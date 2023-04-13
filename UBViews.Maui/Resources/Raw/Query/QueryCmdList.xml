@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Queries count="17">
+  <QueryCmd id="1" type="Phrase">
+    <QueryString>"truth revealers"</QueryString>
+  </QueryCmd>
+  <QueryCmd id="2" type="CTerm">
+    <QueryString>[truth revealers]</QueryString>
+  </QueryCmd>
+  <QueryCmd id="3" type="FilterBy+And">
+    <QueryString>foreword and orvonton filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="4" type="FilterBy+And">
+    <QueryString>admonishes and mandate filterby seqid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="5" type="FilterBy+And">
+    <QueryString>interregnum and witness filterby seqid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="6" type="FilterBy+And">
+    <QueryString>progress and economic filterby seqid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="7" type="FilterBy+And">
+    <QueryString>profit and motive filterby secid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="8" type="FilterBy+And">
+    <QueryString>democracy and ideal filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="9" type="FilterBy+And">
+    <QueryString>cosmic and instrument filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="10" type="And">
+    <QueryString>prostitutes and temple</QueryString>
+  </QueryCmd>
+  <QueryCmd id="11" type="FilterBy+And">
+    <QueryString>mystery and cynics filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="12" type="STerm">
+    <QueryString>~rejuvenation</QueryString>
+  </QueryCmd>
+  <QueryCmd id="13" type="FilterBy+And">
+    <QueryString>conscience and power filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="14" type="CTerm">
+    <QueryString>[ascending midwayers]</QueryString>
+  </QueryCmd>
+  <QueryCmd id="15" type="CTerm">
+    <QueryString>[composite personality groups]</QueryString>
+  </QueryCmd>
+  <QueryCmd id="16" type="FilterBy+And">
+    <QueryString>dematerialization and accelerated filterby parid</QueryString>
+  </QueryCmd>
+  <QueryCmd id="17" type="FilterBy+And">
+    <QueryString>mind and ship filterby parid</QueryString>
+  </QueryCmd>
+</Queries>

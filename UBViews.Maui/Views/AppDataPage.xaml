@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:model="clr-namespace:UBViews.Models"
+             xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             x:Class="UBViews.Views.AppDataPage"
+             Title="App Settings Page"
+             x:DataType="viewmodel:AppDataViewModel">
+    <ContentPage.Behaviors>
+        <behavior:EventToCommandBehavior
+            EventName="Loaded"
+            Command="{Binding AppDataPageAppearingCommand}"/>
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="25">
+            <Label 
+                Text="Application Files"
+                FontSize="Title"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <CollectionView ItemsSource="{Binding DataFiles}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:AppFile">
+                        <VerticalStackLayout>
+                            <Label Padding="10,0,10,0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Id, StringFormat='{0}.'}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding FileName, StringFormat='{0}'}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding FilePath, StringFormat='Path: {0}'}"
+                                    Padding="10,0,0,10"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,305 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UBViews"
+             x:Class="UBViews.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Color Styles -->
+            <Color x:Key="Primary">#007fff</Color>
+            <Color x:Key="PrimaryDark">#013963</Color>
+            <Color x:Key="BlueCrayola">#1F75FE</Color>
+            <Color x:Key="Accent">#00BFFF</Color>
+
+            <!--<Color x:Key="LightBackground">#FAF9F8</Color>-->
+            <Color x:Key="LightBackground">White</Color>
+            <Color x:Key="DarkBackground">Black</Color>
+
+            <Color x:Key="UBLightBackground">White</Color>
+            <Color x:Key="UBDarkBackground">Black</Color>
+
+            <Color x:Key="ActivityIndicatorLightBackground">Blue</Color>
+            <Color x:Key="ActivityIndicatorDarkBackground">White</Color>
+
+            <Color x:Key="LabelText">#1F1F1F</Color>
+            <Color x:Key="LabelTextDark">White</Color>
+
+            <!-- UB Specific Styles -->
+            <!-- Span Styles -->
+            <Style x:Key="BaseSpan" TargetType="Span">
+                <Setter Property="FontFamily" Value="ACaslonProRegular"/>
+                <Setter Property="FontSize" Value="18.5" />
+            </Style>
+
+            <Style x:Key="BaseSpanBold" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProBold"/>
+            </Style>
+            <Style x:Key="BaseSpanItalic" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProItalic"/>
+            </Style>
+
+            <Style x:Key="BaseParagaphSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}" />
+
+            <Style x:Key="ArchaicSpan" TargetType="Span" BasedOn="{StaticResource BaseParagaphSpan}" />
+
+            <Style x:Key="AllSmallCaps" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProBold"/>
+                <Setter Property="TextTransform" Value="Uppercase" />
+                <Setter Property="FontSize" Value="16.0" />
+            </Style>
+            <Style x:Key="SmallCaps" TargetType="Span" BasedOn="{StaticResource AllSmallCaps}"/>
+
+            <Style x:Key="EraSpan" TargetType="Span" BasedOn="{StaticResource SmallCaps}">
+                <Setter Property="FontFamily" Value="ACaslonProRegular" />
+                <Setter Property="FontSize" Value="15.5" />
+            </Style>
+
+            <Style x:Key="TabsSpan" TargetType="Span">
+                <Setter Property="Text" Value="    " />
+            </Style>
+
+            <Style x:Key="SpaceSpan" TargetType="Span">
+                <Setter Property="Text" Value=" " />
+            </Style>
+
+            <Style x:Key="TwoSpaceSpan" TargetType="Span">
+                <Setter Property="Text" Value="  " />
+            </Style>
+
+            <Style x:Key="TitleTabsSpan" TargetType="Span">
+                <Setter Property="Text" Value=". " />
+            </Style>
+
+            <!-- Paper Span Styles -->
+            <Style x:Key="PID" TargetType="Span">
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="OldStyle7Std" />
+            </Style>
+
+            <Style x:Key="Superscript" TargetType="Span" BasedOn="{StaticResource BaseSpan}" />
+
+            <Style x:Key="OldStyle" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="OldStyle7Std" />
+            </Style>
+
+            <!-- Contents Styles -->
+            <Style x:Key="ContentsHeadingSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProBold" />
+                <Setter Property="FontSize" Value="24" />
+            </Style>
+            <Style x:Key="PartNumberSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan }">
+                <Setter Property="FontSize" Value="15.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+            <Style x:Key="PartsHeadingSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan}" />
+            <Style x:Key="PartTitleSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan}">
+                <Setter Property="FontSize" Value="16.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+            <Style x:Key="ContentsSponsorSpan" TargetType="Span" BasedOn="{StaticResource BaseParagaphSpan}" />
+
+            <!-- Base Label Styles -->
+            <Style x:Key="BaseLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="ACaslonProRegular"/>
+            </Style>
+            <Style x:Key="BaseLabelBold" TargetType="Label">
+                <Setter Property="FontFamily" Value="ACaslonProBold"/>
+            </Style>
+            <Style x:Key="BaseLabelItalic" TargetType="Label">
+                <Setter Property="FontFamily" Value="ACaslonProItalic"/>
+            </Style>
+            <Style x:Key="BaseParagraph" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="18.5"/>
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <!-- Base Contents Material -->
+            <Style x:Key="BasePartsMaterial" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
+                <Setter Property="FontFamily" Value="ACaslonProBold" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <!-- TODO: May be removed -->
+            <Style x:Key="BasePartMaterial" TargetType="Label" BasedOn="{StaticResource BasePartsMaterial}">
+                <Setter Property="FontFamily" Value="ACaslonProBold" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+
+            <!-- Header Circle View Styles -->
+            <Style x:Key="HeaderGrid" TargetType="Grid">
+                <Setter Property="ColumnDefinitions" Value="*,Auto,*" />
+                <Setter Property="RowDefinitions" Value="160,Auto" />
+            </Style>
+            <Style x:Key="HeaderBoxView" TargetType="BoxView">
+                <Setter Property="Grid.ColumnSpan" Value="3" />
+                <Setter Property="HeightRequest" Value="160" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+            <Style x:Key="LargeHeaderImage" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="HeightRequest" Value="130" />
+                <Setter Property="WidthRequest" Value="130" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Source" Value="urantia_circles2.png" />
+            </Style>
+            <Style x:Key="SmallHeaderImage" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="HeightRequest" Value="67" />
+                <Setter Property="WidthRequest" Value="67" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Source" Value="urantia_circles2.png" />
+            </Style>
+            <Style x:Key="HeaderVerticalStackLayout" TargetType="VerticalStackLayout">
+                <Setter Property="Grid.RowSpan" Value="3" />
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+            <Style x:Key="HeaderLabel" TargetType="Label" BasedOn="{StaticResource BasePartsMaterial}">
+                <Setter Property="FontFamily" Value="ACaslonProBold"/>
+                <Setter Property="FontSize" Value="45" />
+                <Setter Property="Margin" Value="0,20,0,10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="DarkGoldenrod" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Text" Value="The Urantia Book" />
+            </Style>
+
+            <!-- Contents Styles  -->
+            <Style x:Key="ContentsHeading" TargetType="Label" BasedOn="{StaticResource BasePartsMaterial}">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="10,0,10,0" />
+            </Style>
+            <Style x:Key="ContentsPartsHeading" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="ContentsPartNumber" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="24"></Setter>
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+            <Style x:Key="ContentsPartTitle" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="20.5" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="ContentsPartSponsor" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
+                <Setter Property="Margin" Value="20,0,20,0" />
+            </Style>
+            <!-- TODO: May be removed -->
+            <Style x:Key="ContentsPaperNumber" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Key="ContentsPaperHeading" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="24.5" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+            <Style x:Key="ContentsPaperTitle" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="24.5" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <!-- TODO: May be removed -->
+            <Style x:Key="ContentsSectionTitle" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
+                <Setter Property="FontSize" Value="20.5" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PaperHeadingSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan }">
+                <Setter Property="FontSize" Value="17.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+            <Style x:Key="PaperNumberSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan }">
+                <Setter Property="FontSize" Value="17.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+            <Style x:Key="TitleSpan" TargetType="Span" BasedOn="{StaticResource BaseSpanBold}">
+                <Setter Property="FontSize" Value="17.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+
+            <Style x:Key="OpeningSpan" TargetType="Span" BasedOn="{StaticResource AllSmallCaps}"/>
+            <Style x:Key="RegularSpan" TargetType="Span" BasedOn="{StaticResource BaseParagaphSpan}" />
+            <Style x:Key="ItalicSpan" TargetType="Span" BasedOn="{StaticResource BaseSpanItalic}" />
+
+            <Style x:Key="SectionSpan" TargetType="Span" BasedOn="{StaticResource BaseSpanBold}">
+                <Setter Property="FontSize" Value="17.5" />
+                <Setter Property="TextTransform" Value="Uppercase" />
+            </Style>
+            <Style x:Key="AcknowledgmentSpan" TargetType="Span" BasedOn="{StaticResource OpeningSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProBold"/>
+                <Setter Property="FontAttributes" Value="Italic" />
+                <Setter Property="FontSize" Value="17.5" />
+            </Style>
+
+            <Style x:Key="AllSmallCapsSpan" TargetType="Span" BasedOn="{StaticResource AllSmallCaps}" />
+            <Style x:Key="SmallCapsSpan" TargetType="Span" BasedOn="{StaticResource SmallCaps}" />
+            <Style x:Key="SmallCapsItalicSpan" TargetType="Span" BasedOn="{StaticResource SmallCapsSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProItalic"/>
+            </Style>
+            <Style x:Key="AllSmallCapsItalicSpan" TargetType="Span" BasedOn="{StaticResource AllSmallCapsSpan}">
+                <Setter Property="FontFamily" Value="ACaslonProItalic"/>
+            </Style>
+
+            <Style x:Key="ListNumberSpan" TargetType="Span" BasedOn="{StaticResource OldStyle}" />
+            <Style x:Key="AstrisksSpan" TargetType="Span" BasedOn="{StaticResource OldStyle}">
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <!-- Main Paper VerticalStackLayout Style -->
+            <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="20,0,20,30" />
+            </Style>
+
+            <!-- Paper Paragraph Label Style -->
+            <Style  x:Key="TitleParagraph" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="OpeningParagraph" TargetType="Label" BasedOn="{StaticResource BaseParagraph}" />
+            <Style x:Key="RegularParagraph" TargetType="Label" BasedOn="{StaticResource BaseParagraph}"/>
+
+            <Style x:Key="PaperTitleNumberSpan" TargetType="Span" BasedOn="{StaticResource ContentsHeadingSpan }">
+                <Setter Property="FontSize" Value="17.5" />
+                <!--<Setter Property="TextTransform" Value="Uppercase" />-->
+            </Style>
+            <Style x:Key="PaperTitleSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontSize" Value="17.5" />
+            </Style>
+
+            <!-- Poem -->
+            <Style x:Key="Poem" TargetType="Label" BasedOn="{StaticResource RegularParagraph}" />
+
+            <!--Papaer Section, Acknowledgment, and Sponsor Styles  -->
+            <Style x:Key="SectionParagraph" TargetType="Label" BasedOn="{StaticResource TitleParagraph}">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,20,0,0" />
+            </Style>
+            <Style x:Key="AcknowledgmentParagraph" TargetType="Label" BasedOn="{StaticResource SectionParagraph}"/>
+            <Style x:Key="SponsorParagraph" TargetType="Label" BasedOn="{StaticResource BaseParagraph}"/>
+            <Style x:Key="AstrisksParagraph" TargetType="Label" BasedOn="{StaticResource RegularParagraph}">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,20,0,30" />
+            </Style>
+            <!-- End Label Styles -->
+            <!-- End UB Specific Styles -->
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

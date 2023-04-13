@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:control="clr-namespace:UBViews.Controls"
+             xmlns:local="clr-namespace:UBViews.Views" 
+             xmlns:model="clr-namespace:UBViews.Models"
+             x:Class="UBViews.Views.PartsPage"
+             Title="Parts of Book"
+             x:DataType="viewmodel:PartsViewModel">
+    
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="part1AudioUri">Resources/Raw/Audio/UB.001.0.mp3</x:String>
+            <x:String x:Key="part2AudioUri">Resources/Raw//Audio/UB.032.0.mp3</x:String>
+            <x:String x:Key="part3AudioUri">Resources/Raw//Audio/UB.057.0.mp3</x:String>
+            <x:String x:Key="part4AudioUri">Resources/Raw//Audio/UB.120.0.mp3</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+
+    <!-- Main Content Grid-->
+    <Grid x:Name="contentGrid" 
+          BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                            Dark={StaticResource DarkBackground}}">
+
+        <!-- Main VerticalStackLayout -->
+        <ScrollView x:Name="contentScrollView">
+
+            <!-- Main VerticalStackLayout -->
+            <VerticalStackLayout x:Name="contentVerticalStackLayout"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                   Dark={StaticResource DarkBackground}}">
+
+                <!-- Headers Control -->
+                <control:CirclesHeader />
+                
+                <!-- mainContentVerticalStackLayout -->
+                <VerticalStackLayout x:Name="mainContent" 
+                                     VerticalOptions="StartAndExpand"
+                                     HorizontalOptions="Center"
+                                     BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                       Dark={StaticResource DarkBackground}}">
+                    <!-- forewordFrame -->
+                    <Border  x:Name="forwardBorder"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                               Dark={StaticResource DarkBackground}}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="0" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                               Dark={StaticResource UBDarkBackground}}"
+                                             VerticalOptions="FillAndExpand">
+                            <Label Style="{StaticResource ContentsPartsHeading}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Foreword"
+                                              Style="{StaticResource PartTitleSpan}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Style="{StaticResource ContentsPartSponsor}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="0" />
+                                </Label.GestureRecognizers>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <!--<Span Text="A definitive guide designed to assist those who shall read the papers dealing with Deity and the universe of universes ... formulated by an Orvonton commission sent to Urantia for this purpose."
+                                              Style="{StaticResource ContentsSponsorSpan}"/>-->
+                                        <Span Text="A definitive guide designed to assist those who shall read the accompanying "
+                                              Style="{StaticResource ContentsSponsorSpan}"/>
+                                        <Span Text="papers dealing with Deity and the universe of universes ... formulated by "
+                                              Style="{StaticResource ContentsSponsorSpan}"/>
+                                        <Span Text="an Orvonton commission sent to Urantia for this purpose."
+                                              Style="{StaticResource ContentsSponsorSpan}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- partsVerticalStackLayout -->
+                    <VerticalStackLayout 
+                        x:Name="partsVerticalStackLayout"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                          Dark={StaticResource DarkBackground}}">
+                        <!-- Parts Heading -->
+                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                          Dark={StaticResource UBDarkBackground}}">
+                            <Label Style="{StaticResource ContentsPartsHeading}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="The Parts of the Book"
+                                          Style="{StaticResource PartsHeadingSpan}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Border>
+                        
+                        <!-- part1Border -->
+                        <Border x:Name="part1Frame"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                 Dark={StaticResource DarkBackground}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="1" />
+
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="FillAndExpand"
+                                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                <Label Style="{StaticResource ContentsPartNumber}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Part I" Style="{StaticResource PartNumberSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartsHeading}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="The Central and Superuniverses" 
+                                                  Style="{StaticResource PartTitleSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartSponsor}"
+                                       LineBreakMode="WordWrap"
+                                        MaxLines="6">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Indited by an Orvonton Divine Counselor, Chief of the Corps of "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="Superuniverse Personalities assigned to portray on Urantia the "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="truth concerning the Paradise Deities and the Universe of universes."
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- part2Border -->
+                        <Border x:Name="part2Border"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                 Dark={StaticResource DarkBackground}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="2" />
+
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="FillAndExpand"
+                                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                <Label Style="{StaticResource ContentsPartNumber}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Part II" Style="{StaticResource PartNumberSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartsHeading}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="The Local Universe" 
+                                                  Style="{StaticResource PartTitleSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartSponsor}"
+                                       LineBreakMode="WordWrap"
+                                        MaxLines="6">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Sponsored by a Nebadon Corps of Local Universe "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="Personalities acting by authority of "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="Gabriel of Salvington."
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- part3Border -->
+                        <Border x:Name="part3Border"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                 Dark={StaticResource DarkBackground}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="3" />
+
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="FillAndExpand"
+                                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                <Label Style="{StaticResource ContentsPartNumber}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Part III" Style="{StaticResource PartNumberSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartsHeading}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="The History of Urantia" 
+                                                  Style="{StaticResource PartTitleSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartSponsor}"
+                                       LineBreakMode="WordWrap"
+                                        MaxLines="6">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="These papers were sponsored by a Corps of "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="Local Universe Personalities acting by "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="authority of Gabriel of Salvington."
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- part4Border -->
+                        <Border x:Name="part4Border"
+                               VerticalOptions="FillAndExpand"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                 Dark={StaticResource DarkBackground}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource 
+                                                          AncestorType={x:Type viewmodel:PartsViewModel}}, 
+                                                          Path=NavigateToCommand}" 
+                                        CommandParameter="4" />
+
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="FillAndExpand"
+                                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                <Label Style="{StaticResource ContentsPartNumber}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Part II" Style="{StaticResource PartNumberSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartsHeading}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="The Life and Teachings of Jesus" 
+                                                  Style="{StaticResource PartTitleSpan}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource ContentsPartSponsor}"
+                                       MaxLines="10">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="This group of papers was sponsored by a commission of twelve Urantia "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="midwayers acting under the supervision of a Melchizedek revelatory "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="director. The basis of this narrative was supplied "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="by a secondary midwayer who was onetime "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="assigned to the superhuman watchcare "
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                            <Span Text="of the Apostle Andrew."
+                                                  Style="{StaticResource ContentsSponsorSpan}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator
+            Color="{AppThemeBinding Light={StaticResource ActivityIndicatorLightBackground}, 
+                                    Dark={StaticResource ActivityIndicatorDarkBackground}}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}" />
+        
+    </Grid>
+    
+</ContentPage>

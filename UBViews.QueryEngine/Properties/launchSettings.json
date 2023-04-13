@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UBViews.QueryEngine": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

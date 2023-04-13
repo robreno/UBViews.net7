@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             x:Class="UBViews.Views.QueryInputPage"
+             Title="Query Input"
+             x:DataType="viewmodel:QueryInputViewModel">
+
+    <VerticalStackLayout Padding="40">
+
+        <Label 
+            Text="{Binding QueryInput.Text, StringFormat='Query text: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"/>
+
+        <Label 
+            Text="{Binding QueryInput.TokenCount, StringFormat='Token count: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            Padding="10"
+            HorizontalOptions="Center"/>
+
+        <Button 
+            Text="Parse Query" 
+            FontSize="18"
+            FontAttributes="Bold" 
+            Command="{Binding ParseQueryCommand}"
+            CommandParameter="{Binding QueryInput.Text}"
+            HorizontalOptions="Center" />
+
+        <Button 
+            Text="Run Query" 
+            FontSize="18"
+            FontAttributes="Bold" 
+            Command="{Binding RunQueryCommand}"
+            CommandParameter="{Binding QueryInput.Text}"
+            HorizontalOptions="Center"
+            Margin="10"/>
+
+        <Label 
+            Text="{Binding QueryResultExists, StringFormat='From QueryHistory: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            Padding="10"
+            HorizontalOptions="Center"/>
+
+        <Button 
+            Text="Lookup Stem" 
+            FontSize="18"
+            FontAttributes="Bold" 
+            Command="{Binding LookupStemCommand}"
+            CommandParameter="{Binding QueryInput.Text}"
+            HorizontalOptions="Center"
+            Margin="10"/>
+
+        <!--<Label 
+            Text="{Binding QueryInputString, StringFormat='Query Input: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            Padding="10"
+            HorizontalOptions="Center"/>-->
+
+        <Label 
+            Text="{Binding QueryExpression, StringFormat='Query Expression: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            Padding="10"
+            HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+    
+</ContentPage>

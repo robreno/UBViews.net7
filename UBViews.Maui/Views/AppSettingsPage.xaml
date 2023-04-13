@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             x:Class="UBViews.Views.AppSettingsPage"
+             x:DataType="viewmodel:AppSettingsViewModel"
+             Title="App Settings Page"
+             Loaded="OnLoaded" >
+
+    <ContentPage.Behaviors>
+        <behavior:EventToCommandBehavior 
+            EventName="Appearing" Command="{Binding AppSettingPageAppearingCommand}" />
+        <behavior:EventToCommandBehavior 
+            EventName="Disappearing" Command="{Binding AppSettingPageDisappearingCommand}" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout x:Name="mainVSL"
+                         Padding="20,20,20,20">
+
+        <HorizontalStackLayout x:Name="MaxNumHSL" Margin=".5">
+            <Label x:Name="maxNumberLabel" 
+                           Text="Max Query Result:"
+                           Padding="0,0,0,0"
+                           WidthRequest="115"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center" />
+            <Entry x:Name="maxNumberEntry"
+                           HeightRequest="40"
+                           WidthRequest="40"
+                           Margin="0,0,1.5,0"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           IsEnabled="False"
+                           Text="{Binding Source={x:Reference maxNumberStepper},Path=Value}" />
+            <Stepper x:Name="maxNumberStepper" 
+                             WidthRequest="80"
+                             HeightRequest="50"
+                             Minimum="50" 
+                             Maximum="200" 
+                             Increment="10"
+                             Value="{Binding MaxQueryResults, Mode=OneWay}">
+                <Stepper.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                        EventName="ValueChanged" 
+                        Command="{Binding MaxQueryResultValueChangedCommand}"
+                        CommandParameter="{Binding Source={x:Reference maxNumberStepper}, Path=Value}"/>
+                </Stepper.Behaviors>
+            </Stepper>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout x:Name="lineHeightHSL" Margin=".5">
+            <Label x:Name="lineHeightLabel" 
+                           Text="Line Height:"
+                           Padding="0,0,0,0"
+                           WidthRequest="115"
+                           VerticalOptions="Center" />
+            <Entry x:Name="lineHeightEntry"
+                           HeightRequest="40"
+                           WidthRequest="40"
+                           Margin="0,0,1.5,0"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           IsEnabled="False"
+                           Text="{Binding Source={x:Reference lineHeightStepper},Path=Value}"/>
+            <Stepper x:Name="lineHeightStepper" 
+                             WidthRequest="80"
+                             HeightRequest="50"
+                             Minimum="1.0" 
+                             Maximum="2.0" 
+                             Increment=".1"
+                             Value="{Binding LineHeight, Mode=OneWay}">
+                <Stepper.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                        EventName="ValueChanged" 
+                        Command="{Binding LineHeightValueChangedCommand}"
+                        CommandParameter="{Binding Source={x:Reference lineHeightStepper}, Path=Value}"/>
+                </Stepper.Behaviors>
+            </Stepper>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout x:Name="ShowPidsHTL" Margin=".5">
+            <Label Text="Show References:"
+                           Padding="0,0,.5,0"
+                           WidthRequest="115"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center">
+            </Label>
+            <CheckBox x:Name="pidsCheckBox"
+                              Color="Blue"
+                              IsChecked="{Binding ShowReferencePids, Mode=OneWay}">
+                <CheckBox.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                        EventName="CheckedChanged" 
+                        Command="{Binding ShowPidsCheckedChangedCommand}"
+                        CommandParameter="{Binding Source={x:Reference pidsCheckBox}, Path=IsChecked}"/>
+                </CheckBox.Behaviors>
+            </CheckBox>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout x:Name="ShowPaperContentPage" Margin=".5">
+            <Label Text="Show Paper Contents:"
+                           Padding="0,0,.5,0"
+                           WidthRequest="115"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Center">
+            </Label>
+            <CheckBox x:Name="paperContentsCheckBox"
+                              Color="Blue"
+                              IsChecked="{Binding ShowPaperContents, Mode=OneWay}">
+                <CheckBox.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                        EventName="CheckedChanged" 
+                        Command="{Binding ShowPaperContentsCheckedChangedCommand}"
+                        CommandParameter="{Binding Source={x:Reference paperContentsCheckBox}, Path=IsChecked}"/>
+                </CheckBox.Behaviors>
+            </CheckBox>
+        </HorizontalStackLayout>
+
+        <Button Text="Save Settings" 
+                WidthRequest="120"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0">
+            <Button.Behaviors>
+                <behavior:EventToCommandBehavior 
+                            EventName="Clicked" 
+                            Command="{Binding SaveSettingsCommand}"/>
+            </Button.Behaviors>
+        </Button>
+
+    </VerticalStackLayout>
+
+
+</ContentPage>

@@ -1,0 +1,60 @@
+[
+  {
+    "Id": 0,
+    "PartId": "Part-0",
+    "Heading": "part i",
+    "Title": "foreword",
+    "SponsorLines": [
+      "Indited by an Orvonton Divine Counselor, Chief of the Corps of",
+      "Superuniverse Personalities assigned to portray on Urantia the",
+      "truth concerning the Paradise Deities and the Universe of universes."
+    ]
+  },
+  {
+    "Id": 1,
+    "PartId": "Part-1",
+    "Heading": "part i",
+    "Title": "the central and superuniverses",
+    "SponsorLines": [
+      "Sponsored by a Uversa Corps of Superuniverse Personalities",
+      "acting by authority of the Orvonton",
+      "Ancients of Days."
+    ]
+  },
+  {
+    "Id": 2,
+    "PartId": "Part-2",
+    "Heading": "part ii",
+    "Title": "the local universe",
+    "SponsorLines": [
+      "Sponsored by a Nebadon Corps of Local Universe",
+      "Personalities acting by authority of",
+      "Gabriel of Salvington."
+    ]
+  },
+  {
+    "Id": 3,
+    "PartId": "Part-3",
+    "Heading": "part iii",
+    "Title": "the history of urantia",
+    "SponsorLines": [
+      "These papers were sponsored by a Corps of",
+      "Local Universe Personalities acting by",
+      "authority of Gabriel of Salvington."
+    ]
+  },
+  {
+    "Id": 4,
+    "PartId": "Part-4",
+    "Heading": "part iv",
+    "Title": "the life and teachings of jesus",
+    "SponsorLines": [
+      "This group of papers was sponsored by a commission of twelve Urantia",
+      "midwayers acting under the supervision of a Melchizedek revelatory",
+      "director. The basis of this narrative was supplied",
+      "by a secondary midwayer who was onetime",
+      "assigned to the superhuman watchcare",
+      "of the Apostle Andrew."
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings count="2">
+  <Setting name="show_pids" type="bool" value="false" />
+  <Setting name="max_query_results" type="int" value="50" />
+  <Setting name="line_height" type="double" value="1.0" />
+  <Setting name="show_paper_contents" type="bool" value="false" />
+</Settings>

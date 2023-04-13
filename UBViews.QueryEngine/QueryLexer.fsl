@@ -1,0 +1,65 @@
+﻿// UBViews.LexParser.Lexer definition file.
+// fslex --unicode QueryLexer.fsl
+
+{
+module UBViews.LexParser.Lexer
+
+open System
+open UBViews.LexParser.Parser
+
+open FSharp.Text.Lexing
+
+exception SyntaxError of string
+
+let lexeme = LexBuffer<_>.LexemeString
+
+}
+ 
+// These are some regular expression definitions
+let digit = ['0'-'9']
+let whitespace = [' ' '\t' ]
+let newline = ('\n' | '\r' '\n')
+
+// Just grab a sequence of characters to form a token. We will turn that into
+// a 'document token' later.
+let wordcharacter = ['a'-'z''A'-'Z''\'']
+let softcharacter = ['.' ',' '!' '?']
+let term = (wordcharacter | softcharacter)+
+
+rule tokenize = parse
+	// Eat whitespace
+	| whitespace	{ tokenize lexbuf }
+	| newline       { tokenize lexbuf }
+	// Symbols
+	| "\""			{ QUOTATION_MARK }
+	| "["			{ LEFT_BRACKET }
+	| "]"			{ RIGHT_BRACKET }
+	| "("			{ LEFT_PAREN }
+	| ")"			{ RIGHT_PAREN }
+	| "~"           { TILDE }
+	// Keywords
+	| "AND"
+	| "and"			{ AND }
+	| "OR"
+	| "or"			{ OR }
+	// Additional Keywords
+	| "FILTERBY"
+	| "filterby"	{ FILTERBY }
+	| "TOPID"
+	| "topid"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	| "DOCID"
+	| "docid"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	| "SEQID"
+	| "seqid"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	| "PARID"
+	| "parid"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	| "SECID"
+	| "secid"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	| "STERM"
+	| "sterm"		{ FILTERID(LexBuffer<_>.LexemeString(lexbuf)) }
+	// Any other string is considered a term in a search query.
+	| term         { TERM(LexBuffer<_>.LexemeString(lexbuf)) }
+	// EOF
+	| eof   { EOF }
+	// Error handing
+	| _ { raise (Exception (sprintf "SyntaxError: Unexpected char: '%s' Line: %d Column: %d" (lexeme lexbuf) (lexbuf.StartPos.Line+1) lexbuf.StartPos.Column)) }

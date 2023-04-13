@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Styles version="1.0">
+	<ParagraphStyles>
+    <Style id="1" Map="1" TypeName="PartNumber" FullName="ParagraphStyle/Part Number" Name="Part Number" AltName="pn" BaseCharacterStyle="Caslon 20" PointSize="20" Pixals="26.67" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0"  SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Part Number" Name="Part Number" Imported="false" NextStyle="ParagraphStyle/Part Title" KeyboardShortcut="0 0" PointSize="20" Tracking="10" Capitalization="CapToSmallCap">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Paper Part Number</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="2" Map="2" TypeName="PartTitle" FullName="ParagraphStyle/Part Title" Name="Part Title" AltName="pt" BaseCharacterStyle="Caslon 18" PointSize="18" Pixals="24" SpaceBeforePixals="20" SpaceAfterPixals="4" SpaceBeforePoints="15" SpaceAfterPoints="3" SpaceBefore="1p3" SpaceAfter="0p3">
+      <ParagraphStyle Self="ParagraphStyle/Part Title" Name="Part Title" Imported="false" NextStyle="ParagraphStyle/Part Sponsor" KeyboardShortcut="0 0" PointSize="18" Ligatures="false" Tracking="10" Composer="HL Single" BaselineShift="-0" Capitalization="CapToSmallCap" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="15" SpaceAfter="3" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="3" Map="3" TypeName="PartSponsor" FullName="ParagraphStyle/Part Sponsor" Name="Part Sponsor" AltName="pt-sponsored by text" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0"  SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Part Sponsor" Name="Part Sponsor" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">13</Leading>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="4" Map="4" TypeName="PaperPartNumber" FullName="ParagraphStyle/Paper Part Number" Name="Paper Part Number" AltName="pn (on co pages)" BaseCharacterStyle="Caslon 13" PointSize="13" Pixals="17.33" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Paper Part Number" Name="Paper Part Number" Imported="false" NextStyle="ParagraphStyle/Paper Part Title" KeyboardShortcut="0 0" PointSize="13" Ligatures="false" Tracking="20" Composer="HL Single" BaselineShift="-0" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="5" Map="5" TypeName="PaperPartTitle" FullName="ParagraphStyle/Paper Part Title" Name="Paper Part Title" AltName="pt (on co pages)" BaseCharacterStyle="Caslon 20" PointSize="20" Pixals="26.67" SpaceBeforePixals="24" SpaceAfterPixals="48" SpaceBeforePoints="18" SpaceAfterPoints="36" SpaceBefore="1p6" SpaceAfter="3p0">
+      <ParagraphStyle Self="ParagraphStyle/Paper Part Title" Name="Paper Part Title" Imported="false" NextStyle="Paper Number" KeyboardShortcut="0 0" PointSize="20" Ligatures="false" Tracking="10" Composer="HL Single" BaselineShift="-0" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="18" SpaceAfter="36" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="6" Map="6" TypeName="PaperNumber" FullName="ParagraphStyle/Paper Number" Name="Paper Number" AltName="cn (paper no)" BaseCharacterStyle="Caslon 16" NestedCharacterStyle="Caslon 11" PointSize="16" Pixals="21.33" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Paper Number" Name="Paper Number" Imported="false" NextStyle="Paper Title" KeyboardShortcut="0 0" FontStyle="Semibold" PointSize="10.75" Ligatures="false" Tracking="50" Composer="HL Single" BaselineShift="-0" Capitalization="CapToSmallCap" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" OTFFigureStyle="TabularLining" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Caslon 16</AppliedCharacterStyle>
+              <Delimiter type="string"> </Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">false</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="7" Map="7" TypeName="PaperTitle" FullName="ParagraphStyle/Paper Title" Name="Paper Title" AltName="ct" BaseCharacterStyle="Caslon Title" PointSize="20" Pixals="26.67" SpaceBeforePixals="16" SpaceAfterPixals="0" SpaceBeforePoints="12" SpaceAfterPoints="0" SpaceBefore="1p0" SpaceAfter="0p0" Alignment="Center">
+      <ParagraphStyle Self="ParagraphStyle/Paper Title" Name="Paper Title" Imported="false" NextStyle="ParagraphStyle/Paper Opening" KeyboardShortcut="0 0" PointSize="19" Ligatures="false" Tracking="10" Composer="HL Single" BaselineShift="-0" Capitalization="CapToSmallCap" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="12" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="8" Map="8" TypeName="PaperOpening" FullName="ParagraphStyle/Paper Opening" Name="Paper Opening" AltName="co" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon AllCaps" DropCapLines="3" PointSize="10.5"  Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Paper Opening" Name="Paper Opening" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" DropCapCharacters="1" DropCapLines="3" FirstLineIndent="0" DropcapDetail="1">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Caslon AllCaps</AppliedCharacterStyle>
+              <Delimiter type="enumeration">Dropcap</Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">true</Inclusive>
+            </ListItem>
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Caslon AllCaps</AppliedCharacterStyle>
+              <Delimiter type="enumeration">AnyWord</Delimiter>
+              <Repetition type="long">2</Repetition>
+              <Inclusive type="boolean">true</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="9" Map="9" TypeName="Regular" FullName="ParagraphStyle/Regular" Name="Regular" AltName="pr" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Regular" Name="Regular" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="10.5" Ligatures="false" Tracking="5" BaselineShift="-0" HyphenateLadderLimit="1" FirstLineIndent="12" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" KeepLinesTogether="true" RuleAboveTint="100" RuleBelowTint="100" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">12</Leading>
+          <AppliedFont type="string">Sabon LT Std</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="10" Map="10" TypeName="RegularNoHyphen" FullName="ParagraphStyle/Regular (no hyphen)" Name="Regular (no hyphen)" AltName="pr no hyphen" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Regular (no hyphen)" Name="Regular (no hyphen)" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="10" Ligatures="false" BaselineShift="-0" HyphenateLadderLimit="8" FirstLineIndent="12" AutoLeading="100" Hyphenation="false" HyphenateAfterFirst="3" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" MaximumWordSpacing="140" MinimumWordSpacing="85" MaximumLetterSpacing="2" MinimumLetterSpacing="-2" KeepLinesTogether="true" FillTint="100" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">11</Leading>
+          <AppliedFont type="string">Old Style 7</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="11" Map="11" TypeName="Section" FullName="ParagraphStyle/Section" Name="Section" AltName="a" BaseCharacterStyle="Caslon Heading" NestedCharacterStyle="Section Number" PointSize="14" Pixals="18.66" SpaceBeforePixals="18.66" SpaceAfterPixals="12" SpaceBeforePoints="14" SpaceAfterPoints="9" SpaceBefore="1p2" SpaceAfter="0p9">
+      <ParagraphStyle Self="ParagraphStyle/Section" Name="Section" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="14" Tracking="50" Capitalization="CapToSmallCap" FirstLineIndent="0" SpaceBefore="14" SpaceAfter="9" KeepWithNext="2" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Section Number</AppliedCharacterStyle>
+              <Delimiter type="string">.</Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">false</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="12" Map="12" TypeName="NumberedListHead" FullName="ParagraphStyle/Numbered List (head)" Name="Numbered List (head)" AltName="nl" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="4.89" SpaceAfterPixals="0" SpaceBeforePoints="3.67" SpaceAfterPoints="0" SpaceBefore="0p3.67" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Numbered List (head)" Name="Numbered List (head)" Imported="false" NextStyle="ParagraphStyle/Numbered List (entry)" KeyboardShortcut="0 0" SpaceBefore="3.6699981689453125">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Caslon Oldstyle</AppliedCharacterStyle>
+              <Delimiter type="enumeration">Digits</Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">true</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="13" Map="13" TypeName="NumberedListEntry" FullName="ParagraphStyle/Numbered List (entry)" Name="Numbered List (entry)" AltName="nlne" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="2.66" SpaceAfterPixals="0" SpaceBeforePoints="2" SpaceAfterPoints="0" SpaceBefore="0p2" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Numbered List (entry)" Name="Numbered List (entry)" Imported="false" NextStyle="ParagraphStyle/Numbered List (entry)" KeyboardShortcut="0 0" SpaceBefore="2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Caslon Oldstyle</AppliedCharacterStyle>
+              <Delimiter type="enumeration">Digits</Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">true</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="14" Map="14" TypeName="TabListHead" FullName="ParagraphStyle/Tabbed List (head)" Name="Tabbed List (head)" AltName="nl (tablist)" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Tabbed List (head)" Name="Tabbed List (head)" Imported="false" NextStyle="ParagraphStyle/Tabbed List (entry)" KeyboardShortcut="0 0" RightIndent="9.5" SpaceBefore="3.6699981689453125" Justification="RightJustified">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Tabbed List (entry)</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <TabList type="list">
+            <ListItem type="record">
+              <Alignment type="enumeration">CharacterAlign</Alignment>
+              <AlignmentCharacter type="string">.</AlignmentCharacter>
+              <Leader type="string"> .</Leader>
+              <Position type="unit">320</Position>
+            </ListItem>
+          </TabList>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="15" Map="15" TypeName="TabListEntry" FullName="ParagraphStyle/Tabbed List (entry)" Name="Tabbed List (entry)" AltName="nlne (tablist)" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Tabbed List (entry)" Name="Tabbed List (entry)" Imported="false" NextStyle="ParagraphStyle/Tabbed List (entry)" KeyboardShortcut="0 0" RightIndent="9.5" SpaceBefore="3.6699981689453125" Justification="RightJustified">
+        <Properties>
+          <BasedOn type="object">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <TabList type="list">
+            <ListItem type="record">
+              <Alignment type="enumeration">CharacterAlign</Alignment>
+              <AlignmentCharacter type="string">.</AlignmentCharacter>
+              <Leader type="string"> .</Leader>
+              <Position type="unit">318</Position>
+            </ListItem>
+            <ListItem type="record">
+              <Alignment type="enumeration">CharacterAlign</Alignment>
+              <AlignmentCharacter type="string">.</AlignmentCharacter>
+              <Leader type="string"> .</Leader>
+              <Position type="unit">4212</Position>
+            </ListItem>
+          </TabList>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="16" Map="16" TypeName="OutlineListHead" FullName="ParagraphStyle/Outline List (head)" Name="Outline List (head)" AltName="list head" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="LeftJustify" FontFamily="Old Style 7" FontStyle="Italic" LeftIndent="2p0">
+      <ParagraphStyle Self="ParagraphStyle/Outline List (head)" Name="Outline List (head)" Imported="true" NextStyle="ParagraphStyle/Outline List (entry)" KeyboardShortcut="0 0" FontStyle="Italic" PointSize="10" Ligatures="false" Composer="HL Single" BaselineShift="-0" HyphenateLadderLimit="1" LeftIndent="24" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="5.5" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleAboveLeftIndent="24" RuleBelowTint="100" RuleBelowLeftIndent="24" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">11</Leading>
+          <AppliedFont type="string">Old Style 7</AppliedFont>
+          <RuleAboveColor type="object">Color/Black</RuleAboveColor>
+          <RuleBelowColor type="object">Color/Black</RuleBelowColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="17" Map="17" TypeName="OutlineListEntry" FullName="ParagraphStyle/Outline List (entry)" Name="Outline List (entry)" AltName="lists (no space)" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="0.2" SpaceAfterPixals="0" SpaceBeforePoints="0.15" SpaceAfterPoints="0" SpaceBefore="0p0.15" SpaceAfter="0p0" Alignment="LeftJustify" FontFamily="Old Style 7" LeftIndent="3p2.5" OTFFigureStyle="TabularOldstyle">
+      <ParagraphStyle Self="ParagraphStyle/Outline List (entry)" Name="Outline List (entry)" Imported="true" NextStyle="ParagraphStyle/Outline List (entry)" KeyboardShortcut="0 0" PointSize="10" Ligatures="false" Composer="HL Single" BaselineShift="-0" HyphenateLadderLimit="1" LeftIndent="38.5" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="0.149993896484375" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleAboveLeftIndent="38.5" RuleBelowTint="100" RuleBelowLeftIndent="38.5" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">11</Leading>
+          <AppliedFont type="string">Old Style 7</AppliedFont>
+          <RuleAboveColor type="object">Color/Black</RuleAboveColor>
+          <RuleBelowColor type="object">Color/Black</RuleBelowColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="18" Map="18" TypeName="Poem" FullName="ParagraphStyle/Poem" Name="Poem" AltName="poe" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0" Alignment="Left" LeftIndent="2p0" FirstLineIndent="-1p0">
+      <ParagraphStyle Self="ParagraphStyle/Poem" Name="Poem" Imported="true" NextStyle="ParagraphStyle/poe" KeyboardShortcut="0 0" LeftIndent="24" FirstLineIndent="-12" RuleAboveLeftIndent="24" RuleBelowLeftIndent="24" Justification="LeftAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="19" Map="19" TypeName="PoemAstrisks" FullName="ParagraphStyle/Poem Astrisks" Name="Poem Astrisks" AltName="poe astrisks" BaseCharacterStyle="Roman" PointSize="10" Pixals="13.33" SpaceBeforePixals="0" SpaceAfterPixals="0" SpaceBeforePoints="0" SpaceAfterPoints="0" SpaceBefore="0p0" SpaceAfter="0p0" Alignment="Center" FontFamily="Old Style 7" LeftIndent="0p0" FirstLineIndent="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Poem Astrisks" Name="Poem Astrisks" Imported="true" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" BaselineShift="-1.49993896484375" SpaceBefore="0" SpaceAfter="0">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Sponsor Astrisks</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="20" Map="20" TypeName="ExtractOpening" FullName="ParagraphStyle/Extract (opening)" Name="Extract (opening)" AltName="ext" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="14.66" SpaceAfterPixals="0" SpaceBeforePoints="11" SpaceAfterPoints="0" SpaceBefore="0p11" SpaceAfter="0p0" Alignment="LeftJustify" LeftIndent="2p0" FirstLineIndent="-1p0">
+      <ParagraphStyle Self="ParagraphStyle/Extract Opening" Name="Extract Opening" Imported="true" NextStyle="ParagraphStyle/Extract (entry)" KeyboardShortcut="0 0" LeftIndent="24" FirstLineIndent="-12" SpaceBefore="11" RuleAboveLeftIndent="24" RuleBelowLeftIndent="24">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="21" Map="21" TypeName="ExtractEntry" FullName="ParagraphStyle/Extract (entry)" Name="Extract (entry)" AltName="ext ne" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="14.66" SpaceAfterPixals="0" SpaceBeforePoints="11" SpaceAfterPoints="0" SpaceBefore="0p11" SpaceAfter="0p0" Alignment="LeftJustify" LeftIndent="2p0" FirstLineIndent="-1p0">
+      <ParagraphStyle Self="ParagraphStyle/Extract (entry)" Name="Extract (entry)" Imported="true" NextStyle="ParagraphStyle/Extract (entry)" KeyboardShortcut="0 0" SpaceBefore="0">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Extract (opening)</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="22" Map="22" TypeName="LineSpaceOne" FullName="ParagraphStyle/LineSpace 1" Name="LineSpace 1" AltName="1 line space" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" FirstLineIndent="1p0" SpaceBeforePixals="14.66" SpaceAfterPixals="0" SpaceBeforePoints="11" SpaceAfterPoints="0" SpaceBefore="0p11" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1" Name="LineSpace 1" Imported="false" NextStyle="ParagraphStyle/LineSpace 1" KeyboardShortcut="0 0" SpaceBefore="11">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="23" Map="23" TypeName="LineSpaceOneHalf" FullName="ParagraphStyle/LineSpace 1/2" Name="LineSpace 1/2" AltName="1/2 line space" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/2" Name="LineSpace 1/2" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/2" KeyboardShortcut="0 0" SpaceBefore="5.5">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="24" Map="24" TypeName="LineSpaceOneThird" FullName="ParagraphStyle/LineSpace 1/3" Name="LineSpace 1/3" AltName="1/3 line space" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="16.89" SpaceAfterPixals="0" SpaceBeforePoints="12.67" SpaceAfterPoints="0" SpaceBefore="0p3.67" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/3" Name="LineSpace 1/3" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/3" KeyboardShortcut="0 0" SpaceBefore="3.67">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="25" Map="25" TypeName="LineSpaceOneFourth" FullName="ParagraphStyle/LineSpace 1/4" Name="LineSpace 1/4" AltName="1/4 line space" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="33" SpaceAfterPixals="0" SpaceBeforePoints="24.75" SpaceAfterPoints="0" SpaceBefore="0p2.75" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/4" Name="LineSpace 1/4" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/4" KeyboardShortcut="0 0" SpaceBefore="2.75">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/pr</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="26" Map="26" TypeName="LineSpaceTwoThird" FullName="ParagraphStyle/LineSpace 2/3" Name="LineSpace 2/3" AltName="2/3 line space" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="112.45" SpaceAfterPixals="0" SpaceBeforePoints="84.34" SpaceAfterPoints="0" SpaceBefore="0p7.34" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 2/3" Name="LineSpace 2/3" Imported="false" NextStyle="ParagraphStyle/LineSpace 2/3" KeyboardShortcut="0 0" SpaceBefore="7.34">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="27" Map="27" TypeName="LineSpaceThreeFourth" FullName="ParagraphStyle/LineSpace 3/4" Name="LineSpace 3/4" AltName="3/4 line space" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="128.33" SpaceAfterPixals="0" SpaceBeforePoints="96.25" SpaceAfterPoints="0" SpaceBefore="0p8.25" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 3/4" Name="LineSpace 3/4" Imported="false" NextStyle="ParagraphStyle/LineSpace 3/4" KeyboardShortcut="0 0" SpaceBefore="8.25">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/pr</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="28" Map="28" TypeName="LineSpaceOneNoHyphen" FullName="ParagraphStyle/LineSpace 1 (no hyphen)" Name="LineSpace 1 (no hyphen)" AltName="1 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1 (no hyphen)" Name="LineSpace 1 (no hyphen)" Imported="false" NextStyle="ParagraphStyle/LineSpace 1 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="8" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="11" MaximumWordSpacing="140" MaximumLetterSpacing="2" MinimumLetterSpacing="-2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="29" Map="29" TypeName="LineSpaceOneHalfNoHyphen" FullName="ParagraphStyle/LineSpace 1/2 (no hyphen)" Name="LineSpace 1/2 (no hyphen)" AltName="1/2 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/2 (no hyphen)" Name="LineSpace 1/2 (no hyphen)" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/2 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="8" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="5.5" MaximumWordSpacing="140" MaximumLetterSpacing="2" MinimumLetterSpacing="-2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="30" Map="30" TypeName="LineSpaceOneThirdNoHyphen" FullName="ParagraphStyle/LineSpace 1/3 (no hyphen)" Name="LineSpace 1/3 (no hyphen)" AltName="1/3 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/3 (no hyphen)" Name="LineSpace 1/3 (no hyphen)" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/3 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="8" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="3.67" MaximumWordSpacing="140" MaximumLetterSpacing="2" MinimumLetterSpacing="-2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="31" Map="31" TypeName="LineSpaceOneFourthNoHyphen" FullName="ParagraphStyle/LineSpace 1/4 (no hyphen)" Name="LineSpace 1/4 (no hyphen)" AltName="1/4 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 1/4 (no hyphen)" Name="LineSpace 1/4 (no hyphen)" Imported="false" NextStyle="ParagraphStyle/LineSpace 1/4 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="8" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="2.75" MaximumWordSpacing="140" MaximumLetterSpacing="2" MinimumLetterSpacing="-2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="32" Map="32" TypeName="LineSpaceTwoThirdNoHyphen" FullName="ParagraphStyle/LineSpace 2/3 (no hyphen)" Name="LineSpace 2/3 (no hyphen)" AltName="2/3 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 2/3 (no hyphen)" Name="LineSpace 2/3 (no hyphen)" Imported="false" NextStyle="ParagraphStyle/LineSpace 2/3 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="8" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="7.34" MaximumWordSpacing="140" MaximumLetterSpacing="2" MinimumLetterSpacing="-2">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="33" Map="33" TypeName="LineSpaceThreeFourthNoHyphen" FullName="ParagraphStyle/LineSpace 3/4 (no hyphen)" Name="LineSpace 3/4 (no hyphen)" AltName="3/4 line space nh" BaseCharacterStyle="Sabon 10.5" NestedCharacterStyle="Caslon Oldstyle" PointSize="10.5" Pixals="14" SpaceBeforePixals="86.66" SpaceAfterPixals="0" SpaceBeforePoints="65" SpaceAfterPoints="0" SpaceBefore="0p5.5" SpaceAfter="0p0" Alignment="Left" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/LineSpace 3/4 (no hyphen)" Name="LineSpace 3/4 (no hyphen)" Imported="true" NextStyle="ParagraphStyle/LineSpace 3/4 (no hyphen)" KeyboardShortcut="0 0" HyphenateLadderLimit="0" Hyphenation="false" HyphenateAfterFirst="3" SpaceBefore="8.25" MaximumWordSpacing="139.9993896484375" MaximumLetterSpacing="2.00042724609375" MinimumLetterSpacing="-2.00042724609375">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="34" Map="34" TypeName="SponsorAstrisks" FullName="ParagraphStyle/Sponsor Astrisks" Name="Sponsor Astrisks" AltName="sb-astrisks" BaseCharacterStyle="Roman" PointSize="10" Pixals="13.33" SpaceBeforePixals="14.66" SpaceAfterPixals="14.66" SpaceBeforePoints="11" SpaceAfterPoints="11" SpaceBefore="0p11" SpaceAfter="0p11" Alignment="Center" FontFamily="Old Style 7" LeftIndent="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Sponsor Astrisks" Name="Sponsor Astrisks" Imported="true" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="10" Ligatures="false" Tracking="250" Composer="HL Single" BaselineShift="-0" HyphenateLadderLimit="1" AutoLeading="100" HyphenateBeforeLast="3" HyphenateWordsLongerThan="6" HyphenationZone="0" SpaceBefore="11" SpaceAfter="11" MaximumWordSpacing="119.99969482421875" MinimumWordSpacing="85.0006103515625" RuleAboveTint="100" RuleBelowTint="100" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">11</Leading>
+          <AppliedFont type="string">Old Style 7</AppliedFont>
+          <RuleAboveColor type="object">Color/Black</RuleAboveColor>
+          <RuleBelowColor type="object">Color/Black</RuleBelowColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="35" Map="35" TypeName="Sponsor" FullName="ParagraphStyle/Sponsor" Name="Sponsor" AltName="presented/sponsored by" BaseCharacterStyle="Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="29.33" SpaceAfterPixals="0" SpaceBeforePoints="22" SpaceAfterPoints="0" SpaceBefore="1p10" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Sponsor" Name="Sponsor" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" SpaceBefore="22">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <!-- Same as LineSpace 1; only used in paper 144:3.13 and 144:5.108; changed to LineSpace 1 now never used -->
+    <Style id="36" Map="22" TypeName="Tel" FullName="ParagraphStyle/tel" Name="tel" AltName="tel" BaseCharacterStyle="CharacterStyle/Sabon 10.5" PointSize="10.5" Pixals="14" SpaceBeforePixals="29.33" SpaceAfterPixals="0" SpaceBeforePoints="11" SpaceAfterPoints="0" SpaceBefore="0p11" SpaceAfter="0p0" Alignment="LeftJustify" LeftIndent="0p0" FirstLineIndent="1p0">
+      <ParagraphStyle Self="ParagraphStyle/tel" Name="tel" Imported="true" NextStyle="ParagraphStyle/tel" KeyboardShortcut="0 0" SpaceBefore="11">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <!-- Only used in paper 193 Paper Title; Same as Paper Title with only difference is leading is set to 16 rather than 12 -->
+    <Style id="37" Map="37" TypeName="PaperTitle2" FullName="ParagraphStyle/Paper Title 2" Name="Paper Title 2" AltName="ct-line 2" BaseCharacterStyle="Caslon Heading 14" PointSize="20"  Pixals="26.67" SpaceBeforePixals="16" SpaceAfterPixals="0" SpaceBeforePoints="12" SpaceAfterPoints="0" SpaceBefore="1p0" SpaceAfter="0p0" Alignment="Center" LeftIndent="0p0" FirstLineIndent="0p0" Case="Open Type All  Small Caps">
+      <ParagraphStyle Self="ParagraphStyle/Paper Title 2" Name="Paper Title 2" Imported="false" NextStyle="ParagraphStyle/Paper Opening" KeyboardShortcut="0 0">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Paper Title</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <Leading type="unit">16</Leading>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <!-- New Styles -->
+    <Style id="38" Map="38" TypeName="SubHeadingSection" FullName="ParagraphStyle/Section (subheadings)" Name="Section (subheadings)" AltName="a (subheadings)" BaseCharacterStyle="Caslon Heading" NestedCharacterStyle="Section Number" PointSize="14"  Pixals="18.66" SpaceBeforePixals="18.66" SpaceAfterPixals="3.33" SpaceBeforePoints="14" SpaceAfterPoints="2.5" SpaceBefore="1p2" SpaceAfter="0p2.5" Alignment="Center">
+      <ParagraphStyle Self="ParagraphStyle/Section (subheadings)" Name="Section (subheadings)" Imported="false" NextStyle="ParagraphStyle/Section (subheading)" KeyboardShortcut="0 0" PointSize="14" Tracking="50" Capitalization="CapToSmallCap" FirstLineIndent="0" SpaceBefore="14" SpaceAfter="2" KeepWithNext="2" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+          <AllNestedStyles type="list">
+            <ListItem type="record">
+              <AppliedCharacterStyle type="object">CharacterStyle/Section Number</AppliedCharacterStyle>
+              <Delimiter type="string">.</Delimiter>
+              <Repetition type="long">1</Repetition>
+              <Inclusive type="boolean">false</Inclusive>
+            </ListItem>
+          </AllNestedStyles>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="39" Map="39" TypeName="SubHeadingEntry" FullName="ParagraphStyle/Section (subheading)" Name="Section (subheading)" AltName="a (subheading)" BaseCharacterStyle="Caslon SubHeading" PointSize="12" Pixals="16" SpaceBeforePixals="1.33" SpaceAfterPixals="3.33" SpaceBeforePoints="1" SpaceAfterPoints="2.5" SpaceBefore="0p1" SpaceAfter="0p2.5" Alignment="Center">
+      <ParagraphStyle Self="ParagraphStyle/Section (subheading)" Name="Section (subheading)" Imported="false" NextStyle="ParagraphStyle/Section (subheading end)" KeyboardShortcut="0 0" PointSize="12" Tracking="50" Capitalization="CapToSmallCap" FirstLineIndent="0" SpaceAfter="2" KeepWithNext="2" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="40" Map="40" TypeName="SubHeadingEnd" FullName="ParagraphStyle/Section (subheading end)" Name="Section (subheading end)" AltName="a (subheading end)" BaseCharacterStyle="Caslon SubHeading" PointSize="12" Pixals="16" SpaceBeforePixals="1.33" SpaceAfterPixals="12" SpaceBeforePoints="1" SpaceAfterPoints="9" SpaceBefore="0p1" SpaceAfter="0p9" Alignment="Center">
+      <ParagraphStyle Self="ParagraphStyle/Section (subheading end)" Name="Section (subheading end)" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="12" Tracking="50" Capitalization="CapToSmallCap" FirstLineIndent="0" SpaceAfter="9" KeepWithNext="2" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="41" Map="41" TypeName="Acknowledgment" FullName="ParagraphStyle/Acknowledgment" Name="Acknowledgment" AltName="a (ack)" BaseCharacterStyle="Caslon Heading" PointSize="14" Pixals="18.66" SpaceBeforePixals="18.66" SpaceAfterPixals="12" SpaceBeforePoints="14" SpaceAfterPoints="9" SpaceBefore="1p2" SpaceAfter="0p9">
+      <ParagraphStyle Self="ParagraphStyle/Acknowledgment" Name="Acknowledgment" Imported="false" NextStyle="ParagraphStyle/Regular" KeyboardShortcut="0 0" PointSize="14" Tracking="50" Capitalization="CapToSmallCap" FirstLineIndent="0" SpaceBefore="14" SpaceAfter="9" KeepWithNext="2" Justification="CenterAlign">
+        <Properties>
+          <BasedOn type="object">ParagraphStyle/Regular</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Adobe Caslon Pro</AppliedFont>
+        </Properties>
+      </ParagraphStyle> 
+    </Style>
+    <Style id="42" Map="42" TypeName="EndnoteLine" FullName="ParagraphStyle/Endnote Line" Name="Endnote Line" AltName="edn (line)" BaseCharacterStyle="Sabon Endnote Line" PointSize="9" Pixals="12" LeftIndent="2p0" FirstLineIndent="-1p0" SpaceBeforePixals="16" SpaceAfterPixals="0" SpaceBeforePoints="12" SpaceAfterPoints="0" SpaceBefore="1p0" SpaceAfter="0p0" UnderlineWeight="1">
+      <ParagraphStyle Self="ParagraphStyle/Endnote Line" Name="Endnote Line" Imported="false" NextStyle="ParagraphStyle/Endnote Head" KeyboardShortcut="0 0" PointSize="9" LeftIndent="23.999999999999993" FirstLineIndent="-12.000000000000004" SpaceBefore="12" Justification="LeftJustified" UnderlineWeight="1">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Sabon LT Std</AppliedFont>
+          <NumberingCharacterStyle type="object">CharacterStyle/Sabon Endnote Line</NumberingCharacterStyle>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="43" Map="43" TypeName="EndnoteHead" FullName="ParagraphStyle/Endnote (head)" Name="Endnote (head)" AltName="edn" BaseCharacterStyle="Sabon Endnote" PointSize="9" Pixals="12" LeftIndent="2p0" FirstLineIndent="-0p10" SpaceBeforePixals="32" SpaceAfterPixals="0" SpaceBeforePoints="24" SpaceAfterPoints="0" SpaceBefore="2p0" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Endnote (head)" Name="Endnote (head)" Imported="false" NextStyle="ParagraphStyle/Endnote (entry)" KeyboardShortcut="0 0" PointSize="9" LeftIndent="23.999999999999993" FirstLineIndent="-10" SpaceBefore="12" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Sabon LT Std</AppliedFont>
+          <NumberingCharacterStyle type="object">CharacterStyle/Sabon Endnote</NumberingCharacterStyle>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+    <Style id="44" Map="44" TypeName="EndnoteEntry" FullName="ParagraphStyle/Endnote (entry)" Name="Endnote (entry)" AltName="edn" BaseCharacterStyle="Sabon Endnote" PointSize="9" Pixals="12" LeftIndent="2p0" FirstLineIndent="-0p10" SpaceBeforePixals="2.66" SpaceAfterPixals="0" SpaceBeforePoints="2" SpaceAfterPoints="0" SpaceBefore="0p2" SpaceAfter="0p0">
+      <ParagraphStyle Self="ParagraphStyle/Endnote (entry)" Name="Endnote (entry)" Imported="false" NextStyle="ParagraphStyle/Endnote (entry)" KeyboardShortcut="0 0" PointSize="9" LeftIndent="23.999999999999993" FirstLineIndent="-10" SpaceBefore="2" Justification="LeftJustified">
+        <Properties>
+          <BasedOn type="string">$ID/[No paragraph style]</BasedOn>
+          <PreviewColor type="enumeration">Nothing</PreviewColor>
+          <AppliedFont type="string">Sabon LT Std</AppliedFont>
+          <NumberingCharacterStyle type="object">CharacterStyle/Sabon Endnote</NumberingCharacterStyle>
+        </Properties>
+      </ParagraphStyle>
+    </Style>
+  </ParagraphStyles>
+</Styles>

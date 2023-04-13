@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Books ubmlPath="./Ubml/Metadata/en-US/">
+  <Book bookId="1" versionId="1.0" languageId="1" localId="en-US" languageName="English - English" ubmlVersion="UBML.v1.2.5" tin="UF-ENG-001World-1955" title="The Urantia Book">
+    <Metadata partPrefix="Part" paperPrefix="Paper" paperLabel="Paper" titleLabel="Title" authorLabel="Author" />
+    <Part partId="0" title="Foreword Material" sponsor="Orvonton corps of truth revealers.">
+      <Paper paperId="0" author="Divine Counselor" title="Foreword" />
+    </Part>
+    <Part partId="1" title="The Central and Superuniverses" sponsor="Sponsored by a Uversa Corps of Superuniverse Personalities acting by authority of the Orvonton Ancients of Days.">
+      <Paper paperId="1" author="Divine Counselor" title="The Universal Father" />
+      <Paper paperId="2" author="Divine Counselor" title="The Nature of God" />
+      <Paper paperId="3" author="Divine Counselor" title="The Attributes of God" />
+      <Paper paperId="4" author="Divine Counselor" title="God’s Relation to the Universe" />
+      <Paper paperId="5" author="Divine Counselor" title="God’s Relation to the Individual" />
+      <Paper paperId="6" author="Divine Counselor" title="The Eternal Son" />
+      <Paper paperId="7" author="Divine Counselor" title="Relation of the Eternal Son to the Universe" />
+      <Paper paperId="8" author="Divine Counselor" title="The Infinite Spirit" />
+      <Paper paperId="9" author="Divine Counselor" title="Relation of the Infinite Spirit to the Universe" />
+      <Paper paperId="10" author="Universal Censor" title="The Paradise Trinity" />
+      <Paper paperId="11" author="Perfector of Wisdom" title="The Eternal Isle of Paradise" />
+      <Paper paperId="12" author="Perfector of Wisdom" title="The Universe of Universes" />
+      <Paper paperId="13" author="Perfector of Wisdom" title="The Sacred Spheres of Paradise" />
+      <Paper paperId="14" author="Perfector of Wisdom" title="The Central and Divine Universe" />
+      <Paper paperId="15" author="Universal Censor" title="The Seven Superuniverses" />
+      <Paper paperId="16" author="Universal Censor" title="The Seven Master Spirits" />
+      <Paper paperId="17" author="Divine Counselor" title="The Seven Supreme Spirit Groups" />
+      <Paper paperId="18" author="Divine Counselor" title="The Supreme Trinity Personalities" />
+      <Paper paperId="19" author="Divine Counselor" title="The Co-ordinate Trinity-Origin Beings" />
+      <Paper paperId="20" author="Perfector of Wisdom" title="The Paradise Sons of God" />
+      <Paper paperId="21" author="Perfector of Wisdom" title="The Paradise Creator Sons" />
+      <Paper paperId="22" author="Mighty Messenger" title="The Trinitized Sons of God" />
+      <Paper paperId="23" author="Divine Counselor" title="The Solitary Messengers" />
+      <Paper paperId="24" author="Divine Counselor" title="Higher Personalities of the Infinite Spirit" />
+      <Paper paperId="25" author="One High in Authority" title="The Messenger Hosts of Space" />
+      <Paper paperId="26" author="Perfector of Wisdom" title="Ministering Spirits of the Central Universe" />
+      <Paper paperId="27" author="Perfector of Wisdom" title="Ministry of the Primary Supernaphim" />
+      <Paper paperId="28" author="Mighty Messenger" title="Ministering Spirits of the Superuniverses" />
+      <Paper paperId="29" author="Universal Censor" title="The Universe Power Directors" />
+      <Paper paperId="30" author="Mighty Messenger" title="Personalities of the Grand Universe" />
+      <Paper paperId="31" author="Divine Counselor and One Without Name and Number" title="The Corps of the Finality" />
+    </Part>
+    <Part partId="2" title="The Evolution of Local Universes" sponsor="Sponsored by a Nebadon Corps of Local Universe Personalities acting by authority of Gabriel of Salvington.">
+      <Paper paperId="32" author="Mighty Messenger" title="The Evolution of Local Universes" />
+      <Paper paperId="33" author="Chief of Archangels" title="Administration of the Local Universe" />
+      <Paper paperId="34" author="Mighty Messenger" title="The Local Universe Mother Spirit" />
+      <Paper paperId="35" author="Chief of Archangels" title="The Local Universe Sons of God" />
+      <Paper paperId="36" author="Vorondadek Son" title="The Life Carriers" />
+      <Paper paperId="37" author="Brilliant Evening Star" title="Personalities of the Local Universe" />
+      <Paper paperId="38" author="Melchizedek" title="Ministering Spirits of the Local Universe" />
+      <Paper paperId="39" author="Melchizedek" title="The Seraphic Hosts" />
+      <Paper paperId="40" author="Mighty Messenger" title="The Ascending Sons of God" />
+      <Paper paperId="41" author="Archangel" title="Physical Aspects of the Local Universe" />
+      <Paper paperId="42" author="Mighty Messenger" title="Energy — Mind and Matter" />
+      <Paper paperId="43" author="Malavatia Melchizedek" title="The Constellations" />
+      <Paper paperId="44" author="Archangel" title="The Celestial Artisans" />
+      <Paper paperId="45" author="Melchizedek" title="The Local System Administration" />
+      <Paper paperId="46" author="Archangel" title="The Local System Headquarters" />
+      <Paper paperId="47" author="Brilliant Evening Star" title="The Seven Mansion Worlds" />
+      <Paper paperId="48" author="Archangel" title="The Morontia Life" />
+      <Paper paperId="49" author="Melchizedek" title="The Inhabited Worlds" />
+      <Paper paperId="50" author="Secondary Lanonandek" title="The Planetary Princes" />
+      <Paper paperId="51" author="Secondary Lanonandek" title="The Planetary Adams" />
+      <Paper paperId="52" author="Mighty Messenger" title="Planetary Mortal Epochs" />
+      <Paper paperId="53" author="Manovandet Melchizedek" title="The Lucifer Rebellion" />
+      <Paper paperId="54" author="Mighty Messenger" title="Problems of the Lucifer Rebellion" />
+      <Paper paperId="55" author="Mighty Messenger" title="The Spheres of Light and Life" />
+      <Paper paperId="56" author="Mighty Messenger and Machiventa Melchizedek" title="Universal Unity" />
+    </Part>
+    <Part partId="3" title="The History of Urantia" sponsor="These papers were sponsored by a Corps of Local Universe Personalities acting by authority of Gabriel of Salvington.">
+      <Paper paperId="57" author="Life Carrier" title="The Origin of Urantia" />
+      <Paper paperId="58" author="Life Carrier" title="Life Establishment on Urantia" />
+      <Paper paperId="59" author="Life Carrier" title="The Marine-Life Era on Urantia" />
+      <Paper paperId="60" author="Life Carrier" title="Urantia During the Early Land-Life Era" />
+      <Paper paperId="61" author="Life Carrier" title="The Mammalian Era on Urantia" />
+      <Paper paperId="62" author="Life Carrier" title="The Dawn Races of Early Man" />
+      <Paper paperId="63" author="Life Carrier" title="The First Human Family" />
+      <Paper paperId="64" author="Life Carrier" title="The Evolutionary Races of Color" />
+      <Paper paperId="65" author="Life Carrier" title="The Overcontrol of Evolution" />
+      <Paper paperId="66" author="Melchizedek" title="The Planetary Prince of Urantia" />
+      <Paper paperId="67" author="Melchizedek" title="The Planetary Rebellion" />
+      <Paper paperId="68" author="Melchizedek" title="The Dawn of Civilization" />
+      <Paper paperId="69" author="Melchizedek" title="Primitive Human Institutions" />
+      <Paper paperId="70" author="Melchizedek" title="The Evolution of Human Government" />
+      <Paper paperId="71" author="Melchizedek" title="Development of the State" />
+      <Paper paperId="72" author="Melchizedek" title="Government on a Neighboring Planet" />
+      <Paper paperId="73" author="Solonia" title="The Garden of Eden" />
+      <Paper paperId="74" author="Solonia" title="Adam and Eve" />
+      <Paper paperId="75" author="Solonia" title="The Default of Adam and Eve" />
+      <Paper paperId="76" author="Solonia" title="The Second Garden" />
+      <Paper paperId="77" author="Archangel" title="The Midway Creatures" />
+      <Paper paperId="78" author="Archangel" title="The Violet Race after the Days of Adam" />
+      <Paper paperId="79" author="Archangel" title="Andite Expansion in the Orient" />
+      <Paper paperId="80" author="Archangel" title="Andite Expansion in the Occident" />
+      <Paper paperId="81" author="Archangel" title="Development of Modern Civilization" />
+      <Paper paperId="82" author="Chief of Seraphim" title="The Evolution of Marriage" />
+      <Paper paperId="83" author="Chief of Seraphim" title="The Marriage Institution" />
+      <Paper paperId="84" author="Chief of Seraphim" title="Marriage and Family Life" />
+      <Paper paperId="85" author="Brilliant Evening Star" title="The Origins of Worship" />
+      <Paper paperId="86" author="Brilliant Evening Star" title="Early Evolution of Religion" />
+      <Paper paperId="87" author="Brilliant Evening Star" title="The Ghost Cults" />
+      <Paper paperId="88" author="Brilliant Evening Star" title="Fetishes, Charms, and Magic" />
+      <Paper paperId="89" author="Brilliant Evening Star" title="Sin, Sacrifice, and Atonement" />
+      <Paper paperId="90" author="Melchizedek" title="Shamanism — Medicine Men and Priests" />
+      <Paper paperId="91" author="Chief of Midwayers" title="The Evolution of Prayer" />
+      <Paper paperId="92" author="Melchizedek" title="The Later Evolution of Religion" />
+      <Paper paperId="93" author="Melchizedek" title="Machiventa Melchizedek" />
+      <Paper paperId="94" author="Melchizedek" title="The Melchizedek Teachings in the Orient" />
+      <Paper paperId="95" author="Melchizedek" title="The Melchizedek Teachings in the Levant" />
+      <Paper paperId="96" author="Melchizedek" title="Yahweh — God of the Hebrews" />
+      <Paper paperId="97" author="Melchizedek" title="Evolution of the God Concept among the Hebrews" />
+      <Paper paperId="98" author="Melchizedek" title="The Melchizedek Teachings in the Occident" />
+      <Paper paperId="99" author="Melchizedek" title="The Social Problems of Religion" />
+      <Paper paperId="100" author="Melchizedek" title="Religion in Human Experience" />
+      <Paper paperId="101" author="Melchizedek" title="The Real Nature of Religion" />
+      <Paper paperId="102" author="Melchizedek" title="The Foundations of Religious Faith" />
+      <Paper paperId="103" author="Melchizedek" title="The Reality of Religious Experience" />
+      <Paper paperId="104" author="Melchizedek" title="Growth of the Trinity Concept" />
+      <Paper paperId="105" author="Melchizedek" title="Deity and Reality" />
+      <Paper paperId="106" author="Melchizedek" title="Universe Levels of Reality" />
+      <Paper paperId="107" author="Solitary Messenger" title="Origin and Nature of Thought Adjusters" />
+      <Paper paperId="108" author="Solitary Messenger" title="Mission and Ministry of Thought Adjusters" />
+      <Paper paperId="109" author="Solitary Messenger" title="Relation of Adjusters to Universe Creatures" />
+      <Paper paperId="110" author="Solitary Messenger" title="Relation of Adjusters to Individual Mortals" />
+      <Paper paperId="111" author="Solitary Messenger" title="The Adjuster and the Soul" />
+      <Paper paperId="112" author="Solitary Messenger" title="Personality Survival" />
+      <Paper paperId="113" author="Chief of Seraphim" title="Seraphic Guardians of Destiny" />
+      <Paper paperId="114" author="Chief of Seraphim" title="Seraphic Planetary Government" />
+      <Paper paperId="115" author="Mighty Messenger" title="The Supreme Being" />
+      <Paper paperId="116" author="Mighty Messenger" title="The Almighty Supreme" />
+      <Paper paperId="117" author="Mighty Messenger" title="God the Supreme" />
+      <Paper paperId="118" author="Mighty Messenger" title="Supreme and Ultimate — Time and Space" />
+      <Paper paperId="119" author="Chief of Evening Stars" title="The Bestowals of Christ Michael" />
+    </Part>
+    <Part partId="4" title="The Life and Teachings of Jesus" sponsor="This group of papers was sponsored by a commission of twelve Urantia midwayers acting under the supervision of a Melchizedek revelatory director. The basis of this narrative was supplied by a secondary midwayer who was onetime assigned to the superhuman watchcare of the Apostle Andrew.">
+      <Paper paperId="120" author="Mantutia Melchizedek" title="The Bestowal of Michael on Urantia" />
+      <Paper paperId="121" author="Midwayer Commission" title="The Times of Michael’s Bestowal" />
+      <Paper paperId="122" author="Midwayer Commission" title="Birth and Infancy of Jesus" />
+      <Paper paperId="123" author="Midwayer Commission" title="The Early Childhood of Jesus" />
+      <Paper paperId="124" author="Midwayer Commission" title="The Later Childhood of Jesus" />
+      <Paper paperId="125" author="Midwayer Commission" title="Jesus at Jerusalem" />
+      <Paper paperId="126" author="Midwayer Commission" title="The Two Crucial Years" />
+      <Paper paperId="127" author="Midwayer Commission" title="The Adolescent Years" />
+      <Paper paperId="128" author="Midwayer Commission" title="Jesus’ Early Manhood" />
+      <Paper paperId="129" author="Midwayer Commission" title="The Later Adult Life of Jesus" />
+      <Paper paperId="130" author="Midwayer Commission" title="On the Way to Rome" />
+      <Paper paperId="131" author="Midwayer Commission" title="The World’s Religions" />
+      <Paper paperId="132" author="Midwayer Commission" title="The Sojourn at Rome" />
+      <Paper paperId="133" author="Midwayer Commission" title="The Return from Rome" />
+      <Paper paperId="134" author="Midwayer Commission" title="The Transition Years" />
+      <Paper paperId="135" author="Midwayer Commission" title="John the Baptist" />
+      <Paper paperId="136" author="Midwayer Commission" title="Baptism and the Forty Days" />
+      <Paper paperId="137" author="Midwayer Commission" title="Tarrying Time in Galilee" />
+      <Paper paperId="138" author="Midwayer Commission" title="Training the Kingdom’s Messengers" />
+      <Paper paperId="139" author="Midwayer Commission" title="The Twelve Apostles" />
+      <Paper paperId="140" author="Midwayer Commission" title="The Ordination of the Twelve" />
+      <Paper paperId="141" author="Midwayer Commission" title="Beginning the Public Work" />
+      <Paper paperId="142" author="Midwayer Commission" title="The Passover at Jerusalem" />
+      <Paper paperId="143" author="Midwayer Commission" title="Going Through Samaria" />
+      <Paper paperId="144" author="Midwayer Commission" title="At Gilboa and in the Decapolis" />
+      <Paper paperId="145" author="Midwayer Commission" title="Four Eventful Days at Capernaum" />
+      <Paper paperId="146" author="Midwayer Commission" title="First Preaching Tour of Galilee" />
+      <Paper paperId="147" author="Midwayer Commission" title="The Interlude Visit to Jerusalem" />
+      <Paper paperId="148" author="Midwayer Commission" title="Training Evangelists at Bethsaida" />
+      <Paper paperId="149" author="Midwayer Commission" title="The Second Preaching Tour" />
+      <Paper paperId="150" author="Midwayer Commission" title="The Third Preaching Tour" />
+      <Paper paperId="151" author="Midwayer Commission" title="Tarrying and Teaching by the Seaside" />
+      <Paper paperId="152" author="Midwayer Commission" title="Events Leading up to the Capernaum Crisis" />
+      <Paper paperId="153" author="Midwayer Commission" title="The Crisis at Capernaum" />
+      <Paper paperId="154" author="Midwayer Commission" title="Last Days at Capernaum" />
+      <Paper paperId="155" author="Midwayer Commission" title="Fleeing Through Northern Galilee" />
+      <Paper paperId="156" author="Midwayer Commission" title="The Sojourn at Tyre and Sidon" />
+      <Paper paperId="157" author="Midwayer Commission" title="At Caesarea-Philippi" />
+      <Paper paperId="158" author="Midwayer Commission" title="The Mount of Transfiguration" />
+      <Paper paperId="159" author="Midwayer Commission" title="The Decapolis Tour" />
+      <Paper paperId="160" author="Midwayer Commission" title="Rodan of Alexandria" />
+      <Paper paperId="161" author="Midwayer Commission" title="Further Discussions with Rodan" />
+      <Paper paperId="162" author="Midwayer Commission" title="At the Feast of Tabernacles" />
+      <Paper paperId="163" author="Midwayer Commission" title="Ordination of the Seventy at Magadan" />
+      <Paper paperId="164" author="Midwayer Commission" title="At the Feast of Dedication" />
+      <Paper paperId="165" author="Midwayer Commission" title="The Perean Mission Begins" />
+      <Paper paperId="166" author="Midwayer Commission" title="Last Visit to Northern Perea" />
+      <Paper paperId="167" author="Midwayer Commission" title="The Visit to Philadelphia" />
+      <Paper paperId="168" author="Midwayer Commission" title="The Resurrection of Lazarus" />
+      <Paper paperId="169" author="Midwayer Commission" title="Last Teaching at Pella" />
+      <Paper paperId="170" author="Midwayer Commission" title="The Kingdom of Heaven" />
+      <Paper paperId="171" author="Midwayer Commission" title="On the Way to Jerusalem" />
+      <Paper paperId="172" author="Midwayer Commission" title="Going into Jerusalem" />
+      <Paper paperId="173" author="Midwayer Commission" title="Monday in Jerusalem" />
+      <Paper paperId="174" author="Midwayer Commission" title="Tuesday Morning in the Temple" />
+      <Paper paperId="175" author="Midwayer Commission" title="The Last Temple Discourse" />
+      <Paper paperId="176" author="Midwayer Commission" title="Tuesday Evening on Mount Olivet" />
+      <Paper paperId="177" author="Midwayer Commission" title="Wednesday, the Rest Day" />
+      <Paper paperId="178" author="Midwayer Commission" title="Last Day at the Camp" />
+      <Paper paperId="179" author="Midwayer Commission" title="The Last Supper" />
+      <Paper paperId="180" author="Midwayer Commission" title="The Farewell Discourse" />
+      <Paper paperId="181" author="Midwayer Commission" title="Final Admonitions and Warnings" />
+      <Paper paperId="182" author="Midwayer Commission" title="In Gethsemane" />
+      <Paper paperId="183" author="Midwayer Commission" title="The Betrayal and Arrest of Jesus" />
+      <Paper paperId="184" author="Midwayer Commission" title="Before the Sanhedrin Court" />
+      <Paper paperId="185" author="Midwayer Commission" title="The Trial Before Pilate" />
+      <Paper paperId="186" author="Midwayer Commission" title="Just Before the Crucifixion" />
+      <Paper paperId="187" author="Midwayer Commission" title="The Crucifixion" />
+      <Paper paperId="188" author="Midwayer Commission" title="The Time of the Tomb" />
+      <Paper paperId="189" author="Midwayer Commission" title="The Resurrection" />
+      <Paper paperId="190" author="Midwayer Commission" title="Morontia Appearances of Jesus" />
+      <Paper paperId="191" author="Midwayer Commission" title="Appearances to the Apostles and Other Leaders" />
+      <Paper paperId="192" author="Midwayer Commission" title="Appearances in Galilee" />
+      <Paper paperId="193" author="Midwayer Commission" title="Final Appearances and Ascension" />
+      <Paper paperId="194" author="Midwayer Commission" title="Bestowal of the Spirit of Truth" />
+      <Paper paperId="195" author="Midwayer Commission" title="After Pentecost" />
+      <Paper paperId="196" author="Midwayer Commission" title="The Faith of Jesus" />
+    </Part>
+  </Book>
+</Books>

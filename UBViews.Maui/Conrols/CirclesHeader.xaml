@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UBViews.Controls.CirclesHeader">
+
+    <Grid Style="{StaticResource HeaderGrid}">
+
+        <BoxView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                   Dark={StaticResource UBDarkBackground}}"
+                 Style="{StaticResource HeaderBoxView}" />
+
+        <!-- Large Image HxW: 130by130, Margine 90-->
+        <!-- Large Image HxW: 60by60, Margine 70-->
+        <Border Grid.RowSpan="2" 
+                Grid.Column="1" 
+                Margin="0,70,0,0" 
+                Padding="0"
+                HeightRequest="70"
+                WidthRequest="70"
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 70,70,70,70">
+            <Image Style="{StaticResource SmallHeaderImage}" />
+        </Border>
+
+        <VerticalStackLayout Style="{StaticResource HeaderVerticalStackLayout}">
+            <Label Style="{StaticResource HeaderLabel}" />
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentView>
+    
