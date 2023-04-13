@@ -418,9 +418,9 @@ namespace UBViews.ViewModels
 #if ANDROID
                         var _x = label.X;
                         var _y = label.Y;
-                        scrollView.ScrollToAsync(_x, _y, true);
+                        scrollView.ScrollToAsync(_x, _y, false);
 #elif WINDOWS
-                        scrollView.ScrollToAsync(label, ScrollToPosition.Start, true);
+                        scrollView.ScrollToAsync(label, ScrollToPosition.Start, false);
 #endif
                     }
                 });
