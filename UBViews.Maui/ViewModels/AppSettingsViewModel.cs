@@ -31,7 +31,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     bool showPaperContents;
 
     [RelayCommand]
-    public async Task AppSettingPageAppearing()
+    async Task AppSettingPageAppearing()
     {
         try
         {
@@ -45,7 +45,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task AppSettingPageDisappearing()
+    async Task AppSettingPageDisappearing()
     {
         try
         {
@@ -59,7 +59,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task MaxQueryResultValueChanged(double value)
+    async Task MaxQueryResultValueChanged(double value)
     {
         try
         {
@@ -74,7 +74,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task LineHeightValueChanged(double value)
+    async Task LineHeightValueChanged(double value)
     {
         try
         {
@@ -89,7 +89,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task ShowPidsCheckedChanged(bool value)
+    async Task ShowPidsCheckedChanged(bool value)
     {
         try
         {
@@ -104,7 +104,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task ShowPaperContentsCheckedChanged(bool value)
+    async Task ShowPaperContentsCheckedChanged(bool value)
     {
         try
         {
@@ -136,7 +136,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task SaveSettings()
+    async Task SaveSettings()
     {
         try
         {
@@ -166,7 +166,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task SaveCacheSettings()
+    async Task SaveCacheSettings()
     {
         try
         {

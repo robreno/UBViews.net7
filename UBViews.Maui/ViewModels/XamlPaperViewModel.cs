@@ -93,7 +93,7 @@ namespace UBViews.ViewModels
         string scrollToLabelName;
 
         [RelayCommand]
-        public async Task RefeshingView(PaperDto dto)
+        async Task RefeshingView(PaperDto dto)
         {
             if (IsBusy)
                 return;
@@ -125,7 +125,7 @@ namespace UBViews.ViewModels
         }
 
         [RelayCommand]
-        public async Task PaperViewLoaded(PaperDto dto)
+        async Task PaperViewLoaded(PaperDto dto)
         {
             if (IsBusy)
                 return;

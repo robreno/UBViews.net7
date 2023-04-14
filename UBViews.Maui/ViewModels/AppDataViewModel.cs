@@ -37,7 +37,7 @@ public partial class AppDataViewModel : BaseViewModel
     public string targetNames;
 
     [RelayCommand]
-    public async Task RefreshingView()
+    async Task RefreshingView()
     {
         try
         {
@@ -58,7 +58,7 @@ public partial class AppDataViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task AppDataPageAppearing()
+    async Task AppDataPageAppearing()
     {
         try
         {
@@ -82,7 +82,7 @@ public partial class AppDataViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task SaveData()
+    async Task SaveData()
     {
         try
         {
@@ -102,7 +102,7 @@ public partial class AppDataViewModel : BaseViewModel
         }
     }
 
-    public async Task LoadData()
+    async Task LoadData()
     {
         try
         {
@@ -127,7 +127,7 @@ public partial class AppDataViewModel : BaseViewModel
         }
     }
 
-    private async Task SaveAppData()
+    async Task SaveAppData()
     {
         try
         {

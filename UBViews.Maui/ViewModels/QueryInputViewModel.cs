@@ -49,7 +49,7 @@ public partial class QueryInputViewModel : BaseViewModel
     string queryResultString;
 
     [RelayCommand]
-    public async Task QueryInputPageLoaded()
+    async Task QueryInputPageLoaded()
     {
         if (IsBusy == true)
             return;

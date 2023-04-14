@@ -24,7 +24,7 @@ namespace UBViews.ViewModels
         bool showPaperContents;
 
         [RelayCommand]
-        public async Task PaperTitlesPageAppearing()
+        async Task PaperTitlesPageAppearing()
         {
             if (IsBusy)
                 return;

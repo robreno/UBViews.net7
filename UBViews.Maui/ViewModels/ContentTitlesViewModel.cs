@@ -42,7 +42,7 @@ public partial class ContentTitlesViewModel : BaseViewModel
     string paperNumber;
 
     [RelayCommand]
-    public async Task ContentTitlesPageAppearing(PaperDto dto)
+    async Task ContentTitlesPageAppearing(PaperDto dto)
     {
         try
         {

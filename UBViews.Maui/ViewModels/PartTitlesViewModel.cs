@@ -20,9 +20,22 @@ namespace UBViews.ViewModels
         /// 
         /// </summary>
         IAppSettingsService settingsService;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ObservableCollection<PaperDto> PaperDtos { get; } = new();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TitlesFilter FilterEx { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileService"></param>
+        /// <param name="settingsService"></param>
         public PartTitlesViewModel(IFileService fileService, IAppSettingsService settingsService)
         {
             this.fileService = fileService;
@@ -43,7 +56,7 @@ namespace UBViews.ViewModels
         bool showPaperContents;
 
         [RelayCommand]
-        public async Task PartTitlesPageAppearing(PaperDto dto)
+        async Task PartTitlesPageAppearing(PaperDto dto)
         {
             try
             {

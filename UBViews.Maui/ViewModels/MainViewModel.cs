@@ -143,7 +143,6 @@ public partial class MainViewModel : BaseViewModel
             IsBusy = false;
         }
     }
-
     private async Task NormalizeQueryString(string queryString)
     {
         try
