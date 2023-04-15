@@ -99,7 +99,7 @@
         </HorizontalStackLayout>
 
         <HorizontalStackLayout x:Name="ShowPaperContentPage" Margin=".5">
-            <Label Text="Show Paper Contents:"
+            <Label Text="Show Contents:"
                            Padding="0,0,.5,0"
                            WidthRequest="115"
                            HorizontalOptions="Start"
@@ -130,6 +130,5 @@
         </Button>
 
     </VerticalStackLayout>
-
 
 </ContentPage>

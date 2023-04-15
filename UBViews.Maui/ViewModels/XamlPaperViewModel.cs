@@ -125,7 +125,7 @@ namespace UBViews.ViewModels
         }
 
         [RelayCommand]
-        async Task PaperViewLoaded(PaperDto dto)
+        async Task PaperViewAppearing(PaperDto dto)
         {
             if (IsBusy)
                 return;
@@ -134,29 +134,13 @@ namespace UBViews.ViewModels
             {
                 IsBusy = true;
 
-                var showPids = await settingsService.Get("show_pids", true);
-                ShowReferencePids = showPids;
-               
-                int paperId = dto.Id;
+                PaperNumber = dto.Id.ToString("0");
+                ShowReferencePids = await settingsService.Get("show_pids", true);
                 string uid = dto.Uid;
                 IsScrollToLabel = dto.ScrollTo;
                 if (IsScrollToLabel)
                 {
                     ScrollToLabelName = "_" + uid.Substring(4, 3) + "_" + uid.Substring(0, 3);
-                }
-                PaperTitle = "Paper " + paperId;
-                PaperNumber = paperId.ToString("0");
-
-                var paragraphs = await fileService.GetParagraphsAsync(paperId);
-                if (Paragraphs.Count != 0)
-                    return;
-
-                foreach (var paragraph in paragraphs)
-                    Paragraphs.Add(paragraph);
-
-                if (IsScrollToLabel)
-                {
-                    await ScrollTo(ScrollToLabelName);
                 }
             }
             catch (Exception ex)
@@ -170,11 +154,67 @@ namespace UBViews.ViewModels
             }
         }
 
-        //[RelayCommand]
-        //async Task PaperViewDisappearing()
-        //{
+        [RelayCommand]
+        async Task PaperViewLoaded(PaperDto dto)
+        {
+            if (IsBusy)
+                return;
 
-        //}
+            try
+            {
+                IsBusy = true;
+               
+                int paperId = dto.Id;
+                var paragraphs = await fileService.GetParagraphsAsync(paperId);
+                if (Paragraphs.Count != 0)
+                    return;
+
+                foreach (var paragraph in paragraphs)
+                    Paragraphs.Add(paragraph);
+
+                if (IsScrollToLabel)
+                {
+                    await ScrollTo(ScrollToLabelName);
+                }
+
+                if (ShowReferencePids)
+                {
+                    await SetReferencePids();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                IsRefreshing = false;
+            }
+        }
+
+        [RelayCommand]
+        async Task PaperViewDisappearing(PaperDto dto)
+        {
+            if (IsBusy)
+                return;
+
+            try
+            {
+                IsBusy = true;
+                await StopAudio();
+
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                IsRefreshing = false;
+            }
+        }
 
         [RelayCommand]
         async Task TappedGestureForPaper(string value)
@@ -405,19 +445,65 @@ namespace UBViews.ViewModels
         }
 
         [RelayCommand]
+        async Task SetReferencePids()
+        {
+            try
+            {
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    var vte = contentPage.Content.GetVisualTreeDescendants();
+                    using (var enumerator = vte.GetEnumerator())
+                    {
+                        while (enumerator.MoveNext())
+                        {
+                            var child = enumerator.Current;
+                            if (child != null)
+                            {
+                                var childType = child.GetType().Name;
+                                if (childType == "Label")
+                                {
+                                    var lbl = child as Label;
+                                    var styleId = lbl.StyleId;
+                                    var spn = lbl.FindByName("SP" + styleId) as Span;
+                                    if (spn != null)
+                                    {
+                                        var spanText = spn.Text;
+                                        if (ShowReferencePids)
+                                        {
+                                            spn.Text = spn.StyleId;
+                                        }
+                                        else
+                                        {
+                                            spn.Text = "";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
         async Task ScrollTo(string labelName)
         {
             try
             {
                 var scrollView = contentPage.FindByName("contentScrollView") as ScrollView;
                 var label = contentPage.FindByName(labelName) as Label;
+                var _x = label.X;
+                var _y = label.Y;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     if (scrollView != null && label != null)
                     {
 #if ANDROID
-                        var _x = label.X;
-                        var _y = label.Y;
                         scrollView.ScrollToAsync(_x, _y, false);
 #elif WINDOWS
                         scrollView.ScrollToAsync(label, ScrollToPosition.Start, false);

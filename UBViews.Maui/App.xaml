@@ -235,6 +235,10 @@
             <Style x:Key="RegularSpan" TargetType="Span" BasedOn="{StaticResource BaseParagaphSpan}" />
             <Style x:Key="ItalicSpan" TargetType="Span" BasedOn="{StaticResource BaseSpanItalic}" />
 
+            <Style x:Key="RegularSpaceSpan" TargetType="Span" BasedOn="{StaticResource RegularSpan}">
+                <Setter Property="Text" Value=" " />
+            </Style>
+
             <Style x:Key="SectionSpan" TargetType="Span" BasedOn="{StaticResource BaseSpanBold}">
                 <Setter Property="FontSize" Value="17.5" />
                 <Setter Property="TextTransform" Value="Uppercase" />
