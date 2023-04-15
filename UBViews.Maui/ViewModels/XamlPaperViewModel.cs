@@ -333,6 +333,7 @@ namespace UBViews.ViewModels
 
                 Label currentLabel = (Label)contentPage.FindByName(id);
                 string timeSpanRange = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
+                string timeSpanRangeMsg = timeSpanRange.Replace("_", " - ");
                 string uid = currentLabel.GetValue(AttachedProperties.Ubml.UniqueIdProperty) as string;
                 // 001.000.000.000
                 string[] arr = uid.Split('.');
@@ -342,7 +343,7 @@ namespace UBViews.ViewModels
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
 
-                string message = $"Playing {pid} Timespan {timeSpanRange}";
+                string message = $"Playing {pid} Timespan {timeSpanRangeMsg}";
 
 #if ANDROID
                 // Opening State for Windows or After Completion of PlayAudioRange
@@ -416,6 +417,7 @@ namespace UBViews.ViewModels
 
                 Label currentLabel = (Label)contentPage.FindByName(id);
                 string timeSpanRange = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
+                string timeSpanRangeMsg = timeSpanRange.Replace("_", " - ");
                 string uid = currentLabel.GetValue(AttachedProperties.Ubml.UniqueIdProperty) as string;
                 // 001.000.000.000
                 string[] arr = uid.Split('.');
@@ -425,7 +427,7 @@ namespace UBViews.ViewModels
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
 
-                string message = $"Stopping {pid} Timespan {timeSpanRange}";
+                string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
@@ -652,6 +654,12 @@ namespace UBViews.ViewModels
                 return;
             }
         }
+
+        /// <summary>
+        /// Private Method for setting reference PIDs on or off.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         async Task SetReferencePids(bool value)
         {
             try

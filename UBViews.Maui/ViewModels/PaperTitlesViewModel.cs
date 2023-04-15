@@ -66,7 +66,8 @@ namespace UBViews.ViewModels
 
                 Label currentLabel = (Label)contentPage.FindByName(id);
                 string timeSpan = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
-                string msg = "Current Paper (" + paperDto.Id + ") Timespan (" + timeSpan + ")";
+                string timeSpanMsg = timeSpan.Replace("_", " - ")
+                string msg = "Current Paper (" + paperDto.Id + ") Timespan (" + timeSpanMsg + ")";
 
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
