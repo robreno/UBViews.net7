@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AudioFiles>
+  <AudioFile id="0.0" type="intro" lang="en" uri="https://s3.amazonaws.com/urantia/media/en/U0Intro.mp3" />
+  <AudioFile id="0" type="paper" lang="en" uri="https://s3.amazonaws.com/urantia/media/en/U0.mp3" />
+  <AudioFile id="1" type="paper" lang="en" uri="https://s3.amazonaws.com/urantia/media/en/U1.mp3" />
+  <AudioFile id="2" type="paper" lang="en" uri="https://s3.amazonaws.com/urantia/media/en/U2.mp3" />
+</AudioFiles>
