@@ -265,7 +265,7 @@
 
             <!-- Main Paper VerticalStackLayout Style -->
             <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="60" />
+                <Setter Property="Padding" Value="30" />
             </Style>
 
             <!-- Paper Paragraph Label Style -->
@@ -307,7 +307,7 @@
             <!-- Experimental Styles -->
 
             <Style x:Name="MainPageButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryDark}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
             </Style>
 
             <Style x:Key="MainGridStyle" TargetType="Grid">
@@ -339,8 +339,8 @@
                 <Setter Property="Padding" Value="20,0,20,0" />
             </Style>
 
-            <Style x:Key="MainPaperVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="0" />
+            <Style x:Key="PaperContentVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="30" />
             </Style>
 
             <!-- End UB Specific Styles -->
