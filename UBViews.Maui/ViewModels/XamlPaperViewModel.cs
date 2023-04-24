@@ -1,18 +1,25 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Globalization;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Core.Primitives;
 using UBViews.Models;
 using UBViews.Models.Ubml;
 using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
-
+using UBViews.Converters;
 
 namespace UBViews.ViewModels
 {
     [QueryProperty(nameof(PaperDto), "PaperDto")]
     public partial class XamlPaperViewModel : BaseViewModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public CultureInfo cultureInfo;
+
         /// <summary>
         /// 
         /// </summary>
@@ -46,6 +53,7 @@ namespace UBViews.ViewModels
         {
             this.fileService = fileService;
             this.settingsService = settingsService;
+            this.cultureInfo = new CultureInfo("en-US");
             PreviousState = "None";
             CurrentState = "None";
         }
@@ -85,6 +93,12 @@ namespace UBViews.ViewModels
 
         [ObservableProperty]
         string currentState;
+
+        [ObservableProperty]
+        string mediaElementPreviousState;
+
+        [ObservableProperty]
+        string mediaElementCurrentState;
 
         [ObservableProperty]
         bool isScrollToLabel;
@@ -133,6 +147,9 @@ namespace UBViews.ViewModels
             try
             {
                 IsBusy = true;
+
+                CurrentState = "None";
+                PreviousState = "None";
 
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_pids", true);
@@ -225,53 +242,19 @@ namespace UBViews.ViewModels
                     return;
 
                 string paperTitle = PaperTitle;
-                string message = $"Playing {paperTitle} Timespan {value}";
 
-#if ANDROID
-                // Opening State for Windows or After Completion of PlayAudioRange
-                if (CurrentState == "Paused" && PreviousState == "Buffering" ||
-                    CurrentState == "Stopped" && PreviousState == "Buffering")
+                string message = $"Playing {paperTitle}";
+
+                if (CurrentState == "None" ||
+                    CurrentState == "Paused" ||
+                    CurrentState == "Stopped")
                 {
                     await PlayAudio();
                 }
-                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                         CurrentState == "Playing" && PreviousState == "Buffering")
+                else if (CurrentState == "Playing")
                 {
                     await PauseAudio();
-                    message = $"Pausing {paperTitle} Timespan {value}";
-                }
-                else if (CurrentState == "Paused" && PreviousState == "Playing")
-                {
-                    await PlayAudio();
-                    message = $"Resume Playing {paperTitle} Timespan {value}";
-                }
-                else
-                {
-                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                    throw new Exception("Uknown State: " + msg);
-                }
-#elif WINDOWS
-                // Opening State for Windows
-                if (CurrentState == "Paused" && PreviousState == "Opening" ||
-                    CurrentState == "Paused" && PreviousState == "Stopped")
-                {
-                    await PlayAudio();
-                }
-                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                         CurrentState == "Playing" && PreviousState == "Buffering")
-                {
-                    await PauseAudio();
-                    message = $"Pausing {paperTitle} Timespan {value}";
-                }
-                else if (CurrentState == "Paused" && PreviousState == "Playing")
-                {
-                    await PlayAudio();
-                    message = $"Resume Playing {paperTitle} Timespan {value}";
-                }
-                else if (CurrentState == "Stopped" && PreviousState == "Paused")
-                {
-                    await PlayAudio();
-                    message = $"Playing {paperTitle} Timespan {value}";
+                    message = $"Pausing {paperTitle}";
                 }
                 else
                 {
@@ -279,7 +262,6 @@ namespace UBViews.ViewModels
                     throw new Exception("Uknown State: " + msg);
                 }
 
-#endif
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
                     ToastDuration duration = ToastDuration.Short;
@@ -304,7 +286,7 @@ namespace UBViews.ViewModels
                     return;
 
                 string paperTitle = PaperTitle;
-                string message = $"Stopping {paperTitle} Timespan {value}";
+                string message = $"Stopping {paperTitle}";
 
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
@@ -345,53 +327,27 @@ namespace UBViews.ViewModels
 
                 string message = $"Playing {pid} Timespan {timeSpanRangeMsg}";
 
-#if ANDROID
-                // Opening State for Windows or After Completion of PlayAudioRange
-                if (CurrentState == "Paused" && PreviousState == "Buffering" ||
-                    CurrentState == "Stopped" && PreviousState == "Buffering")
+                if (CurrentState == "None" ||
+                    CurrentState == "Stopped")
                 {
                     await PlayAudioRange(timeSpanRange);
                 }
-                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                         CurrentState == "Playing" && PreviousState == "Buffering")
-                {
-                    await PauseAudio();
-                    message = $"Pausing {pid} Timespan {timeSpanRange}";
-                }
-                else if (CurrentState == "Paused" && PreviousState == "Playing")
+                else if (CurrentState == "Paused")
                 {
                     await PlayAudio();
-                    message = $"Resume Playing {pid} Timespan {timeSpanRange}";
+                    message = $"Resuming {pid} Timespan {timeSpanRangeMsg}";
+                }
+                else if (CurrentState == "Playing")
+                {
+                    await PauseAudio();
+                    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
                 }
                 else
                 {
                     string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
                     throw new Exception("Uknown State: " + msg);
                 }
-#elif WINDOWS
-                // Opening State for Windows
-                if (CurrentState == "Paused" && PreviousState == "Opening" ||
-                    CurrentState == "Paused" && PreviousState == "Stopped")
-                {
-                    await PlayAudioRange(timeSpanRange);
-                }
-                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                         CurrentState == "Playing" && PreviousState == "Buffering")
-                {
-                    await PauseAudio();
-                    message = $"Pausing {pid} Timespan {timeSpanRange}";
-                }
-                else if (CurrentState == "Paused" && PreviousState == "Playing")
-                {
-                    await PlayAudio();
-                    message = $"Resume Playing {pid} Timespan {timeSpanRange}";
-                }
-                else
-                {
-                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                    throw new Exception("Uknown State: " + msg);
-                }
-#endif
+
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
                     ToastDuration duration = ToastDuration.Short;
@@ -426,6 +382,17 @@ namespace UBViews.ViewModels
                              Int32.Parse(arr[2]).ToString("0")
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
+
+                //string format = @"dd\:hh\:mm\:ss\.fffffff";
+                // Console.WriteLine("The time difference is: {0}", ts.ToString(format));
+                //string format = @"dd\:hh\:mm\:ss\.fffffff";
+
+                //string format = @"hh\:mm\:ss\.ff";
+                //var hrs = timeSpan.TotalHours;
+                //var min = timeSpan.TotalMinutes;
+                //var sec = timeSpan.TotalSeconds;
+                //var str1 = timeSpan.ToShortTimeString();
+                //var str2 = timeSpan.ToString(format);
 
                 string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
@@ -525,6 +492,9 @@ namespace UBViews.ViewModels
         {
             try
             {
+                PreviousState = CurrentState;
+                CurrentState = "Playing";
+
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -546,6 +516,9 @@ namespace UBViews.ViewModels
         {
             try
             {
+                PreviousState = CurrentState;
+                CurrentState = "Paused";
+
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -567,6 +540,9 @@ namespace UBViews.ViewModels
         {
             try
             {
+                PreviousState = CurrentState;
+                CurrentState = "Stopped";
+
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -589,6 +565,9 @@ namespace UBViews.ViewModels
         {
             try
             {
+                PreviousState = CurrentState;
+                CurrentState = "Playing";
+
                 char[] separators = { ':', '.' };
                 string[] arry = timeSpanRange.Split('_');
                 string[] sa = arry[0].Split(separators, StringSplitOptions.RemoveEmptyEntries);
@@ -618,7 +597,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                Position = timeSpan;
+                Position = CurrentPosition = timeSpan;
 
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
@@ -645,8 +624,8 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = state;
+                MediaElementPreviousState = CurrentState;
+                MediaElementCurrentState = state;
             }
             catch (Exception ex)
             {
@@ -654,39 +633,5 @@ namespace UBViews.ViewModels
                 return;
             }
         }
-
-        /// <summary>
-        /// Private Method for setting reference PIDs on or off.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        async Task SetReferencePids(bool value)
-        {
-            try
-            {
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    if (!ShowReferencePids)
-                    {
-                        var count = Paragraphs.Count();
-                        foreach (var paragraph in Paragraphs)
-                        {
-                            var seqId = paragraph.SeqId;
-                            var pid = paragraph.Pid;
-                            var spanName = "span_" + seqId.ToString("000");
-                            var span = contentPage.FindByName(spanName) as Span;
-                            var spanText = span.Text;
-                            span.Text = "";
-                        }
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-                return;
-            }
-        }
-
     }
 }
