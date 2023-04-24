@@ -34,6 +34,7 @@ namespace UBViews
             if (!_appInitialized)
             {
                 // Set Default Prefs: some move to settings 
+                Preferences.Default.Set("culture", "en-US");
                 Preferences.Default.Set("userData", true);
                 Preferences.Default.Set("has_queries", false);
                 Preferences.Default.Set("query_count", 0);
@@ -93,6 +94,33 @@ namespace UBViews
                         ex.Message, "Cancel");
                 }
             });
+        }
+
+        protected override Window CreateWindow(IActivationState activationState)
+        {
+            var window = base.CreateWindow(activationState);
+            window.Created += Window_Created;
+            return window;
+        }
+
+        private async void Window_Created(object sender, EventArgs e)
+        {
+#if WINDOWS
+        const int defaultWidth = 1080;
+        const int defaultHeight = 920;
+
+        var window = (Window)sender;
+        window.Width = defaultWidth;
+        window.Height = defaultHeight;
+        window.X = -defaultWidth;
+        window.Y = -defaultHeight;
+
+        await window.Dispatcher.DispatchAsync(() => { });
+
+        var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+        window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
+        window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+#endif
         }
     }
 }
