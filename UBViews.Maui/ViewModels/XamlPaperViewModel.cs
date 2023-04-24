@@ -8,9 +8,6 @@ using UBViews.Models.Ubml;
 using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
-using UBViews.Converters;
-using CommunityToolkit.Maui.Core.Handlers;
-using System.Xml.Linq;
 
 namespace UBViews.ViewModels
 {
@@ -159,6 +156,9 @@ namespace UBViews.ViewModels
                 CurrentState = "None";
                 PreviousState = "None";
 
+                CurrentState = "None";
+                PreviousState = "None";
+
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_reference_pids", false);
                 ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
@@ -272,7 +272,12 @@ namespace UBViews.ViewModels
                 else if (CurrentState == "Playing")
                 {
                     await PauseAudio();
-                    message = $"Pausing {paperTitle}";
+                    message = $"Pausing {paperTitle} Timespan {value}";
+                }
+                else if (CurrentState == "Paused" && PreviousState == "Playing")
+                {
+                    await PlayAudio();
+                    message = $"Resume Playing {paperTitle} Timespan {value}";
                 }
                 else
                 {
@@ -355,7 +360,20 @@ namespace UBViews.ViewModels
                     await PlayAudio();
                     message = $"Resuming {pid} Timespan {timeSpanRangeMsg}";
                 }
-                else if (CurrentState == "Playing")
+                else
+                {
+                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
+                    throw new Exception("Uknown State: " + msg);
+                }
+#elif WINDOWS
+                // Opening State for Windows
+                if (CurrentState == "Paused" && PreviousState == "Opening" ||
+                    CurrentState == "Paused" && PreviousState == "Stopped")
+                {
+                    await PlayAudioRange(timeSpanRange);
+                }
+                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
+                         CurrentState == "Playing" && PreviousState == "Buffering")
                 {
                     await PauseAudio();
                     message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
@@ -400,6 +418,17 @@ namespace UBViews.ViewModels
                              Int32.Parse(arr[2]).ToString("0")
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
+
+                //string format = @"dd\:hh\:mm\:ss\.fffffff";
+                // Console.WriteLine("The time difference is: {0}", ts.ToString(format));
+                //string format = @"dd\:hh\:mm\:ss\.fffffff";
+
+                //string format = @"hh\:mm\:ss\.ff";
+                //var hrs = timeSpan.TotalHours;
+                //var min = timeSpan.TotalMinutes;
+                //var sec = timeSpan.TotalSeconds;
+                //var str1 = timeSpan.ToShortTimeString();
+                //var str2 = timeSpan.ToString(format);
 
                 string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
@@ -648,7 +677,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                Position = timeSpan;
+                Position = CurrentPosition = timeSpan;
 
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
@@ -675,8 +704,8 @@ namespace UBViews.ViewModels
         {
             try
             {
-                MediaElementPreviousState = CurrentState;
-                MediaElementCurrentState = state;
+                PreviousState = CurrentState;
+                CurrentState = state;
             }
             catch (Exception ex)
             {
@@ -685,13 +714,31 @@ namespace UBViews.ViewModels
             }
         }
 
-        [RelayCommand]
-        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
+        /// <summary>
+        /// Private Method for setting reference PIDs on or off.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        async Task SetReferencePids(bool value)
         {
             try
             {
-                this.Markers = await audioService.LoadAudioMarkers(paperId);
-                return this.Markers;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    if (!ShowReferencePids)
+                    {
+                        var count = Paragraphs.Count();
+                        foreach (var paragraph in Paragraphs)
+                        {
+                            var seqId = paragraph.SeqId;
+                            var pid = paragraph.Pid;
+                            var spanName = "span_" + seqId.ToString("000");
+                            var span = contentPage.FindByName(spanName) as Span;
+                            var spanText = span.Text;
+                            span.Text = "";
+                        }
+                    }
+                });
             }
             catch (Exception ex)
             {

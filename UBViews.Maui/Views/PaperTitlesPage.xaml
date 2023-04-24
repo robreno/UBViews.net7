@@ -32,22 +32,9 @@
                         </Label.FormattedText>
                     </Label>
                 </Border>
-                <VerticalStackLayout x:Name="contentVerticalStackLayout" Style="{StaticResource PaperTitlesStaticVSL}" BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
-                    <!--<Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource UBDarkBackground}}" 
-                            StrokeShape="Rectangle" 
-                            HorizontalOptions="Center" 
-                            Padding="0,10,0,10">
-                        <Label Grid.Row="1" 
-                           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                             Dark={StaticResource UBDarkBackground}}"
-                           Style="{StaticResource ContentsPartTitle}">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Title}" Style="{StaticResource PartTitleSpan}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </Border>-->
+                <VerticalStackLayout x:Name="contentVerticalStackLayout" 
+                                     Style="{StaticResource PaperTitlesStaticVSL}" 
+                                     BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
                     <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource UBDarkBackground}}" StrokeShape="Rectangle" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10,10,10,0">
                         <Label x:Name="_000" BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource UBDarkBackground}}" Style="{StaticResource RegularParagraph}" attached:Paper.Id="0" attached:Paper.Title="Foreword" attached:Paper.Author="Divine Counselor" attached:Paper.PartId="0" attached:Paper.PartTitle="Foreword Material" attached:Audio.TimeSpan="0:0:0.0_1:6:39.0">
                             <Label.GestureRecognizers>
