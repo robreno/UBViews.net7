@@ -5,7 +5,8 @@
              x:Class="UBViews.App">
     <Application.Resources>
         <ResourceDictionary>
-
+            
+            <!-- Main Grid and VerticalStackLayout Styles -->
             <!-- Color Styles -->
             <Color x:Key="Primary">#007fff</Color>
             <Color x:Key="PrimaryDark">#013963</Color>
@@ -184,12 +185,11 @@
             </Style>
             <Style x:Key="ContentsPartsHeading" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="Margin" Value="0,0,0,0" />
-                <Setter Property="Padding" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="0,10,0,0" />
             </Style>
             <Style x:Key="ContentsPartNumber" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
                 <Setter Property="FontSize" Value="24"></Setter>
-                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="Margin" Value="0" />
             </Style>
             <Style x:Key="ContentsPartTitle" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
                 <Setter Property="FontSize" Value="20.5" />
@@ -197,7 +197,7 @@
                 <Setter Property="Padding" Value="0,0,0,0" />
             </Style>
             <Style x:Key="ContentsPartSponsor" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
-                <Setter Property="Margin" Value="20,0,20,0" />
+                <Setter Property="Padding" Value="30,0,30,0" />
             </Style>
             <!-- TODO: May be removed -->
             <Style x:Key="ContentsPaperNumber" TargetType="Label" BasedOn="{StaticResource ContentsHeading}">
@@ -265,7 +265,7 @@
 
             <!-- Main Paper VerticalStackLayout Style -->
             <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="20,0,20,30" />
+                <Setter Property="Padding" Value="60" />
             </Style>
 
             <!-- Paper Paragraph Label Style -->
@@ -301,7 +301,48 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="Margin" Value="0,20,0,30" />
             </Style>
+            
             <!-- End Label Styles -->
+            
+            <!-- Experimental Styles -->
+
+            <Style x:Name="MainPageButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryDark}" />
+            </Style>
+
+            <Style x:Key="MainGridStyle" TargetType="Grid">
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <Style x:Key="PaperContentTitlesVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="10,0,0,0" />
+            </Style>
+
+            <Style x:Key="PaperTitlesVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="PartTitlesVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="SettingsVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Margin" Value="20,100,0,0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="AppDataVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="50,50,0,0" />
+            </Style>
+
+            <Style x:Key="PartsPageVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="20,0,20,0" />
+            </Style>
+
+            <Style x:Key="MainPaperVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
             <!-- End UB Specific Styles -->
 
         </ResourceDictionary>
