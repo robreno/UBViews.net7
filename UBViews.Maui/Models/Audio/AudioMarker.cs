@@ -6,12 +6,14 @@ namespace UBViews.Models.Audio;
 /// <summary>
 /// AudioMarker class.
 /// </summary>
-public sealed class AudioMarker
+public class AudioMarker
 {
     /// <summary>
     /// 
     /// </summary>
     enum MarkerType { Title, Section, Paragraph }
+
+    public AudioMarker() { }
 
     /// <summary>
     /// AudioMarker Cstor
@@ -120,6 +122,19 @@ public sealed class AudioMarker
                 break;
         }
         return str;
+    }
+
+    public AudioMarker GetNewAudioMarker(TimeSpan start, TimeSpan end)
+    {
+        AudioMarker newMarker = new AudioMarker()
+        {
+            SequenceId = this.SequenceId,
+            ParagraphId = this.ParagraphId,
+            Type = this.Type,
+            StartTime = start,
+            EndTime = end
+        };
+        return newMarker;
     }
 
     /// <summary>

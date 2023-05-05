@@ -6,18 +6,30 @@ namespace UBViews.Helpers;
 
 public partial class XmlAppSettingsService : IAppSettingsService
 {
-    private readonly string _settingsFileName = "Settings.xml";
+    /// <summary>
+    /// Private Data Members
+    /// </summary>
+    private const string _settingsFileName = "Settings.xml";
     private XDocument _settings;
     private XElement _settingsRoot;
     private string _content;
     private string _appDir;
     private bool _cacheDirty;
 
-    public XmlAppSettingsService()
+    /// <summary>
+    /// File Service
+    /// </summary>
+    IFileService fileService;
+
+    public XmlAppSettingsService(IFileService fileService)
     {
         InitializeSettings();
+        this.fileService = fileService;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private async void InitializeSettings()
     {
         try
@@ -35,6 +47,12 @@ public partial class XmlAppSettingsService : IAppSettingsService
             return;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
     private async Task<string> LoadAppSettingsAsync(string filename)
     {
         try
@@ -52,6 +70,11 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
     private async Task SaveAppSettingsAsync(string filename)
     {
         try
@@ -67,6 +90,10 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public async Task Clear()
     {
         try
@@ -80,6 +107,11 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task Clear(string key)
     {
         try
@@ -102,6 +134,11 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<bool> ContainsKey(string key)
     {
         try
@@ -121,6 +158,14 @@ public partial class XmlAppSettingsService : IAppSettingsService
             return default(bool);
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="defaultValue"></param>
+    /// <returns></returns>
     public async Task<T> Get<T>(string key, T defaultValue)
     {
         try
@@ -146,6 +191,13 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task Set<T>(string key, T value)
     {
         try
@@ -176,6 +228,13 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task SetCache<T>(string key, T value)
     {
         try
@@ -206,6 +265,11 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+
     [RelayCommand]
     public async Task SaveCache()
     {
@@ -223,12 +287,25 @@ public partial class XmlAppSettingsService : IAppSettingsService
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     static private T ConvertStringValue<T>(string type, string value)
     {
         T newValue = GetTfromString<T>(value);
         return newValue;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="mystring"></param>
+    /// <returns></returns>
     static private T GetTfromString<T>(string mystring)
     {
         var foo = TypeDescriptor.GetConverter(typeof(T));

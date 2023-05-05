@@ -9,6 +9,8 @@ using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
 using UBViews.Converters;
+using CommunityToolkit.Maui.Core.Handlers;
+using System.Xml.Linq;
 
 namespace UBViews.ViewModels
 {
@@ -28,10 +30,15 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ObservableCollection<Paragraph> Paragraphs { get; private set; } = new();
+        protected AudioMarkerSequence Markers { get; set; } = new();
 
         /// <summary>
         /// 
+        /// </summary>
+        public ObservableCollection<Paragraph> Paragraphs { get; private set; } = new();
+
+        /// <summary>
+        /// TODO: Currently not loading this collection
         /// </summary>
         public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
 
@@ -43,15 +50,21 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        IAudioService audioService;
+
+        /// <summary>
+        /// 
+        /// </summary>
         IAppSettingsService settingsService;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fileService"></param>
-        public XamlPaperViewModel(IFileService fileService, IAppSettingsService settingsService)
+        public XamlPaperViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService)
         {
             this.fileService = fileService;
+            this.audioService = audioService;
             this.settingsService = settingsService;
             this.cultureInfo = new CultureInfo("en-US");
             PreviousState = "None";
@@ -74,7 +87,7 @@ namespace UBViews.ViewModels
         bool showReferencePids;
 
         [ObservableProperty]
-        TimeSpan currentPosition;
+        bool showPlaybackControls;
 
         [ObservableProperty]
         TimeSpan position;
@@ -141,53 +154,50 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewAppearing(PaperDto dto)
         {
-            if (IsBusy)
-                return;
-
             try
             {
-                IsBusy = true;
-
                 CurrentState = "None";
                 PreviousState = "None";
 
                 PaperNumber = dto.Id.ToString("0");
-                ShowReferencePids = await settingsService.Get("show_pids", true);
+                ShowReferencePids = await settingsService.Get("show_reference_pids", false);
+                ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
                 string uid = dto.Uid;
                 IsScrollToLabel = dto.ScrollTo;
                 if (IsScrollToLabel)
                 {
                     ScrollToLabelName = "_" + uid.Substring(4, 3) + "_" + uid.Substring(0, 3);
                 }
+
+                Markers = await LoadAudioMarkers(PaperDto.Id);
+                if (Markers.Size > 0)
+                {
+                    foreach (var marker in Markers.Values().ToList())
+                    {
+                        AudioMarkers.Add(marker);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-                IsRefreshing = false;
             }
         }
 
         [RelayCommand]
         async Task PaperViewLoaded(PaperDto dto)
         {
-            if (IsBusy)
-                return;
-
             try
             {
-                IsBusy = true;
-               
                 int paperId = dto.Id;
                 var paragraphs = await fileService.GetParagraphsAsync(paperId);
                 if (Paragraphs.Count != 0)
                     return;
 
                 foreach (var paragraph in paragraphs)
+                {
                     Paragraphs.Add(paragraph);
+                }
 
                 if (IsScrollToLabel)
                 {
@@ -198,38 +208,46 @@ namespace UBViews.ViewModels
                 {
                     await SetReferencePids();
                 }
+
+                if (ShowPlaybackControls)
+                {
+                    await SetMediaPlaybackControls(ShowPlaybackControls);
+                }
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-                IsRefreshing = false;
             }
         }
 
         [RelayCommand]
         async Task PaperViewDisappearing(PaperDto dto)
         {
-            if (IsBusy)
-                return;
-
             try
             {
-                IsBusy = true;
                 await StopAudio();
-
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
-            finally
+        }
+
+        [RelayCommand]
+        async Task PaperViewUnloaded(PaperDto dto)
+        {
+            try
             {
-                IsBusy = false;
-                IsRefreshing = false;
+                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    // Stop and cleanup MediaElement when we navigate away
+                    me.Handler?.DisconnectHandler();
+                });
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
         }
 
@@ -383,17 +401,6 @@ namespace UBViews.ViewModels
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
 
-                //string format = @"dd\:hh\:mm\:ss\.fffffff";
-                // Console.WriteLine("The time difference is: {0}", ts.ToString(format));
-                //string format = @"dd\:hh\:mm\:ss\.fffffff";
-
-                //string format = @"hh\:mm\:ss\.ff";
-                //var hrs = timeSpan.TotalHours;
-                //var min = timeSpan.TotalMinutes;
-                //var sec = timeSpan.TotalSeconds;
-                //var str1 = timeSpan.ToShortTimeString();
-                //var str2 = timeSpan.ToString(format);
-
                 string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -405,6 +412,43 @@ namespace UBViews.ViewModels
                 }
 
                 await StopAudio();
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task SetMediaPlaybackControls(bool value)
+        {
+            try
+            {
+                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    // Stop and cleanup MediaElement when we navigate away
+                    me.ShouldShowPlaybackControls = value;
+                });
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task SetPlaybackControlsStartTime(AudioMarker audioMarker)
+        {
+            try
+            {
+                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    me.SeekTo(audioMarker.StartTime);
+                });
             }
             catch (Exception ex)
             {
@@ -465,17 +509,24 @@ namespace UBViews.ViewModels
             try
             {
                 var scrollView = contentPage.FindByName("contentScrollView") as ScrollView;
-                var label = contentPage.FindByName(labelName) as Label;
-                var _x = label.X;
-                var _y = label.Y;
+                var currentLabel = contentPage.FindByName(labelName) as Label;
+
+                var lblArry = labelName.Split('_', StringSplitOptions.RemoveEmptyEntries);
+                int paperId = Int32.Parse(lblArry[0]);
+                int seqId = Int32.Parse(lblArry[1]);
+                var audioMarker = Markers.GetBySeqId(seqId);
+                await SetPlaybackControlsStartTime(audioMarker);
+
+                var _x = currentLabel.X;
+                var _y = currentLabel.Y;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    if (scrollView != null && label != null)
+                    if (scrollView != null && currentLabel != null)
                     {
 #if ANDROID
                         scrollView.ScrollToAsync(_x, _y, false);
 #elif WINDOWS
-                        scrollView.ScrollToAsync(label, ScrollToPosition.Start, false);
+                        scrollView.ScrollToAsync(currentLabel, ScrollToPosition.Start, false);
 #endif
                     }
                 });
@@ -597,7 +648,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                Position = CurrentPosition = timeSpan;
+                Position = timeSpan;
 
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
@@ -631,6 +682,21 @@ namespace UBViews.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
                 return;
+            }
+        }
+
+        [RelayCommand]
+        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
+        {
+            try
+            {
+                this.Markers = await audioService.LoadAudioMarkers(paperId);
+                return this.Markers;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                return null;
             }
         }
     }

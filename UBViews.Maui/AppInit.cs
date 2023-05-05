@@ -40,7 +40,8 @@ namespace UBViews
                 Preferences.Default.Set("query_count", 0);
                 Preferences.Default.Set("max_query_results", 50);
                 Preferences.Default.Set("line_height", 1.0);
-                Preferences.Default.Set("show_pids", false);
+                Preferences.Default.Set("show_reference_pids", false);
+                Preferences.Default.Set("show_playback_controls", false);
                 Preferences.Default.Set("show_paper_contents", false);
                 // SetupDefaultData();
                 int size = srcNames.Length;
@@ -115,11 +116,12 @@ namespace UBViews
         window.X = -defaultWidth;
         window.Y = -defaultHeight;
 
-        await window.Dispatcher.DispatchAsync(() => { });
-
-        var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
-        window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
-        window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+        await window.Dispatcher.DispatchAsync(() => 
+        { 
+            var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+            window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
+            window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+        });
 #endif
         }
     }

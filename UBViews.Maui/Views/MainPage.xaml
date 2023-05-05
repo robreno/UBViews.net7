@@ -13,74 +13,88 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="20"
-            Padding="10,10,10,10"
-            VerticalOptions="Center">
+        <VerticalStackLayout Spacing="20"
+                             Padding="10,10,10,10"
+                             VerticalOptions="Center">
 
-            <Border 
-                HeightRequest="70"
-                WidthRequest="70"
-                HorizontalOptions="Center"
-                StrokeShape="RoundRectangle 70,70,70,70">
+            <Border HeightRequest="70"
+                    WidthRequest="70"
+                    HorizontalOptions="Center"
+                    StrokeShape="RoundRectangle 70,70,70,70"
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Three Azure Concentric Circles Image"
+                    SemanticProperties.Hint="Three Circles Image">
                 <Image Style="{StaticResource SmallHeaderImage}" />
             </Border>
 
-            <Label
-                Text="Urantia Book Viewer"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <Label Text="Urantia Book Viewer"
+                   FontSize="32"
+                   HorizontalOptions="Center" 
+                   SemanticProperties.HeadingLevel="Level1"
+                   SemanticProperties.Description="Opening Title"
+                   SemanticProperties.Hint="Title"/>
 
             <Entry Text="{Binding QueryInput, Mode=TwoWay}"
-                WidthRequest="300"
-                Placeholder="Enter search query here ..." />
+                   WidthRequest="300"
+                   Placeholder="Enter search query here ..."
+                   SemanticProperties.Description="Entry control for entering search query."
+                   SemanticProperties.HeadingLevel="Level1"
+                   SemanticProperties.Hint="Text Entry Control" />
 
-            <Button 
-                Text="Query" 
-                FontSize="18"
-                FontAttributes="Bold" 
-                HorizontalOptions="Center" 
-                WidthRequest="{x:StaticResource ButtonWidth}"
-                Command="{Binding SumbitQueryCommand}"
-                CommandParameter="{Binding QueryInput}" />
+            <Button Text="Query" 
+                    FontSize="18"
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Center" 
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Query Button for submitting query."
+                    SemanticProperties.Hint="Query Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding SumbitQueryCommand}"
+                    CommandParameter="{Binding QueryInput}" />
 
-            <Button 
-                Text="Parts of Book"
-                FontSize="18"
-                FontAttributes="Bold"
-                HorizontalOptions="Center" 
-                WidthRequest="{x:StaticResource ButtonWidth}"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="PartsPage" />
+            <Button Text="Parts of Book"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center" 
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Button for navigating to Parts of Book page."
+                    SemanticProperties.Hint="Navigation Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="PartsPage" />
 
-            <Button 
-                Text="Titles of Papers"
-                FontSize="18"
-                FontAttributes="Bold"
-                HorizontalOptions="Center" 
-                WidthRequest="{x:StaticResource ButtonWidth}"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="PaperTitles"/>
+            <Button Text="Titles of Papers"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center" 
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Button for navigating to Titles of Papers page."
+                    SemanticProperties.Hint="Navigation Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="PaperTitles"/>
 
-            <Button 
-                Text="App Settings" 
-                FontSize="18"
-                FontAttributes="Bold" 
-                HorizontalOptions="Center" 
-                WidthRequest="{x:StaticResource ButtonWidth}"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="AppSettings" />
+            <Button Text="App Settings" 
+                    FontSize="18"
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Center" 
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Button for navigating to App Settings page."
+                    SemanticProperties.Hint="Navigation Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="AppSettings" />
 
-            <Button 
-                Text="App Data" 
-                FontSize="18"
-                FontAttributes="Bold" 
-                HorizontalOptions="Center"
-                WidthRequest="{x:StaticResource ButtonWidth}"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="AppData"
-                 />
+            <Button Text="App Data" 
+                    FontSize="18"
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Center"
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Button for navigating to App Data page."
+                    SemanticProperties.Hint="Navigation Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="AppData" />
 
             <!--<Button 
                 Text="Check Internet" 

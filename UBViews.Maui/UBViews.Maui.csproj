@@ -32,6 +32,15 @@
 		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 		<RunAnalyzers>false</RunAnalyzers>
+		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>FDE97FF138D8FDEEA151B85DD3DC7017FFBB8DD2</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppInstallerUri>C:\Archive\Projects\UBViews_2023\AppPackages\</AppInstallerUri>
   
 	</PropertyGroup>
 
@@ -163,6 +172,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Resources\Themes\UBLightTheme.xaml.cs">
+	    <DependentUpon>UBLightTheme.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Themes\UBDarkTheme.xaml.cs">
+	    <DependentUpon>UBDarkTheme.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ContentTitlesPage.xaml.cs">
 	    <DependentUpon>ContentTitlesPage.xaml</DependentUpon>
 	  </Compile>
@@ -179,6 +194,12 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Conrols\CirclesHeader.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Themes\UBDarkTheme.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Themes\UBLightTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContentTitlesPage.xaml">

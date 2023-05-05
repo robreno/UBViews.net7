@@ -17,17 +17,18 @@
     </ContentPage.Behaviors>
 
     <!-- Main Content Grid-->
-    <Grid x:Name="mainGrid">
-        
+    <Grid x:Name="mainGrid" 
+          BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                            Dark={StaticResource UBDarkBackground}}">
+
         <!-- Main ScrollView -->
         <ScrollView x:Name="mainScrollView">
-            
+
             <!-- Main VerticalStackLayout -->
             <VerticalStackLayout x:Name="mainVerticalStackLayout" 
                                  VerticalOptions="StartAndExpand"
-                                 HorizontalOptions="FillAndExpand"
-                                 BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                   Dark={StaticResource UBDarkBackground}}">
+                                 HorizontalOptions="FillAndExpand">
+                
                 <!-- Headers Control -->
                 <control:CirclesHeader Margin="0,0,0,10" />
 
@@ -85,11 +86,11 @@
                                     Grid.ColumnSpan="2"
                                     ItemsSource="{Binding SectionTitlesDtos}"
                                     SelectionMode="Single">
-                        
+
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:SectionTitleDto">
                                 <!-- Outer VerticalStackLayout -->
-                                <VerticalStackLayout x:Name="innerDataTemplateGrid"
+                                <VerticalStackLayout x:Name="contentVerticalStackLayout"
                                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                                        Dark={StaticResource DarkBackground}}">
                                     <!-- Inner Content Border -->
@@ -139,9 +140,9 @@
                 </Grid>
 
             </VerticalStackLayout>
-            
+
         </ScrollView>
-        
+
         <ActivityIndicator 
             HorizontalOptions="CenterAndExpand" 
             VerticalOptions="CenterAndExpand" 

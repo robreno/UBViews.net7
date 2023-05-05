@@ -263,11 +263,6 @@
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
 
-            <!-- Main Paper VerticalStackLayout Style -->
-            <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="30" />
-            </Style>
-
             <!-- Paper Paragraph Label Style -->
             <Style  x:Key="TitleParagraph" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
                 <Setter Property="HorizontalOptions" Value="Center"/>
@@ -306,19 +301,15 @@
             
             <!-- Experimental Styles -->
 
-            <Style x:Name="MainPageButtonStyle" TargetType="Button">
+            <!--<Style x:Name="MainButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-            </Style>
+            </Style>-->
 
             <Style x:Key="MainGridStyle" TargetType="Grid">
                 <Setter Property="Padding" Value="0" />
             </Style>
 
-            <Style x:Key="PaperContentTitlesVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="10,0,0,0" />
-            </Style>
-
-            <Style x:Key="PaperTitlesVSL" TargetType="VerticalStackLayout">
+            <Style x:Key="PartsVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Padding" Value="0,0,0,0" />
             </Style>
 
@@ -326,21 +317,45 @@
                 <Setter Property="Padding" Value="0,0,0,0" />
             </Style>
 
-            <Style x:Key="SettingsVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Margin" Value="20,100,0,0" />
+            <Style x:Key="PaperTitlesStaticVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="10,0,0,0" />
+            </Style>
+
+            <!-- Paper Contents Style -->
+            <Style x:Key="BasePaperContentTitlesVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="10,0,0,0" />
+            </Style>
+            <Style x:Key="AndroidPaperContentTitlesVSL" TargetType="Grid">
+                <Setter Property="Padding" Value="15,0,0,0" />
+            </Style>
+            <Style x:Key="WindowsPaperContentTitlesVSL" TargetType="Grid">
+                <Setter Property="Padding" Value="40,0,0,0" />
+            </Style>
+
+            <!-- Main Paper VerticalStackLayout Style -->
+            <Style x:Key="PaperContentVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="30" />
+            </Style>
+
+            <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
+                <Setter Property="Padding" Value="30" />
+            </Style>
+
+            <!-- AppSettings and AppData Styles -->
+            <Style x:Key="AppSettingsVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Margin" Value="0,50,0,0" />
                 <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="AppSettingsLabels" TargetType="Label">
+                <Setter Property="WidthRequest" Value="135" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
 
             <Style x:Key="AppDataVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Padding" Value="50,50,0,0" />
-            </Style>
-
-            <Style x:Key="PartsPageVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="20,0,20,0" />
-            </Style>
-
-            <Style x:Key="PaperContentVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="30" />
             </Style>
 
             <!-- End UB Specific Styles -->

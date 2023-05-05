@@ -11,6 +11,19 @@ namespace UBViews.Helpers;
 
 public class FileService : IFileService
 {
+    /// <summary>
+    /// Private paths
+    /// </summary>
+    private const string _corpus = "Corpus";
+    private const string _query = "Query";
+    private const string _xmlData = "XmlData";
+    private const string _jsonData = "JsonData";
+    private const string _settings = "Settings";
+    private const string _mauiUbml = "MauiUbml";
+
+    /// <summary>
+    /// CStor
+    /// </summary>
     public FileService() { }
 
     /// <summary>
@@ -37,16 +50,15 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="rootPath"></param>
     /// <param name="filename"></param>
     /// <returns></returns>
-    public async Task<string> LoadAsset(string rootPath, string filename)
+    public async Task<string> LoadAsset(string rootPath, string fileName)
     {
         try
         {
-            string dataSource = Path.Combine(rootPath, filename);
-            using var stream = await FileSystem.OpenAppPackageFileAsync(dataSource);
-            using var reader = new StreamReader(stream);
-            string contents = reader.ReadToEnd();
+            string dataSource = Path.Combine(rootPath, fileName);
+            string contents = await LoadAsset(dataSource);
             return contents;
         }
         catch (Exception ex)
@@ -89,7 +101,7 @@ public class FileService : IFileService
         {
             List<PaperDto> titleList = new();
 
-            string xml = await LoadAsset("XmlData", "PaperTitles.xml");
+            string xml = await LoadAsset(_xmlData, "PaperTitles.xml");
             var xdoc = XDocument.Parse(xml);
             var root = xdoc.Root;
             var titles = root.Descendants("Title");
@@ -145,11 +157,10 @@ public class FileService : IFileService
     {
         try
         {
-            var rootPath = "MauiUbml";
             var fileName = id.ToString("000") + ".xml";
 
             ContentDto dto = new ContentDto();
-            var content = await LoadAsset(rootPath, fileName);
+            var content = await LoadAsset(_mauiUbml, fileName);
             XDocument xDoc = XDocument.Parse(content);
             XElement root = xDoc.Root;
             var paragraphs = root.Descendants("Paragraph").Where(e => e.Attribute("type").Value == "section");
@@ -198,7 +209,7 @@ public class FileService : IFileService
             List<Paragraph> paragraphList = new();
 
             string paperName = id.ToString("000") + ".xml";
-            string filePathName = Path.Combine("MauiUbml", paperName);
+            string filePathName = Path.Combine(_mauiUbml, paperName);
             string xml = await LoadAsset(filePathName);
 
             var xdoc = XDocument.Parse(xml);

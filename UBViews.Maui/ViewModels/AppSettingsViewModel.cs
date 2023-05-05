@@ -10,6 +10,8 @@ public partial class AppSettingsViewModel : BaseViewModel
     double previousLineHeight;
     bool previousShowPids;
     bool previousShowPaperContents;
+    bool previousShowPlaybackControls;
+
     public AppSettingsViewModel(IAppSettingsService settingsService)
     {
         this.settingsService = settingsService;
@@ -22,13 +24,16 @@ public partial class AppSettingsViewModel : BaseViewModel
     int maxQueryResults;
 
     [ObservableProperty]
-    bool showReferencePids;
-
-    [ObservableProperty]
     double lineHeight;
 
     [ObservableProperty]
+    bool showReferencePids;
+
+    [ObservableProperty]
     bool showPaperContents;
+
+    [ObservableProperty]
+    bool showPlaybackControls;
 
     [RelayCommand]
     async Task AppSettingPageAppearing()
@@ -104,6 +109,21 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task ShowPlaybackControlsCheckedChanged(bool value)
+    {
+        try
+        {
+            previousShowPlaybackControls = ShowPlaybackControls;
+            ShowPlaybackControls = value;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
     async Task ShowPaperContentsCheckedChanged(bool value)
     {
         try
@@ -124,9 +144,10 @@ public partial class AppSettingsViewModel : BaseViewModel
         try
         {
             MaxQueryResults = previousMaxQuery = await settingsService.Get("max_query_results", 50);
-            ShowReferencePids = previousShowPids = await settingsService.Get("show_pids", false);
+            ShowReferencePids = previousShowPids = await settingsService.Get("show_reference_pids", false);
             LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
             ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
+            ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
         }
         catch (Exception ex)
         {
@@ -146,15 +167,19 @@ public partial class AppSettingsViewModel : BaseViewModel
             }
             if (previousShowPids != ShowReferencePids)
             {
-                await settingsService.SetCache("show_pids", ShowReferencePids);
+                await settingsService.SetCache("show_reference_pids", ShowReferencePids);
             }
             if (previousLineHeight != LineHeight)
             {
                 await settingsService.SetCache("line_height", LineHeight);
             }
-            if (previousShowPaperContents != showPaperContents)
+            if (previousShowPaperContents != ShowPaperContents)
             {
-                await settingsService.SetCache("show_paper_contents", showPaperContents);
+                await settingsService.SetCache("show_paper_contents", ShowPaperContents);
+            }
+            if (previousShowPlaybackControls != ShowPlaybackControls)
+            {
+                await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
             }
             await App.Current.MainPage.DisplayAlert("Settings", "Settings were saved!", "Ok");
         }

@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:converter="clr-namespace:UBViews.Converters"
              x:Class="UBViews.Views.AppSettingsPage"
              x:DataType="viewmodel:AppSettingsViewModel"
              Title="App Settings Page"
              Loaded="OnLoaded" >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
@@ -18,15 +25,13 @@
     <VerticalStackLayout x:Name="mainVSL"
                          Padding="20,20,20,20">
 
-        <VerticalStackLayout x:Name="controlSettingsVSL">
+        <VerticalStackLayout x:Name="controlSettingsVSL"
+                             Style="{StaticResource AppSettingsVSL}">
 
             <HorizontalStackLayout x:Name="MaxNumHSL" Margin=".5">
                 <Label x:Name="maxNumberLabel" 
-                       Text="Max Query Result:"
-                       Padding="0,0,0,0"
-                       WidthRequest="115"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center" />
+                       Style="{StaticResource AppSettingsLabels}"
+                       Text="Max Query Result:" />
                 <Entry x:Name="maxNumberEntry"
                        HeightRequest="40"
                        WidthRequest="40"
@@ -53,10 +58,8 @@
 
             <HorizontalStackLayout x:Name="lineHeightHSL" Margin=".5">
                 <Label x:Name="lineHeightLabel" 
-                       Text="Line Height:"
-                       Padding="0,0,0,0"
-                       WidthRequest="115"
-                       VerticalOptions="Center" />
+                       Style="{StaticResource AppSettingsLabels}"
+                       Text="Line Height:" />
                 <Entry x:Name="lineHeightEntry"
                        HeightRequest="40"
                        WidthRequest="40"
@@ -82,12 +85,9 @@
             </HorizontalStackLayout>
 
             <HorizontalStackLayout x:Name="ShowPidsHTL" Margin=".5">
-                <Label Text="Show References:"
-                        Padding="0,0,.5,0"
-                        WidthRequest="115"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center">
-                </Label>
+                <Label x:Name="showPidsLabel" 
+                       Text="Show References:"
+                       Style="{StaticResource AppSettingsLabels}"/>
                 <CheckBox x:Name="pidsCheckBox"
                           Color="Blue"
                           IsChecked="{Binding ShowReferencePids, Mode=OneWay}">
@@ -100,13 +100,27 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
+            <HorizontalStackLayout x:Name="showPlaybackControlsHTL" Margin=".5">
+                <Label x:Name="showControlsLabel" 
+                       Text="Show Media Controls:"
+                       Style="{StaticResource AppSettingsLabels}" />
+                <CheckBox x:Name="playbackControlsCheckBox"
+                          Color="Blue"
+                          IsChecked="{Binding ShowPlaybackControls, Mode=OneWay}">
+                    <CheckBox.Behaviors>
+                        <behavior:EventToCommandBehavior 
+                            EventName="CheckedChanged" 
+                            Command="{Binding ShowPlaybackControlsCheckedChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference playbackControlsCheckBox}, Path=IsChecked}"/>
+                    </CheckBox.Behaviors>
+                </CheckBox>
+            </HorizontalStackLayout>
+
             <HorizontalStackLayout x:Name="ShowPaperContentPage" Margin=".5">
-                <Label Text="Show Contents:"
-                       Padding="0,0,.5,0"
-                       WidthRequest="115"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center">
-                </Label>
+                <Label x:Name="showContentsLabel" 
+                       Text="Show Contents:"
+                       Style="{StaticResource AppSettingsLabels}" />
+
                 <CheckBox x:Name="paperContentsCheckBox"
                           Color="Blue"
                           IsChecked="{Binding ShowPaperContents, Mode=OneWay}">

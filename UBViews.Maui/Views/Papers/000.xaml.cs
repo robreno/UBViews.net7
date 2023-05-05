@@ -326,15 +326,5 @@ public partial class _000 : ContentPage
     {
         Resources["IsVisiblePidStyle"] = Resources["IsNotVisiblePidStyle"];
     }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void OnDisappearing(object sender, EventArgs e)
-    {
-        mediaElement.Stop();
-    }
 }
 

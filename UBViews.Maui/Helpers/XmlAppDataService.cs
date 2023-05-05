@@ -5,11 +5,14 @@ using UBViews.Services;
 
 namespace UBViews.Helpers;
 
-public class AppDataService : IAppDataService
+public class XmlAppDataService : IAppDataService
 {
+    /// <summary>
+    /// 
+    /// </summary>
     IFileService fileService;
 
-    public AppDataService(IFileService fileService)
+    public XmlAppDataService(IFileService fileService)
     {
         this.fileService = fileService;
     }

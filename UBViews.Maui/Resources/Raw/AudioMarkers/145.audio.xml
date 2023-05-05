@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AudioMarkers count="57">
+  <Marker pid="145:0.0" seqId="1">
+    <Start>0:0:0.0</Start>
+    <End>0:0:6.595</End>
+    <TimeSpan>0:0:0.0_0:0:6.595</TimeSpan>
+  </Marker>
+  <Marker pid="145:0.1" seqId="2">
+    <Start>0:0:6.595</Start>
+    <End>0:0:37.98</End>
+    <TimeSpan>0:0:6.595_0:0:37.98</TimeSpan>
+  </Marker>
+  <Marker pid="145:0.2" seqId="3">
+    <Start>0:0:37.98</Start>
+    <End>0:0:57.409</End>
+    <TimeSpan>0:0:37.98_0:0:57.409</TimeSpan>
+  </Marker>
+  <Marker pid="145:0.3" seqId="4">
+    <Start>0:0:57.409</Start>
+    <End>0:1:49.221</End>
+    <TimeSpan>0:0:57.409_0:1:49.221</TimeSpan>
+  </Marker>
+  <Marker pid="145:1.0" seqId="5">
+    <Start>0:1:49.221</Start>
+    <End>0:1:52.410</End>
+    <TimeSpan>0:1:49.221_0:1:52.410</TimeSpan>
+  </Marker>
+  <Marker pid="145:1.1" seqId="6">
+    <Start>0:1:52.410</Start>
+    <End>0:2:33.518</End>
+    <TimeSpan>0:1:52.410_0:2:33.518</TimeSpan>
+  </Marker>
+  <Marker pid="145:1.2" seqId="7">
+    <Start>0:2:33.518</Start>
+    <End>0:3:41.953</End>
+    <TimeSpan>0:2:33.518_0:3:41.953</TimeSpan>
+  </Marker>
+  <Marker pid="145:1.3" seqId="8">
+    <Start>0:3:41.953</Start>
+    <End>0:4:4.457</End>
+    <TimeSpan>0:3:41.953_0:4:4.457</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.0" seqId="9">
+    <Start>0:4:4.457</Start>
+    <End>0:4:7.960</End>
+    <TimeSpan>0:4:4.457_0:4:7.960</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.1" seqId="10">
+    <Start>0:4:7.960</Start>
+    <End>0:4:32.512</End>
+    <TimeSpan>0:4:7.960_0:4:32.512</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.2" seqId="11">
+    <Start>0:4:32.512</Start>
+    <End>0:5:16.830</End>
+    <TimeSpan>0:4:32.512_0:5:16.830</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.3" seqId="12">
+    <Start>0:5:16.830</Start>
+    <End>0:5:26.965</End>
+    <TimeSpan>0:5:16.830_0:5:26.965</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.4" seqId="13">
+    <Start>0:5:26.965</Start>
+    <End>0:6:32.151</End>
+    <TimeSpan>0:5:26.965_0:6:32.151</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.5" seqId="14">
+    <Start>0:6:32.151</Start>
+    <End>0:7:33.213</End>
+    <TimeSpan>0:6:32.151_0:7:33.213</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.6" seqId="15">
+    <Start>0:7:33.213</Start>
+    <End>0:8:5.417</End>
+    <TimeSpan>0:7:33.213_0:8:5.417</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.7" seqId="16">
+    <Start>0:8:5.417</Start>
+    <End>0:8:47.337</End>
+    <TimeSpan>0:8:5.417_0:8:47.337</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.8" seqId="17">
+    <Start>0:8:47.337</Start>
+    <End>0:9:16.654</End>
+    <TimeSpan>0:8:47.337_0:9:16.654</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.9" seqId="18">
+    <Start>0:9:16.654</Start>
+    <End>0:9:38.102</End>
+    <TimeSpan>0:9:16.654_0:9:38.102</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.10" seqId="19">
+    <Start>0:9:38.102</Start>
+    <End>0:9:50.164</End>
+    <TimeSpan>0:9:38.102_0:9:50.164</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.11" seqId="20">
+    <Start>0:9:50.164</Start>
+    <End>0:10:3.519</End>
+    <TimeSpan>0:9:50.164_0:10:3.519</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.12" seqId="21">
+    <Start>0:10:3.519</Start>
+    <End>0:10:39.461</End>
+    <TimeSpan>0:10:3.519_0:10:39.461</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.13" seqId="22">
+    <Start>0:10:39.461</Start>
+    <End>0:11:34.680</End>
+    <TimeSpan>0:10:39.461_0:11:34.680</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.14" seqId="23">
+    <Start>0:11:34.680</Start>
+    <End>0:11:59.889</End>
+    <TimeSpan>0:11:34.680_0:11:59.889</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.15" seqId="24">
+    <Start>0:11:59.889</Start>
+    <End>0:12:54.29</End>
+    <TimeSpan>0:11:59.889_0:12:54.29</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.16" seqId="25">
+    <Start>0:12:54.29</Start>
+    <End>0:13:13.307</End>
+    <TimeSpan>0:12:54.29_0:13:13.307</TimeSpan>
+  </Marker>
+  <Marker pid="145:2.17" seqId="26">
+    <Start>0:13:13.307</Start>
+    <End>0:13:29.312</End>
+    <TimeSpan>0:13:13.307_0:13:29.312</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.0" seqId="27">
+    <Start>0:13:29.312</Start>
+    <End>0:13:32.677</End>
+    <TimeSpan>0:13:29.312_0:13:32.677</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.1" seqId="28">
+    <Start>0:13:32.677</Start>
+    <End>0:14:2.839</End>
+    <TimeSpan>0:13:32.677_0:14:2.839</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.2" seqId="29">
+    <Start>0:14:2.839</Start>
+    <End>0:14:19.171</End>
+    <TimeSpan>0:14:2.839_0:14:19.171</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.3" seqId="30">
+    <Start>0:14:19.171</Start>
+    <End>0:14:56.526</End>
+    <TimeSpan>0:14:19.171_0:14:56.526</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.4" seqId="31">
+    <Start>0:14:56.526</Start>
+    <End>0:15:34.185</End>
+    <TimeSpan>0:14:56.526_0:15:34.185</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.5" seqId="32">
+    <Start>0:15:34.185</Start>
+    <End>0:16:1.416</End>
+    <TimeSpan>0:15:34.185_0:16:1.416</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.6" seqId="33">
+    <Start>0:16:1.416</Start>
+    <End>0:16:25.431</End>
+    <TimeSpan>0:16:1.416_0:16:25.431</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.7" seqId="34">
+    <Start>0:16:25.431</Start>
+    <End>0:17:10.293</End>
+    <TimeSpan>0:16:25.431_0:17:10.293</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.8" seqId="35">
+    <Start>0:17:10.293</Start>
+    <End>0:17:50.343</End>
+    <TimeSpan>0:17:10.293_0:17:50.343</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.9" seqId="36">
+    <Start>0:17:50.343</Start>
+    <End>0:18:23.588</End>
+    <TimeSpan>0:17:50.343_0:18:23.588</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.10" seqId="37">
+    <Start>0:18:23.588</Start>
+    <End>0:19:14.279</End>
+    <TimeSpan>0:18:23.588_0:19:14.279</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.11" seqId="38">
+    <Start>0:19:14.279</Start>
+    <End>0:20:25.457</End>
+    <TimeSpan>0:19:14.279_0:20:25.457</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.12" seqId="39">
+    <Start>0:20:25.457</Start>
+    <End>0:20:49.31</End>
+    <TimeSpan>0:20:25.457_0:20:49.31</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.13" seqId="40">
+    <Start>0:20:49.31</Start>
+    <End>0:21:12.950</End>
+    <TimeSpan>0:20:49.31_0:21:12.950</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.14" seqId="41">
+    <Start>0:21:12.950</Start>
+    <End>0:21:38.828</End>
+    <TimeSpan>0:21:12.950_0:21:38.828</TimeSpan>
+  </Marker>
+  <Marker pid="145:3.15" seqId="42">
+    <Start>0:21:38.828</Start>
+    <End>0:22:10.77</End>
+    <TimeSpan>0:21:38.828_0:22:10.77</TimeSpan>
+  </Marker>
+  <Marker pid="145:4.0" seqId="43">
+    <Start>0:22:10.77</Start>
+    <End>0:22:13.90</End>
+    <TimeSpan>0:22:10.77_0:22:13.90</TimeSpan>
+  </Marker>
+  <Marker pid="145:4.1" seqId="44">
+    <Start>0:22:13.90</Start>
+    <End>0:23:13.210</End>
+    <TimeSpan>0:22:13.90_0:23:13.210</TimeSpan>
+  </Marker>
+  <Marker pid="145:4.2" seqId="45">
+    <Start>0:23:13.210</Start>
+    <End>0:24:11.411</End>
+    <TimeSpan>0:23:13.210_0:24:11.411</TimeSpan>
+  </Marker>
+  <Marker pid="145:4.3" seqId="46">
+    <Start>0:24:11.411</Start>
+    <End>0:24:47.726</End>
+    <TimeSpan>0:24:11.411_0:24:47.726</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.0" seqId="47">
+    <Start>0:24:47.726</Start>
+    <End>0:24:50.908</End>
+    <TimeSpan>0:24:47.726_0:24:50.908</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.1" seqId="48">
+    <Start>0:24:50.908</Start>
+    <End>0:26:0.938</End>
+    <TimeSpan>0:24:50.908_0:26:0.938</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.2" seqId="49">
+    <Start>0:26:0.938</Start>
+    <End>0:26:8.482</End>
+    <TimeSpan>0:26:0.938_0:26:8.482</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.3" seqId="50">
+    <Start>0:26:8.482</Start>
+    <End>0:26:37.347</End>
+    <TimeSpan>0:26:8.482_0:26:37.347</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.4" seqId="51">
+    <Start>0:26:37.347</Start>
+    <End>0:27:5.806</End>
+    <TimeSpan>0:26:37.347_0:27:5.806</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.5" seqId="52">
+    <Start>0:27:5.806</Start>
+    <End>0:27:52.706</End>
+    <TimeSpan>0:27:5.806_0:27:52.706</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.6" seqId="53">
+    <Start>0:27:52.706</Start>
+    <End>0:28:52.853</End>
+    <TimeSpan>0:27:52.706_0:28:52.853</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.7" seqId="54">
+    <Start>0:28:52.853</Start>
+    <End>0:29:53.197</End>
+    <TimeSpan>0:28:52.853_0:29:53.197</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.8" seqId="55">
+    <Start>0:29:53.197</Start>
+    <End>0:30:26.626</End>
+    <TimeSpan>0:29:53.197_0:30:26.626</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.9" seqId="56">
+    <Start>0:30:26.626</Start>
+    <End>0:30:50.381</End>
+    <TimeSpan>0:30:26.626_0:30:50.381</TimeSpan>
+  </Marker>
+  <Marker pid="145:5.10" seqId="57">
+    <Start>0:30:50.381</Start>
+    <End>0:31:32.769</End>
+    <TimeSpan>0:30:50.381_0:31:32.769</TimeSpan>
+  </Marker>
+</AudioMarkers>

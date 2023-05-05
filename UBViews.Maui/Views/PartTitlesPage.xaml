@@ -82,6 +82,7 @@
                             <DataTemplate x:DataType="model:PaperDto">
                                 <!-- Outer VerticalStackLayout -->
                                 <VerticalStackLayout x:Name="innerDataTemplateGrid"
+                                                     Style="{StaticResource PartTitlesVSL}"
                                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                                        Dark={StaticResource DarkBackground}}">
                                     <!-- Inner Content Border -->

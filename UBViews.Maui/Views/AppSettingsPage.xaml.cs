@@ -28,7 +28,7 @@ public partial class AppSettingsPage : ContentPage
         {
             maxNumber = await appSettingsService.Get("max_query_results", 50);
             maxNumberEntry.Text = maxNumber.ToString("0");
-            showPids = await appSettingsService.Get("show_pids", false);
+            showPids = await appSettingsService.Get("show_reference_pids", false);
             pidsCheckBox.IsChecked = showPids;
             lineHeight = await appSettingsService.Get("line_height", 1.0);
             lineHeightStepper.Value = lineHeight;
@@ -86,8 +86,8 @@ public partial class AppSettingsPage : ContentPage
             }
             if (showPidsDirty)
             {
-                Preferences.Default.Set("show_pids", showPids);
-                await appSettingsService.SetCache("show_pids", showPids);
+                Preferences.Default.Set("show_reference_pids", showPids);
+                await appSettingsService.SetCache("show_reference_pids", showPids);
             }
             if (lineHeightDirty)
             {

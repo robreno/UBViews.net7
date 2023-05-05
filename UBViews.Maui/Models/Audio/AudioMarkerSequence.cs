@@ -6,7 +6,7 @@ namespace UBViews.Models.Audio;
 /// <summary>
 /// An ordered collection of PlaybackMediaMarker objects.
 /// </summary>
-sealed class AudioMarkerSequence
+public class AudioMarkerSequence
 {
     /// <summary>
     /// SortedList of MedidaMarkers
@@ -25,6 +25,22 @@ sealed class AudioMarkerSequence
     /// <returns></returns>
     public AudioMarker GetAt(int index)
     {
+        return markers[index];
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="seqId"></param>
+    /// <returns></returns>
+    public AudioMarker GetBySeqId(int seqId)
+    {
+        if (seqId < 1)
+        {
+            return null;
+        }
+
+        int index = seqId - 1;
         return markers[index];
     }
 
