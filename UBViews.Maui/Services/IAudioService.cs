@@ -25,7 +25,7 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="mediaMarker"></param>
+    /// <param name="audioMarker"></param>
     Task Insert(AudioMarker audioMarker);
 
     /// <summary>

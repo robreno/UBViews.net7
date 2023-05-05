@@ -104,24 +104,27 @@ namespace UBViews
             return window;
         }
 
-        private async void Window_Created(object sender, EventArgs e)
+        protected void Window_Created(object sender, EventArgs e)
         {
 #if WINDOWS
-        const int defaultWidth = 1080;
-        const int defaultHeight = 920;
+            Task.Run(async () => 
+            {
+                const int defaultWidth = 1080;
+                const int defaultHeight = 920;
 
-        var window = (Window)sender;
-        window.Width = defaultWidth;
-        window.Height = defaultHeight;
-        window.X = -defaultWidth;
-        window.Y = -defaultHeight;
+                var window = (Window)sender;
+                window.Width = defaultWidth;
+                window.Height = defaultHeight;
+                window.X = -defaultWidth;
+                window.Y = -defaultHeight;
 
-        await window.Dispatcher.DispatchAsync(() => 
-        { 
-            var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
-            window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
-            window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
-        });
+                await window.Dispatcher.DispatchAsync(() =>
+                {
+                    var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+                    window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
+                    window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+                });
+            });
 #endif
         }
     }
