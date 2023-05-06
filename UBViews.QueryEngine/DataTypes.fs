@@ -6,37 +6,38 @@ open System.IO
 
 open Microsoft.FSharp.Core.String.FSharpStringExtensions
 
-type QPTermPosition = {term:string; docId:int; seqId:int; idx:int; ln:int}
-type QPTermPositionList = QPTermPosition list
-type QPTermOccurrence = {docId:int; docFreq:int; seqId:int; paraId:string; posLst:QPTermPositionList}
+// Not Used by Solution
+//type QPTermPosition = {term:string; docId:int; seqId:int; idx:int; ln:int}
+//type QPTermPositionList = QPTermPosition list
+//type QPTermOccurrence = {docId:int; docFreq:int; seqId:int; paraId:string; posLst:QPTermPositionList}
 
-let StringSplitPatternArrayLocal = [|"["; ";"; "]";|]
+//let StringSplitPatternArrayLocal = [|"["; ";"; "]";|]
 
 // Not Used by Solution
-[<Serializable>]
-type TermSetEx = Set<string>
+//[<Serializable>]
+//type TermSetEx = Set<string>
 
-[<Serializable>]
-type CaptureLocationEx = {idx:int; ln:int}
+//[<Serializable>]
+//type CaptureLocationEx = {idx:int; ln:int}
 
-[<Serializable>]
-type TermPositionEx = {docId:int; seqId:int; idx:int; ln:int}
-[<Serializable>]
-type TermPositionListEx = TermPositionEx list
-[<Serializable>]
-type TermOccurrenceEx = {docId:int; docFreq:int; seqId:int; paraId:string; posLst:TermPositionListEx}
-[<Serializable>]
-type TermOccurrenceListEx = TermOccurrenceEx list
-[<Serializable>]
-type PaperVocabularyValueEx = {term:string; docId:int; idocFreq:int; docFreq:int; occLst:TermOccurrenceListEx }
-[<Serializable>]
-type BookVocabularyValueEx = {term:string; idocFreq:int; docFreq:int; occLst:TermOccurrenceListEx }
-[<Serializable>]
-type BookVocabularyValueListEx = BookVocabularyValueEx list
-[<Serializable>]
-type PaperVocabularyKeyValuePairEx = string * PaperVocabularyValueEx 
-[<Serializable>]
-type BookVocabularyKeyValuePairEx  = string * BookVocabularyValueEx
+//[<Serializable>]
+//type TermPositionEx = {docId:int; seqId:int; idx:int; ln:int}
+//[<Serializable>]
+//type TermPositionListEx = TermPositionEx list
+//[<Serializable>]
+//type TermOccurrenceEx = {docId:int; docFreq:int; seqId:int; paraId:string; posLst:TermPositionListEx}
+//[<Serializable>]
+//type TermOccurrenceListEx = TermOccurrenceEx list
+//[<Serializable>]
+//type PaperVocabularyValueEx = {term:string; docId:int; idocFreq:int; docFreq:int; occLst:TermOccurrenceListEx }
+//[<Serializable>]
+//type BookVocabularyValueEx = {term:string; idocFreq:int; docFreq:int; occLst:TermOccurrenceListEx }
+//[<Serializable>]
+//type BookVocabularyValueListEx = BookVocabularyValueEx list
+//[<Serializable>]
+//type PaperVocabularyKeyValuePairEx = string * PaperVocabularyValueEx 
+//[<Serializable>]
+//type BookVocabularyKeyValuePairEx  = string * BookVocabularyValueEx
 
 // Used by Mappers.fs and Tokenization.fs
 //type TokenCase =
@@ -55,10 +56,6 @@ type TokenID = int
 let getTokenID (rawToken : RawToken) : TokenID =
     let tokenId = rawToken.ToLowerInvariant().GetHashCode()
     tokenId
-
-//let getTokenIDByLookup (rawToken : RawToken) : TokenID =
-//    let tokenId = rawToken.ToLowerInvariant().GetHashCode()
-//    tokenId
 
 /// Fancy way to represent a token id and lexeme tuple.
 type Token =

@@ -15,7 +15,7 @@
 		<ApplicationTitle>UBViews.Maui</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.ubviews.maui</ApplicationId>
+		<ApplicationId>ubviews.maui</ApplicationId>
 		<ApplicationIdGuid>aa91c2eb-6265-48b2-8835-b94bb1c7b79b</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -34,17 +34,32 @@
 		<RunAnalyzers>false</RunAnalyzers>
 		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
 		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
 		<PackageCertificateThumbprint>FDE97FF138D8FDEEA151B85DD3DC7017FFBB8DD2</PackageCertificateThumbprint>
 		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
 		<AppInstallerUri>C:\Archive\Projects\UBViews_2023\AppPackages\</AppInstallerUri>
-  
+		<Platforms>AnyCPU;x86</Platforms>
 	</PropertyGroup>
 
+  <!-- see Publish a .NET MAUI app for Windows with the CLI -->
+  <!--<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Release'">
+    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>FDE97FF138D8FDEEA151B85DD3DC7017FFBB8DD2</PackageCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(RuntimeIdentifierOverride)' != ''">
+    <RuntimeIdentifier>$(RuntimeIdentifierOverride)</RuntimeIdentifier>
+  </PropertyGroup>-->
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <Optimize>False</Optimize>
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|x86'">
 	  <Optimize>False</Optimize>
 	  <ApplicationTitle>UBViews</ApplicationTitle>
 	  <ApplicationId>com.ubviews</ApplicationId>
@@ -56,7 +71,19 @@
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|x86'">
+	  <Optimize>False</Optimize>
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
+	  <Optimize>False</Optimize>
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|x86'">
 	  <Optimize>False</Optimize>
 	  <ApplicationTitle>UBViews</ApplicationTitle>
 	  <ApplicationId>com.ubviews</ApplicationId>
@@ -68,12 +95,30 @@
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|x86'">
+	  <Optimize>False</Optimize>
 	  <ApplicationTitle>UBViews</ApplicationTitle>
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|x86'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|x86'">
 	  <ApplicationTitle>UBViews</ApplicationTitle>
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>
@@ -83,7 +128,17 @@
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|x86'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|x86'">
 	  <ApplicationTitle>UBViews</ApplicationTitle>
 	  <ApplicationId>com.ubviews</ApplicationId>
 	</PropertyGroup>

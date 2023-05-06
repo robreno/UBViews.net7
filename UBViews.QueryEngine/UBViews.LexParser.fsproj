@@ -5,23 +5,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <FsLexToolPath>..\src\FsLex\bin\$(Configuration)\net6.0</FsLexToolPath>
     <FsYaccToolPath>..\src\FsYacc\bin\$(Configuration)\net6.0</FsYaccToolPath>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>
     <Tailcalls>True</Tailcalls>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Optimize>True</Optimize>
-    <Tailcalls>True</Tailcalls>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>False</Optimize>
-    <Tailcalls>False</Tailcalls>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Optimize>False</Optimize>
     <Tailcalls>False</Tailcalls>
   </PropertyGroup>

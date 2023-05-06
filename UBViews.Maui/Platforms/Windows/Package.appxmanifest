@@ -6,13 +6,13 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=ubviewsOne" Version="0.1.3.0" />
+  <Identity Name="AGMedia.Maui.UBViews" Publisher="CN=ubviewsOne" Version="0.1.10.0" />
 
   <mp:PhoneIdentity PhoneProductId="CC68130D-0A4C-44DF-9C3D-21DE94C6FE5F" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <DisplayName>UBViews</DisplayName>
+    <PublisherDisplayName>AGMedia.Maui Apps</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
 
@@ -28,8 +28,8 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="$placeholder$"
-        Description="$placeholder$"
+        DisplayName="UBViews"
+        Description="A Urantia Book Viewer"
         Square150x150Logo="$placeholder$.png"
         Square44x44Logo="$placeholder$.png"
         BackgroundColor="transparent">
