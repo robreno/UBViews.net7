@@ -13,8 +13,8 @@
     <Tailcalls>True</Tailcalls>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>False</Optimize>
-    <Tailcalls>False</Tailcalls>
+    <Optimize>True</Optimize>
+    <Tailcalls>True</Tailcalls>
   </PropertyGroup>
 
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
