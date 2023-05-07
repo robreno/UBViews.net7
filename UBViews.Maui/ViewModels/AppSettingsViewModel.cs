@@ -4,13 +4,13 @@ namespace UBViews.ViewModels;
 
 public partial class AppSettingsViewModel : BaseViewModel
 {
-    private IAppSettingsService settingsService;
-
     int previousMaxQuery;
     double previousLineHeight;
     bool previousShowPids;
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
+
+    private IAppSettingsService settingsService;
 
     public AppSettingsViewModel(IAppSettingsService settingsService)
     {
