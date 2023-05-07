@@ -9,11 +9,14 @@ namespace UBViews
 
             Routing.RegisterRoute(nameof(PartsPage), typeof(PartsPage));
             Routing.RegisterRoute(nameof(PartTitlesPage), typeof(PartTitlesPage));
-            Routing.RegisterRoute(nameof(PaperTitlesPage), typeof(PaperTitlesPage));
             Routing.RegisterRoute(nameof(ContentTitlesPage), typeof(ContentTitlesPage));
+            Routing.RegisterRoute(nameof(PaperTitlesPage), typeof(PaperTitlesPage));
+
             Routing.RegisterRoute(nameof(AppDataPage), typeof(AppDataPage));
             Routing.RegisterRoute(nameof(AppSettingsPage), typeof(AppSettingsPage));
+
             Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
+            //Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
 
             // Generated Xaml Pages
             // Part I The Central and Superuniverse

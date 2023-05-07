@@ -68,6 +68,8 @@ namespace UBViews
 
             builder.Services.AddTransient<QueryInputViewModel>();
             builder.Services.AddTransient<QueryInputPage>();
+            //builder.Services.AddTransient<QueryResultViewModel>();
+            //builder.Services.AddTransient<QueryResultPage>();
 
             builder.Services.AddTransient<AppDataViewModel>();
             builder.Services.AddTransient<AppDataPage>();
@@ -77,10 +79,8 @@ namespace UBViews
 
             // Xaml Pages ViewModel
             builder.Services.AddTransient<XamlPaperViewModel>();
-
             // Generated Xaml Pages Foreword
             builder.Services.AddTransient<_000>();
-
             // Generated Xaml Pages
             // Part I The Central and Superuniverse
             builder.Services.AddTransient<_001>();
