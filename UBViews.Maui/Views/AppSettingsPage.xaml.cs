@@ -3,8 +3,14 @@ using UBViews.ViewModels;
 
 namespace UBViews.Views;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class AppSettingsPage : ContentPage
 {
+    /// <summary>
+    /// 
+    /// </summary>
     private int maxNumber;
     private bool showPids;
     private double lineHeight;
@@ -13,8 +19,16 @@ public partial class AppSettingsPage : ContentPage
     private bool showPidsDirty;
     private bool lineHeightDirty;
 
+    /// <summary>
+    /// 
+    /// </summary>
     private IAppSettingsService appSettingsService;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="vm"></param>
+    /// <param name="appSettingsService"></param>
     public AppSettingsPage(AppSettingsViewModel vm, IAppSettingsService appSettingsService)
     {
         InitializeComponent();
@@ -22,6 +36,11 @@ public partial class AppSettingsPage : ContentPage
         this.appSettingsService = appSettingsService;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnLoaded(object sender, EventArgs e)
     {
         try
@@ -38,6 +57,12 @@ public partial class AppSettingsPage : ContentPage
             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnMaxNumberStepperValueChanged(object sender, ValueChangedEventArgs e)
     {
         try
@@ -51,6 +76,11 @@ public partial class AppSettingsPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnLineHeightStepperValueChanged(object sender, ValueChangedEventArgs e)
     {
         try 
@@ -63,6 +93,12 @@ public partial class AppSettingsPage : ContentPage
             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnShowPidsCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         try
@@ -75,6 +111,12 @@ public partial class AppSettingsPage : ContentPage
             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnSaveSettingsButtonClicked(object sender, EventArgs e)
     {
         try

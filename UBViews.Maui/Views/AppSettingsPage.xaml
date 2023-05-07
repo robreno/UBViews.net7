@@ -7,7 +7,7 @@
              x:Class="UBViews.Views.AppSettingsPage"
              x:DataType="viewmodel:AppSettingsViewModel"
              Title="App Settings Page"
-             Loaded="OnLoaded" >
+             Loaded="OnLoaded">
 
     <ContentPage.Resources>
         <ResourceDictionary>
