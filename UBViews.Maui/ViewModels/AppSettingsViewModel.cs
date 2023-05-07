@@ -139,7 +139,7 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task LoadSettings()
+    async Task LoadSettings()
     {
         try
         {
