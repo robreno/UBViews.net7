@@ -78,6 +78,9 @@ namespace UBViews.ViewModels
         string paperTitle;
 
         [ObservableProperty]
+        string paperAuthor;
+
+        [ObservableProperty]
         string paperNumber;
 
         [ObservableProperty]
