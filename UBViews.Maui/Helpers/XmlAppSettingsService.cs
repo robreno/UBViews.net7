@@ -51,13 +51,13 @@ public partial class XmlAppSettingsService : IAppSettingsService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="filename"></param>
+    /// <param name="fileName"></param>
     /// <returns></returns>
-    private async Task<string> LoadAppSettingsAsync(string filename)
+    private async Task<string> LoadAppSettingsAsync(string fileName)
     {
         try
         {
-            string targetFilePath = Path.Combine(_appDir, filename);
+            string targetFilePath = Path.Combine(_appDir, fileName);
             using FileStream inputStream = File.OpenRead(targetFilePath);
             using StreamReader reader = new StreamReader(inputStream);
             string contents = reader.ReadToEnd();
@@ -73,13 +73,13 @@ public partial class XmlAppSettingsService : IAppSettingsService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="filename"></param>
+    /// <param name="fileName"></param>
     /// <returns></returns>
-    private async Task SaveAppSettingsAsync(string filename)
+    private async Task SaveAppSettingsAsync(string fileName)
     {
         try
         {
-            string targetFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, filename);
+            string targetFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
             using var stream = File.Create(targetFilePath);
             CancellationToken token = new CancellationToken(false);
             await _settingsRoot.SaveAsync(stream, SaveOptions.DisableFormatting, token);

@@ -21,10 +21,10 @@ public partial class AppSettingsViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    int maxQueryResults;
+    double lineHeight;
 
     [ObservableProperty]
-    double lineHeight;
+    int maxQueryResults;
 
     [ObservableProperty]
     bool showReferencePids;
