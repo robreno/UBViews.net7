@@ -4,9 +4,14 @@ using CommunityToolkit.Maui.Views;
 namespace UBViews.Models.Audio;
 public class MediaStatePair
 {
-
+    // See: https://www.xamboy.com/2021/08/17/using-state-machine-in-xamarin-forms-part-1/
+    // See: https://github.com/CrossGeeks/StateMachineVideoPlayerXFSample
     public MediaStatePair(string previousState, string newState)
-    { PreviousState = previousState; NewState = NewState; }
+    { 
+        PreviousState = previousState; 
+        NewState = NewState; 
+    }
+
     public string PreviousState { get; set; }
     public string NewState { get; set; }
 

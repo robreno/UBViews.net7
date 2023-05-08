@@ -27,6 +27,11 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        public MediaStatePair MediaState = new("None", "None");
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected AudioMarkerSequence Markers { get; set; } = new();
 
         /// <summary>
@@ -165,6 +170,7 @@ namespace UBViews.ViewModels
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_reference_pids", false);
                 ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
+
                 string uid = dto.Uid;
                 IsScrollToLabel = dto.ScrollTo;
                 if (IsScrollToLabel)
@@ -192,10 +198,11 @@ namespace UBViews.ViewModels
         {
             try
             {
-                int paperId = dto.Id;
-                var paragraphs = await fileService.GetParagraphsAsync(paperId);
                 if (Paragraphs.Count != 0)
                     return;
+
+                int paperId = dto.Id;
+                var paragraphs = await fileService.GetParagraphsAsync(paperId);
 
                 foreach (var paragraph in paragraphs)
                 {
@@ -353,12 +360,15 @@ namespace UBViews.ViewModels
 
                 string message = $"Playing {pid} Timespan {timeSpanRangeMsg}";
 
+                // Initial State
                 if (CurrentState == "None" ||
-                    CurrentState == "Stopped")
+                    PreviousState == "None")
                 {
                     await PlayAudioRange(timeSpanRange);
                 }
-                else if (CurrentState == "Paused")
+                // Paused State (
+                else if (CurrentState == "Paused" ||
+                         PreviousState == "None")
                 {
                     await PlayAudio();
                     message = $"Resuming {pid} Timespan {timeSpanRangeMsg}";
@@ -370,22 +380,22 @@ namespace UBViews.ViewModels
                 }
 
                 // Opening State for Windows
-                if (CurrentState == "Paused" && PreviousState == "Opening" ||
-                    CurrentState == "Paused" && PreviousState == "Stopped")
-                {
-                    await PlayAudioRange(timeSpanRange);
-                }
-                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                         CurrentState == "Playing" && PreviousState == "Buffering")
-                {
-                    await PauseAudio();
-                    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
-                }
-                else
-                {
-                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                    throw new Exception("Uknown State: " + msg);
-                }
+                //if (CurrentState == "Paused" && PreviousState == "Opening" ||
+                //    CurrentState == "Paused" && PreviousState == "Stopped")
+                //{
+                //    await PlayAudioRange(timeSpanRange);
+                //}
+                //else if (CurrentState == "Playing" && PreviousState == "Paused" ||
+                //         CurrentState == "Playing" && PreviousState == "Buffering")
+                //{
+                //    await PauseAudio();
+                //    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
+                //}
+                //else
+                //{
+                //    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
+                //    throw new Exception("Uknown State: " + msg);
+                //}
 
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
