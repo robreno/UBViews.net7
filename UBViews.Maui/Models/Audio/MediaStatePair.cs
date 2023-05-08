@@ -4,6 +4,7 @@ using CommunityToolkit.Maui.Views;
 namespace UBViews.Models.Audio;
 public class MediaStatePair
 {
+    // See: https://learn.microsoft.com/th-th/dotnet/framework/windows-workflow-foundation/state-machine-workflows?WT.mc_id=DOP-MVP-5003636
     // See: https://www.xamboy.com/2021/08/17/using-state-machine-in-xamarin-forms-part-1/
     // See: https://github.com/CrossGeeks/StateMachineVideoPlayerXFSample
     public MediaStatePair(string previousState, string newState)
