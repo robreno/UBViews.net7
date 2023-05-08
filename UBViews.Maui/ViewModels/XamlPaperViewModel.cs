@@ -84,6 +84,9 @@ namespace UBViews.ViewModels
         string paperNumber;
 
         [ObservableProperty]
+        double lineHeight;
+
+        [ObservableProperty]
         bool showReferencePids;
 
         [ObservableProperty]
@@ -156,9 +159,6 @@ namespace UBViews.ViewModels
         {
             try
             {
-                CurrentState = "None";
-                PreviousState = "None";
-
                 CurrentState = "None";
                 PreviousState = "None";
 
@@ -368,7 +368,7 @@ namespace UBViews.ViewModels
                     string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
                     throw new Exception("Uknown State: " + msg);
                 }
-#elif WINDOWS
+
                 // Opening State for Windows
                 if (CurrentState == "Paused" && PreviousState == "Opening" ||
                     CurrentState == "Paused" && PreviousState == "Stopped")
@@ -680,7 +680,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                Position = CurrentPosition = timeSpan;
+                Position = timeSpan;
 
                 var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
@@ -707,8 +707,8 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = state;
+                MediaElementPreviousState = MediaElementCurrentState;
+                MediaElementCurrentState = state;
             }
             catch (Exception ex)
             {
@@ -718,30 +718,16 @@ namespace UBViews.ViewModels
         }
 
         /// <summary>
-        /// Private Method for setting reference PIDs on or off.
+        /// 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="paperId"></param>
         /// <returns></returns>
-        async Task SetReferencePids(bool value)
+        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
             try
             {
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    if (!ShowReferencePids)
-                    {
-                        var count = Paragraphs.Count();
-                        foreach (var paragraph in Paragraphs)
-                        {
-                            var seqId = paragraph.SeqId;
-                            var pid = paragraph.Pid;
-                            var spanName = "span_" + seqId.ToString("000");
-                            var span = contentPage.FindByName(spanName) as Span;
-                            var spanText = span.Text;
-                            span.Text = "";
-                        }
-                    }
-                });
+                this.Markers = await audioService.LoadAudioMarkers(paperId);
+                return this.Markers;
             }
             catch (Exception ex)
             {

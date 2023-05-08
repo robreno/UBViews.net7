@@ -1,0 +1,125 @@
+#if ANDROID
+                // Opening State for Windows or After Completion of PlayAudioRange
+                if (CurrentState == "Paused" && PreviousState == "Buffering" ||
+                    CurrentState == "Stopped" && PreviousState == "Buffering")
+                {
+                    await PlayAudioRange(timeSpanRange);
+                }
+                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
+                         CurrentState == "Playing" && PreviousState == "Buffering")
+                {
+                    await PauseAudio();
+                    message = $"Pausing {pid} Timespan {timeSpanRange}";
+                }
+                else if (CurrentState == "Paused" && PreviousState == "Playing")
+                {
+                    await PlayAudio();
+                    message = $"Resume Playing {pid} Timespan {timeSpanRange}";
+                }
+                else
+                {
+                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
+                    throw new Exception("Uknown State: " + msg);
+                }
+#elif WINDOWS
+                // Opening State for Windows
+                if (CurrentState == "Paused" && PreviousState == "Opening" ||
+                    CurrentState == "Paused" && PreviousState == "Stopped")
+                {
+                    await PlayAudioRange(timeSpanRange);
+                }
+                else if (CurrentState == "Playing" && PreviousState == "Paused" ||
+                         CurrentState == "Playing" && PreviousState == "Buffering")
+                {
+                    await PauseAudio();
+                    message = $"Pausing {pid} Timespan {timeSpanRange}";
+                }
+                else if (CurrentState == "Paused" && PreviousState == "Playing")
+                {
+                    await PlayAudio();
+                    message = $"Resume Playing {pid} Timespan {timeSpanRange}";
+                }
+                else
+                {
+                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
+                    throw new Exception("Uknown State: " + msg);
+                }
+#endif
+
+/// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        async Task SetReferencePids()
+        {
+            try
+            {
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    if (!ShowReferencePids)
+                    {
+                        var count = Paragraphs.Count();
+                        foreach (var paragraph in Paragraphs)
+                        {
+                            var seqId = paragraph.SeqId;
+                            var pid = paragraph.Pid;
+                            var spanName = "span_" + seqId.ToString("000");
+                            var span = contentPage.FindByName(spanName) as Span;
+                            var spanText = span.Text;
+                            span.Text = "";
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                return;
+            }
+        }
+
+//[RelayCommand]
+        //async Task SetReferencePids()
+        //{
+        //    try
+        //    {
+        //        await MainThread.InvokeOnMainThreadAsync(() =>
+        //        {
+        //            var vte = contentPage.Content.GetVisualTreeDescendants();
+        //            using (var enumerator = vte.GetEnumerator())
+        //            {
+        //                while (enumerator.MoveNext())
+        //                {
+        //                    var child = enumerator.Current;
+        //                    if (child != null)
+        //                    {
+        //                        var childType = child.GetType().Name;
+        //                        if (childType == "Label")
+        //                        {
+        //                            var lbl = child as Label;
+        //                            var styleId = lbl.StyleId;
+        //                            var spn = lbl.FindByName("SP" + styleId) as Span;
+        //                            if (spn != null)
+        //                            {
+        //                                var spanText = spn.Text;
+        //                                if (ShowReferencePids)
+        //                                {
+        //                                    spn.Text = spn.StyleId;
+        //                                }
+        //                                else
+        //                                {
+        //                                    spn.Text = "";
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+        //        return;
+        //    }
+        //}
