@@ -123,3 +123,135 @@
         //        return;
         //    }
         //}
+
+
+    public string GetState(MediaElementState mes)
+    {
+        string state = string.Empty;
+        switch (mes)
+        {
+            case MediaElementState.None:
+                state = "None";
+                break;
+            case MediaElementState.Opening:
+                state = "Opening";
+                break;
+            case MediaElementState.Buffering:
+                state = "Buffering";
+                break;
+            case MediaElementState.Playing:
+                state = "Playing";
+                break;
+            case MediaElementState.Paused:
+                state = "Paused";
+                break;
+            case MediaElementState.Stopped:
+                state = "Stopped";
+                break;
+            case MediaElementState.Failed:
+                state = "Failed";
+                break;
+        }
+        return state;
+    }
+
+
+    
+
+This is How we did it :
+
+https://github.com/BhangeeF16/MAUI-DOT-NET/blob/main/SampleApp/MauiProgram.cs
+
+In MauiProgram.cs > CreateMauiApp
+
+#if WINDOWS
+        builder.ConfigureLifecycleEvents(events =>
+        {
+            events.AddWindows(wndLifeCycleBuilder =>
+            {
+                wndLifeCycleBuilder.OnWindowCreated(window =>
+                {
+                    IntPtr nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                    WindowId win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
+                    AppWindow winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);    
+                    if(winuiAppWindow.Presenter is OverlappedPresenter p)
+                    { 
+                       p.Maximize();
+                       //p.IsAlwaysOnTop=true;
+                       p.IsResizable=false;
+                       p.IsMaximizable = false;
+                       p.IsMinimizable=false;
+                    }                     
+                    else
+                    {
+                        const int width = 1920;
+                        const int height = 1080;
+                        winuiAppWindow.MoveAndResize(new RectInt32(1920 / 2 - width / 2, 1080 / 2 - height / 2, width, height));                      
+                    }                        
+                });
+            });
+        });
+
+    Since September 2022, it can be done with simpler way:
+public partial class App : Application
+{
+    public App()
+    {
+        InitializeComponent();
+
+        MainPage = new AppShell();    
+    }
+
+    protected override Window CreateWindow(IActivationState activationState)
+    {
+        Window window = base.CreateWindow(activationState);
+        window.Activated += Window_Activated;
+        return window;
+    }
+
+    private async void Window_Activated(object sender, EventArgs e)
+    {
+    #if WINDOWS
+        const int DefaultWidth = 1024;
+        const int DefaultHeight = 800;
+
+        var window = sender as Window;
+
+        // change window size.
+        window.Width = DefaultWidth;
+        window.Height = DefaultHeight;
+
+        // give it some time to complete window resizing task.
+        await window.Dispatcher.DispatchAsync(() => { });
+
+        var disp = DeviceDisplay.Current.MainDisplayInfo;
+
+        // move to screen center
+        window.X = (disp.Width / disp.Density - window.Width) / 2;
+        window.Y = (disp.Height / disp.Density - window.Height) / 2;
+    #endif    
+    }
+}
+Related ticket: https://github.com/dotnet/maui/pull/4942
+
+If you only want to do this for the Desktop Platforms, then you can do something similar to @ToolmakerSteve but per-platform by overriding the OnLaunched function within the Platforms/Windows/App.xaml.cs for example.
+
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Windows.Graphics;
+using WinRT.Interop;
+//...
+protected override void OnLaunched(LaunchActivatedEventArgs args)
+{
+    base.OnLaunched(args);
+
+    var currentWindow = Application.Windows[0].Handler.PlatformView;
+    IntPtr _windowHandle = WindowNative.GetWindowHandle(currentWindow);
+    var windowId = Win32Interop.GetWindowIdFromWindow(_windowHandle);
+
+    AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+    appWindow.Resize(new SizeInt32(350, 600));
+}
+These methods of resizing are still not ideal as it will flicker when it's changing window size. This is simply because of the time taken between OnLaunch being fired and the window being resized by native win32 API calls. However, moving it directly to the Platform-specific code is a bit more semantic.
+
+Unlike the other answer we cannot get the Requested dimensions from client pages to use as our Window dimensions.

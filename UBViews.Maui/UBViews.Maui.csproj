@@ -223,6 +223,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Triggers\" />
 	  <Folder Include="Resources\Raw\MauiUbml\" />
 	</ItemGroup>
 

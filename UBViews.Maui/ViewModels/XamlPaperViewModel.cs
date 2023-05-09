@@ -27,7 +27,7 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public MediaStatePair MediaState = new("None", "None");
+        public MediaStatePair MediaState = new();
 
         /// <summary>
         /// 
@@ -115,11 +115,11 @@ namespace UBViews.ViewModels
         [ObservableProperty]
         string currentState;
 
-        [ObservableProperty]
-        string mediaElementPreviousState;
+        //[ObservableProperty]
+        //string mediaElementPreviousState;
 
-        [ObservableProperty]
-        string mediaElementCurrentState;
+        //[ObservableProperty]
+        //string mediaElementCurrentState;
 
         [ObservableProperty]
         bool isScrollToLabel;
@@ -360,15 +360,23 @@ namespace UBViews.ViewModels
 
                 string message = $"Playing {pid} Timespan {timeSpanRangeMsg}";
 
-                // Initial State
+                // Initial State -> Trigger Play
                 if (CurrentState == "None" ||
                     PreviousState == "None")
                 {
                     await PlayAudioRange(timeSpanRange);
                 }
-                // Paused State (
+                // Play State -> Tappeed Event -> 
+                /* || PreviousState = "Paused" */
+                else if (CurrentState == "Playing" ||
+                         PreviousState == "None") 
+                {
+                    await PauseAudio();
+                    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
+                }
+                // Playing State -> Play Trigger
                 else if (CurrentState == "Paused" ||
-                         PreviousState == "None")
+                         PreviousState == "Playing")
                 {
                     await PlayAudio();
                     message = $"Resuming {pid} Timespan {timeSpanRangeMsg}";
@@ -703,6 +711,7 @@ namespace UBViews.ViewModels
                             me.MediaEnded();
                         }
                     });
+                    MediaState.SetState(me.CurrentState.ToString());
                 }
             }
             catch (Exception ex)
@@ -717,8 +726,11 @@ namespace UBViews.ViewModels
         {
             try
             {
-                MediaElementPreviousState = MediaElementCurrentState;
-                MediaElementCurrentState = state;
+                var currentState = state;
+                MediaState.SetState(state);
+                // TODO: Remove Above
+                //MediaElementPreviousState = MediaElementCurrentState;
+                //MediaElementCurrentState = state;
             }
             catch (Exception ex)
             {

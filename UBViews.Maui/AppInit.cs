@@ -3,12 +3,35 @@ namespace UBViews
 {
     public partial class App
     {
+        Dictionary<int, string> WindowDimensions = new Dictionary<int, string>()
+        {
+            { 0, "1080,920" }, 
+            { 1, "880,720" },
+            { 2, "680,520" }
+        };
+
+        Dictionary<int, string> NamesSrc = new Dictionary<int, string>()
+        {
+            { 0, "Query/Queries.template.xml" },
+            { 1, "Query/Queries.xml" },
+            { 2, "Query/QueryCmdList.xml" },
+            { 3, "Settings/Settings.template.xml" },
+        };
+
         string[] srcNames = new string[]
         {
             "Query/Queries.template.xml",
             "Query/Queries.xml",
             "Query/QueryCmdList.xml",
             "Settings/Settings.template.xml"
+        };
+
+        Dictionary<int, string> TargetsSrc = new Dictionary<int, string>()
+        {
+            { 0, "UserQueries.xml" },
+            { 1, "QueryHistory.xml" },
+            { 2, "QueryCommands.xml" },
+            { 3, "Settings.xml" },
         };
         string[] trgNames = new string[]
         {
@@ -33,6 +56,7 @@ namespace UBViews
 
             if (!_appInitialized)
             {
+                int _width = Int32.Parse(WindowDimensions.ElementAt(0).Value.Split(',')[0]);
                 // Set Default Prefs: some move to settings 
                 Preferences.Default.Set("culture", "en-US");
                 Preferences.Default.Set("userData", true);
@@ -43,6 +67,13 @@ namespace UBViews
                 Preferences.Default.Set("show_reference_pids", false);
                 Preferences.Default.Set("show_playback_controls", false);
                 Preferences.Default.Set("show_paper_contents", false);
+                Preferences.Default.Set("default_width", 1080);
+                Preferences.Default.Set("default_height", 920);
+
+                Preferences.Default.Set("small_window", "680,520");
+                Preferences.Default.Set("medium_window", "880,720");
+                Preferences.Default.Set("large_window", "1080,920");
+
                 // SetupDefaultData();
                 int size = srcNames.Length;
                 for (int i = 0; i < size; i++)
