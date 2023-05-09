@@ -6,7 +6,7 @@
   <Setting name="show_paper_contents" type="bool" value="false" />
   <Setting name="show_playback_controls" type="bool" value="false" />
   <Setting name="culture" type="string" value="en-US" />
-  <Settign name="default_theme" type="string" value="LightTheme" />
+  <Settign name="default_theme" type="string" value="Light" />
   <Settings name="default_width" type="int" value="1080" />
   <Settings name="default_height" type="int" value="920" />
   <Settings name="small_window" type="string" value="680,520" />

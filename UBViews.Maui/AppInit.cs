@@ -3,7 +3,8 @@ namespace UBViews
 {
     public partial class App
     {
-        Dictionary<int, string> WindowDimensions = new Dictionary<int, string>()
+        public enum WindowSize { Large, Medium, Small }
+        public Dictionary<int, string> WindowDimensions = new Dictionary<int, string>()
         {
             { 0, "1080,920" }, 
             { 1, "880,720" },
@@ -56,7 +57,11 @@ namespace UBViews
 
             if (!_appInitialized)
             {
+                var v = WindowSize.Large;
+
+                var _size = (int)WindowSize.Large;
                 int _width = Int32.Parse(WindowDimensions.ElementAt(0).Value.Split(',')[0]);
+                int _height = Int32.Parse(WindowDimensions.ElementAt(0).Value.Split(',')[1]);
                 // Set Default Prefs: some move to settings 
                 Preferences.Default.Set("culture", "en-US");
                 Preferences.Default.Set("userData", true);
@@ -67,8 +72,10 @@ namespace UBViews
                 Preferences.Default.Set("show_reference_pids", false);
                 Preferences.Default.Set("show_playback_controls", false);
                 Preferences.Default.Set("show_paper_contents", false);
-                Preferences.Default.Set("default_width", 1080);
-                Preferences.Default.Set("default_height", 920);
+
+                Preferences.Default.Set("default_theme", "Light");
+                Preferences.Default.Set("default_width", _width);
+                Preferences.Default.Set("default_height", _height);
 
                 Preferences.Default.Set("small_window", "680,520");
                 Preferences.Default.Set("medium_window", "880,720");
