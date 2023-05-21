@@ -132,7 +132,30 @@
                     </CheckBox.Behaviors>
                 </CheckBox>
             </HorizontalStackLayout>
-            
+
+            <HorizontalStackLayout x:Name="WindowScreenSizeVSL" Margin=".5">
+                <Label x:Name="WindowSizeLabel" 
+                       Text="Window Size: " 
+                       Style="{StaticResource AppSettingsLabels}" />
+                <Picker x:Name="windowSizePicker" 
+                        HorizontalOptions="FillAndExpand" 
+                        SelectedIndex="{Binding WindowSize, Mode=TwoWay}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Small (680,520)</x:String>
+                            <x:String>Medium (880,720)</x:String>
+                            <x:String>Large (1080,920)</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                    <Picker.Behaviors>
+                        <behavior:EventToCommandBehavior 
+                            EventName="SelectedIndexChanged"
+                            Command="{Binding WindowSizeSelectedIndexChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference windowSizePicker}, Path=SelectedIndex}"/>
+                    </Picker.Behaviors>
+                </Picker>
+            </HorizontalStackLayout>
+
         </VerticalStackLayout>
 
         <Button Text="Save Settings" 

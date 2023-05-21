@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A58A835-34C0-465B-B343-4C9A50008924}"
 	ProjectSection(SolutionItems) = preProject
 		BuildOutput.txt = BuildOutput.txt
+		Development_Guide.txt = Development_Guide.txt
 		Gerald_SideLoading.md = Gerald_SideLoading.md
 		TextFile1.txt = TextFile1.txt
 	EndProjectSection

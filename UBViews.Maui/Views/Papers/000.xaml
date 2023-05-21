@@ -2896,12 +2896,12 @@
                 </toolkit:MediaElement.Behaviors>
             </toolkit:MediaElement>
         </VerticalStackLayout>
-        <VerticalStackLayout x:Name="customMediaControls" VerticalOptions="EndAndExpand" IsVisible="True">
+        <!--<VerticalStackLayout x:Name="customMediaControls" VerticalOptions="EndAndExpand" IsVisible="True">
             <HorizontalStackLayout x:Name="horizontalControls">
                 <Button x:Name="Play" />
                 <Button x:Name="Pause" />
                 <Button x:Name="Stop" />
             </HorizontalStackLayout>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
     </Grid>
 </ContentPage>

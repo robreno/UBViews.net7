@@ -11,13 +11,15 @@ public partial class AppSettingsPage : ContentPage
     /// <summary>
     /// 
     /// </summary>
-    private int maxNumber;
-    private bool showPids;
-    private double lineHeight;
+    int maxNumber;
+    bool showPids;
+    double lineHeight;
+    int screenSize;
 
-    private bool maxNumDirty;
-    private bool showPidsDirty;
-    private bool lineHeightDirty;
+    bool maxNumDirty;
+    bool showPidsDirty;
+    bool lineHeightDirty;
+    bool screenSizeDirty;
 
     /// <summary>
     /// 
@@ -33,6 +35,7 @@ public partial class AppSettingsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+        vm.contentPage = this;
         this.appSettingsService = appSettingsService;
     }
 
@@ -46,11 +49,14 @@ public partial class AppSettingsPage : ContentPage
         try
         {
             maxNumber = await appSettingsService.Get("max_query_results", 50);
-            maxNumberEntry.Text = maxNumber.ToString("0");
+            this.maxNumberEntry.Text = maxNumber.ToString("0");
             showPids = await appSettingsService.Get("show_reference_pids", false);
             pidsCheckBox.IsChecked = showPids;
             lineHeight = await appSettingsService.Get("line_height", 1.0);
             lineHeightStepper.Value = lineHeight;
+            screenSize = await appSettingsService.Get("window_size", 2);
+            windowSizePicker.SelectedIndex = screenSize;
+
         }
         catch (Exception ex)
         {
