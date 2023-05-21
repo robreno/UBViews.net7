@@ -34,7 +34,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     {
         try
         {
-            // C:\Users\robre\AppData\Local\Packages\aa91c2eb-6265-48b2-8835-b94bb1c7b79b_9zz4h110yvjzm\LocalState
+            // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
             _appDir = FileSystem.Current.AppDataDirectory;
             _content = await LoadAppSettingsAsync(_settingsFileName);
             _settings = XDocument.Parse(_content, LoadOptions.None);
@@ -200,6 +200,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     /// <returns></returns>
     public async Task Set<T>(string key, T value)
     {
+        // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
         try
         {
             var item = _settingsRoot.Descendants("Setting")
