@@ -4,11 +4,12 @@ namespace UBViews
     public partial class App
     {
         public enum WindowSize { Large, Medium, Small }
-        public Dictionary<int, string> WindowDimensions = new Dictionary<int, string>()
+
+        Dictionary<int, (int, int)> WindowDimensions = new Dictionary<int, (int, int)>()
         {
-            { 0, "1080,920" }, 
-            { 1, "880,720" },
-            { 2, "680,520" }
+            { 0, (1080, 920) },
+            { 1, (880,720) },
+            { 2, (680,520) }
         };
 
         Dictionary<int, string> NamesSrc = new Dictionary<int, string>()
@@ -49,7 +50,7 @@ namespace UBViews
         private bool _missingUserFile = false;
         public void AppInitData(bool debug = false)
         {
-            // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState
+            // C:\Users\robre\AppData\Local\Packages\aa91c2eb-6265-48b2-8835-b94bb1c7b79b_9zz4h110yvjzm\LocalState
 
             bool hasUserData = HasUserData(trgNames);
             if (hasUserData)
@@ -57,11 +58,11 @@ namespace UBViews
 
             if (!_appInitialized)
             {
-                var v = WindowSize.Large;
+                var tpl = (0, 0);
+                bool success = WindowDimensions.TryGetValue((int)WindowSize.Large, out tpl);
+                int _width = tpl.Item1;
+                int _height = tpl.Item2;
 
-                var _size = (int)WindowSize.Large;
-                int _width = Int32.Parse(WindowDimensions.ElementAt(0).Value.Split(',')[0]);
-                int _height = Int32.Parse(WindowDimensions.ElementAt(0).Value.Split(',')[1]);
                 // Set Default Prefs: some move to settings 
                 Preferences.Default.Set("culture", "en-US");
                 Preferences.Default.Set("userData", true);
@@ -73,7 +74,9 @@ namespace UBViews
                 Preferences.Default.Set("show_playback_controls", false);
                 Preferences.Default.Set("show_paper_contents", false);
 
-                Preferences.Default.Set("default_theme", "Light");
+                Preferences.Default.Set("default_theme", "light");
+
+
                 Preferences.Default.Set("default_width", _width);
                 Preferences.Default.Set("default_height", _height);
 
@@ -144,11 +147,16 @@ namespace UBViews
 
         protected void Window_Created(object sender, EventArgs e)
         {
+            var tpl = (0, 0);
+            bool success = WindowDimensions.TryGetValue((int)WindowSize.Large, out tpl);
+            int _width = tpl.Item1;
+            int _height = tpl.Item2;
+            //var it1, it2 = GetDimensions(WindowSize.Large);
 #if WINDOWS
             Task.Run(async () => 
             {
-                const int defaultWidth = 1080;
-                const int defaultHeight = 920;
+                int defaultWidth = _width;
+                int defaultHeight = _height;
 
                 var window = (Window)sender;
                 window.Width = defaultWidth;
@@ -164,6 +172,17 @@ namespace UBViews
                 });
             });
 #endif
+        }
+
+        protected (int, int) GetDimensions(WindowSize sizeId)
+        {
+            var tpl = (0, 0);
+            int _width  = 0;
+            int _height = 0;
+            bool success = WindowDimensions.TryGetValue((int)sizeId, out tpl);
+            _width = tpl.Item1;
+            _height = tpl.Item2;
+            return (_width, _height);
         }
     }
 }
