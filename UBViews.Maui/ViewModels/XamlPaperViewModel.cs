@@ -209,11 +209,6 @@ namespace UBViews.ViewModels
                     Paragraphs.Add(paragraph);
                 }
 
-                if (IsScrollToLabel)
-                {
-                    await ScrollTo(ScrollToLabelName);
-                }
-
                 if (ShowReferencePids)
                 {
                     await SetReferencePids();
@@ -222,6 +217,11 @@ namespace UBViews.ViewModels
                 if (ShowPlaybackControls)
                 {
                     await SetMediaPlaybackControls(ShowPlaybackControls);
+                }
+
+                if (IsScrollToLabel)
+                {
+                    await ScrollTo(ScrollToLabelName);
                 }
             }
             catch (Exception ex)
@@ -567,17 +567,18 @@ namespace UBViews.ViewModels
                 var audioMarker = Markers.GetBySeqId(seqId);
                 await SetPlaybackControlsStartTime(audioMarker);
 
+                // See Workaround for Maui bug #7295
+                // https://github.com/dotnet/maui/issues/7295
+                await Task.Delay(1000);
+
                 var _x = currentLabel.X;
                 var _y = currentLabel.Y;
+
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     if (scrollView != null && currentLabel != null)
                     {
-#if ANDROID
-                        scrollView.ScrollToAsync(_x, _y, false);
-#elif WINDOWS
                         scrollView.ScrollToAsync(currentLabel, ScrollToPosition.Start, false);
-#endif
                     }
                 });
             }
