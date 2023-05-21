@@ -4,11 +4,28 @@ namespace UBViews.ViewModels;
 
 public partial class AppSettingsViewModel : BaseViewModel
 {
+    const int SMALL = 0;
+    const int MEDIUM = 1;
+    const int LARGE = 2;
+
+    Dictionary<int, (int,int)> WindowDimensions = new Dictionary<int, (int,int)>()
+    {
+        { 0, (1080, 920) },
+        { 1, (880,720) },
+        { 2, (680,520) }
+    };
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public ContentPage contentPage;
+
     int previousMaxQuery;
     double previousLineHeight;
     bool previousShowPids;
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
+    int previousWindowSize;
 
     private IAppSettingsService settingsService;
 
@@ -35,12 +52,21 @@ public partial class AppSettingsViewModel : BaseViewModel
     [ObservableProperty]
     bool showPlaybackControls;
 
+    [ObservableProperty]
+    int windowSize;
+
     [RelayCommand]
     async Task AppSettingPageAppearing()
     {
         try
         {
             await LoadSettings();
+            var windowHSL = contentPage.FindByName("WindowScreenSizeVSL") as HorizontalStackLayout;
+#if WINDOWS
+            windowHSL.IsVisible = true;
+#elif ANDROID
+            windowHSL.IsVisible = false;
+#endif
         }
         catch (Exception ex)
         {
@@ -139,6 +165,36 @@ public partial class AppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task WindowSizeSelectedIndexChanged(int value)
+    {
+        try
+        {
+            // 0 small, 1 medium, 2 large
+            previousWindowSize = WindowSize;
+            WindowSize = value;
+            if (value.Equals(0))
+            {
+                await settingsService.Set("window_size", SMALL);
+            }
+
+            if (value.Equals(1))
+            {
+                await settingsService.Set("window_size", MEDIUM);
+            }
+
+            if (value.Equals(2))
+            {
+                await settingsService.Set("window_size", LARGE);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
     async Task LoadSettings()
     {
         try
@@ -148,6 +204,7 @@ public partial class AppSettingsViewModel : BaseViewModel
             LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
             ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
+            WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
         }
         catch (Exception ex)
         {
@@ -180,6 +237,10 @@ public partial class AppSettingsViewModel : BaseViewModel
             if (previousShowPlaybackControls != ShowPlaybackControls)
             {
                 await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
+            }
+            if (previousWindowSize != WindowSize)
+            {
+                await settingsService.SetCache("window_size", WindowSize);
             }
             await App.Current.MainPage.DisplayAlert("Settings", "Settings were saved!", "Ok");
         }
