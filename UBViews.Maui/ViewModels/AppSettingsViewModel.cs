@@ -61,11 +61,17 @@ public partial class AppSettingsViewModel : BaseViewModel
         try
         {
             await LoadSettings();
-            var windowHSL = contentPage.FindByName("WindowScreenSizeVSL") as HorizontalStackLayout;
+            var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
+            var playbackControlsHSL = contentPage.FindByName("PlaybackControlsHSL") as HorizontalStackLayout;
+            var lineHeightHSL = contentPage.FindByName("LineHeightHSL") as HorizontalStackLayout;
 #if WINDOWS
-            windowHSL.IsVisible = true;
+            windowSizeHSL.IsVisible = false;
+            playbackControlsHSL.IsVisible = false;
+            lineHeightHSL.IsVisible = false;
 #elif ANDROID
-            windowHSL.IsVisible = false;
+            playbackControlsHSL.IsVisible = false;
+            windowSizeHSL.IsVisible = false;
+            lineHeightHSL.IsVisible = false;
 #endif
         }
         catch (Exception ex)

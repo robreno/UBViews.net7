@@ -28,7 +28,7 @@
         <VerticalStackLayout x:Name="controlSettingsVSL"
                              Style="{StaticResource AppSettingsVSL}">
 
-            <HorizontalStackLayout x:Name="MaxNumHSL" Margin=".5">
+            <HorizontalStackLayout x:Name="MaxQueryResultHSL" Margin=".5">
                 <Label x:Name="maxNumberLabel" 
                        Style="{StaticResource AppSettingsLabels}"
                        Text="Max Query Result:" />
@@ -56,7 +56,7 @@
                 </Stepper>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="lineHeightHSL" Margin=".5">
+            <HorizontalStackLayout x:Name="LineHeightHSL" Margin=".5">
                 <Label x:Name="lineHeightLabel" 
                        Style="{StaticResource AppSettingsLabels}"
                        Text="Line Height:" />
@@ -84,7 +84,7 @@
                 </Stepper>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="ShowPidsHTL" Margin=".5">
+            <HorizontalStackLayout x:Name="PidsHSL" Margin=".5">
                 <Label x:Name="showPidsLabel" 
                        Text="Show References:"
                        Style="{StaticResource AppSettingsLabels}"/>
@@ -100,7 +100,7 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="showPlaybackControlsHTL" Margin=".5">
+            <HorizontalStackLayout x:Name="PlaybackControlsHSL" Margin=".5">
                 <Label x:Name="showControlsLabel" 
                        Text="Show Media Controls:"
                        Style="{StaticResource AppSettingsLabels}" />
@@ -116,7 +116,7 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="ShowPaperContentPage" Margin=".5">
+            <HorizontalStackLayout x:Name="PaperContentHSL" Margin=".5">
                 <Label x:Name="showContentsLabel" 
                        Text="Show Contents:"
                        Style="{StaticResource AppSettingsLabels}" />
@@ -133,7 +133,7 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="WindowScreenSizeVSL" Margin=".5">
+            <HorizontalStackLayout x:Name="WindowSizeHSL" Margin=".5">
                 <Label x:Name="WindowSizeLabel" 
                        Text="Window Size: " 
                        Style="{StaticResource AppSettingsLabels}" />
