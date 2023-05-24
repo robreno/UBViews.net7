@@ -2,8 +2,10 @@
 public class PaperDto
 {
     public int Id { get; set; }
-    public bool ScrollTo { get; set; }
+    public int SeqId { get; set; }
+    public string Pid { get; set; }
     public string Uid { get; set; }
+    public bool ScrollTo { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
     public int PartId { get; set; }

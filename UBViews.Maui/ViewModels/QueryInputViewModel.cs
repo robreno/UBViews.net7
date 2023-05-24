@@ -7,6 +7,9 @@ using UBViews.Services;
 using UBViews.Models.Query;
 using UBViews.LexParser;
 
+using SQLiteRepository;
+using SQLiteRepository.Dtos;
+
 namespace UBViews.ViewModels;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]

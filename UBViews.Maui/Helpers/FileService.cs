@@ -131,14 +131,14 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="paperId"></param>
     /// <returns></returns>
-    public async Task<PaperDto> GetPaperDtoAsync(int id)
+    public async Task<PaperDto> GetPaperDtoAsync(int paperId)
     {
         try
         {
             var tl = await GetPaperDtosAsync();
-            var title = tl.Where(t => t.Id == id).FirstOrDefault();
+            var title = tl.Where(t => t.Id == paperId).FirstOrDefault();
             return title;
         }
         catch (Exception ex)
