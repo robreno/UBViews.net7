@@ -57,4 +57,12 @@ public interface IFileService
     /// <param name="id"></param>
     /// <returns></returns>
     Task<List<Paragraph>> GetParagraphsAsync(int id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="paperId"></param>
+    /// <param name="seqId"></param>
+    /// <returns></returns>
+    Task<Paragraph> GetParagraphAsync(int paperId, int seqId);
 }

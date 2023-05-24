@@ -33,6 +33,9 @@ public partial class MainViewModel : BaseViewModel
     int tokenCount;
 
     [ObservableProperty]
+    string searchInput;
+
+    [ObservableProperty]
     string queryInput;
 
     [ObservableProperty]

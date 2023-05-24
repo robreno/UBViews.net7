@@ -200,15 +200,15 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="paperId"></param>
     /// <returns></returns>
-    public async Task<List<Paragraph>> GetParagraphsAsync(int id)
+    public async Task<List<Paragraph>> GetParagraphsAsync(int paperId)
     {
         try
         {
             List<Paragraph> paragraphList = new();
 
-            string paperName = id.ToString("000") + ".xml";
+            string paperName = paperId.ToString("000") + ".xml";
             string filePathName = Path.Combine(_mauiUbml, paperName);
             string xml = await LoadAsset(filePathName);
 
@@ -256,7 +256,7 @@ public class FileService : IFileService
 
                 Paragraph newParagraph = new()
                 {
-                    Id = id,
+                    Id = paperId,
                     SeqId = seqId,
                     Uid = uid,
                     Pid = pid,
@@ -269,6 +269,78 @@ public class FileService : IFileService
                 paragraphList.Add(newParagraph);
             }
             return paragraphList;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="paperId"></param>
+    /// <param name="seqId"></param>
+    /// <returns></returns>
+    public async Task<Paragraph> GetParagraphAsync(int paperId, int seqId)
+    {
+        try
+        {
+            string paperName = paperId.ToString("000") + ".xml";
+            string filePathName = Path.Combine(_mauiUbml, paperName);
+            string xml = await LoadAsset(filePathName);
+
+            var xdoc = XDocument.Parse(xml);
+            var root = xdoc.Root;
+            var paragraphs = root.Descendants("Paragraph");
+            var para = paragraphs.Where(p => p.Attribute("seqId").Value == seqId.ToString("0")).FirstOrDefault();
+
+            var style = para.Attribute("paraStyle").Value;
+            StringBuilder sb = new StringBuilder();
+            var paraType = para.Attribute("type").Value;
+
+            if (paraType == "section")
+            {
+                var runs = para.Descendants("Run").ToList();
+                foreach (var run in runs)
+                {
+                    string txt = run.Attribute("Text").Value;
+                    sb.Append(txt);
+                }
+            }
+            else
+            {
+                var runs = para.Descendants("Run").ToList();
+                foreach (var run in runs)
+                {
+                    string txt = run.Attribute("Text").Value;
+                    sb.Append(txt);
+                }
+            }
+
+            var uid = para.Attribute("uid").Value;
+            var uidArr = uid.Split('.');
+            var pid = Int32.Parse(uidArr[1]) +
+                      ":" +
+                      Int32.Parse(uidArr[2]) +
+                      "." +
+                      Int32.Parse(uidArr[3]);
+
+            Paragraph paragraph = new()
+            {
+                Id = paperId,
+                SeqId = seqId,
+                Uid = uid,
+                Pid = pid,
+                Type = para.Attribute("type").Value,
+                ParaStyle = style,
+                StartTime = para.Attribute("startTime").Value,
+                EndTime = para.Attribute("endTime").Value,
+                Text = sb.ToString()
+            };
+
+            return paragraph;
         }
         catch (Exception ex)
         {

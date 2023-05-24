@@ -301,10 +301,6 @@
             
             <!-- Experimental Styles -->
 
-            <!--<Style x:Name="MainButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-            </Style>-->
-
             <Style x:Key="MainGridStyle" TargetType="Grid">
                 <Setter Property="Padding" Value="0" />
             </Style>

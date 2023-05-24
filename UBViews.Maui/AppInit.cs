@@ -29,7 +29,7 @@ namespace UBViews
             "Query/QueryCmdList.xml",
             "Settings/Settings.template.xml",
             "Database/queryResults.db3",
-            "Database/postingLists.db3"
+            //"Database/postingLists.db3"
         };
 
         Dictionary<int, string> TargetsSrc = new Dictionary<int, string>()
@@ -48,7 +48,7 @@ namespace UBViews
             "QueryCommands.xml",
             "Settings.xml",
             "QueryResults.db3",
-            "PostingLists.db3"
+            //"PostingLists.db3"
         };
 
         Dictionary<string, bool> UserFiles = new();
@@ -58,8 +58,6 @@ namespace UBViews
         private bool _missingUserFile = false;
         public void AppInitData(bool debug = false)
         {
-            // C:\Users\robre\AppData\Local\Packages\aa91c2eb-6265-48b2-8835-b94bb1c7b79b_9zz4h110yvjzm\LocalState
-
             bool hasUserData = HasUserData(trgNames);
             if (hasUserData)
                 _appInitialized = true;
@@ -131,6 +129,7 @@ namespace UBViews
                     string content = await reader.ReadToEndAsync();
 
                     // Write the file content to the app data directory
+                    // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
                     string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, targetFileName);
 
                     using FileStream outputStream = System.IO.File.OpenWrite(targetFile);

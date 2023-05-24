@@ -7,8 +7,8 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <x:String x:Key="ButtonWidth">160</x:String>
-            <x:Int32 x:Key="ButtonWidthInt">0</x:Int32>
+            <x:String x:Key="ButtonWidth">155</x:String>
+            <x:String x:Key="SearchBarWidth">300</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -34,12 +34,12 @@
                    SemanticProperties.Description="Opening Title"
                    SemanticProperties.Hint="Title"/>
 
-            <Entry Text="{Binding QueryInput, Mode=TwoWay}"
-                   WidthRequest="300"
-                   Placeholder="Enter search query here ..."
-                   SemanticProperties.Description="Entry control for entering search query."
-                   SemanticProperties.HeadingLevel="Level1"
-                   SemanticProperties.Hint="Text Entry Control" />
+            <SearchBar Text="{Binding QueryInput, Mode=TwoWay}" 
+                       WidthRequest="{x:StaticResource SearchBarWidth}"
+                       Placeholder="Enter search query ..."
+                       SemanticProperties.Description="SearchBar for entering search query text."
+                       SemanticProperties.HeadingLevel="Level1"
+                       SemanticProperties.Hint="Text SearchBar"/>
 
             <Button Text="Query" 
                     FontSize="18"
@@ -54,7 +54,7 @@
 
             <Button Text="Parts of Book"
                     FontSize="18"
-                    FontAttributes="Bold"
+                    FontAttributes="Bold" 
                     HorizontalOptions="Center" 
                     SemanticProperties.HeadingLevel="None"
                     SemanticProperties.Description="Button for navigating to Parts of Book page."
@@ -101,8 +101,7 @@
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center"
-                Command="{Binding CheckInternetCommand}"
-                 />-->
+                Command="{Binding CheckInternetCommand}" />-->
 
             <ActivityIndicator
                 VerticalOptions="Start"
