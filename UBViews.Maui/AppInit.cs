@@ -28,7 +28,7 @@ namespace UBViews
             "Query/Queries.xml",
             "Query/QueryCmdList.xml",
             "Settings/Settings.template.xml",
-            "Database/queryResults.db3",
+            //"Database/queryResults.db3",
             //"Database/postingLists.db3"
         };
 
@@ -47,7 +47,7 @@ namespace UBViews
             "QueryHistory.xml",
             "QueryCommands.xml",
             "Settings.xml",
-            "QueryResults.db3",
+            //"QueryResults.db3",
             //"PostingLists.db3"
         };
 

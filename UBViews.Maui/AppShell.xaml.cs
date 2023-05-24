@@ -18,6 +18,7 @@ namespace UBViews
             Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
             //Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
 
+            #region Xaml Papers
             // Generated Xaml Pages
             // Part I The Central and Superuniverse
             Routing.RegisterRoute(nameof(_000), typeof(_000));
@@ -223,6 +224,20 @@ namespace UBViews
             Routing.RegisterRoute(nameof(_194), typeof(_194));
             Routing.RegisterRoute(nameof(_195), typeof(_195));
             Routing.RegisterRoute(nameof(_196), typeof(_196));
+            #endregion
+        }
+        protected override void OnAppearing()
+        {
+            Task.Run(async () =>
+            {
+                await InitializeData();
+            });
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
     }
 }

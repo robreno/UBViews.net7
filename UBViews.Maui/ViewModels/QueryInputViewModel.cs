@@ -7,8 +7,8 @@ using UBViews.Services;
 using UBViews.Models.Query;
 using UBViews.LexParser;
 
-using SQLiteRepository;
-using SQLiteRepository.Dtos;
+//using SQLiteRepository;
+//using SQLiteRepository.Dtos;
 
 namespace UBViews.ViewModels;
 
@@ -16,15 +16,21 @@ namespace UBViews.ViewModels;
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class QueryInputViewModel : BaseViewModel
 {
-    readonly IAppDataService appDataService;
+    public ContentPage contentPage;
+
+    IAppDataService appDataService;
+
+    IFileService fileService;
+
     public ObservableCollection<QueryCommand> QueryCommands { get; } = new();
 
     ParserService parserService;
 
-    public QueryInputViewModel(IAppDataService appDataService)
+    public QueryInputViewModel(IAppDataService appDataService, IFileService fileService)
     {
         this.appDataService = appDataService;
-        parserService = new ParserService();
+        this.fileService = fileService;
+        this.parserService = new ParserService();
     }
 
     [ObservableProperty]

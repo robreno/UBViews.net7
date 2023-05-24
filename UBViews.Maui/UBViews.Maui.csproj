@@ -170,6 +170,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiAsset Remove="Resources\Raw\Database\postingLists.db3" />
+	  <MauiAsset Remove="Resources\Raw\Database\queryResults.db3" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Remove="Conrols\PaperHeadingControl.xaml" />
 	</ItemGroup>
 
@@ -211,11 +216,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Raw\Database\postingLists.db3" />
+	  <EmbeddedResource Include="Resources\Raw\Database\queryResults.db3">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Common" Version="8.1.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="1.0.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	</ItemGroup>
 
 	<ItemGroup>

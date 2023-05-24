@@ -41,8 +41,4 @@
     <PackageReference Include="FsLexYacc.Runtime" Version="10.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MauiDatabases\MauiDatabases\SQLiteRepository\SQLiteRepository.csproj" />
-  </ItemGroup>
-
 </Project>
