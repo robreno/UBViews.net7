@@ -5,8 +5,8 @@ using SQLiteRepository.Models;
 namespace UBViews.Services
 {
     /// <summary>
-    /// Database initialization options allows selective initialization
-    /// of database(s).
+    /// Database initialization options allows selective 
+    /// initialization of database(s).
     /// </summary>
     public enum InitOptions { QueryDB, PostingDB, All };
 
