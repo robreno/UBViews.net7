@@ -173,7 +173,6 @@
 	<ItemGroup>
 	  <Compile Remove="Conrols\PaperHeadingControl.xaml.cs" />
 	  <Compile Remove="Converters\DurationDisplayConverter.cs" />
-	  <Compile Remove="DatabaseInit.cs" />
 	  <Compile Remove="Models\PaperTitle.cs" />
 	  <Compile Remove="Services\IPostingService.cs" />
 	  <Compile Remove="Services\ISubscriberService.cs" />

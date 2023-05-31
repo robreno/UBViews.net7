@@ -3,8 +3,8 @@ using System.Xml.Linq;
 using UBViews.Helpers;
 using UBViews.Services;
 
-using UBViews.Repositories;
-using UBViews.Repositories.Models;
+using SQLiteRepository;
+using SQLiteRepository.Models;
 
 // See: https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/database-sqlite
 
@@ -31,7 +31,7 @@ namespace UBViews
             // Copy Posting Lists Database
             if (!File.Exists(_postingsPathName))
                 await CopyDatabase(_plDatabaseName, _postingsPathName);
-
+            // Copy Query Results Database
             if (!File.Exists(_queriesPathName))
                 await CopyDatabase(_qrDatabaseName, _queriesPathName);
 
