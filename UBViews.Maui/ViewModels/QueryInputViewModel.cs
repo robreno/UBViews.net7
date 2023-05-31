@@ -22,6 +22,7 @@ namespace UBViews.ViewModels;
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class QueryInputViewModel : BaseViewModel
 {
+    private QueryInputDto _queryInput;
     public ContentPage contentPage;
 
     IAppDataService appDataService;
@@ -45,7 +46,7 @@ public partial class QueryInputViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    QueryInput queryInput;
+    QueryInputDto queryInput;
 
     [ObservableProperty]
     int tokenCount;
@@ -102,7 +103,17 @@ public partial class QueryInputViewModel : BaseViewModel
             var repoCommands = await repositoryService.GetQueryCommandsAsync();
             foreach (var cmd in repoCommands)
             {
-                QueryCommands.Add(cmd);
+                var newCommand = new QueryCommandDto 
+                {
+                    Id = cmd.Id,
+                    Type = cmd.Type,
+                    Terms = cmd.Terms,
+                    Proximity = cmd.Proximity,
+                    Stemmed = cmd.Stemmed,
+                    FilterId = cmd.FilterId,
+                    QueryString = cmd.QueryString
+                };
+                QueryCommands.Add(newCommand);
             }
         }
         catch (Exception ex)
@@ -141,7 +152,24 @@ public partial class QueryInputViewModel : BaseViewModel
                 foreach (var term in terms)
                 {
                     var postingList = await repositoryService.GetPostingByLexemeAsync(term);
-                    var tokOccs = await repositoryService.GetTokenOccurrencesAsync(postingList.Id);
+                    var tokOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingList.Id);
+                    var newPostingList = new PostingListDto
+                    {
+                        Id = postingList.Id,
+                        Lexeme = postingList.Lexeme
+                    };
+                    foreach (var occ in tokOccs)
+                    {
+                        var occDto = new TokenOccurrenceDto
+                        { 
+                            PostingId = occ.PostingId,
+                            DocumentId = occ.DocumentId,
+                            SequenceId = occ.SequenceId,
+                            DocumentPosition = occ.DocumentPosition, // TODO: regen db, as spelling error on field in database
+                            TextPosition = occ.TextPosition
+                        };
+                        newPostingList.TokenOccurrences.Add(occDto);
+                    }
                 }
             }
         }
@@ -193,8 +221,8 @@ public partial class QueryInputViewModel : BaseViewModel
                     var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
 
                     // 2. Get TokenOccurrenceList for each PostingListId
-                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesAsync(postingLst2.Id);
-                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesAsync(postingLst3.Id);
+                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
+                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
 
                     //var parserService = new ParserService();
                     // 3. Use Linq QueryLanguage to filter to Hits
@@ -318,7 +346,7 @@ public partial class QueryInputViewModel : BaseViewModel
         }
     }
 
-    private async Task LoadXaml(QueryResultDto queryResultDto)
+    private async Task LoadXaml(QueryResultLocations queryResultLocationsDto)
     {
         try
         {
@@ -329,7 +357,7 @@ public partial class QueryInputViewModel : BaseViewModel
             stackLayout.Add(navigationButton); ...
             */
 
-            var locations = queryResultDto.QueryLocations;
+            var locations = queryResultLocationsDto.QueryLocations;
             foreach (var location in locations)
             {
                 var id = location.Id;
@@ -404,9 +432,10 @@ public partial class QueryInputViewModel : BaseViewModel
                     sb.Append(t + " ");
                 }
                 qs = sb.ToString().Trim();
-                QueryInput = new QueryInput() { Text = qs, TokenCount = tokens.Length };
-                QueryInputString = QueryInput.Text;
-                TokenCount = QueryInput.TokenCount;
+                _queryInput = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
+                QueryInput = _queryInput;
+                QueryInputString = _queryInput.Text;
+                TokenCount = _queryInput.TokenCount;
             });
         }
         catch (Exception ex)

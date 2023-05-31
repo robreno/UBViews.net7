@@ -1,4 +1,6 @@
-﻿using SQLiteRepository;
+﻿using UBViews.Models.Query;
+
+using SQLiteRepository;
 using SQLiteRepository.Dtos;
 using SQLiteRepository.Models;
 
@@ -50,37 +52,24 @@ namespace UBViews.Services
         Task<List<QueryResult>> GetQueryResultsAsync();
 
         /// <summary>
-        /// GetQueryResultByIdAsync
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>QueryResultDto</returns>
-        Task<QueryResultDto> GetQueryResultByIdAsync(int id);
-
-        /// <summary>
         /// GetQueryResultByQueryStringAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns>QueryResultDto</returns>
-        Task<QueryResultDto> GetQueryResultByQueryStringAsync(string queryString);
+        Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString);
 
         /// <summary>
-        /// GetTermOccurrencesAsync
-        /// </summary>
-        /// <returns>List of TermOccurrence</returns>
-        Task<List<TermOccurrence>> GetTermOccurrencesAsync();
-
-        /// <summary>
-        /// GetTermOccurrencesByQueryResultIdAsync
+        /// GetQueryResultByIdAsync
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>List of TermOccurrence</returns>
-        Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id);
+        /// <returns>QueryResultDto</returns>
+        Task<QueryResultLocations> GetQueryResultByIdAsync(int id);
 
         /// <summary>
         /// GetQueryCommandsAsync
         /// </summary>
         /// <returns>List of QueryCommandDto</returns>
-        Task<List<QueryCommandDto>> GetQueryCommandsAsync();
+        Task<List<QueryCommand>> GetQueryCommandsAsync();
 
         /// <summary>
         /// GetPostingsAsync
@@ -96,11 +85,24 @@ namespace UBViews.Services
         Task<PostingList> GetPostingByLexemeAsync(string lexeme);
 
         /// <summary>
+        /// GetTermOccurrencesAsync
+        /// </summary>
+        /// <returns>List of TermOccurrence</returns>
+        Task<List<TermOccurrence>> GetTermOccurrencesAsync();
+
+        /// <summary>
+        /// GetTermOccurrencesByQueryResultIdAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of TermOccurrence</returns>
+        Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id);
+
+        /// <summary>
         /// GetTokenOccurrencesAsync
         /// </summary>
         /// <param name="postingId"></param>
         /// <returns>List of TokenOccurrence</returns>
-        Task<List<TokenOccurrence>> GetTokenOccurrencesAsync(int postingId);
+        Task<List<TokenOccurrence>> GetTokenOccurrencesByPostingListIdAsync(int postingId);
 
         /// <summary>
         /// GetTokenStemsAsync

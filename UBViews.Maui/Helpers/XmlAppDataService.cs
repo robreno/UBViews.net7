@@ -103,10 +103,10 @@ public class XmlAppDataService : IAppDataService
             xdoc = null;
         }
     }
-    public async Task<QueryResult> GetQueryResultByIdAsync(int queryId)
+    public async Task<QueryResultLocationsDto> GetQueryResultByIdAsync(int queryId)
     {
         XDocument xdoc = null;
-        QueryResult queryResultDto = null;
+        QueryResultLocationsDto queryResultLocationsDto = null;
         try
         {
             var queryHistory = await LoadAppDataAsync("QueryHistory.xml");
@@ -130,7 +130,7 @@ public class XmlAppDataService : IAppDataService
                 string queryExpression = queryExpressionElm.Value;
                 XElement queryLocationsElm = queryResult.Descendants("QueryLocations").FirstOrDefault();
 
-                queryResultDto = new QueryResult()
+                queryResultLocationsDto = new QueryResultLocationsDto()
                 {
                     Id = Int32.Parse(id),
                     Type = type,
@@ -138,25 +138,25 @@ public class XmlAppDataService : IAppDataService
                     Proximity = proximity,
                     QueryString = queryString,
                     QueryExpression = queryExpression,
-                    QueryLocations = new List<QueryLocation>()
+                    QueryLocations = new List<QueryLocationDto>()
                 };
 
                 var locs = queryLocationsElm.Descendants("QueryLocation");
-                QueryLocation qlocDto;
+                QueryLocationDto qlocDto;
                 foreach (XElement loc in locs)
                 {
                     var locId = loc.Attribute("id").Value;
                     var pid = loc.Attribute("pid").Value;
-                    qlocDto = new QueryLocation()
+                    qlocDto = new QueryLocationDto()
                     {
                         Id = locId,
                         Pid = pid,
-                        TermOccurrences = new List<TermOccurence>()
+                        TermOccurrences = new List<TermOccurenceDto>()
                     };
-                    queryResultDto.QueryLocations.Add(qlocDto);
+                    queryResultLocationsDto.QueryLocations.Add(qlocDto);
 
                     var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurence occDto;
+                    TermOccurenceDto occDto;
                     foreach (XElement occ in occLst)
                     {
                         var term = occ.Attribute("term").Value;
@@ -165,7 +165,7 @@ public class XmlAppDataService : IAppDataService
                         var dpoId = occ.Attribute("dpoId").Value;
                         var tpoId = occ.Attribute("tpoId").Value;
                         var len = occ.Attribute("len").Value;
-                        occDto = new TermOccurence()
+                        occDto = new TermOccurenceDto()
                         {
                             Term = term,
                             DocId = Int32.Parse(docId),
@@ -178,7 +178,7 @@ public class XmlAppDataService : IAppDataService
                     }
                 }
             }
-            return queryResultDto;
+            return queryResultLocationsDto;
         }
         catch (Exception ex)
         {
@@ -189,13 +189,13 @@ public class XmlAppDataService : IAppDataService
         finally
         {
             xdoc = null;
-            queryResultDto = null;
+            queryResultLocationsDto = null;
         }
     }
-    public async Task<QueryResult> GetQueryResultAsync(string query)
+    public async Task<QueryResultLocationsDto> GetQueryResultAsync(string query)
     {
         XDocument xdoc = null;
-        QueryResult queryResultDto = null;
+        QueryResultLocationsDto queryResultLocationsDto = null;
 
         try
         {
@@ -220,7 +220,7 @@ public class XmlAppDataService : IAppDataService
                 string queryExpression = queryExpressionElm.Value;
                 XElement queryLocationsElm = queryResult.Descendants("QueryLocations").FirstOrDefault();
 
-                queryResultDto = new QueryResult()
+                queryResultLocationsDto = new QueryResultLocationsDto()
                 {
                     Id = Int32.Parse(id),
                     Type = type,
@@ -228,25 +228,25 @@ public class XmlAppDataService : IAppDataService
                     Proximity = proximity,
                     QueryString = queryString,
                     QueryExpression = queryExpression,
-                    QueryLocations = new List<QueryLocation>()
+                    QueryLocations = new List<QueryLocationDto>()
                 };
 
                 var locs = queryLocationsElm.Descendants("QueryLocation");
-                QueryLocation qlocDto;
+                QueryLocationDto qlocDto;
                 foreach (XElement loc in locs)
                 {
                     var locId = loc.Attribute("id").Value;
                     var pid = loc.Attribute("pid").Value;
-                    qlocDto = new QueryLocation()
+                    qlocDto = new QueryLocationDto()
                     {
                         Id = locId,
                         Pid = pid,
-                        TermOccurrences = new List<TermOccurence>()
+                        TermOccurrences = new List<TermOccurenceDto>()
                     };
-                    queryResultDto.QueryLocations.Add(qlocDto);
+                    queryResultLocationsDto.QueryLocations.Add(qlocDto);
 
                     var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurence occDto;
+                    TermOccurenceDto occDto;
                     foreach (XElement occ in occLst)
                     {
                         var term = occ.Attribute("term").Value;
@@ -255,7 +255,7 @@ public class XmlAppDataService : IAppDataService
                         var dpoId = occ.Attribute("dpoId").Value;
                         var tpoId = occ.Attribute("tpoId").Value;
                         var len = occ.Attribute("len").Value;
-                        occDto = new TermOccurence()
+                        occDto = new TermOccurenceDto()
                         {
                             Term = term,
                             DocId = Int32.Parse(docId),
@@ -268,7 +268,7 @@ public class XmlAppDataService : IAppDataService
                     }
                 }
             }
-            return queryResultDto;
+            return queryResultLocationsDto;
         }
         catch (Exception ex)
         {
@@ -279,13 +279,13 @@ public class XmlAppDataService : IAppDataService
         finally
         {
             xdoc = null;
-            queryResultDto = null;
+            queryResultLocationsDto = null;
         }
     }
-    public async Task<List<QueryCommand>> GetQueryCommandsAsync()
+    public async Task<List<QueryCommandDto>> GetQueryCommandsAsync()
     {
         XDocument xdoc = null;
-        List<QueryCommand> queryCommands = null; ;
+        List<QueryCommandDto> queryCommands = null; ;
 
         try
         {
@@ -293,7 +293,7 @@ public class XmlAppDataService : IAppDataService
             xdoc = XDocument.Parse(queryHistory);
             var root = xdoc.Root;
             var qryCmds = root.Descendants("QueryCmd");
-            queryCommands = new List<QueryCommand>();
+            queryCommands = new List<QueryCommandDto>();
             foreach (var cmd in qryCmds)
             {
                 var id = Int32.Parse(cmd.Attribute("id").Value);
@@ -303,7 +303,7 @@ public class XmlAppDataService : IAppDataService
                 var stemmed = cmd.Attribute("stemmed") == null ? string.Empty : cmd.Attribute("stemmed").Value;
                 var filterId = cmd.Attribute("filterId") == null ? string.Empty : cmd.Attribute("filterId").Value;
                 var queryString = cmd.Descendants("QueryString").FirstOrDefault().Value;
-                QueryCommand dto = new QueryCommand()
+                QueryCommandDto dto = new QueryCommandDto()
                 {
                     Id = id,
                     Type = type,

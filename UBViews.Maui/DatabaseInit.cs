@@ -170,7 +170,7 @@ namespace UBViews
                         PostingId = posting.Id,
                         DocumentId = Int32.Parse(occ.Attribute("did").Value),
                         SequenceId = Int32.Parse(occ.Attribute("sid").Value),
-                        DocummentPosition = Int32.Parse(occ.Attribute("dpo").Value),
+                        DocummentPosition = Int32.Parse(occ.Attribute("dpo").Value), // TODO: regen db, as spelling error on field in database
                         TextPosition = Int32.Parse(occ.Attribute("tpo").Value)
                     };
                     int oSuccess = await PostingRepository.SaveTokenOccurenceAsync(occurrence);

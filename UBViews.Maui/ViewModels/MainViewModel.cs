@@ -14,13 +14,13 @@ namespace UBViews.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
-    QueryInput _qryInput;
+    QueryInputDto _queryInput;
     ConnectivityViewModel connectivityViewModel;
     IConnectivity connectivity;
     IFileService fileService;
     public MainViewModel(IFileService fileService, IConnectivity connectivity)
     {
-        _qryInput = new QueryInput();
+        _queryInput = new QueryInputDto();
         this.connectivity = Connectivity.Current;
         connectivityViewModel = new ConnectivityViewModel(this.connectivity);
         this.fileService = fileService;
@@ -53,18 +53,18 @@ public partial class MainViewModel : BaseViewModel
 
             if (queryString == null || queryString == string.Empty)
             {
-                _qryInput.Text = "Empty Query";
-                _qryInput.TokenCount = 0;
+                _queryInput.Text = "Empty Query";
+                _queryInput.TokenCount = 0;
                 QueryInput = await App.Current.MainPage.DisplayPromptAsync("Query empty", 
                     "Bad query, enter a valid query");
             }
             else
             {
                 await NormalizeQueryString(queryString);
-                await Shell.Current.GoToAsync($"{nameof(QueryInputPage)}?TokeCount={_qryInput.TokenCount}",
+                await Shell.Current.GoToAsync($"{nameof(QueryInputPage)}?TokeCount={_queryInput.TokenCount}",
                     new Dictionary<string, object>
                     {
-                        ["QueryInput"] = _qryInput
+                        ["QueryInput"] = _queryInput
                     });
             }
         }
@@ -160,9 +160,9 @@ public partial class MainViewModel : BaseViewModel
                 sb.Append(t + " ");
             }
             qs = sb.ToString().Trim();
-            _qryInput = new QueryInput() { Text = qs, TokenCount = tokens.Length };
-            QueryInput = _qryInput.Text;
-            TokenCount = _qryInput.TokenCount;
+            _queryInput = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
+            QueryInput = _queryInput.Text;
+            TokenCount = _queryInput.TokenCount;
         }
         catch (Exception ex)
         {

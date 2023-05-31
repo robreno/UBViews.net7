@@ -1,7 +1,6 @@
 ﻿using UBViews.Services;
 
-//using UBViews.Models.Query;
-
+using UBViews.Models.Query;
 using SQLiteRepository;
 using SQLiteRepository.Dtos;
 using SQLiteRepository.Models;
@@ -122,7 +121,7 @@ namespace UBViews.Helpers
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
-        public async Task<QueryResultDto> GetQueryResultByQueryStringAsync(string queryString)
+        public async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
         {
             try
             {
@@ -140,7 +139,7 @@ namespace UBViews.Helpers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<QueryResultDto> GetQueryResultByIdAsync(int id)
+        public async Task<QueryResultLocations> GetQueryResultByIdAsync(int id)
         {
             try
             {
@@ -156,53 +155,16 @@ namespace UBViews.Helpers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="termOccurrence"></param>
         /// <returns></returns>
-        public async Task<int> SaveTermOccurrenceAsync(TermOccurrence termOccurrence)
-        {
-            return await QueryRepository.SaveTermOccurrenceAsync(termOccurrence);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<TermOccurrence>> GetTermOccurrencesAsync()
-        {
-            return await QueryRepository.GetTermOccurrencesAsync();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
+        public async Task<List<QueryCommand>> GetQueryCommandsAsync()
         {
             try
             {
-                return await QueryRepository.GetTermOccurrencesByQueryResultIdAsync(id);
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Exception raised => GetTermOccurrencesByQueryResultIdAsync.", ex.Message, "Cancel");
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<QueryCommandDto>> GetQueryCommandsAsync()
-        {
-            try
-            {
-                List<QueryCommandDto> queryCommands = new List<QueryCommandDto>();
+                List<QueryCommand> queryCommands = new List<QueryCommand>();
                 var queryResults = await QueryRepository.GetQueryResultsAsync();
                 foreach (var result in queryResults)
                 {
-                    var queryCommand = new QueryCommandDto
+                    var queryCommand = new QueryCommand
                     {
                         Id = result.Id,
                         Type = result.Type,
@@ -243,9 +205,36 @@ namespace UBViews.Helpers
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public async Task<List<TermOccurrence>> GetTermOccurrencesAsync()
+        {
+            return await QueryRepository.GetTermOccurrencesAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
+        {
+            try
+            {
+                return await QueryRepository.GetTermOccurrencesByQueryResultIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised => GetTermOccurrencesByQueryResultIdAsync.", ex.Message, "Cancel");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="postingId"></param>
         /// <returns></returns>
-        public async Task<List<TokenOccurrence>> GetTokenOccurrencesAsync(int postingId)
+        public async Task<List<TokenOccurrence>> GetTokenOccurrencesByPostintListIdAsync(int postingId)
         {
             return await PostingRepository.GetTokenOccurrencesAsync(postingId);
         }
