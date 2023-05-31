@@ -21,6 +21,7 @@
   <Import Project="..\src\FsLexYacc.Build.Tasks\FsLexYacc.targets" />
 
   <ItemGroup>
+    <Content Include="Readme.txt" />
     <FsYacc Include="QueryParser.fsy">
       <OtherFlags>--module UBViews.QueryEngine.Parser</OtherFlags>
     </FsYacc>
@@ -32,6 +33,7 @@
     <Compile Include="QueryTypes.fs" />
     <Compile Include="QueryParser.fs" />
     <Compile Include="QueryLexer.fs" />
+    <Compile Include="Evaluators.fs" />
     <Compile Include="LexParser.fs" />
     <None Include="QueryParser.fsy" />
     <None Include="QueryLexer.fsl" />

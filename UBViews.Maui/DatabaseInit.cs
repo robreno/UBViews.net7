@@ -2,15 +2,17 @@
 using System.Xml.Linq;
 using UBViews.Helpers;
 using UBViews.Services;
+
 using UBViews.Repositories;
 using UBViews.Repositories.Models;
+
+// See: https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/database-sqlite
 
 namespace UBViews
 {
     public partial class AppShell
     {
-        // See: https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/database-sqlite
-
+        #region Database Paths and Data Members 
         // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
         private string _appLocalState = FileSystem.Current.AppDataDirectory;
         // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalCache
@@ -21,11 +23,14 @@ namespace UBViews
 
         private string _qrDatabaseName = "queryResults.db3";
         private string _queriesPathName = Path.Combine(FileSystem.Current.AppDataDirectory, "queryResults.db3");
+        #endregion
+
+        #region Database Initialization and Table Generation Methods
         public async Task InitializeData()
         {
             // Copy Posting Lists Database
-            //if (!File.Exists(_postingsPathName))
-            //    await CopyDatabase(_plDatabaseName, _postingsPathName);
+            if (!File.Exists(_postingsPathName))
+                await CopyDatabase(_plDatabaseName, _postingsPathName);
 
             if (!File.Exists(_queriesPathName))
                 await CopyDatabase(_qrDatabaseName, _queriesPathName);
@@ -57,7 +62,7 @@ namespace UBViews
         }
         public async Task CreateQueryResultsDB()
         {
-            await QueryRepository.Init();
+            await QueryRepository.InitializeDatabase();
         }
         public async Task AddQueryData(IFileService fileService)
         {
@@ -118,7 +123,7 @@ namespace UBViews
         }
         public async Task CreatePostingListsDB()
         {
-            await PostingRepository.Init();
+            await PostingRepository.InitializeDatabase();
         }
         public async Task AddPostingData(IFileService fileService)
         {
@@ -173,5 +178,6 @@ namespace UBViews
             }
             return;
         }
+        #endregion
     }
 }

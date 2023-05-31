@@ -1,15 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using System.Xml.Linq;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Maui.Controls.Compatibility;
 
 using UBViews.Services;
 using UBViews.Models.Query;
+
+using SQLiteRepository;
+using SQLiteRepository.Dtos;
+using SQLiteRepository.Models;
+
+//using LexParser.Library;
 using UBViews.LexParser;
-
-//using SQLiteRepository;
-//using SQLiteRepository.Dtos;
-
 namespace UBViews.ViewModels;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]
@@ -21,16 +25,18 @@ public partial class QueryInputViewModel : BaseViewModel
     IAppDataService appDataService;
 
     IFileService fileService;
+    IRepositoryService repositoryService;
 
-    public ObservableCollection<QueryCommand> QueryCommands { get; } = new();
+    public ObservableCollection<QueryCommandDto> QueryCommands { get; } = new();
 
     ParserService parserService;
 
-    public QueryInputViewModel(IAppDataService appDataService, IFileService fileService)
+    public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IRepositoryService repositoryService)
     {
         this.appDataService = appDataService;
         this.fileService = fileService;
         this.parserService = new ParserService();
+        this.repositoryService = repositoryService;
     }
 
     [ObservableProperty]
@@ -58,6 +64,29 @@ public partial class QueryInputViewModel : BaseViewModel
     string queryResultString;
 
     [RelayCommand]
+    async Task QueryInputPageAppearing()
+    {
+        if (IsBusy == true)
+            return;
+
+        try
+        {
+            IsBusy = true;
+            await repositoryService.InititializeDatabase(InitOptions.All);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.QueryInputPageAppearing => ",
+               ex.Message, "Ok");
+        }
+        finally
+        {
+            IsBusy = false;
+            //IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
     async Task QueryInputPageLoaded()
     {
         if (IsBusy == true)
@@ -68,12 +97,11 @@ public partial class QueryInputViewModel : BaseViewModel
             IsBusy = true;
 
             var commands = await appDataService.GetQueryCommandsAsync();
-            if (QueryCommands.Count != 0)
-                return;
-
-            foreach (var command in commands)
-                QueryCommands.Add(command);
-
+            var repoCommands = await repositoryService.GetQueryCommandsAsync();
+            foreach (var cmd in repoCommands)
+            {
+                QueryCommands.Add(cmd);
+            }
         }
         catch (Exception ex)
         {
@@ -104,7 +132,15 @@ public partial class QueryInputViewModel : BaseViewModel
             }
             else
             {
-                QueryExpression = parserService.ParseQuery(QueryInput.Text).ToString();
+                var queryText = QueryInput.Text;
+                var result = parserService.ParseQuery(queryText);
+                QueryExpression = result.ToString();
+                var terms = parserService.ParseQueryStringToTermList(queryText);
+                foreach (var term in terms)
+                {
+                    var postingList = await repositoryService.GetPostingByLexemeAsync(term);
+                    var tokOccs = await repositoryService.GetTokenOccurrencesAsync(postingList.Id);
+                }
             }
         }
         catch (Exception ex)
@@ -138,10 +174,39 @@ public partial class QueryInputViewModel : BaseViewModel
                 // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState\
                 // QueryCommands.xml
                 (bool queryExists, int queryId) = await appDataService.QueryResultExistsAsync(queryString);
+                (bool queryExistsRepo, int queryIdRepo) = await repositoryService.QueryResultExistsAsync(queryString);
                 QueryResultExists = queryExists;
-                if (queryExists)
+                if (queryExistsRepo)
                 {
-                    var queryResultDto = await appDataService.GetQueryResultByIdAsync(queryId);
+                    // TODO: Add to Repository .... or change to Repository?
+                    var queryResultDto = await appDataService.GetQueryResultByIdAsync(queryIdRepo);
+                    var queryResultDtoRepo = await repositoryService.GetQueryResultByIdAsync(queryIdRepo);
+                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryResultDtoRepo.Id);
+
+                    var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
+                    var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
+
+                    // 1. Get PostingList for each term in query use F# to parse QueryExpression and get posting lists
+                    var postingLst2 = await repositoryService.GetPostingByLexemeAsync("foreword");
+                    var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
+
+                    // 2. Get TokenOccurrenceList for each PostingListId
+                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesAsync(postingLst2.Id);
+                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesAsync(postingLst3.Id);
+
+                    //var parserService = new ParserService();
+                    // 3. Use Linq QueryLanguage to filter to Hits
+                    //var set1 = new SortedSet<TokenOccurrence>();
+                    //var set2 = new SortedSet<TokenOccurrence>();
+                    //foreach (var token in tokenOccurrences1)
+                    //{
+                    //    set1.Add(token);
+                    //}
+                    //foreach (var token in tokenOccurrences2)
+                    //{
+                    //    set2.Add(token);
+                    //}
+                    // join, union, etc., 
                 }
                 else
                 {

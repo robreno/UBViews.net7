@@ -1,68 +1,48 @@
 ﻿using SQLite;
-using UBViews.Repositories.Dtos;
+using DTO = UBViews.Repositories.Dtos;
 using UBViews.Repositories.Models;
 
 namespace UBViews.Repositories
 {
     public static class QueryRepository
     {
+        #region Database Paths and Data Members 
         private static SQLiteAsyncConnection _databaseConn;
         private static string _databasePathLocalState = Path.Combine(FileSystem.AppDataDirectory, "queryResults.db3");
         private static string _databasePathLocalCache =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "queryResults.db3");
         private static bool _dbExists = false;
+        #endregion
 
-        public static async Task Init()
+        #region Database Initialization
+        public static async Task<bool> DatabaseExistsAsync(string dbPath)
+        {
+            return await Task.FromResult(_dbExists);
+        }
+        public static async Task InitializeDatabase()
         {
             await Task.Run(() => 
             {
                 _databaseConn = new SQLiteAsyncConnection(_databasePathLocalState);
+                _dbExists = true;
             });
+            //result = await _databaseConn.CreateTableAsync<QueryResult>();
         }
-
-        public static async Task<bool> ExistsAsync(string dbPath)
+        public static async Task<int> QueryResultCountAsync()
         {
-            return await Task.FromResult(_dbExists);
+            return await _databaseConn.Table<QueryResult>().CountAsync();
         }
+        #endregion
 
-        public static async Task<List<QueryResult>> GetQueryResultsAsync() 
-        {
-            return await _databaseConn.Table<QueryResult>().ToListAsync();
-        }
-
+        #region Query Repository Methods
         public static async Task<int> SaveQueryResultAsync(QueryResult queryResult)
         {
             return await _databaseConn.InsertAsync(queryResult);
         }
-
-        public static async Task<List<TermOccurrence>> GetTermOccurrencesAsync() 
-        {
-            return await _databaseConn.Table<TermOccurrence>().ToListAsync();
-        }
-
-        public static async Task<int> SaveTermOccurrenceAsync(TermOccurrence termOccurrence) 
-        { 
-            return await _databaseConn.InsertAsync(termOccurrence);
-        }
-
-        public static async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
-        {
-            return await _databaseConn.Table<TermOccurrence>()
-                                      .Where(to => to.QueryResultId == id)
-                                      .ToListAsync();
-        }
-
-        public static async Task<QueryResult> GetQueryResultByQueryStringAsync(string queryString) 
-        { 
-            return await _databaseConn.Table<QueryResult>()
-                                      .Where(qr => qr.QueryString == queryString)
-                                      .FirstOrDefaultAsync();
-        }
-
         public static async Task<(bool, int)> QueryResultExistsAsync(string queryString)
         {
             var queryResult = await GetQueryResultByQueryStringAsync(queryString);
-            if (queryResult != null) 
+            if (queryResult != null)
             {
                 return (true, queryResult.Id);
             }
@@ -71,15 +51,24 @@ namespace UBViews.Repositories
                 return (false, 0);
             }
         }
-
-        public static async Task<QueryResultDto> GetQueryResultByIdAsync(int id)
+        public static async Task<List<QueryResult>> GetQueryResultsAsync() 
+        {
+            return await _databaseConn.Table<QueryResult>().ToListAsync();
+        }
+        public static async Task<QueryResult> GetQueryResultByQueryStringAsync(string queryString)
+        {
+            return await _databaseConn.Table<QueryResult>()
+                                      .Where(qr => qr.QueryString == queryString)
+                                      .FirstOrDefaultAsync();
+        }
+        public static async Task<DTO.QueryResult> GetQueryResultByIdAsync(int id)
         {
             var queryResult = await _databaseConn.Table<QueryResult>()
                                       .Where(qr => qr.Id == id)
                                       .FirstOrDefaultAsync();
             if (queryResult != null)
             {
-                var queryResultDto = new QueryResultDto() 
+                var queryResultDto = new DTO.QueryResult()
                 {
                     Id = queryResult.Id,
                     Hits = queryResult.Hits,
@@ -95,15 +84,15 @@ namespace UBViews.Repositories
 
                 var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
 
-                foreach (var location in queryLocations) 
+                foreach (var location in queryLocations)
                 {
-                    var queryLocation = new QueryLocationDto();
+                    var queryLocation = new DTO.QueryLocation();
                     queryLocation.Id = location.First().DocumentId + ":" + location.First().SequenceId;
                     queryLocation.Pid = location.Key;
-                    
-                    foreach (var termOccurrence in location) 
+
+                    foreach (var termOccurrence in location)
                     {
-                        var loc = new TermOccurenceDto()
+                        var loc = new DTO.TermOccurence()
                         {
                             Term = termOccurrence.Term,
                             DocId = termOccurrence.DocumentId,
@@ -120,5 +109,20 @@ namespace UBViews.Repositories
             }
             return null;
         }
+        public static async Task<int> SaveTermOccurrenceAsync(TermOccurrence termOccurrence)
+        {
+            return await _databaseConn.InsertAsync(termOccurrence);
+        }
+        public static async Task<List<TermOccurrence>> GetTermOccurrencesAsync() 
+        {
+            return await _databaseConn.Table<TermOccurrence>().ToListAsync();
+        }
+        public static async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
+        {
+            return await _databaseConn.Table<TermOccurrence>()
+                                      .Where(to => to.QueryResultId == id)
+                                      .ToListAsync();
+        }
+        #endregion
     }
 }

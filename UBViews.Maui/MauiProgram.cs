@@ -41,10 +41,12 @@ namespace UBViews
                 });
 
             // Services
+            builder.Services.AddTransient<IFileService>((e) => new FileService());
+            builder.Services.AddTransient<IRepositoryService>((e) => new RepositoryService());
+
             builder.Services.AddTransient<IAppDataService>((e) => new XmlAppDataService(new FileService()));
             builder.Services.AddTransient<IAppSettingsService>((e) => new XmlAppSettingsService(new FileService()));
             builder.Services.AddTransient<IAudioService>((e) => new XmlAudioService(new FileService()));
-            builder.Services.AddTransient<IFileService>((e) => new FileService());
 
             // Connectivity Service
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);

@@ -20,7 +20,7 @@ public partial class AppDataViewModel : BaseViewModel
             "QueryCommands.xml"
     };
 
-    public ObservableCollection<AppFile> DataFiles { get; } = new();
+    public ObservableCollection<AppFileDto> DataFiles { get; } = new();
     private IAppDataService appDataService;
     public AppDataViewModel(IAppDataService appDataService)
     {

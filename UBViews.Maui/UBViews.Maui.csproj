@@ -162,9 +162,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Repositories\**" />
+	  <Compile Remove="Repositories\**" />
+	  <EmbeddedResource Remove="Repositories\**" />
+	  <MauiCss Remove="Repositories\**" />
+	  <MauiXaml Remove="Repositories\**" />
+	  <None Remove="Repositories\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Conrols\PaperHeadingControl.xaml.cs" />
 	  <Compile Remove="Converters\DurationDisplayConverter.cs" />
+	  <Compile Remove="DatabaseInit.cs" />
 	  <Compile Remove="Models\PaperTitle.cs" />
+	  <Compile Remove="Services\IPostingService.cs" />
+	  <Compile Remove="Services\ISubscriberService.cs" />
 	  <Compile Remove="State\ContentsFilter.cs" />
 	  <Compile Remove="ViewModels\QueryResultViewModel.cs" />
 	</ItemGroup>
@@ -232,12 +244,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\UBViews.QueryEngine\UBViews.LexParser.fsproj" />
+	  <Folder Include="Triggers\" />
+	  <Folder Include="Resources\Raw\MauiUbml\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Triggers\" />
-	  <Folder Include="Resources\Raw\MauiUbml\" />
+	  <ProjectReference Include="..\..\MauiDatabases\MauiDatabases\SQLiteRepository\SQLiteRepository.csproj" />
+	  <ProjectReference Include="..\UBViews.QueryEngine\UBViews.LexParser.fsproj" />
 	</ItemGroup>
 
 	<ItemGroup>

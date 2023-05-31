@@ -228,10 +228,10 @@ namespace UBViews
         }
         protected override void OnAppearing()
         {
-            Task.Run(async () =>
-            {
-                await InitializeData();
-            });
+            //Task.Run(async () =>
+            //{
+            //    //await InitializeData(); // Excluded class DatabaseInitialize
+            //});
             base.OnAppearing();
         }
 

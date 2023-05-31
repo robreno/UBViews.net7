@@ -15,6 +15,9 @@
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding QueryInputPageAppearingCommand}" />
+        <behavior:EventToCommandBehavior
             EventName="Loaded"
             Command="{Binding QueryInputPageLoadedCommand}" />
     </ContentPage.Behaviors>

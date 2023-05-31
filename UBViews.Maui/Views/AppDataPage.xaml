@@ -23,7 +23,7 @@
                 HorizontalOptions="Center" />
             <CollectionView ItemsSource="{Binding DataFiles}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:AppFile">
+                    <DataTemplate x:DataType="model:AppFileDto">
                         <VerticalStackLayout>
                             <Label Padding="10,0,10,0">
                                 <Label.FormattedText>

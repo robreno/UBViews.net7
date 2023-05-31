@@ -1,54 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Queries count="17">
-  <QueryCmd id="1" type="Phrase">
+  <QueryCmd id="1" type="Phrase" terms="[truth revealers]" proximity="paragraph">
     <QueryString>"truth revealers"</QueryString>
   </QueryCmd>
-  <QueryCmd id="2" type="CTerm">
+  <QueryCmd id="2" type="CTerm" terms="[truth revealers]" proximity="paragraph">
     <QueryString>[truth revealers]</QueryString>
   </QueryCmd>
-  <QueryCmd id="3" type="FilterBy+And">
+  <QueryCmd id="3" type="FilterBy+And" terms="[foreword; orvonton]" proximity="paragraph" filterId="PARID">
     <QueryString>foreword and orvonton filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="4" type="FilterBy+And">
+  <QueryCmd id="4" type="FilterBy+And" terms="[admonishes; mandate]" proximity="sequence" filterId="SEQID">
     <QueryString>admonishes and mandate filterby seqid</QueryString>
   </QueryCmd>
-  <QueryCmd id="5" type="FilterBy+And">
+  <QueryCmd id="5" type="FilterBy+And" terms="[interregnum; witness]" proximity="sequence" filterId="SEQID">
     <QueryString>interregnum and witness filterby seqid</QueryString>
   </QueryCmd>
-  <QueryCmd id="6" type="FilterBy+And">
+  <QueryCmd id="6" type="FilterBy+And" terms="[progress; economic]" proximity="sequence" filterId="SEQID">
     <QueryString>progress and economic filterby seqid</QueryString>
   </QueryCmd>
-  <QueryCmd id="7" type="FilterBy+And">
+  <QueryCmd id="7" type="FilterBy+And" terms="[profit; motive]" proximity="section" filterId="SECID">
     <QueryString>profit and motive filterby secid</QueryString>
   </QueryCmd>
-  <QueryCmd id="8" type="FilterBy+And">
+  <QueryCmd id="8" type="FilterBy+And" terms="[democracy; ideal]" proximity="paragraph" filterId="PARID">
     <QueryString>democracy and ideal filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="9" type="FilterBy+And">
+  <QueryCmd id="9" type="FilterBy+And" terms="[cosmic; instrument]" proximity="paragraph" filterId="PARID">
     <QueryString>cosmic and instrument filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="10" type="And">
+  <QueryCmd id="10" type="And" terms="[prostitutes; temple]" proximity="book">
     <QueryString>prostitutes and temple</QueryString>
   </QueryCmd>
-  <QueryCmd id="11" type="FilterBy+And">
+  <QueryCmd id="11" type="FilterBy+And" terms="[mystery; cynics]" proximity="paragraph" filterId="PARID">
     <QueryString>mystery and cynics filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="12" type="STerm">
+  <QueryCmd id="12" type="STerm" terms="[rejuvenation]" stemmed="rejuven" proximity="book">
     <QueryString>~rejuvenation</QueryString>
   </QueryCmd>
-  <QueryCmd id="13" type="FilterBy+And">
+  <QueryCmd id="13" type="FilterBy+And" terms="[conscience; power]" proximity="paragraph" filterId="PARID">
     <QueryString>conscience and power filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="14" type="CTerm">
+  <QueryCmd id="14" type="CTerm" terms="[ascending midwayers]" proximity="paragraph">
     <QueryString>[ascending midwayers]</QueryString>
   </QueryCmd>
-  <QueryCmd id="15" type="CTerm">
+  <QueryCmd id="15" type="CTerm" terms="[composite personality groups]" proximity="paragraph">
     <QueryString>[composite personality groups]</QueryString>
   </QueryCmd>
-  <QueryCmd id="16" type="FilterBy+And">
+  <QueryCmd id="16" type="FilterBy+And" terms="[dematerialization; accelerated]" proximity="paragraph" filterId="PARID">
     <QueryString>dematerialization and accelerated filterby parid</QueryString>
   </QueryCmd>
-  <QueryCmd id="17" type="FilterBy+And">
+  <QueryCmd id="17" type="FilterBy+And" terms="[mind; ship]" proximity="paragraph" filterId="PARID">
     <QueryString>mind and ship filterby parid</QueryString>
   </QueryCmd>
 </Queries>

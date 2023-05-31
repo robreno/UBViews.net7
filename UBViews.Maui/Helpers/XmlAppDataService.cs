@@ -1,9 +1,8 @@
 ﻿using System.Xml.Linq;
 using UBViews.Models;
-using UBViews.Models.Query;
 using UBViews.Services;
-
 namespace UBViews.Helpers;
+using UBViews.Models.Query;
 
 public class XmlAppDataService : IAppDataService
 {
@@ -47,20 +46,20 @@ public class XmlAppDataService : IAppDataService
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
         }
     }
-    public async Task<List<AppFile>> GetAppFilesAsync()
+    public async Task<List<AppFileDto>> GetAppFilesAsync()
     {
         try
         {
             string mainDir = FileSystem.Current.AppDataDirectory;
             string[] files = Directory.GetFiles(mainDir);
 
-            List<AppFile> appFiles = new List<AppFile>();
+            List<AppFileDto> appFiles = new List<AppFileDto>();
 
             int count = 0;
             foreach (string file in files)
             {
                 var fileName = file.Substring(mainDir.Length + 1);
-                var newFile = new AppFile { Id = ++count, FilePath = file, FileName = fileName };
+                var newFile = new AppFileDto { Id = ++count, FilePath = file, FileName = fileName };
                 appFiles.Add(newFile);
             }
 
@@ -299,12 +298,20 @@ public class XmlAppDataService : IAppDataService
             {
                 var id = Int32.Parse(cmd.Attribute("id").Value);
                 var type = cmd.Attribute("type").Value;
-                var query = cmd.Descendants("QueryString").FirstOrDefault().Value;
+                var terms = cmd.Attribute("terms").Value;
+                var proximity = cmd.Attribute("proximity").Value;
+                var stemmed = cmd.Attribute("stemmed") == null ? string.Empty : cmd.Attribute("stemmed").Value;
+                var filterId = cmd.Attribute("filterId") == null ? string.Empty : cmd.Attribute("filterId").Value;
+                var queryString = cmd.Descendants("QueryString").FirstOrDefault().Value;
                 QueryCommand dto = new QueryCommand()
                 {
                     Id = id,
                     Type = type,
-                    Query = query
+                    Terms = terms,
+                    Proximity = proximity,
+                    Stemmed = stemmed,
+                    FilterId = filterId,
+                    QueryString = queryString
                 };
                 queryCommands.Add(dto);
             }

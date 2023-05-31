@@ -19,7 +19,7 @@ public partial class AppSettingsPage : ContentPage
     bool maxNumDirty;
     bool showPidsDirty;
     bool lineHeightDirty;
-    bool screenSizeDirty;
+    //bool screenSizeDirty;
 
     /// <summary>
     /// 
