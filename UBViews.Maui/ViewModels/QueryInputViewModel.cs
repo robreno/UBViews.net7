@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using Microsoft.Maui.Controls.Compatibility;
 
 using UBViews.Services;
+using UBViews.Models;
 using UBViews.Models.Query;
+using UBViews.Models.Ubml;
 
 using SQLiteRepository;
 using SQLiteRepository.Dtos;
@@ -207,6 +209,8 @@ public partial class QueryInputViewModel : BaseViewModel
                     //    set2.Add(token);
                     //}
                     // join, union, etc., 
+
+                    await LoadXaml(queryResultDtoRepo);
                 }
                 else
                 {
@@ -222,6 +226,62 @@ public partial class QueryInputViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task TappedGesture(string lableName)
+    {
+        try
+        {
+            var arry = lableName.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            var paperId = Int32.Parse(arry[0]);
+            var seqId = Int32.Parse(arry[1]);
+            Paragraph paragraph = await fileService.GetParagraphAsync(paperId, seqId);
+            PaperDto paperDto = await fileService.GetPaperDtoAsync(paperId);
+            var uid = paragraph.Uid;
+            var pid = paragraph.Pid;
+            paperDto.ScrollTo = true;
+            paperDto.SeqId = seqId;
+            paperDto.Pid = pid;
+            paperDto.Uid = uid;
+            await GoToDetails(paperDto);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task GoToDetails(PaperDto dto)
+    {
+        if (IsBusy)
+            return;
+
+        try
+        {
+            IsBusy = true;
+
+            if (dto == null)
+                return;
+
+            string className = "_" + dto.Id.ToString("000");
+
+            await Shell.Current.GoToAsync(className, true, new Dictionary<string, object>
+            {
+                {"PaperDto", dto }
+            });
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
         }
     }
 
@@ -258,6 +318,77 @@ public partial class QueryInputViewModel : BaseViewModel
         }
     }
 
+    private async Task LoadXaml(QueryResultDto queryResultDto)
+    {
+        try
+        {
+            // See: https://learn.microsoft.com/en-us/dotnet/maui/xaml/runtime-load
+            /*
+            string navigationButtonXAML = "<Button Text=\"Navigate\" />";
+            Button navigationButton = new Button().LoadFromXaml(navigationButtonXAML);
+            stackLayout.Add(navigationButton); ...
+            */
+
+            var locations = queryResultDto.QueryLocations;
+            foreach (var location in locations)
+            {
+                var id = location.Id;
+                var pid = location.Pid;
+                var arry = id.Split(':');
+                var paperId = Int32.Parse(arry[0]);
+                var seqId = Int32.Parse(arry[1]);
+                var paragraph = await fileService.GetParagraphAsync(paperId, seqId);
+                var text = paragraph.Text;
+                var paraStyle = paragraph.ParaStyle;
+
+
+                var contentVSL = contentPage.FindByName("queryResultVSL") as VerticalStackLayout;
+
+                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+                // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
+                FormattedString formattedString = new FormattedString();
+                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
+                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
+                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
+
+                Span defaultTextSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = "But in order to formulate this ... " };
+
+                formattedString.Spans.Add(tabSpan);
+                formattedString.Spans.Add(pidSpan);
+                formattedString.Spans.Add(spaceSpan);
+                formattedString.Spans.Add(defaultTextSpan);
+
+                Label label = new Label { FormattedText = formattedString };
+                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
+                tapGestureRecognizer.CommandParameter = $"{labelName}";
+                tapGestureRecognizer.NumberOfTapsRequired = 1;
+                label.GestureRecognizers.Add(tapGestureRecognizer);
+
+                Border newBorder = new Border()
+                {
+                    Stroke = Colors.Blue,
+                    Padding = new Thickness(10),
+                    Margin = new Thickness(.5),
+                    Content = label
+                };
+                contentVSL.Add(newBorder);
+
+                foreach (var termOcc in location.TermOccurrences)
+                {
+                    var position = termOcc.TextPosition;
+                    var length = termOcc.Length;
+                    var term = text.Substring(position, length);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
+                ex.Message, "Ok");
+        }
+    }
     private async Task NormalizeQueryString(string queryString)
     {
         try

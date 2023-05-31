@@ -9,6 +9,7 @@ public partial class QueryInputPage : ContentPage
 	{ 
 		InitializeComponent();
 		BindingContext = vm;
+		vm.contentPage = this;
 	}
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)

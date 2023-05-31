@@ -45,6 +45,13 @@
             CommandParameter="{Binding QueryInput.Text}"
             HorizontalOptions="Center" />
 
+        <Label 
+            Text="{Binding QueryExpression, StringFormat='Query Expression: {0}'}"
+            FontSize="18"
+            FontAttributes="Bold"
+            Padding="10"
+            HorizontalOptions="Center"/>
+
         <Button 
             Text="Run Query" 
             FontSize="18"
@@ -61,14 +68,49 @@
             Padding="10"
             HorizontalOptions="Center"/>
 
-        <Button 
+        <ScrollView x:Name="queryResultScrollView">
+            <VerticalStackLayout x:Name="queryResultVSL">
+                <Border Stroke="Blue" Padding="10" Margin=".5">
+                    <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}" ToolTipProperties.Text="Tap to go to paragraph.">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Style="{StaticResource TabsSpan}" />
+                                <Span x:Name="SP_000_005" Style="{StaticResource PID}" Text="0:0.4" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Style="{StaticResource RegularSpan}" Text="But in order to formulate this " />
+                                <Span Style="{StaticResource HighlightSpan}" Text="Foreword" />
+                                <Span Style="{StaticResource RegularSpan}" Text=" of definitions and limitations of terminology, it is necessary to anticipate the usage of these terms in the subsequent presentations. This " />
+                                <Span Style="{StaticResource HighlightSpan}" Text="Foreword" />
+                                <Span Style="{StaticResource RegularSpan}" Text=" is not, therefore, a finished statement within itself; it is only a definitive guide designed to assist those who shall read the accompanying papers dealing with Deity and the universe of universes which have been formulated by an " />
+                                <Span Style="{StaticResource HighlightSpan}" Text="Orvonton" />
+                                <Span Style="{StaticResource RegularSpan}" Text=" commission sent to Urantia for this purpose." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>
+                <!--<Border Stroke="Blue" Padding="10" Margin=".5">
+                    <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Style="{StaticResource TabsSpan}" />
+                                <Span Style="{StaticResource PID}" Text="0:0.4" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Style="{StaticResource RegularSpan}" Text="But in order to formulate this ... " />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>-->
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--<Button 
             Text="Lookup Stem" 
             FontSize="18"
             FontAttributes="Bold" 
             Command="{Binding LookupStemCommand}"
             CommandParameter="{Binding QueryInput.Text}"
             HorizontalOptions="Center"
-            Margin="10"/>
+            Margin="10"/>-->
 
         <!--<Label 
             Text="{Binding QueryInputString, StringFormat='Query Input: {0}'}"
@@ -76,13 +118,6 @@
             FontAttributes="Bold"
             Padding="10"
             HorizontalOptions="Center"/>-->
-
-        <Label 
-            Text="{Binding QueryExpression, StringFormat='Query Expression: {0}'}"
-            FontSize="18"
-            FontAttributes="Bold"
-            Padding="10"
-            HorizontalOptions="Center"/>
 
     </VerticalStackLayout>
     
