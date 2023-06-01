@@ -250,8 +250,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\MauiDatabases\MauiDatabases\SQLiteRepository\SQLiteRepository.csproj" />
 	  <ProjectReference Include="..\UBViews.QueryEngine\UBViews.LexParser.fsproj" />
+	  <ProjectReference Include="..\UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

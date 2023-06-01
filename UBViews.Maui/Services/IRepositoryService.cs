@@ -1,8 +1,8 @@
 ﻿using UBViews.Models.Query;
 
-using SQLiteRepository;
-using SQLiteRepository.Dtos;
-using SQLiteRepository.Models;
+using UBViews.SQLiteRepository;
+using UBViews.SQLiteRepository.Dtos;
+using UBViews.SQLiteRepository.Models;
 
 namespace UBViews.Services
 {

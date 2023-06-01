@@ -3,8 +3,8 @@ using System.Xml.Linq;
 using UBViews.Helpers;
 using UBViews.Services;
 
-using SQLiteRepository;
-using SQLiteRepository.Models;
+using UBViews.SQLiteRepository;
+using UBViews.SQLiteRepository.Models;
 
 // See: https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/database-sqlite
 

@@ -10,9 +10,9 @@ using UBViews.Models;
 using UBViews.Models.Query;
 using UBViews.Models.Ubml;
 
-using SQLiteRepository;
-using SQLiteRepository.Dtos;
-using SQLiteRepository.Models;
+using UBViews.SQLiteRepository;
+using UBViews.SQLiteRepository.Dtos;
+using UBViews.SQLiteRepository.Models;
 
 //using LexParser.Library;
 using UBViews.LexParser;

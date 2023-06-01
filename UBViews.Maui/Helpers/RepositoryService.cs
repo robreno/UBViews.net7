@@ -1,9 +1,9 @@
 ﻿using UBViews.Services;
 
 using UBViews.Models.Query;
-using SQLiteRepository;
-using SQLiteRepository.Dtos;
-using SQLiteRepository.Models;
+using UBViews.SQLiteRepository;
+using UBViews.SQLiteRepository.Dtos;
+using UBViews.SQLiteRepository.Models;
 
 namespace UBViews.Helpers
 {
@@ -137,13 +137,13 @@ namespace UBViews.Helpers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="queryResultId"></param>
         /// <returns></returns>
-        public async Task<QueryResultLocations> GetQueryResultByIdAsync(int id)
+        public async Task<QueryResultLocations> GetQueryResultByIdAsync(int queryResultId)
         {
             try
             {
-                return await QueryRepository.GetQueryResultByIdAsync(id);
+                return await QueryRepository.GetQueryResultByIdAsync(queryResultId);
             }
             catch (Exception ex)
             {
@@ -214,13 +214,13 @@ namespace UBViews.Helpers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="queryResultId"></param>
         /// <returns></returns>
-        public async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
+        public async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int queryResultId)
         {
             try
             {
-                return await QueryRepository.GetTermOccurrencesByQueryResultIdAsync(id);
+                return await QueryRepository.GetTermOccurrencesByQueryResultIdAsync(queryResultId);
             }
             catch (Exception ex)
             {
@@ -234,9 +234,9 @@ namespace UBViews.Helpers
         /// </summary>
         /// <param name="postingId"></param>
         /// <returns></returns>
-        public async Task<List<TokenOccurrence>> GetTokenOccurrencesByPostintListIdAsync(int postingId)
+        public async Task<List<TokenOccurrence>> GetTokenOccurrencesByPostingListIdAsync(int postingId)
         {
-            return await PostingRepository.GetTokenOccurrencesAsync(postingId);
+            return await PostingRepository.GetTokenOccurrencesByPostingListIdAsync(postingId);
         }
 
         /// <summary>
