@@ -217,33 +217,31 @@ public class FileService : IFileService
             var paragraphs = root.Descendants("Paragraph");
             foreach (var paragraph in paragraphs)
             {
+                var startTime = paragraph.Attribute("startTime").Value;
+                var endTime = paragraph.Attribute("endTime").Value;
                 var seqId = Int32.Parse(paragraph.Attribute("seqId").Value);
-                var style = paragraph.Attribute("paraStyle").Value;
-                bool skipAstrisks = (style == "SponsorAstrisks") ||
-                                    (style == "PoemAstrisks") ||
-                                    (style == "AstrisksParagraph");
+                var paraType = paragraph.Attribute("type").Value;
+                var paraStyle = paragraph.Attribute("paraStyle").Value;
+                bool skipAstrisks = (paraStyle == "SponsorAstrisks") ||
+                                    (paraStyle == "PoemAstrisks") ||
+                                    (paraStyle == "AstrisksParagraph");
                 if (skipAstrisks)
                     continue;
 
                 StringBuilder sb = new StringBuilder();
-                var paraType = paragraph.Attribute("type").Value;
-                if (paraType == "section")
+                List<Run> paragraphRuns = new List<Run>();
+                var runs = paragraph.Descendants("Run").ToList();
+                foreach (var run in runs)
                 {
-                    var runs = paragraph.Descendants("Run").ToList();
-                    foreach (var run in runs)
+                    var runStyle = run.Attribute("Style").Value;
+                    string txt = run.Attribute("Text").Value;
+                    sb.Append(txt);
+                    var newRun = new Run
                     {
-                        string txt = run.Attribute("Text").Value;
-                        sb.Append(txt);
-                    }
-                }
-                else
-                {
-                    var runs = paragraph.Descendants("Run").ToList();
-                    foreach (var run in runs)
-                    {
-                        string txt = run.Attribute("Text").Value;
-                        sb.Append(txt);
-                    }
+                        Text = txt,
+                        Style = runStyle,
+                    };
+                    paragraphRuns.Add(newRun);
                 }
 
                 var uid = paragraph.Attribute("uid").Value;
@@ -260,11 +258,12 @@ public class FileService : IFileService
                     SeqId = seqId,
                     Uid = uid,
                     Pid = pid,
-                    Type = paragraph.Attribute("type").Value,
-                    ParaStyle = style,
-                    StartTime = paragraph.Attribute("startTime").Value,
-                    EndTime = paragraph.Attribute("endTime").Value,
-                    Text = sb.ToString()
+                    Type = paraType,
+                    ParaStyle = paraStyle,
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    Text = sb.ToString(),
+                    Runs = paragraphRuns
                 };
                 paragraphList.Add(newParagraph);
             }
@@ -294,32 +293,30 @@ public class FileService : IFileService
             var xdoc = XDocument.Parse(xml);
             var root = xdoc.Root;
             var paragraphs = root.Descendants("Paragraph");
-            var para = paragraphs.Where(p => p.Attribute("seqId").Value == seqId.ToString("0")).FirstOrDefault();
+            var paragraph = paragraphs.Where(p => p.Attribute("seqId").Value == seqId.ToString("0")).FirstOrDefault();
 
-            var style = para.Attribute("paraStyle").Value;
+            var paraStyle = paragraph.Attribute("paraStyle").Value;
+            var paraType = paragraph.Attribute("type").Value;
+            var startTime = paragraph.Attribute("startTime").Value;
+            var endTime = paragraph.Attribute("endTime").Value;
+
             StringBuilder sb = new StringBuilder();
-            var paraType = para.Attribute("type").Value;
-
-            if (paraType == "section")
+            List<Run> paragraphRuns = new List<Run>();
+            var runs = paragraph.Descendants("Run").ToList();
+            foreach (var run in runs)
             {
-                var runs = para.Descendants("Run").ToList();
-                foreach (var run in runs)
+                var runStyle = run.Attribute("Style").Value;
+                string txt = run.Attribute("Text").Value;
+                sb.Append(txt);
+                var newRun = new Run
                 {
-                    string txt = run.Attribute("Text").Value;
-                    sb.Append(txt);
-                }
+                    Text = txt,
+                    Style = runStyle,
+                };
+                paragraphRuns.Add(newRun);
             }
-            else
-            {
-                var runs = para.Descendants("Run").ToList();
-                foreach (var run in runs)
-                {
-                    string txt = run.Attribute("Text").Value;
-                    sb.Append(txt);
-                }
-            }
-
-            var uid = para.Attribute("uid").Value;
+            
+            var uid = paragraph.Attribute("uid").Value;
             var uidArr = uid.Split('.');
             var pid = Int32.Parse(uidArr[1]) +
                       ":" +
@@ -327,20 +324,21 @@ public class FileService : IFileService
                       "." +
                       Int32.Parse(uidArr[3]);
 
-            Paragraph paragraph = new()
+            Paragraph newParagraph = new()
             {
                 Id = paperId,
                 SeqId = seqId,
                 Uid = uid,
                 Pid = pid,
-                Type = para.Attribute("type").Value,
-                ParaStyle = style,
-                StartTime = para.Attribute("startTime").Value,
-                EndTime = para.Attribute("endTime").Value,
-                Text = sb.ToString()
+                Type = paraType,
+                ParaStyle = paraStyle,
+                StartTime = startTime,
+                EndTime = endTime,
+                Text = sb.ToString(),
+                Runs = paragraphRuns
             };
 
-            return paragraph;
+            return newParagraph;
         }
         catch (Exception ex)
         {

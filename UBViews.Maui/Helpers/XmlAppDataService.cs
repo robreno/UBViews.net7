@@ -151,12 +151,12 @@ public class XmlAppDataService : IAppDataService
                     {
                         Id = locId,
                         Pid = pid,
-                        TermOccurrences = new List<TermOccurenceDto>()
+                        TermOccurrences = new List<TermOccurrenceDto>()
                     };
                     queryResultLocationsDto.QueryLocations.Add(qlocDto);
 
                     var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurenceDto occDto;
+                    TermOccurrenceDto occDto;
                     foreach (XElement occ in occLst)
                     {
                         var term = occ.Attribute("term").Value;
@@ -165,7 +165,10 @@ public class XmlAppDataService : IAppDataService
                         var dpoId = occ.Attribute("dpoId").Value;
                         var tpoId = occ.Attribute("tpoId").Value;
                         var len = occ.Attribute("len").Value;
-                        occDto = new TermOccurenceDto()
+                        // TODO: Change to TermLocationDtoEx
+                        // Change Type Here
+                        // Xml attribute names
+                        occDto = new TermOccurrenceDto()
                         {
                             Term = term,
                             DocId = Int32.Parse(docId),
@@ -241,12 +244,12 @@ public class XmlAppDataService : IAppDataService
                     {
                         Id = locId,
                         Pid = pid,
-                        TermOccurrences = new List<TermOccurenceDto>()
+                        TermOccurrences = new List<TermOccurrenceDto>()
                     };
                     queryResultLocationsDto.QueryLocations.Add(qlocDto);
 
                     var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurenceDto occDto;
+                    TermOccurrenceDto occDto;
                     foreach (XElement occ in occLst)
                     {
                         var term = occ.Attribute("term").Value;
@@ -255,7 +258,7 @@ public class XmlAppDataService : IAppDataService
                         var dpoId = occ.Attribute("dpoId").Value;
                         var tpoId = occ.Attribute("tpoId").Value;
                         var len = occ.Attribute("len").Value;
-                        occDto = new TermOccurenceDto()
+                        occDto = new TermOccurrenceDto()
                         {
                             Term = term,
                             DocId = Int32.Parse(docId),

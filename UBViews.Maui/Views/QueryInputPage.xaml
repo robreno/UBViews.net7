@@ -70,7 +70,7 @@
 
         <ScrollView x:Name="queryResultScrollView">
             <VerticalStackLayout x:Name="queryResultVSL">
-                <Border Stroke="Blue" Padding="10" Margin=".5">
+                <!--<Border Stroke="Blue" Padding="10" Margin=".5">
                     <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}" ToolTipProperties.Text="Tap to go to paragraph.">
                         <Label.FormattedText>
                             <FormattedString>
@@ -84,18 +84,6 @@
                                 <Span Style="{StaticResource RegularSpan}" Text=" is not, therefore, a finished statement within itself; it is only a definitive guide designed to assist those who shall read the accompanying papers dealing with Deity and the universe of universes which have been formulated by an " />
                                 <Span Style="{StaticResource HighlightSpan}" Text="Orvonton" />
                                 <Span Style="{StaticResource RegularSpan}" Text=" commission sent to Urantia for this purpose." />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-                <!--<Border Stroke="Blue" Padding="10" Margin=".5">
-                    <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource TabsSpan}" />
-                                <Span Style="{StaticResource PID}" Text="0:0.4" />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Style="{StaticResource RegularSpan}" Text="But in order to formulate this ... " />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

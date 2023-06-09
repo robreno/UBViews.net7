@@ -188,6 +188,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\ub606_100x100.png" />
+	  <MauiImage Remove="Resources\Images\ub606_558x558.png" />
+	  <MauiImage Remove="Resources\Images\waveform.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Remove="Conrols\PaperHeadingControl.xaml" />
 	</ItemGroup>
 
@@ -208,8 +214,9 @@
 	  <None Remove="Resources\Images\ub606_100x100.png" />
 	  <None Remove="Resources\Images\ub606_558x558.png" />
 	  <None Remove="Resources\Images\ub_viewer.png" />
-	  <None Remove="Resources\Images\urantia_circles1.png" />
-	  <None Remove="Resources\Images\urantia_circles2.png" />
+	  <None Remove="Resources\Images\urantia_circles_One.png" />
+	  <None Remove="Resources\Images\urantia_circles_two.png" />
+	  <None Remove="Resources\Images\waveform.png" />
 	  <None Remove="Resources\Raw\Audio.Metadata.en.xml" />
 	  <None Remove="Resources\Raw\Audio.Metadata.fr.xml" />
 	  <None Remove="Resources\Raw\AudioMarkers\000.audio.xml" />

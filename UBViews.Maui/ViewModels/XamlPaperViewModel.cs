@@ -564,8 +564,8 @@ namespace UBViews.ViewModels
                 var lblArry = labelName.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 int paperId = Int32.Parse(lblArry[0]);
                 int seqId = Int32.Parse(lblArry[1]);
-                var audioMarker = Markers.GetBySeqId(seqId);
-                await SetPlaybackControlsStartTime(audioMarker);
+                //var audioMarker = Markers.GetBySeqId(seqId);
+                //await SetPlaybackControlsStartTime(audioMarker);
 
                 // See Workaround for Maui bug #7295
                 // https://github.com/dotnet/maui/issues/7295

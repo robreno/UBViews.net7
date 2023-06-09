@@ -1,7 +1,7 @@
 ﻿namespace UBViews.Models.Query;
-public class QueryLocationDto
+public class XmlQueryLocationDto
 {
     public string Id { get; set; }
     public string Pid { get; set; }
-    public List<TermOccurrenceDto> TermOccurrences { get; set; } = new();
+    public List<XmlTermOccurrenceDto> TermOccurrences { get; set; } = new();
 }

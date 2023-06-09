@@ -147,7 +147,7 @@
                 <Setter Property="WidthRequest" Value="130" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Source" Value="urantia_circles2.png" />
+                <Setter Property="Source" Value="urantia_circles_one.png" />
             </Style>
             <Style x:Key="SmallHeaderImage" TargetType="Image">
                 <Setter Property="Aspect" Value="AspectFill" />
@@ -155,7 +155,7 @@
                 <Setter Property="WidthRequest" Value="67" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Source" Value="urantia_circles2.png" />
+                <Setter Property="Source" Value="urantia_circles_one.png" />
             </Style>
             <Style x:Key="HeaderVerticalStackLayout" TargetType="VerticalStackLayout">
                 <Setter Property="Grid.RowSpan" Value="3" />

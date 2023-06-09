@@ -153,7 +153,7 @@ public partial class QueryInputViewModel : BaseViewModel
                 {
                     var postingList = await repositoryService.GetPostingByLexemeAsync(term);
                     var tokOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingList.Id);
-                    var newPostingList = new PostingListDto
+                    var newPostingListOccurrences = new PostingListOccurrencesDto
                     {
                         Id = postingList.Id,
                         Lexeme = postingList.Lexeme
@@ -165,10 +165,10 @@ public partial class QueryInputViewModel : BaseViewModel
                             PostingId = occ.PostingId,
                             DocumentId = occ.DocumentId,
                             SequenceId = occ.SequenceId,
-                            DocumentPosition = occ.DocumentPosition, // TODO: regen db, as spelling error on field in database
+                            DocumentPosition = occ.DocumentPosition,
                             TextPosition = occ.TextPosition
                         };
-                        newPostingList.TokenOccurrences.Add(occDto);
+                        newPostingListOccurrences.TokenOccurrences.Add(occDto);
                     }
                 }
             }
@@ -203,15 +203,17 @@ public partial class QueryInputViewModel : BaseViewModel
             {
                 // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState\
                 // QueryCommands.xml
-                (bool queryExists, int queryId) = await appDataService.QueryResultExistsAsync(queryString);
-                (bool queryExistsRepo, int queryIdRepo) = await repositoryService.QueryResultExistsAsync(queryString);
+                (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
                 QueryResultExists = queryExists;
-                if (queryExistsRepo)
+                if (queryExists)
                 {
                     // TODO: Add to Repository .... or change to Repository?
-                    var queryResultDto = await appDataService.GetQueryResultByIdAsync(queryIdRepo);
-                    var queryResultDtoRepo = await repositoryService.GetQueryResultByIdAsync(queryIdRepo);
-                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryResultDtoRepo.Id);
+                    var queryResultById = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
+
+                    var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
+
+                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
 
                     var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
                     var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
@@ -238,7 +240,7 @@ public partial class QueryInputViewModel : BaseViewModel
                     //}
                     // join, union, etc., 
 
-                    await LoadXaml(queryResultDtoRepo);
+                    await LoadXaml(queryResultById);
                 }
                 else
                 {
@@ -375,19 +377,9 @@ public partial class QueryInputViewModel : BaseViewModel
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 
                 // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
-                FormattedString formattedString = new FormattedString();
-                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
-                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
-                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
+                FormattedString fs = await CreateFormattedString(paragraph);
 
-                Span defaultTextSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = "But in order to formulate this ... " };
-
-                formattedString.Spans.Add(tabSpan);
-                formattedString.Spans.Add(pidSpan);
-                formattedString.Spans.Add(spaceSpan);
-                formattedString.Spans.Add(defaultTextSpan);
-
-                Label label = new Label { FormattedText = formattedString };
+                Label label = new Label { FormattedText = fs };
                 TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
                 tapGestureRecognizer.CommandParameter = $"{labelName}";
@@ -417,6 +409,44 @@ public partial class QueryInputViewModel : BaseViewModel
                 ex.Message, "Ok");
         }
     }
+    private async Task<FormattedString> CreateFormattedString(Paragraph paragraph)
+    {
+        // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
+        try
+        {
+            FormattedString formattedString = new FormattedString();
+            await Task.Run(() =>
+            {
+                var paperId = paragraph.Id;
+                var seqId = paragraph.SeqId;
+                var pid = paragraph.Pid;
+                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
+                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
+                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
+
+                var runs = paragraph.Runs;
+                Span newSpan = null;
+
+                formattedString.Spans.Add(tabSpan);
+                formattedString.Spans.Add(pidSpan);
+                formattedString.Spans.Add(spaceSpan);
+                foreach (var run in runs)
+                {
+                    newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = run.Text };
+                    formattedString.Spans.Add(newSpan);
+                }
+            });
+            return formattedString;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
+                ex.Message, "Ok");
+            return null;
+        }
+    }
     private async Task NormalizeQueryString(string queryString)
     {
         try
@@ -444,5 +474,6 @@ public partial class QueryInputViewModel : BaseViewModel
                 ex.Message, "Cancel");
         }
     }
+
     Task Back() => Shell.Current.GoToAsync("..");
 }

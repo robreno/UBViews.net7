@@ -60,12 +60,13 @@ namespace UBViews.SQLiteRepository
         }
         public static async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
         {
+            QueryResultLocations queryResultLocations = null;
             var queryResult = await _databaseConn.Table<QueryResult>()
                                       .Where(qr => qr.QueryString == queryString)
                                       .FirstOrDefaultAsync();
             if (queryResult != null)
             {
-                var qryResult = new QueryResultLocations()
+                queryResultLocations = new QueryResultLocations()
                 {
                     Id = queryResult.Id,
                     Hits = queryResult.Hits,
@@ -77,34 +78,31 @@ namespace UBViews.SQLiteRepository
                 };
 
                 var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResult.Id);
-                var count = termOccurrences.Count();
-
                 var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
 
-                foreach (var location in queryLocations)
+                foreach (var locations in queryLocations)
                 {
-                    var queryLocation = new QueryLocation();
-                    queryLocation.Id = location.First().DocumentId + ":" + location.First().SequenceId;
-                    queryLocation.Pid = location.Key;
+                    var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+                    var pid = locations.Key;
+                    var queryLocation = new QueryLocation() { Id = id, Pid = pid };
 
-                    foreach (var termOccurrence in location)
+                    foreach (var location in locations)
                     {
-                        var loc = new TermLocation()
+                        var termLocation = new TermLocation()
                         {
-                            Term = termOccurrence.Term,
-                            DocumentId = termOccurrence.DocumentId,
-                            SequenceId = termOccurrence.SequenceId,
-                            DocumentPosition = termOccurrence.DocumentPosition,
-                            TextPosition = termOccurrence.TextPosition,
-                            Length = termOccurrence.TextLength
+                            Term = location.Term,
+                            DocumentId = location.DocumentId,
+                            SequenceId = location.SequenceId,
+                            DocumentPosition = location.DocumentPosition,
+                            TextPosition = location.TextPosition,
+                            Length = location.TextLength
                         };
-                        queryLocation.TermOccurrences.Add(loc);
+                        queryLocation.TermOccurrences.Add(termLocation);
                     }
-                    qryResult.QueryLocations.Add(queryLocation);
+                    queryResultLocations.QueryLocations.Add(queryLocation);
                 }
-                return qryResult;
             }
-            return null;
+            return queryResultLocations;
         }
         public static async Task<QueryResultLocations> GetQueryResultByIdAsync(int id)
         {
@@ -266,6 +264,55 @@ namespace UBViews.SQLiteRepository
                                       .Where(to => to.QueryResultId == id)
                                       .ToListAsync();
         }
+        #endregion
+
+        #region Private Helper Methods
+        //private async Task<QueryResultLocationsDto> MapQueryResultToDto(QueryResult queryResult)
+        //{
+        //    try
+        //    {
+        //        QueryResultLocationsDto queryResultDto = new QueryResultLocationsDto()
+        //        {
+        //            Id = queryResult.Id,
+        //            Hits = queryResult.Hits,
+        //            Type = queryResult.Type,
+        //            Terms = queryResult.Terms,
+        //            Proximity = queryResult.Proximity,
+        //            QueryString = queryResult.QueryString,
+        //            QueryExpression = queryResult.QueryExpression
+        //        };
+
+        //        var termOccurrences = await getTermOccurrencesByQueryResultIdAsync(dbPath, queryResult.Id);
+        //        var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
+
+        //        foreach (var locations in queryLocations)
+        //        {
+        //            var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+        //            var queryLocation = new QueryLocationDto() { Id = id, Pid = locations.Key };
+
+        //            foreach (var location in locations)
+        //            {
+        //                var termLocation = new TermLocationDto()
+        //                {
+        //                    Term = location.Term,
+        //                    DocumentId = location.DocumentId,
+        //                    SequenceId = termOccurrences.First().SequenceId,
+        //                    DocumentPosition = location.DocumentPosition,
+        //                    TextPosition = location.TextPosition,
+        //                    TextLength = location.TextLength
+        //                };
+        //                queryLocation.TermOccurrences.Add(termLocation);
+        //            }
+        //            queryResultDto.QueryLocations.Add(queryLocation);
+        //        }
+        //        return queryResultDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert("Exception raised => GetQueryResultByQueryStringAsync.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
         #endregion
     }
 }

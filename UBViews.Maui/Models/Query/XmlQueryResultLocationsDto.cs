@@ -1,5 +1,5 @@
 ﻿namespace UBViews.Models.Query;
-public class QueryResultDto
+public class XmlQueryResultLocationsDto
 {
     public int Id { get; set; }
     public int Hits { get; set; }
@@ -8,4 +8,5 @@ public class QueryResultDto
     public string Proximity { get; set; }
     public string QueryString { get; set; }
     public string QueryExpression { get; set; }
+    public List<XmlQueryLocationDto> QueryLocations { get; set; } = new();
 }

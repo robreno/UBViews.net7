@@ -1,5 +1,5 @@
 ﻿namespace UBViews.Models.Query;
-public class TermOccurrenceDto
+public class XmlTermOccurrenceDto
 {
     public string Term { get; set; }
     public int DocId { get; set; }

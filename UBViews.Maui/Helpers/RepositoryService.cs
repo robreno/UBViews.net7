@@ -88,13 +88,14 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<(bool, int)> QueryResultExistsAsync(string queryString)
         {
+            string methodName = "QueryResultExistsAsync";
             try
             {
                 return await QueryRepository.QueryResultExistsAsync(queryString);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised => QueryResultExistsAsync.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return (false, -1);
             }
         }
@@ -105,13 +106,14 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<QueryResult>> GetQueryResultsAsync()
         {
+            string methodName = "GetQueryResultsAsync";
             try
             {
                 return await QueryRepository.GetQueryResultsAsync();
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return null;
             }
         }
@@ -123,13 +125,14 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
         {
+            string methodName = "GetQueryResultByQueryStringAsync";
             try
             {
                 return await QueryRepository.GetQueryResultByQueryStringAsync(queryString);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised => GetQueryResultByQueryStringAsync.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return null;
             }
         }
@@ -141,13 +144,14 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<QueryResultLocations> GetQueryResultByIdAsync(int queryResultId)
         {
+            string methodName = "GetQueryResultByIdAsync";
             try
             {
                 return await QueryRepository.GetQueryResultByIdAsync(queryResultId);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised => GetQueryResultByIdAsync.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return null;
             }
         }
@@ -158,6 +162,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<QueryCommand>> GetQueryCommandsAsync()
         {
+            string methodName = "GetQueryCommandsAsync";
             try
             {
                 List<QueryCommand> queryCommands = new List<QueryCommand>();
@@ -178,7 +183,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return null;
             }
         }
@@ -189,7 +194,16 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<PostingList>> GetPostingsAsync()
         {
-            return await PostingRepository.GetPostingsAsync();
+            string methodName = "GetPostingsAsync";
+            try
+            {
+                return await PostingRepository.GetPostingsAsync();
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
 
         /// <summary>
@@ -199,7 +213,16 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<PostingList> GetPostingByLexemeAsync(string lexeme)
         {
-            return await PostingRepository.GetPostingByLexemeAsync(lexeme);
+            string methodName = "GetPostingByLexemeAsync";
+            try
+            {
+                return await PostingRepository.GetPostingByLexemeAsync(lexeme);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
 
         /// <summary>
@@ -208,7 +231,16 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TermOccurrence>> GetTermOccurrencesAsync()
         {
-            return await QueryRepository.GetTermOccurrencesAsync();
+            string methodName = "GetTermOccurrencesAsync";
+            try
+            {
+                return await QueryRepository.GetTermOccurrencesAsync();
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
 
         /// <summary>
@@ -218,13 +250,14 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int queryResultId)
         {
+            string methodName = "GetTermOccurrencesByQueryResultIdAsync";
             try
             {
                 return await QueryRepository.GetTermOccurrencesByQueryResultIdAsync(queryResultId);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised => GetTermOccurrencesByQueryResultIdAsync.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
                 return null;
             }
         }
@@ -236,7 +269,16 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TokenOccurrence>> GetTokenOccurrencesByPostingListIdAsync(int postingId)
         {
-            return await PostingRepository.GetTokenOccurrencesByPostingListIdAsync(postingId);
+            string methodName = "GetTokenOccurrencesByPostingListIdAsync";
+            try
+            {
+                return await PostingRepository.GetTokenOccurrencesByPostingListIdAsync(postingId);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
 
         /// <summary>
@@ -245,7 +287,16 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TokenStem>> GetTokenStemsAsync()
         {
-            return await PostingRepository.GetTokenStemsAsync();
+            string methodName = "GetTokenStemsAsync";
+            try
+            {
+                return await PostingRepository.GetTokenStemsAsync();
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
 
         /// <summary>
@@ -255,8 +306,151 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<TokenStem> GetTokenStemAsync(string lexeme)
         {
-            return await PostingRepository.GetTokenStemAsync(lexeme);
+            string methodName = "GetTokenStemsAsync";
+            try
+            {
+                return await PostingRepository.GetTokenStemAsync(lexeme);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
         }
+        #endregion
+
+        #region Private Helper Methods
+        //private async Task<QueryResultLocationsDto> MapQueryResultToDto(QueryResultLocations queryResult)
+        //{
+        //    string methodName = "MapQueryResultToDto";
+        //    try
+        //    {
+        //        var queryResultDto = new QueryResultLocationsDto()
+        //        {
+        //            Id = queryResult.Id,
+        //            Hits = queryResult.Hits,
+        //            Type = queryResult.Type,
+        //            Terms = queryResult.Terms,
+        //            Proximity = queryResult.Proximity,
+        //            QueryString = queryResult.QueryString,
+        //            QueryExpression = queryResult.QueryExpression
+        //        };
+
+        //        var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResultDto.Id);
+        //        var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
+
+        //        foreach (var locations in queryLocations)
+        //        {
+        //            var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+        //            var queryLocation = new QueryLocationDto() { Id = id, Pid = locations.Key };
+
+        //            foreach (var location in locations)
+        //            {
+        //                var termLocation = new TermLocationDto()
+        //                {
+        //                    Term = location.Term,
+        //                    DocumentId = location.DocumentId,
+        //                    SequenceId = termOccurrences.First().SequenceId,
+        //                    DocumentPosition = location.DocumentPosition,
+        //                    TextPosition = location.TextPosition,
+        //                    TextLength = location.TextLength
+        //                };
+        //                queryLocation.TermOccurrences.Add(termLocation);
+        //            }
+        //            queryResultDto.QueryLocations.Add(queryLocation);
+        //        }
+        //        return queryResultDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
+        //private async Task<Local.PostingListDto> MapPostingListToDto(PostingList postingList)
+        //{
+        //    string methodName = "MapPostingListToDto";
+        //    try
+        //    {
+        //        var postingListDto = new Local.PostingListDto()
+        //        {
+        //            Id = postingList.Id,
+        //            Lexeme = postingList.Lexeme
+        //        };
+        //        return postingListDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
+        //private async Task<Local.TermOccurrenceDto> MapTermOccurrenceToDto(TermOccurrence termOccurrence)
+        //{
+        //    string methodName = "MapTermOccurrenceToDto";
+        //    try
+        //    {
+        //        var dto = new Local.TermOccurrenceDto()
+        //        {
+        //            Id = termOccurrence.Id,
+        //            QueryResultId = termOccurrence.QueryResultId,
+        //            DocumentId = termOccurrence.DocumentId,
+        //            SequenceId = termOccurrence.SequenceId,
+        //            DocumentPosition = termOccurrence.DocumentPosition,
+        //            TextPosition = termOccurrence.TextPosition,
+        //            TextLength = termOccurrence.TextLength,
+        //            ParagraphId = termOccurrence.ParagraphId,
+        //            Term = termOccurrence.Term,
+        //        };
+        //        return dto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
+        //private async Task<Local.TokenOccurrenceDto> MapTokenOccurrenceToDto(TokenOccurrence tokenOccurrence)
+        //{
+        //    string methodName = "MapTokenOccurrenceToDto";
+        //    try
+        //    {
+        //        var dto = new Local.TokenOccurrenceDto()
+        //        {
+        //            Id = tokenOccurrence.Id,
+        //            PostingId = tokenOccurrence.PostingId,
+        //            DocumentId = tokenOccurrence.DocumentId,
+        //            SequenceId = tokenOccurrence.SequenceId,
+        //            DocumentPosition = tokenOccurrence.DocumentPosition,
+        //            TextPosition = tokenOccurrence.TextPosition
+        //        };
+        //        return dto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
+        //private async Task<Local.TokenStemDto> MapTokenStemToDto(TokenStem tokenStem)
+        //{
+        //    string methodName = "MapTokenStemToDto";
+        //    try
+        //    {
+        //        var dto = new Local.TokenStemDto()
+        //        {
+        //            Id = tokenStem.Id,
+        //            Lexeme = tokenStem.Lexeme,
+        //            Stemmed = tokenStem.Stemmed
+        //        };
+        //        return dto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
         #endregion
     }
 }
