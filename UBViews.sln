@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp_Test_LexParser", "ConsoleApp1\ConsoleApp_Test_LexParser.csproj", "{1E3CD838-B26D-4AFE-A397-1B184A241258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBViews.SQLiteRepository", "UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj", "{ADA243B4-A04A-456A-BA66-AC8A3DA58615}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UBViews.SQLiteRepository", "UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj", "{ADA243B4-A04A-456A-BA66-AC8A3DA58615}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
