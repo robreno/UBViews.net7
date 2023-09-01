@@ -1,0 +1,25 @@
+/UBViews
+	/src
+	/UBViews.LexParser
+	/UBViews.Maui
+	/UBViews.SQLiteRepository
+	/UBViews.SQLiteRepository.Tests
+
+/FSharpDB
+	// FSharpSQLiteRepo.Tests
+	// FSharpLexParser.Tests
+	// FSharpSQLiteRepo
+	// LexParser
+	// QueryEngine
+
+1. Make the UBViews.LexParser.Tests directory the current directory and create a new project using dotnet new xunit -lang "F#". This creates a test project that uses xUnit as the test library. The generated template configures the test runner in the FSharpLexParser.fsproj:
+
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
+  <PackageReference Include="xunit" Version="2.2.0" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+</ItemGroup>
+
+The test project requires other packages to create and run unit tests. dotnet new in the previous step added xUnit and the xUnit runner. Now, add the MathService class library as another dependency to the project. Use the dotnet add reference command:
+
+dotnet add reference ../LexParser/LexParser.fsproj

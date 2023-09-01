@@ -11,8 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7A58A835-3
 	ProjectSection(SolutionItems) = preProject
 		BuildOutput.txt = BuildOutput.txt
 		Development_Guide.txt = Development_Guide.txt
+		FsLexYacc.targets = FsLexYacc.targets
+		FsLexYacc_Project_file1.txt = FsLexYacc_Project_file1.txt
 		Gerald_SideLoading.md = Gerald_SideLoading.md
 		TextFile1.txt = TextFile1.txt
+		xUnit-Setup1.txt = xUnit-Setup1.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UBViews.SQLiteRepository", "UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj", "{ADA243B4-A04A-456A-BA66-AC8A3DA58615}"

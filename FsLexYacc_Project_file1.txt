@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <FsLexToolPath>..\..\src\FsLex\bin\$(Configuration)\net6.0</FsLexToolPath>
+    <FsYaccToolPath>..\..\src\FsYacc\bin\$(Configuration)\net6.0</FsYaccToolPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+    <Tailcalls>True</Tailcalls>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+    <Tailcalls>False</Tailcalls>
+  </PropertyGroup>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <Import Project="..\..\src\FsLexYacc.Build.Tasks\FsLexYacc.targets" /> 
+  <ItemGroup>
+    <FsYacc Include="Parser.fsy">
+      <OtherFlags>--module UBViews.Query.Parser</OtherFlags>
+    </FsYacc>
+    <FsLex Include="Lexer.fsl">
+      <OtherFlags>--unicode</OtherFlags>
+    </FsLex>
+    <Compile Include="QueryTypes.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="Lexer.fs" />
+    <Compile Include="Evaluators.fs" />
+    <Compile Include="LexerParserLib.fs" />
+    <None Include="Parser.fsy" />
+    <None Include="Lexer.fsl" />
+  </ItemGroup> 
+  <ItemGroup>
+    <PackageReference Include="FsLexYacc.Runtime" Version="11.0.1" />
+  </ItemGroup>
+
+</Project>
