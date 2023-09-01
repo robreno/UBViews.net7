@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp_Test_LexParser",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UBViews.SQLiteRepository", "UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj", "{ADA243B4-A04A-456A-BA66-AC8A3DA58615}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1BA98C4-B395-468D-B587-58E07B9AAD34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -38,7 +38,7 @@ module Say =
         List.fold(fun acc query -> Or(acc, query)) NoOpQuery queries
 
     let queryToString (qry : Query) : string =
-        let retval = eval qry
+        let retval = queryExpToString qry
         retval
 
 

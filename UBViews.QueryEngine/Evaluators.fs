@@ -36,7 +36,7 @@ module Evaluators =
        | FilterValue.SEQID -> "sequence"
        | FilterValue.PARID -> "paragraph"
     
-    let rec eval (q : Query) : string =
+    let rec queryExpToString (q : Query) : string =
         match q with
         | Term(term) -> "Term(\"" + term + "\")"
         | STerm(term) -> "STerm(\"" + term + "\")"
@@ -54,19 +54,19 @@ module Evaluators =
                 |> List.map (fun s -> let ns = s
                                       ns)
             "Phrase(" + newStringList.ToString() + ")"
-        | And(x, y)   -> "And(" + eval(x) + "," + eval(y) + ")"
-        | Or(x, y)    -> "Or(" + eval(x) + "," + eval(y) + ")"
-        | SubQuery(q) -> "SubQuery(" + eval(q) + ")"
+        | And(x, y)   -> "And(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
+        | Or(x, y)    -> "Or(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
+        | SubQuery(q) -> "SubQuery(" + queryExpToString(q) + ")"
         | FilterBy(q, f) -> 
             let results =
                     match q with
-                    | Term(term)     -> eval(q) + " FilderBy " + toStringValue f
-                    | STerm(term)    -> eval(q) + " FilderBy " + toStringValue f
-                    | CTerm(cterm)   -> eval(q) + " FilderBy " + toStringValue f
-                    | Phrase(phrase) -> eval(q) + " FilderBy " + toStringValue f
-                    | And(x, y)      -> eval(q) + " FilderBy " + toStringValue f
-                    | Or(x, y)       -> eval(q) + " FilderBy " + toStringValue f
-                    | _ -> eval(q) + " FilderBy " + toStringValue f
+                    | Term(term)     -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | STerm(term)    -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | CTerm(cterm)   -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | Phrase(phrase) -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | And(x, y)      -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | Or(x, y)       -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+                    | _              -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
             results
         | NoOpQuery   -> string []
 
