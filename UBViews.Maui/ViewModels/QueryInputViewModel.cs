@@ -14,8 +14,9 @@ using UBViews.SQLiteRepository;
 using UBViews.SQLiteRepository.Dtos;
 using UBViews.SQLiteRepository.Models;
 
-//using LexParser.Library;
 using UBViews.LexParser;
+using static QueryFilter.QueryFilterService;
+
 namespace UBViews.ViewModels;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]

@@ -1,6 +1,6 @@
 ﻿namespace QueryFilter
 
-    module Regex =
+    module QueryFilterRegex =
 
         open System
         open System.IO
