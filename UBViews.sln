@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UBViews.SQLiteRepository", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1BA98C4-B395-468D-B587-58E07B9AAD34}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QueryFilter", "QueryFilter\QueryFilter.fsproj", "{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,14 @@ Global
 		{ADA243B4-A04A-456A-BA66-AC8A3DA58615}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ADA243B4-A04A-456A-BA66-AC8A3DA58615}.Release|x86.ActiveCfg = Release|Any CPU
 		{ADA243B4-A04A-456A-BA66-AC8A3DA58615}.Release|x86.Build.0 = Release|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Debug|x86.Build.0 = Debug|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Release|x86.ActiveCfg = Release|Any CPU
+		{D5EDFA5F-8CB1-4F75-97E9-ABC9901D7078}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
