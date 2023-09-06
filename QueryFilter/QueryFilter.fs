@@ -8,13 +8,6 @@ open System.Xml.Linq
 open System.Linq
 
 module QueryFilterService =
-    
-    open RecordTypes
-    open SpecialTermSetEx
-    open HyphenTermSetEx
-    open CompoundTermRecordSetEx
-    open QueryFilterRegex
-    open DataTypes
 
     let atozlSeq = set {'a'..'z'}
     let atozuSeq = set {'A'..'Z'}
@@ -69,19 +62,28 @@ module QueryFilterService =
         let t3, t4 = checkForValidForm queryString
         [(t1, t2), (t3, t4)]
 
-    let openOrderedSet (setname:string) =
-        let mutable ctset = Set.empty
-        let strc = SpecialTermRecordSetEx
-        match setname with
-        | "SpecialTermRecordSetEx" ->
-            ctset <- SpecialTermRecordSetEx
-        | "HyphenTermSetEx" ->
-            ctset <- HyphenTermRecordSetEx
-        | "CompoundTermRecordSetEx" ->
-            ctset <- CompoundTermRecordSetEx
-        | _ -> failwith "no set by that name"
+//module QueryRecordsetService =
 
-        let orderedSet = ctset.OrderBy(fun e -> e).ToArray()
-        let os = Set.ofArray orderedSet
-        os
+//    open RecordTypes
+//    open SpecialTermSetEx
+//    open HyphenTermSetEx
+//    open CompoundTermRecordSetEx
+//    open QueryFilterRegex
+//    open DataTypes
+
+//    let openOrderedSet (setname:string) =
+//        let mutable ctset = Set.empty
+//        let strc = SpecialTermRecordSetEx
+//        match setname with
+//        | "SpecialTermRecordSetEx" ->
+//            ctset <- SpecialTermRecordSetEx
+//        | "HyphenTermSetEx" ->
+//            ctset <- HyphenTermRecordSetEx
+//        | "CompoundTermRecordSetEx" ->
+//            ctset <- CompoundTermRecordSetEx
+//        | _ -> failwith "no set by that name"
+
+//        let orderedSet = ctset.OrderBy(fun e -> e).ToArray()
+//        let os = Set.ofArray orderedSet
+//        os
 

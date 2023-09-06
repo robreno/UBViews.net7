@@ -15,7 +15,7 @@ using UBViews.SQLiteRepository.Dtos;
 using UBViews.SQLiteRepository.Models;
 
 using UBViews.LexParser;
-using static QueryFilter.QueryFilterService;
+//using QueryFilterLib;
 
 namespace UBViews.ViewModels;
 
