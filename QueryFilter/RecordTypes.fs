@@ -1,4 +1,4 @@
-﻿namespace QueryFilter
+﻿namespace QueryFilterLib
 
     module RecordTypes =
 
