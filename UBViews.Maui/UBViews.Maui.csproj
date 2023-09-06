@@ -229,6 +229,7 @@
 	  <None Remove="Resources\Raw\Query\Queries.template.xml" />
 	  <None Remove="Resources\Raw\Query\Queries.xml" />
 	  <None Remove="Resources\Raw\Query\QueryCmdList.xml" />
+	  <None Remove="Resources\Raw\Query\QueryCommandList.txt" />
 	  <None Remove="Resources\Raw\Settings\Settings.template.xml" />
 	  <None Remove="Resources\Raw\XmlData\PaperTitles.xml" />
 	  <None Remove="Resources\Raw\XmlData\ParagraphStyleDictionary.xml" />
