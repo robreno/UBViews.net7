@@ -20,7 +20,14 @@ module QueryFilterService =
     // failwith strings
     let invalidStringsSet = 
         Set<string> 
-            ["and and"; "or or"; "and filterby"; "or filterby"; "~ ";]
+            ["and and"; "or or"; "and filterby"; "or filterby";]
+
+    // TODO: Create Regex and get match and capture
+    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?";|]
+    let containsInvalidChars (qs : string) =
+        invalidCharStrings
+        |> Seq.map(fun c -> qs.Contains(c))
+        |> Seq.contains(true)
 
     let validQuery (queryString : string) = 
         let queryStringSet = queryString.ToCharArray() |> Set.ofArray
@@ -36,6 +43,15 @@ module QueryFilterService =
                        |> Seq.filter(fun e -> not (allVaidCharsSet.Contains e))
                        |> Seq.toList
         charList
+
+    let checkForInvalidChars (queryString : string) =
+        let v1 = invalidCharStrings
+                 |> Seq.map(fun c -> queryString.Contains(c))
+                 |> Seq.contains(true)
+        let v2 = invalidCharStrings
+                 |> Seq.filter(fun c -> queryString.Contains(c))
+                 |> Seq.toList
+        (v1, v2)
 
     let checkForValidChars (queryString : string) =
         let queryStringSet = queryString.ToCharArray() |> Set.ofArray

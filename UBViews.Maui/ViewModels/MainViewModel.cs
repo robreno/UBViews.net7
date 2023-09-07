@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace UBViews.ViewModels;
 
+[QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class MainViewModel : BaseViewModel
 {
     QueryInputDto _queryInput;
@@ -40,6 +41,20 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     string partId;
+
+    [RelayCommand]
+    async Task MainPageAppearing()
+    {
+        try
+        {
+            QueryInput = queryInput;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainPageAppearing => ",
+                ex.Message, "Cancel");
+        }
+    }
 
     [RelayCommand]
     async Task SumbitQuery(string queryString)

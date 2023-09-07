@@ -139,10 +139,38 @@ public partial class QueryInputViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            if (queryString == "EmptyQuery" || queryString == null)
+            var validChars = QueryFilterService.checkForValidChars(queryString);
+            var validCharsSuccess = validChars.Item1;
+            var validForm = QueryFilterService.checkForValidForm(queryString);
+            var validFormSuccess = validForm.Item1;
+
+            if (queryString == "EmptyQuery" || 
+                queryString == null || 
+                !validCharsSuccess || 
+                !validFormSuccess)
             {
-                await App.Current.MainPage.DisplayPromptAsync("Query Status", "Bad query, enter a valid query");
-                await Shell.Current.GoToAsync("..");
+                var errorMessage = string.Empty;
+                var msg = string.Empty;
+
+                if (!validCharsSuccess || !validFormSuccess)
+                {
+                    if (!validCharsSuccess)
+                        errorMessage = errorMessage + validChars.Item2 + ";";
+                    if (!validFormSuccess)
+                        errorMessage = errorMessage + validForm.Item2 + ";";
+
+                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                }
+
+                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
+                if (result != null)
+                {
+                    await Shell.Current.GoToAsync($"..?QueryInput={result}");
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
             }
             else
             {
@@ -195,10 +223,38 @@ public partial class QueryInputViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            if (queryString == "EmptyQuery" || queryString == null)
+            var validChars = QueryFilterService.checkForValidChars(queryString);
+            var validCharsSuccess = validChars.Item1;
+            var validForm = QueryFilterService.checkForValidForm(queryString);
+            var validFormSuccess = validForm.Item1;
+
+            if (queryString == "EmptyQuery" || 
+                queryString == null || 
+                !validCharsSuccess || 
+                !validFormSuccess)
             {
-                await App.Current.MainPage.DisplayPromptAsync("Query Status", "Bad query, enter a valid query");
-                await Shell.Current.GoToAsync("..");
+                var errorMessage = string.Empty;
+                var msg = string.Empty;
+
+                if (!validCharsSuccess || !validFormSuccess)
+                {
+                    if (!validCharsSuccess)
+                        errorMessage = errorMessage + validChars.Item2 + ";";
+                    if (!validFormSuccess)
+                        errorMessage = errorMessage + validForm.Item2 + ";";
+
+                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                }
+
+                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
+                if (result != null)
+                {
+                    await Shell.Current.GoToAsync($"..?QueryInput={result}");
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
             }
             else
             {
@@ -246,6 +302,24 @@ public partial class QueryInputViewModel : BaseViewModel
                 else
                 {
                     // Run Query
+                    var queryText = QueryInput.Text;
+                    var result = parserService.ParseQuery(queryText);
+                    QueryExpression = result.ToString();
+                    var terms = parserService.ParseQueryStringToTermList(queryText);
+                    var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
+                    var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
+                    foreach (var term in terms)
+                    {
+                        var postingLst = await repositoryService.GetPostingByLexemeAsync(term);
+                        var tokenOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst.Id);
+                        pLst.Add(postingLst);
+                        var lst = new List<UBViews.SQLiteRepository.Models.TokenOccurrence>();
+                        foreach (var token in tokenOccs)
+                        {
+                           lst.Add(token);
+                        }
+                        tLst.Add(lst);
+                    }
                 }
             }
         }

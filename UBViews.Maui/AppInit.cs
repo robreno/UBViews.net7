@@ -65,7 +65,7 @@ namespace UBViews
             if (!_appInitialized)
             {
                 var tpl = (0, 0);
-                bool success = WindowDimensions.TryGetValue((int)WindowSize.Large, out tpl);
+                bool success = WindowDimensions.TryGetValue((int)WindowSize.Medium, out tpl);
                 int _width = tpl.Item1;
                 int _height = tpl.Item2;
 
