@@ -90,6 +90,7 @@ namespace UBViews.SQLiteRepository
             // System.IO.FileNotFoundException
             // Message = Could not load file or assembly 'SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b' or one of its dependencies.
             // https://stackoverflow.com/questions/56169808/could-not-load-file-or-assembly-sqlitepclraw-core
+            // https://stackoverflow.com/questions/72755874/getting-a-filenotfoundexception-when-trying-to-make-a-sqlite-connection-in-net
             try
             {
                 return await _databaseConn.Table<QueryResult>().ToListAsync();
