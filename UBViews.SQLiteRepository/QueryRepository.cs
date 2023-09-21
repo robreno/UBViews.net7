@@ -38,120 +38,194 @@ namespace UBViews.SQLiteRepository
         #endregion
 
         #region Query Repository Methods
+        /// <summary>
+        /// SaveQueryResultAsync
+        /// </summary>
+        /// <param name="queryResult"></param>
+        /// <returns></returns>
         public static async Task<int> SaveQueryResultAsync(QueryResult queryResult)
         {
-            return await _databaseConn.InsertAsync(queryResult);
+            try
+            {
+                return await _databaseConn.InsertAsync(queryResult);
+            }
+            catch (Exception ex) 
+            {
+                return 0;
+            }
         }
+
+        /// <summary>
+        /// QueryResultExistsAsync
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
         public static async Task<(bool, int)> QueryResultExistsAsync(string queryString)
         {
-            var queryResult = await GetQueryResultByQueryStringAsync(queryString);
-            if (queryResult != null)
+            try
             {
-                return (true, queryResult.Id);
+                var queryResult = await GetQueryResultByQueryStringAsync(queryString);
+                if (queryResult != null)
+                {
+                    return (true, queryResult.Id);
+                }
+                else
+                {
+                    return (false, 0);
+                }
             }
-            else
+            catch (Exception ex) 
             {
-                return (false, 0);
+                return (false, -1);
             }
+            
         }
+
+        /// <summary>
+        /// GetQueryResultsAsync
+        /// </summary>
+        /// <returns></returns>
         public static async Task<List<QueryResult>> GetQueryResultsAsync()
         {
-            return await _databaseConn.Table<QueryResult>().ToListAsync();
+            // System.IO.FileNotFoundException
+            // Message = Could not load file or assembly 'SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b' or one of its dependencies.
+            // https://stackoverflow.com/questions/56169808/could-not-load-file-or-assembly-sqlitepclraw-core
+            try
+            {
+                return await _databaseConn.Table<QueryResult>().ToListAsync();
+            }
+            catch (Exception ex) 
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// GetQueryResultByQueryStringAsync
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
         public static async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
         {
-            QueryResultLocations queryResultLocations = null;
-            var queryResult = await _databaseConn.Table<QueryResult>()
-                                      .Where(qr => qr.QueryString == queryString)
-                                      .FirstOrDefaultAsync();
-            if (queryResult != null)
+            try
             {
-                queryResultLocations = new QueryResultLocations()
+                QueryResultLocations queryResultLocations = null;
+                var queryResult = await _databaseConn.Table<QueryResult>()
+                                          .Where(qr => qr.QueryString == queryString)
+                                          .FirstOrDefaultAsync();
+                if (queryResult != null)
                 {
-                    Id = queryResult.Id,
-                    Hits = queryResult.Hits,
-                    Type = queryResult.Type,
-                    Terms = queryResult.Terms,
-                    Proximity = queryResult.Proximity,
-                    QueryString = queryResult.QueryString,
-                    QueryExpression = queryResult.QueryExpression
-                };
-
-                var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResult.Id);
-                var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
-
-                foreach (var locations in queryLocations)
-                {
-                    var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
-                    var pid = locations.Key;
-                    var queryLocation = new QueryLocation() { Id = id, Pid = pid };
-
-                    foreach (var location in locations)
+                    queryResultLocations = new QueryResultLocations()
                     {
-                        var termLocation = new TermLocation()
+                        Id = queryResult.Id,
+                        Hits = queryResult.Hits,
+                        Type = queryResult.Type,
+                        Terms = queryResult.Terms,
+                        Proximity = queryResult.Proximity,
+                        QueryString = queryResult.QueryString,
+                        QueryExpression = queryResult.QueryExpression
+                    };
+
+                    var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResult.Id);
+                    var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
+
+                    foreach (var locations in queryLocations)
+                    {
+                        var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+                        var pid = locations.Key;
+                        var queryLocation = new QueryLocation() { Id = id, Pid = pid };
+
+                        foreach (var location in locations)
                         {
-                            Term = location.Term,
-                            DocumentId = location.DocumentId,
-                            SequenceId = location.SequenceId,
-                            DocumentPosition = location.DocumentPosition,
-                            TextPosition = location.TextPosition,
-                            Length = location.TextLength
-                        };
-                        queryLocation.TermOccurrences.Add(termLocation);
+                            var termLocation = new TermLocation()
+                            {
+                                Term = location.Term,
+                                DocumentId = location.DocumentId,
+                                SequenceId = location.SequenceId,
+                                DocumentPosition = location.DocumentPosition,
+                                TextPosition = location.TextPosition,
+                                Length = location.TextLength
+                            };
+                            queryLocation.TermOccurrences.Add(termLocation);
+                        }
+                        queryResultLocations.QueryLocations.Add(queryLocation);
                     }
-                    queryResultLocations.QueryLocations.Add(queryLocation);
                 }
+                return queryResultLocations;
             }
-            return queryResultLocations;
+            catch (Exception ex) 
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// GetQueryResultByIdAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static async Task<QueryResultLocations> GetQueryResultByIdAsync(int id)
         {
-            var queryResult = await _databaseConn.Table<QueryResult>()
-                                      .Where(qr => qr.Id == id)
-                                      .FirstOrDefaultAsync();
-            if (queryResult != null)
+            try
             {
-                var qryResult = new QueryResultLocations()
+                var queryResult = await _databaseConn.Table<QueryResult>()
+                                        .Where(qr => qr.Id == id)
+                                        .FirstOrDefaultAsync();
+                if (queryResult != null)
                 {
-                    Id = queryResult.Id,
-                    Hits = queryResult.Hits,
-                    Type = queryResult.Type,
-                    Terms = queryResult.Terms,
-                    Proximity = queryResult.Proximity,
-                    QueryString = queryResult.QueryString,
-                    QueryExpression = queryResult.QueryExpression
-                };
-
-                var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(id);
-                int count = termOccurrences.Count();
-
-                var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
-
-                foreach (var location in queryLocations)
-                {
-                    var queryLocation = new QueryLocation();
-                    queryLocation.Id = location.First().DocumentId + ":" + location.First().SequenceId;
-                    queryLocation.Pid = location.Key;
-
-                    foreach (var termOccurrence in location)
+                    var qryResult = new QueryResultLocations()
                     {
-                        var loc = new TermLocation()
+                        Id = queryResult.Id,
+                        Hits = queryResult.Hits,
+                        Type = queryResult.Type,
+                        Terms = queryResult.Terms,
+                        Proximity = queryResult.Proximity,
+                        QueryString = queryResult.QueryString,
+                        QueryExpression = queryResult.QueryExpression
+                    };
+
+                    var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(id);
+                    int count = termOccurrences.Count();
+
+                    var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
+
+                    foreach (var location in queryLocations)
+                    {
+                        var queryLocation = new QueryLocation();
+                        queryLocation.Id = location.First().DocumentId + ":" + location.First().SequenceId;
+                        queryLocation.Pid = location.Key;
+
+                        foreach (var termOccurrence in location)
                         {
-                            Term = termOccurrence.Term,
-                            DocumentId = termOccurrence.DocumentId,
-                            SequenceId = termOccurrence.SequenceId,
-                            DocumentPosition = termOccurrence.DocumentPosition,
-                            TextPosition = termOccurrence.TextPosition,
-                            Length = termOccurrence.TextLength
-                        };
-                        queryLocation.TermOccurrences.Add(loc);
+                            var loc = new TermLocation()
+                            {
+                                Term = termOccurrence.Term,
+                                DocumentId = termOccurrence.DocumentId,
+                                SequenceId = termOccurrence.SequenceId,
+                                DocumentPosition = termOccurrence.DocumentPosition,
+                                TextPosition = termOccurrence.TextPosition,
+                                Length = termOccurrence.TextLength
+                            };
+                            queryLocation.TermOccurrences.Add(loc);
+                        }
+                        qryResult.QueryLocations.Add(queryLocation);
                     }
-                    qryResult.QueryLocations.Add(queryLocation);
+                    return qryResult;
                 }
-                return qryResult;
+                return null;
             }
-            return null;
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
+
+        /// <summary>
+        /// GetQueryResultByIdAsyncEx
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static async Task<QueryResultLocations> GetQueryResultByIdAsyncEx(int id)
         {
             var queryResult = await _databaseConn.Table<QueryResult>()
@@ -200,6 +274,12 @@ namespace UBViews.SQLiteRepository
             }
             return null;
         }
+
+        /// <summary>
+        /// GetQueryResultJsonByIdAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static async Task<string> GetQueryResultJsonByIdAsync(int id)
         {
             var queryResult = await _databaseConn.Table<Models.QueryResult>()
@@ -250,19 +330,57 @@ namespace UBViews.SQLiteRepository
             }
             return null;
         }
+
+        /// <summary>
+        /// SaveTermOccurrenceAsync
+        /// </summary>
+        /// <param name="termOccurrence"></param>
+        /// <returns></returns>
         public static async Task<int> SaveTermOccurrenceAsync(TermOccurrence termOccurrence)
         {
-            return await _databaseConn.InsertAsync(termOccurrence);
+            try
+            {
+                return await _databaseConn.InsertAsync(termOccurrence);
+            }
+            catch (Exception ex) 
+            {
+                return -1;
+            }
         }
+
+        /// <summary>
+        /// GetTermOccurrencesAsync
+        /// </summary>
+        /// <returns></returns>
         public static async Task<List<TermOccurrence>> GetTermOccurrencesAsync()
         {
-            return await _databaseConn.Table<TermOccurrence>().ToListAsync();
+            try
+            {
+                return await _databaseConn.Table<TermOccurrence>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// GetTermOccurrencesByQueryResultIdAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static async Task<List<TermOccurrence>> GetTermOccurrencesByQueryResultIdAsync(int id)
         {
-            return await _databaseConn.Table<TermOccurrence>()
-                                      .Where(to => to.QueryResultId == id)
-                                      .ToListAsync();
+            try
+            {
+                return await _databaseConn.Table<TermOccurrence>()
+                                            .Where(to => to.QueryResultId == id)
+                                            .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
 

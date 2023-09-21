@@ -67,41 +67,155 @@ namespace UBViews.SQLiteRepository
         #endregion
 
         #region Posting Repository Api
+        /// <summary>
+        /// SavePostingAsync
+        /// </summary>
+        /// <param name="posting"></param>
+        /// <returns></returns>
         public static async Task<int> SavePostingAsync(PostingList posting)
         {
-            return await _databaseConn.InsertAsync(posting);
+            try
+            {
+                return await _databaseConn.InsertAsync(posting);
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
+
+        /// <summary>
+        /// GetPostingsAsync
+        /// </summary>
+        /// <returns></returns>
         public static async Task<List<PostingList>> GetPostingsAsync()
         {
-            return await _databaseConn.Table<PostingList>().ToListAsync();
+            try
+            {
+                return await _databaseConn.Table<PostingList>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// GetPostingByLexemeAsync
+        /// </summary>
+        /// <param name="lexeme"></param>
+        /// <returns></returns>
         public static async Task<PostingList> GetPostingByLexemeAsync(string lexeme)
         {
-            return await _databaseConn.Table<PostingList>().Where(p => p.Lexeme == lexeme).FirstOrDefaultAsync();
+            try
+            {
+                return await _databaseConn.Table<PostingList>().Where(p => p.Lexeme == lexeme).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// SaveTokenOccurenceAsync
+        /// </summary>
+        /// <param name="occurrence"></param>
+        /// <returns></returns>
         public static async Task<int> SaveTokenOccurenceAsync(TokenOccurrence occurrence)
         {
-            return await _databaseConn.InsertAsync(occurrence);
+            try
+            {
+                return await _databaseConn.InsertAsync(occurrence);
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
+
+        /// <summary>
+        /// SaveTokenOccurrencesAsync
+        /// </summary>
+        /// <param name="occurrences">IEnumerable of TokenOccurrence</param>
+        /// <returns>Nummber of rows added, zero of none or -1 for exception.</returns>
         public static async Task<int> SaveTokenOccurrencesAsync(IEnumerable<TokenOccurrence> occurrences)
         {
-            return await _databaseConn.InsertAllAsync(occurrences);
+            try
+            {
+                return await _databaseConn.InsertAllAsync(occurrences);
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
+
+        /// <summary>
+        /// GetTokenOccurrencesByPostingListIdAsync
+        /// </summary>
+        /// <param name="postingId"></param>
+        /// <returns></returns>
         public static async Task<List<TokenOccurrence>> GetTokenOccurrencesByPostingListIdAsync(int postingId)
         {
-            return await _databaseConn.Table<TokenOccurrence>().Where(o => o.PostingId == postingId).ToListAsync();
+            try
+            {
+                return await _databaseConn.Table<TokenOccurrence>().Where(o => o.PostingId == postingId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// SaveTokenStem
+        /// </summary>
+        /// <param name="stem"></param>
+        /// <returns></returns>
         public static async Task<int> SaveTokenStem(TokenStem stem)
         {
-            return await _databaseConn.InsertAsync(stem);
+            try
+            {
+                return await _databaseConn.InsertAsync(stem);
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
+
+        /// <summary>
+        /// GetTokenStemAsync
+        /// </summary>
+        /// <param name="lexeme"></param>
+        /// <returns></returns>
         public static async Task<TokenStem> GetTokenStemAsync(string lexeme)
         {
-            return await _databaseConn.Table<TokenStem>().Where(s => s.Lexeme == lexeme).FirstOrDefaultAsync();
+            try
+            {
+                return await _databaseConn.Table<TokenStem>().Where(s => s.Lexeme == lexeme).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// GetTokenStemsAsync
+        /// </summary>
+        /// <returns>List of all Token Stems</returns>
         public static async Task<List<TokenStem>> GetTokenStemsAsync()
         {
-            return await _databaseConn.Table<TokenStem>().ToListAsync();
+            try
+            {
+                return await _databaseConn.Table<TokenStem>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         #endregion
     }
