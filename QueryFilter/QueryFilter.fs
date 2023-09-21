@@ -79,51 +79,6 @@ module QueryFilterService =
         let t3, t4 = checkForValidForm queryString
         [(t1, t2), (t3, t4)]
 
-//module QueryProcessingService = 
-
-//    /// Utility Methods
-//    let toStringValue fv =
-//        match fv with
-//        | FilterValue.TOPID -> "TOPID"
-//        | FilterValue.DOCID -> "DOCID"
-//        | FilterValue.SEQID -> "SEQID"
-//        | FilterValue.PARID -> "PARID"
-//        | FilterValue.SECID -> "SECID"
-
-//    let rec queryExpToString (query: Query) : string =
-//        match query with
-//        | Term(term)  -> "Term(\"" + term + "\")"
-//        | STerm(term) -> "STerm(\"" + term + "\")"
-//        | CTerm(cterm) -> 
-//            let newStringList =
-//                cterm
-//                |> List.rev
-//                |> List.map(fun s -> let ns = s
-//                                     ns)
-//            "CTerm(\"" + newStringList.ToString() + "\")"
-//        | Phrase(phrase) -> 
-//            let newStringList = 
-//                phrase
-//                |> List.rev 
-//                |> List.map (fun s -> let ns = s
-//                                      ns)
-//            "Phrase(" + newStringList.ToString() + ")"
-//        | And(x, y)   -> "And(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
-//        | Or(x, y)    -> "Or(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
-//        | SubQuery(q) -> "SubQuery(" + queryExpToString(q) + ")"
-//        | FilterBy(q, f) ->
-//            let results =
-//                    match q with
-//                    | Term(term)     -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | STerm(term)    -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | CTerm(cterm)   -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | Phrase(phrase) -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | And(x, y)      -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | Or(x, y)       -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//                    | _ -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
-//            results
-//        | NoOpQuery   -> string []
-
 //module QueryRecordsetService =
 
 //    open RecordTypes

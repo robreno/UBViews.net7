@@ -311,6 +311,7 @@ public partial class QueryInputViewModel : BaseViewModel
 
                     var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
                     var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
+
                     foreach (var term in terms)
                     {
                         var postingLst = await repositoryService.GetPostingByLexemeAsync(term);
@@ -321,7 +322,6 @@ public partial class QueryInputViewModel : BaseViewModel
                         {
                             lst.Add(token);
                         }
-                        var iss = lst.ToImmutableSortedSet();
                         tLst.Add(lst);
                     }
                 }
