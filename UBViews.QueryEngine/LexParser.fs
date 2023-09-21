@@ -19,6 +19,10 @@ type ParserService() =
         let tl = Evaluators.queryToTermList(query.Head)
         tl
 
+    member this.QueryExpressionToString (query: Query) : string =
+        let queryExpressionStr = queryExpToString query
+        queryExpressionStr
+
 module Say =
 
     let hello name =

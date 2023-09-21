@@ -17,4 +17,8 @@
     <Compile Include="QueryFilter.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UBViews.QueryEngine\UBViews.LexParser.fsproj" />
+  </ItemGroup>
+
 </Project>

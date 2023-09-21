@@ -16,6 +16,7 @@ using UBViews.SQLiteRepository.Models;
 
 using UBViews.LexParser;
 using QueryFilterLib;
+using System.Collections.Immutable;
 
 namespace UBViews.ViewModels;
 
@@ -304,8 +305,10 @@ public partial class QueryInputViewModel : BaseViewModel
                     // Run Query
                     var queryText = QueryInput.Text;
                     var result = parserService.ParseQuery(queryText);
+                    var queryExpressionStr = parserService.QueryExpressionToString(result.Head);
                     QueryExpression = result.ToString();
                     var terms = parserService.ParseQueryStringToTermList(queryText);
+
                     var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
                     var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
                     foreach (var term in terms)
@@ -316,8 +319,9 @@ public partial class QueryInputViewModel : BaseViewModel
                         var lst = new List<UBViews.SQLiteRepository.Models.TokenOccurrence>();
                         foreach (var token in tokenOccs)
                         {
-                           lst.Add(token);
+                            lst.Add(token);
                         }
+                        var iss = lst.ToImmutableSortedSet();
                         tLst.Add(lst);
                     }
                 }

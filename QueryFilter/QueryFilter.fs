@@ -6,36 +6,7 @@ open System.Collections.Generic
 open System.Text.RegularExpressions
 open System.Xml.Linq
 open System.Linq
-
-//type value =
-//    | Int of int
-//    | Float of float
-//    | String of string
-
-//type FilterValue = 
-//    | TOPID
-//    | DOCID
-//    | SEQID
-//    | PARID
-//    | SECID
-
-//type FilterID =
-//    | BookID of string
-//    | DocuID of string
-//    | SequID of string
-//    | ParaID of string
-//    | SectID of string
-
-//type Query =
-//    | Term of string
-//    | STerm of string
-//    | CTerm of string list
-//    | Phrase of string list
-//    | And of Query * Query
-//    | Or of Query * Query
-//    | SubQuery of Query
-//    | FilterBy of Query * FilterValue
-//    | NoOpQuery
+open UBViews.LexParser
 
 module QueryFilterService =
 
@@ -107,6 +78,51 @@ module QueryFilterService =
         let t1, t2 = checkForValidChars queryString
         let t3, t4 = checkForValidForm queryString
         [(t1, t2), (t3, t4)]
+
+//module QueryProcessingService = 
+
+//    /// Utility Methods
+//    let toStringValue fv =
+//        match fv with
+//        | FilterValue.TOPID -> "TOPID"
+//        | FilterValue.DOCID -> "DOCID"
+//        | FilterValue.SEQID -> "SEQID"
+//        | FilterValue.PARID -> "PARID"
+//        | FilterValue.SECID -> "SECID"
+
+//    let rec queryExpToString (query: Query) : string =
+//        match query with
+//        | Term(term)  -> "Term(\"" + term + "\")"
+//        | STerm(term) -> "STerm(\"" + term + "\")"
+//        | CTerm(cterm) -> 
+//            let newStringList =
+//                cterm
+//                |> List.rev
+//                |> List.map(fun s -> let ns = s
+//                                     ns)
+//            "CTerm(\"" + newStringList.ToString() + "\")"
+//        | Phrase(phrase) -> 
+//            let newStringList = 
+//                phrase
+//                |> List.rev 
+//                |> List.map (fun s -> let ns = s
+//                                      ns)
+//            "Phrase(" + newStringList.ToString() + ")"
+//        | And(x, y)   -> "And(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
+//        | Or(x, y)    -> "Or(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
+//        | SubQuery(q) -> "SubQuery(" + queryExpToString(q) + ")"
+//        | FilterBy(q, f) ->
+//            let results =
+//                    match q with
+//                    | Term(term)     -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | STerm(term)    -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | CTerm(cterm)   -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | Phrase(phrase) -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | And(x, y)      -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | Or(x, y)       -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//                    | _ -> "FilterBy(" + queryExpToString(q) + "," + toStringValue f + ")"
+//            results
+//        | NoOpQuery   -> string []
 
 //module QueryRecordsetService =
 
