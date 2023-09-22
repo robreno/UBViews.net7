@@ -8,7 +8,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <x:String x:Key="ButtonWidth">155</x:String>
+            <x:String x:Key="ButtonWidth">160</x:String>
             <x:String x:Key="SearchBarWidth">300</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>

@@ -165,13 +165,25 @@ namespace UBViews
                 var occurences = post.Descendants("TokenOccurrence");
                 foreach (var occ in occurences)
                 {
+                    var pid = occ.Attribute("pid").Value;
+                    char[] delims = { ':', '.' };
+                    var pidArry = pid.Split(delims, StringSplitOptions.RemoveEmptyEntries);
+
+                    var id = posting.Id;
+                    var docId = Int32.Parse(occ.Attribute("did").Value);
+                    var seqId = Int32.Parse(occ.Attribute("sid").Value);
+                    var secId = Int32.Parse(pidArry[1]);
+                    var dpo = Int32.Parse(occ.Attribute("dpo").Value);
+                    var tpo = Int32.Parse(occ.Attribute("tpo").Value);
+
                     var occurrence = new TokenOccurrence()
                     {
-                        PostingId = posting.Id,
-                        DocumentId = Int32.Parse(occ.Attribute("did").Value),
-                        SequenceId = Int32.Parse(occ.Attribute("sid").Value),
-                        DocumentPosition = Int32.Parse(occ.Attribute("dpo").Value), // TODO: regen db, as spelling error on field in database
-                        TextPosition = Int32.Parse(occ.Attribute("tpo").Value)
+                        PostingId = id,
+                        DocumentId = docId,
+                        SequenceId = seqId,
+                        SectionId  = secId,
+                        DocumentPosition = dpo,
+                        TextPosition = tpo
                     };
                     int oSuccess = await PostingRepository.SaveTokenOccurenceAsync(occurrence);
                 }

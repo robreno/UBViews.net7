@@ -16,4 +16,9 @@ public partial class QueryInputPage : ContentPage
     {
         base.OnNavigatedTo(args);
     }
+
+    private void queryResultScrollView_Scrolled(object sender, ScrolledEventArgs e)
+    {
+
+    }
 }

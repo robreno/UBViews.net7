@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace UBViews.ViewModels;
 
+using System.Collections.ObjectModel;
 using UBViews.Services;
-using UBViews.Models;
-
-namespace UBViews.ViewModels;
+using UBViews.Models.XmlAppData;
 
 public partial class AppDataViewModel : BaseViewModel
 {

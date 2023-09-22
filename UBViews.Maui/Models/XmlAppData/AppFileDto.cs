@@ -1,4 +1,4 @@
-﻿namespace UBViews.Models;
+﻿namespace UBViews.Models.XmlAppData;
 public class AppFileDto
 {
     public int Id { get; set; }

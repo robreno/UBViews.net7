@@ -367,6 +367,7 @@ namespace UBViews.Helpers
         //        return null;
         //    }
         //}
+
         //private async Task<Local.PostingListDto> MapPostingListToDto(PostingList postingList)
         //{
         //    string methodName = "MapPostingListToDto";
@@ -385,6 +386,7 @@ namespace UBViews.Helpers
         //        return null;
         //    }
         //}
+
         //private async Task<Local.TermOccurrenceDto> MapTermOccurrenceToDto(TermOccurrence termOccurrence)
         //{
         //    string methodName = "MapTermOccurrenceToDto";
@@ -410,6 +412,7 @@ namespace UBViews.Helpers
         //        return null;
         //    }
         //}
+
         //private async Task<Local.TokenOccurrenceDto> MapTokenOccurrenceToDto(TokenOccurrence tokenOccurrence)
         //{
         //    string methodName = "MapTokenOccurrenceToDto";
@@ -432,6 +435,7 @@ namespace UBViews.Helpers
         //        return null;
         //    }
         //}
+
         //private async Task<Local.TokenStemDto> MapTokenStemToDto(TokenStem tokenStem)
         //{
         //    string methodName = "MapTokenStemToDto";

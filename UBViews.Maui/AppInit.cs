@@ -99,6 +99,7 @@ namespace UBViews
         }
         public bool HasUserData(string[] userFiles)
         {
+            // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
             _appDir = FileSystem.Current.AppDataDirectory;
             foreach (var file in userFiles)
             {
@@ -129,7 +130,6 @@ namespace UBViews
                     string content = await reader.ReadToEndAsync();
 
                     // Write the file content to the app data directory
-                    // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
                     string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, targetFileName);
 
                     using FileStream outputStream = System.IO.File.OpenWrite(targetFile);

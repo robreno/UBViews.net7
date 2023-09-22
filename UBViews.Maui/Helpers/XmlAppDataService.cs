@@ -1,8 +1,9 @@
-﻿using System.Xml.Linq;
+﻿namespace UBViews.Helpers;
+
+using System.Xml.Linq;
 using UBViews.Models;
 using UBViews.Services;
-namespace UBViews.Helpers;
-using UBViews.Models.Query;
+using UBViews.Models.XmlAppData;
 
 public class XmlAppDataService : IAppDataService
 {

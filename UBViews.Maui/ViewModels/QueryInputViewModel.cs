@@ -452,6 +452,7 @@ public partial class QueryInputViewModel : BaseViewModel
 
 
                 var contentVSL = contentPage.FindByName("queryResultVSL") as VerticalStackLayout;
+                //var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
 
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 

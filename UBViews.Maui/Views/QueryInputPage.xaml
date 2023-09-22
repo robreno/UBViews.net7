@@ -68,8 +68,11 @@
             Padding="10"
             HorizontalOptions="Center"/>
 
-        <ScrollView x:Name="queryResultScrollView">
-            <VerticalStackLayout x:Name="queryResultVSL">
+        <ScrollView x:Name="queryResultScrollView" 
+                    IsEnabled="true"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Always">
+            <VerticalStackLayout x:Name="queryResultVSL" VerticalOptions="FillAndExpand">
                 <!--<Border Stroke="Blue" Padding="10" Margin=".5">
                     <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}" ToolTipProperties.Text="Tap to go to paragraph.">
                         <Label.FormattedText>

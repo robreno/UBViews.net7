@@ -1,5 +1,4 @@
-﻿using UBViews.Models;
-using UBViews.Models.Query;
+﻿using UBViews.Models.XmlAppData;
 
 namespace UBViews.Services;
 
