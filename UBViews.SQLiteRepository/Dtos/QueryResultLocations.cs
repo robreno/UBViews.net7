@@ -7,6 +7,7 @@ public class QueryResultLocations
     public string Terms { get; set; }
     public string Proximity { get; set; }
     public string QueryString { get; set; }
+    public string ReverseQueryString { get; set; }
     public string QueryExpression { get; set; }
     public List<QueryLocation> QueryLocations { get; set; } = new();
 }
