@@ -10,6 +10,7 @@ namespace UBViews.SQLiteRepository
     {
         #region Database Paths and Data Members 
         private static SQLiteAsyncConnection _databaseConn;
+        // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState\
         private static string _databasePathLocalState = Path.Combine(FileSystem.AppDataDirectory, "queryResults.db3");
         private static string _databasePathLocalCache =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "queryResults.db3");
@@ -112,7 +113,8 @@ namespace UBViews.SQLiteRepository
             {
                 QueryResultLocations queryResultLocations = null;
                 var queryResult = await _databaseConn.Table<QueryResult>()
-                                          .Where(qr => qr.QueryString == queryString)
+                                          .Where(qr => qr.QueryString == queryString ||
+                                                       qr.ReverseQueryString == queryString)
                                           .FirstOrDefaultAsync();
                 if (queryResult != null)
                 {
@@ -124,6 +126,7 @@ namespace UBViews.SQLiteRepository
                         Terms = queryResult.Terms,
                         Proximity = queryResult.Proximity,
                         QueryString = queryResult.QueryString,
+                        ReverseQueryString = queryResult.ReverseQueryString,
                         QueryExpression = queryResult.QueryExpression
                     };
 
