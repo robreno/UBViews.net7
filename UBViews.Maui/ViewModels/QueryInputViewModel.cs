@@ -438,6 +438,9 @@ public partial class QueryInputViewModel : BaseViewModel
             stackLayout.Add(navigationButton); ...
             */
 
+            var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
+            var contentVSL = contentPage.FindByName("queryResultVSL") as VerticalStackLayout;
+
             var locations = queryResultLocationsDto.QueryLocations;
             foreach (var location in locations)
             {
@@ -450,9 +453,7 @@ public partial class QueryInputViewModel : BaseViewModel
                 var text = paragraph.Text;
                 var paraStyle = paragraph.ParaStyle;
 
-
-                var contentVSL = contentPage.FindByName("queryResultVSL") as VerticalStackLayout;
-                //var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
+                // Study the .NET Maui ScrollView examples
 
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 
@@ -465,6 +466,8 @@ public partial class QueryInputViewModel : BaseViewModel
                 tapGestureRecognizer.CommandParameter = $"{labelName}";
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
                 label.GestureRecognizers.Add(tapGestureRecognizer);
+
+                label.SetValue(ToolTipProperties.TextProperty, "Tap to go to paragraph.");
 
                 Border newBorder = new Border()
                 {
