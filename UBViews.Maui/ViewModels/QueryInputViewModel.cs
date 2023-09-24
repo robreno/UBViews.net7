@@ -427,6 +427,7 @@ public partial class QueryInputViewModel : BaseViewModel
         }
     }
 
+    #region Helper Methods
     private async Task LoadXaml(QueryResultLocations queryResultLocationsDto)
     {
         try
@@ -553,10 +554,83 @@ public partial class QueryInputViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NormalizeQueryString => ",
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.NormalizeQueryString => ",
                 ex.Message, "Cancel");
         }
     }
-
+    private async Task<string> GetQueryType(string queryString)
+    {
+        Regex rgxFilterBy = new Regex("filterby");
+        Regex rgxAnd = new Regex(@"\sand\s");
+        Regex rgxOr = new Regex(@"\sor\s");
+        var queryType = string.Empty;
+        try
+        {
+            var filteryByOp = rgxFilterBy.Match(queryString).Success;
+            var andOp = rgxAnd.Match(queryString).Success;
+            var orOp = rgxOr.Match(queryString).Success;
+            if (andOp && filteryByOp)
+            {
+                queryType = "FilterBy+And";
+            }
+            else if (orOp && filteryByOp)
+            {
+                queryType = "FilterBy+Or";
+            }
+            if (andOp && !filteryByOp)
+            {
+                queryType = "And";
+            }
+            else if (orOp && !filteryByOp)
+            {
+                queryType = "Or";
+            }
+            return queryType;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.GetQueryType => ",
+                ex.Message, "Cancel");
+            return string.Empty;
+        }
+    }
+    private async Task<string> ReverseQueryString(string queryString)
+    {
+        Regex rgxFilterBy = new Regex("filterby");
+        Regex rgxAnd = new Regex(@"\sand\s");
+        Regex rgxOr = new Regex(@"\sor\s");
+        var reverseQueryString = string.Empty;
+        var filterByOp = string.Empty;
+        var baseQuery = string.Empty;
+        var len = queryString.Length;
+        try
+        {
+            if (queryType == "And")
+            {
+                var m = rgxAnd.Match(queryString);
+                var terms = queryString.Split(" and ");
+                reverseQueryString = terms[1] + " and " + terms[0];
+            }
+            else if (queryType == "FilterBy+And")
+            {
+                var m = rgxFilterBy.Match(queryString);
+                if (m.Success)
+                {
+                    filterByOp = queryString.Substring(m.Index, queryString.Length - m.Index);
+                    baseQuery = queryString.Substring(0, m.Index - 1);
+                    var terms = baseQuery.Split(" and ");
+                    reverseQueryString = terms[1] + " and " + terms[0] + " " + filterByOp;
+                }
+            }
+            return reverseQueryString;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.ReverseQueryString => ",
+                ex.Message, "Cancel");
+            return string.Empty;
+        }
+    }
+    #endregion
     Task Back() => Shell.Current.GoToAsync("..");
 }
