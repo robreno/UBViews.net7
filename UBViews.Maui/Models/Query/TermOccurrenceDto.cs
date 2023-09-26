@@ -1,10 +1,13 @@
 ﻿namespace UBViews.Models.Query;
 public class TermOccurrenceDto
 {
+    public int Id { get; set; }
+    public int QueryResultId { get; set; }
+    public int DocumentId { get; set; }
+    public int SequenceId { get; set; }
+    public int DocumentPosition { get; set; }
+    public int TextPosition { get; set; }
+    public int TextLength { get; set; }
     public string Term { get; set; }
-    public int DocId { get; set; }
-    public int SeqId { get; set; }
-    public int DpoId { get; set; }
-    public int TpoId { get; set; }
-    public int Len { get; set; }
+    public string ParagraphId { get; set; }
 }
