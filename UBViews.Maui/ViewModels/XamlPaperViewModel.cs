@@ -346,6 +346,14 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
+                int paperId = Int32.Parse(id.Substring(1, 3));
+                int sequenceId = Int32.Parse(id.Substring(5,3));
+                var audioMarker = AudioMarkers.Where(m => m.SequenceId == sequenceId).FirstOrDefault();
+
+                var startTimeStr = audioMarker.StartTime.ToLongTimeString();
+                var endTimeStr = audioMarker.EndTime.ToLongTimeString();
+                string timeRange = startTimeStr + " - " + endTimeStr;
+
                 Label currentLabel = (Label)contentPage.FindByName(id);
                 string timeSpanRange = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
                 string timeSpanRangeMsg = timeSpanRange.Replace("_", " - ");
@@ -358,13 +366,13 @@ namespace UBViews.ViewModels
                              + "." +
                              Int32.Parse(arr[3]).ToString("0");
 
-                string message = $"Playing {pid} Timespan {timeSpanRangeMsg}";
+                string message = $"Playing {pid} Timespan {timeRange}";
 
                 // Initial State -> Trigger Play
                 if (CurrentState == "None" ||
                     PreviousState == "None")
                 {
-                    await PlayAudioRange(timeSpanRange);
+                    await PlayAudioRangeEx(audioMarker);
                 }
                 // Play State -> Tappeed Event -> 
                 /* || PreviousState = "Paused" */
@@ -676,6 +684,34 @@ namespace UBViews.ViewModels
                 string[] ea = arry[1].Split(separators, StringSplitOptions.RemoveEmptyEntries);
                 TimeSpan start = new TimeSpan(0, Int32.Parse(sa[0]), Int32.Parse(sa[1]), Int32.Parse(sa[2]), Int32.Parse(sa[3]));
                 TimeSpan end = new TimeSpan(0, Int32.Parse(ea[0]), Int32.Parse(ea[1]), Int32.Parse(ea[2]), Int32.Parse(ea[3]));
+
+                StartTime = start;
+                EndTime = end;
+
+                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    me.SeekTo(start);
+                    me.Play();
+                });
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task PlayAudioRangeEx(AudioMarker audioMarker)
+        {
+            try
+            {
+                PreviousState = CurrentState;
+                CurrentState = "Playing";
+
+                TimeSpan start = audioMarker.StartTime;
+                TimeSpan end = audioMarker.EndTime;
 
                 StartTime = start;
                 EndTime = end;
