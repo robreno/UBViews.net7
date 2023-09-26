@@ -12,8 +12,8 @@
   </Marker>
   <Marker pid="189:0.2" seqId="3">
     <Start>0:01:08.01</Start>
-    <End>0:02:20.10</End>
-    <TimeSpan>0:01:08.01_0:02:20.10</TimeSpan>
+    <End>0:02:30.10</End>
+    <TimeSpan>0:01:08.01_0:02:30.10</TimeSpan>
   </Marker>
   <Marker pid="189:0.3" seqId="4">
     <Start>0:02:20.10</Start>
