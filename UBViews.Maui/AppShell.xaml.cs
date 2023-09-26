@@ -16,7 +16,7 @@ namespace UBViews
             Routing.RegisterRoute(nameof(AppSettingsPage), typeof(AppSettingsPage));
 
             Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
-            //Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
+            Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
 
             #region Xaml Papers
             // Generated Xaml Pages
