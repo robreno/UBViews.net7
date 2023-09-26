@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace UBViews.ViewModels;
+
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using System.Linq;
 using System.Text;
@@ -17,8 +19,7 @@ using UBViews.SQLiteRepository.Models;
 using UBViews.LexParser;
 using QueryFilterLib;
 using System.Collections.Immutable;
-
-namespace UBViews.ViewModels;
+using UBViews.Views;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
@@ -46,6 +47,9 @@ public partial class QueryInputViewModel : BaseViewModel
 
     [ObservableProperty]
     bool isRefreshing;
+
+    [ObservableProperty]
+    QueryResultLocationsDto locationsDto;
 
     [ObservableProperty]
     QueryInputDto queryInput;
@@ -266,7 +270,7 @@ public partial class QueryInputViewModel : BaseViewModel
                 if (queryExists)
                 {
                     // TODO: Add to Repository .... or change to Repository?
-                    var queryResultById = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
                     var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
 
                     var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
@@ -284,25 +288,14 @@ public partial class QueryInputViewModel : BaseViewModel
                     var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
                     var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
 
-                    //var parserService = new ParserService();
-                    // 3. Use Linq QueryLanguage to filter to Hits
-                    //var set1 = new SortedSet<TokenOccurrence>();
-                    //var set2 = new SortedSet<TokenOccurrence>();
-                    //foreach (var token in tokenOccurrences1)
-                    //{
-                    //    set1.Add(token);
-                    //}
-                    //foreach (var token in tokenOccurrences2)
-                    //{
-                    //    set2.Add(token);
-                    //}
-                    // join, union, etc., 
+                    // TODO: Navitage to QueryResultPage here for test puroses
 
-                    await LoadXaml(queryResultById);
+                    await LoadXaml(queryResultLocationsDto);
                 }
                 else
                 {
                     // Run Query
+                    // 
                     var queryText = QueryInput.Text;
                     var result = parserService.ParseQuery(queryText);
                     var queryExpressionStr = parserService.QueryExpressionToString(result.Head);
@@ -360,6 +353,118 @@ public partial class QueryInputViewModel : BaseViewModel
         {
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
             return;
+        }
+    }
+
+    [RelayCommand]
+    async Task TestQuery(string queryString)
+    {
+        if (IsBusy == true)
+            return;
+
+        try
+        {
+            IsBusy = true;
+
+            var validChars = QueryFilterService.checkForValidChars(queryString);
+            var validCharsSuccess = validChars.Item1;
+            var validForm = QueryFilterService.checkForValidForm(queryString);
+            var validFormSuccess = validForm.Item1;
+
+            if (queryString == "EmptyQuery" ||
+                queryString == null ||
+                !validCharsSuccess ||
+                !validFormSuccess)
+            {
+                var errorMessage = string.Empty;
+                var msg = string.Empty;
+
+                if (!validCharsSuccess || !validFormSuccess)
+                {
+                    if (!validCharsSuccess)
+                        errorMessage = errorMessage + validChars.Item2 + ";";
+                    if (!validFormSuccess)
+                        errorMessage = errorMessage + validForm.Item2 + ";";
+
+                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                }
+
+                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
+                if (result != null)
+                {
+                    await Shell.Current.GoToAsync($"..?QueryInput={result}");
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("..");
+                }
+            }
+            else
+            {
+                // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState\
+                // QueryCommands.xml
+                (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
+                QueryResultExists = queryExists;
+                if (queryExists)
+                {
+                    // TODO: Add to Repository .... or change to Repository?
+                    var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
+
+                    var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
+
+                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
+
+                    var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
+                    var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
+
+                    // 1. Get PostingList for each term in query use F# to parse QueryExpression and get posting lists
+                    var postingLst2 = await repositoryService.GetPostingByLexemeAsync("foreword");
+                    var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
+
+                    // 2. Get TokenOccurrenceList for each PostingListId
+                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
+                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
+
+                    // TODO: Navitage to QueryResultPage here for test puroses
+
+                    await LoadXaml(queryResultLocationsDto);
+                }
+                else
+                {
+                    // Run Query
+                    var queryText = QueryInput.Text;
+                    var result = parserService.ParseQuery(queryText);
+                    var queryExpressionStr = parserService.QueryExpressionToString(result.Head);
+                    QueryExpression = result.ToString();
+                    var terms = parserService.ParseQueryStringToTermList(queryText);
+
+                    var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
+                    var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
+
+                    foreach (var term in terms)
+                    {
+                        var postingLst = await repositoryService.GetPostingByLexemeAsync(term);
+                        var tokenOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst.Id);
+                        pLst.Add(postingLst);
+                        var lst = new List<UBViews.SQLiteRepository.Models.TokenOccurrence>();
+                        foreach (var token in tokenOccs)
+                        {
+                            lst.Add(token);
+                        }
+                        tLst.Add(lst);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.RunQuery => ",
+                ex.Message, "Ok");
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
@@ -482,7 +587,7 @@ public partial class QueryInputViewModel : BaseViewModel
                 foreach (var termOcc in location.TermOccurrences)
                 {
                     var position = termOcc.TextPosition;
-                    var length = termOcc.Length;
+                    var length = termOcc.TextLength;
                     var term = text.Substring(position, length);
                 }
             }
@@ -594,7 +699,7 @@ public partial class QueryInputViewModel : BaseViewModel
             return string.Empty;
         }
     }
-    private async Task<string> ReverseQueryString(string queryString)
+    private async Task<string> ReverseQueryString(string queryString, string queryType)
     {
         Regex rgxFilterBy = new Regex("filterby");
         Regex rgxAnd = new Regex(@"\sand\s");
@@ -633,4 +738,43 @@ public partial class QueryInputViewModel : BaseViewModel
     }
     #endregion
     Task Back() => Shell.Current.GoToAsync("..");
+
+    [RelayCommand]
+    async Task NavigateTo(string target)
+    {
+        if (IsBusy)
+            return;
+
+        try
+        {
+            LocationsDto = new QueryResultLocationsDto();
+
+            IsBusy = true;
+
+            string targetName = string.Empty;
+            if (target == "QueryResultPage")
+            {
+                targetName = nameof(QueryResultPage);
+            }
+            else
+            {
+                targetName = nameof(QueryInputPage);
+            }
+
+
+            await Shell.Current.GoToAsync(targetName, new Dictionary<string, object>()
+            {
+                {"QueryResultLocatinsDto", LocationsDto }
+            });
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
+                ex.Message, "Cancel");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
 }
