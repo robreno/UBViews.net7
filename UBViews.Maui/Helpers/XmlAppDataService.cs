@@ -64,6 +64,15 @@ public class XmlAppDataService : IAppDataService
                 appFiles.Add(newFile);
             }
 
+            string audioDir = Path.Combine(FileSystem.Current.AppDataDirectory, "AudioMarkers");
+            string[] audioFiles = Directory.GetFiles(audioDir);
+            foreach (string audioFile in audioFiles)
+            {
+                var fileName = audioFile.Substring(mainDir.Length + 14);
+                var newFile = new AppFileDto { Id = ++count, FilePath = audioFile, FileName = fileName };
+                appFiles.Add(newFile);
+            }
+
             return appFiles;
         }
         catch (Exception ex)
