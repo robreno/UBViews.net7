@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             x:Class="UBViews.Views.QueryResultPage"
+             Title="QueryResultPage"
+             x:DataType="viewmodel:QueryResultViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="basePidStyle" TargetType="Label">
+            <Setter Property="Margin" Value="0,20,5,0" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="IsVisible" Value="true" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <behavior:EventToCommandBehavior
+            EventName="Loaded"
+            Command="{Binding QueryResultLoadedCommand}"
+            CommandParameter="{Binding QueryResultsCol}"/>
+    </ContentPage.Behaviors>
+
+    <Grid x:Name="contentGrid">
+
+        <ScrollView x:Name="contentScrollView" 
+                    VerticalOptions="Center" 
+                    HorizontalScrollBarVisibility="Always">
+
+            <VerticalStackLayout x:Name="innerVerticalStackLayout" 
+                                 Style="{StaticResource AppPaperContent}">
+                
+                <Label x:Name="_000_001" Style="{StaticResource AppTitleParagraph}" ToolTipProperties.Text="0:0.0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span x:Name="SP_000_001" Style="{StaticResource AppPID}" StyleId="0:0.0" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppTitleSpan}" Text="Foreword" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_002" Style="{StaticResource AppOpeningParagraph}" ToolTipProperties.Text="0:0.1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span x:Name="SP_000_002" Style="{StaticResource AppPID}" StyleId="0:0.1" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppOpeningSpan}" Text="Lorem ipsum" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text=" dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_003" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:0.2">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_003" Style="{StaticResource AppPID}" StyleId="0:0.2" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_004" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:0.3">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_004" Style="{StaticResource AppPID}" StyleId="0:0.3" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_005" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:0.4">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_005" Style="{StaticResource AppPID}" StyleId="0:0.4" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_006" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:0.5">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_006" Style="{StaticResource AppPID}" StyleId="0:0.5" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_007" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:0.6">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_007" Style="{StaticResource AppPID}" StyleId="0:0.6" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_008" Style="{StaticResource AppSectionParagraph}" ToolTipProperties.Text="0:1.0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span  x:Name="SP_000_008" Style="{StaticResource AppPID}" StyleId="0:1.0" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppSectionSpan}" Text="I. Lorem and Ipsum" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_009" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_009" Style="{StaticResource AppPID}" StyleId="0:1.1" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_010" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.2">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_010" Style="{StaticResource AppPID}" StyleId="0:1.2" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_011" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.3">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_011" Style="{StaticResource AppPID}" StyleId="0:1.3" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_012" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.4">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_012" Style="{StaticResource AppPID}" StyleId="0:1.4" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_013" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.5">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_013" Style="{StaticResource AppPID}" StyleId="0:1.5" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_014" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.6">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_014" Style="{StaticResource AppPID}" StyleId="0:1.6" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_015" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.7">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_015" Style="{StaticResource AppPID}" StyleId="0:1.7" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_016" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.8">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_016" Style="{StaticResource AppPID}" StyleId="0:1.8" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_017" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.9">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_017" Style="{StaticResource AppPID}" StyleId="0:1.9" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_018" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.10">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_018" Style="{StaticResource AppPID}" StyleId="0:1.10" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_019" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.11">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_019" Style="{StaticResource AppPID}" StyleId="0:1.11" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_020" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.12">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_020" Style="{StaticResource AppPID}" StyleId="0:1.12" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_021" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.13">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_021" Style="{StaticResource AppPID}" StyleId="0:1.13" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label x:Name="_000_022" Style="{StaticResource AppRegularParagraph}" ToolTipProperties.Text="0:1.14">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource AppTabsSpan}" />
+                            <Span  x:Name="SP_000_022" Style="{StaticResource AppPID}" StyleId="0:1.14" Text="" />
+                            <Span Style="{StaticResource AppRegularSpaceSpan}" />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                            <Span Style="{StaticResource AppRegularSpan}" Text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+        
+    </Grid>
+
+    
+    
+</ContentPage>
