@@ -70,8 +70,8 @@ namespace UBViews
 
             builder.Services.AddTransient<QueryInputViewModel>();
             builder.Services.AddTransient<QueryInputPage>();
-            //builder.Services.AddTransient<QueryResultViewModel>();
-            //builder.Services.AddTransient<QueryResultPage>();
+            builder.Services.AddTransient<QueryResultViewModel>();
+            builder.Services.AddTransient<QueryResultPage>();
 
             builder.Services.AddTransient<AppDataViewModel>();
             builder.Services.AddTransient<AppDataPage>();
