@@ -174,12 +174,10 @@
 	  <Compile Remove="Conrols\PaperHeadingControl.xaml.cs" />
 	  <Compile Remove="Converters\DurationDisplayConverter.cs" />
 	  <Compile Remove="Models\PaperTitle.cs" />
-	  <Compile Remove="Models\Query\QueryLocationsDto.cs" />
-	  <Compile Remove="Models\Query\Term.cs" />
+	  <Compile Remove="Models\Query\_PaperDto.cs" />
 	  <Compile Remove="Services\IPostingService.cs" />
 	  <Compile Remove="Services\ISubscriberService.cs" />
 	  <Compile Remove="State\ContentsFilter.cs" />
-	  <Compile Remove="ViewModels\QueryResultViewModel.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -292,6 +290,12 @@
 	  <MauiAsset Update="Resources\Raw\Audio.Metadata.en.xml">
 	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
 	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\AudioMarkers\000.audio.xml">
+	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\AudioMarkers\189.audio.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiAsset>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -308,6 +312,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PartsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\QueryResultPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
