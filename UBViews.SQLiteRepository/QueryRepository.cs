@@ -148,7 +148,7 @@ namespace UBViews.SQLiteRepository
                                 SequenceId = location.SequenceId,
                                 DocumentPosition = location.DocumentPosition,
                                 TextPosition = location.TextPosition,
-                                Length = location.TextLength
+                                TextLength = location.TextLength
                             };
                             queryLocation.TermOccurrences.Add(termLocation);
                         }
@@ -185,6 +185,7 @@ namespace UBViews.SQLiteRepository
                         Terms = queryResult.Terms,
                         Proximity = queryResult.Proximity,
                         QueryString = queryResult.QueryString,
+                        ReverseQueryString = queryResult.ReverseQueryString,
                         QueryExpression = queryResult.QueryExpression
                     };
 
@@ -208,7 +209,7 @@ namespace UBViews.SQLiteRepository
                                 SequenceId = termOccurrence.SequenceId,
                                 DocumentPosition = termOccurrence.DocumentPosition,
                                 TextPosition = termOccurrence.TextPosition,
-                                Length = termOccurrence.TextLength
+                                TextLength = termOccurrence.TextLength
                             };
                             queryLocation.TermOccurrences.Add(loc);
                         }
@@ -245,6 +246,7 @@ namespace UBViews.SQLiteRepository
                     Terms = queryResult.Terms,
                     Proximity = queryResult.Proximity,
                     QueryString = queryResult.QueryString,
+                    ReverseQueryString = queryResult.ReverseQueryString,
                     QueryExpression = queryResult.QueryExpression
                 };
 
@@ -268,7 +270,7 @@ namespace UBViews.SQLiteRepository
                             SequenceId = termOccurrence.SequenceId,
                             DocumentPosition = termOccurrence.DocumentPosition,
                             TextPosition = termOccurrence.TextPosition,
-                            Length = termOccurrence.TextLength
+                            TextLength = termOccurrence.TextLength
                         };
                         queryLocation.TermOccurrences.Add(loc);
                     }
@@ -299,6 +301,7 @@ namespace UBViews.SQLiteRepository
                     Terms = queryResult.Terms,
                     Proximity = queryResult.Proximity,
                     QueryString = queryResult.QueryString,
+                    ReverseQueryString = queryResult.ReverseQueryString,
                     QueryExpression = queryResult.QueryExpression
                 };
 
@@ -322,7 +325,7 @@ namespace UBViews.SQLiteRepository
                             SequenceId = termOccurrence.SequenceId,
                             DocumentPosition = termOccurrence.DocumentPosition,
                             TextPosition = termOccurrence.TextPosition,
-                            Length = termOccurrence.TextLength
+                            TextLength = termOccurrence.TextLength
                         };
                         queryLocation.TermOccurrences.Add(loc);
                     }
