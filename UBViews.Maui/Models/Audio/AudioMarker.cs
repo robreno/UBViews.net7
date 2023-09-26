@@ -140,26 +140,26 @@ public class AudioMarker
     /// <summary>
     /// Gets the type of the media marker.
     /// </summary>
-    public string Type { get; private set; }
+    public string Type { get; set; }
 
     /// <summary>
     /// Gets the PargraphId associated with the marker.
     /// </summary>
-    public string ParagraphId { get; private set; }
+    public string ParagraphId { get; set; }
 
     /// <summary>
     /// Gets the SequenceId associated with the marker.
     /// </summary>
-    public int SequenceId { get; private set; }
+    public int SequenceId { get; set; }
 
     /// <summary>
     /// Gets the offset in the media timeline where the marker occurs.
     /// </summary>
-    public TimeSpan StartTime { get; private set; }
+    public TimeSpan StartTime { get; set; }
 
     /// <summary>
     /// Gets the offset in the media timeline where the marker occurs.
     /// </summary>
-    public TimeSpan EndTime { get; private set; }
+    public TimeSpan EndTime { get; set; }
 }
 
