@@ -1,3 +1,13 @@
+1. Parse Query
+2. Run Query via getIteratorEx: 
+    - This Discriminated Union gets the TokenOccurrences collection for each Term.
+    - The TokenOccurrences collectin is then used as the parameter to create TokenPostingList
+    - The TokenPostingList of TokenOccurrences is then returned
+    - Recurrsively repeat until all search tokens have been processed
+    - Filterby calls the relevant SimpleEnumeratorsEx methods to apply filter op and returns 
+      TokenPostingList with filterd TokenPostions after running query.
+
+
 #if ANDROID
                 // Opening State for Windows or After Completion of PlayAudioRange
                 if (CurrentState == "Paused" && PreviousState == "Buffering" ||

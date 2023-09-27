@@ -682,7 +682,7 @@ public partial class QueryInputViewModel : BaseViewModel
             {
                 queryType = "FilterBy+Or";
             }
-            if (andOp && !filteryByOp)
+            else if (andOp && !filteryByOp)
             {
                 queryType = "And";
             }
