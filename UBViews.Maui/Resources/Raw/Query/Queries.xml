@@ -34,6 +34,7 @@
   </QueryResult>
   <QueryResult id="3" locationCount="1" type="FilterBy+And" terms="[foreword; orvonton]" proximity="paragraph" filterId="PARID">
     <QueryString>foreword and orvonton filterby parid</QueryString>
+    <ReverseQueryString>orvonton and foreword filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("foreword"),Term("orvonton")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="0.5" pid="0:0.4">
@@ -47,6 +48,7 @@
   </QueryResult>
   <QueryResult id="4" locationCount="1" type="FilterBy+And" terms="[admonishes; mandate]" proximity="sequence" filterId="SEQID">
     <QueryString>admonishes and mandate filterby seqid</QueryString>
+    <ReverseQueryString>mandate and admonishes filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("admonishes"),Term("mandate")),SEQID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="0.3" pid="0:0.2">
@@ -59,6 +61,7 @@
   </QueryResult>
   <QueryResult id="5" locationCount="1" type="FilterBy+And" terms="[interregnum; witness]" proximity="sequence" filterId="SEQID">
     <QueryString>interregnum and witness filterby seqid</QueryString>
+    <ReverseQueryString>witness and interregnum filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("interregnum"),Term("witness")),SEQID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="118.76" pid="118:8.6">
@@ -71,6 +74,7 @@
   </QueryResult>
   <QueryResult id="6" locationCount="2" type="FilterBy+And" terms="[progress; economic]" proximity="sequence" filterId="SEQID">
     <QueryString>progress and economic filterby seqid</QueryString>
+    <ReverseQueryString>economic and progress filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("progress"),Term("economic")),SEQID)</QueryExpression>
     <QueryLocations count="2">
       <QueryLocation id="81.59" pid="81:5.1">
@@ -89,6 +93,7 @@
   </QueryResult>
   <QueryResult id="7" locationCount="5" type="FilterBy+And" terms="[profit; motive]" proximity="section" filterId="SECID">
     <QueryString>profit and motive filterby secid</QueryString>
+    <ReverseQueryString>motive and profit filterby secid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("profit"),Term("motive")),SECID)</QueryExpression>
     <QueryLocations count="5">
       <QueryLocation id="71.85" pid="71:6.0">
@@ -127,6 +132,7 @@
   </QueryResult>
   <QueryResult id="8" locationCount="4" type="FilterBy+And" terms="[profit; motive]" proximity="paragraph" filterId="PARID">
     <QueryString>profit and motive filterby parid</QueryString>
+    <ReverseQueryString>motive and profit filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("profit"),Term("motive")),PARID)</QueryExpression>
     <QueryLocations count="4">
       <QueryLocation id="71.85" pid="71:6.0">
@@ -159,6 +165,7 @@
   </QueryResult>
   <QueryResult id="9" locationCount="1" type="FilterBy+And" terms="[democracy; ideal]" proximity="paragraph" filterId="PARID">
     <QueryString>democracy and ideal filterby parid</QueryString>
+    <ReverseQueryString>ideal and democracy filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("democracy"),Term("ideal")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="71.30" pid="71:2.1">
@@ -172,6 +179,7 @@
   </QueryResult>
   <QueryResult id="10" locationCount="1" type="FilterBy+And" terms="[cosmic; instrument]" proximity="paragraph" filterId="PARID">
     <QueryString>cosmic and instrument filterby parid</QueryString>
+    <ReverseQueryString>instrument and cosmic filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("cosmic"),Term("instrument")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="111.15" pid="111:1.6">
@@ -184,6 +192,7 @@
   </QueryResult>
   <QueryResult id="11" locationCount="1" type="And" terms="[prostitutes; temple]" proximity="book">
     <QueryString>prostitutes and temple</QueryString>
+    <ReverseQueryString>temple and prostitutes</ReverseQueryString>
     <QueryExpression>And(Term("prostitutes"),Term("temple"))</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="89.68" pid="89:7.5">
@@ -195,6 +204,7 @@
   </QueryResult>
   <QueryResult id="12" locationCount="2" type="FilterBy+And" terms="[mystery; cynics]" proximity="paragraph" filterId="PARID">
     <QueryString>mystery and cynics filterby parid</QueryString>
+    <ReverseQueryString>cynics and mystery filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("mystery"),Term("cynics")),PARID)</QueryExpression>
     <QueryLocations count="2">
       <QueryLocation id="132.5" pid="132:0.4">
@@ -245,6 +255,7 @@
   </QueryResult>
   <QueryResult id="14" locationCount="1" type="FilterBy+And" terms="[conscience; power]" proximity="paragraph" filterId="PARID">
     <QueryString>conscience and power filterby parid</QueryString>
+    <ReverseQueryString>power and conscience filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("conscience"),Term("power")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="195.163" pid="195:10.20">
@@ -280,6 +291,7 @@
   </QueryResult>
   <QueryResult id="17" locationCount="1" type="FilterBy+And" terms="[dematerialization; accelerated]" proximity="paragraph" filterId="PARID">
     <QueryString>dematerialization and accelerated filterby parid</QueryString>
+    <ReverseQueryString>accelerated and dematerialization filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("dematerialization"),Term("accelerated")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="189.20" pid="189:2.1">
@@ -292,6 +304,7 @@
   </QueryResult>
   <QueryResult id="18" locationCount="1" type="FilterBy+And" terms="[mind; ship]" proximity="paragraph" filterId="PARID">
     <QueryString>mind and ship filterby parid</QueryString>
+    <ReverseQueryString>ship and mind filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("mind"),Term("ship")),PARID)</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="111.18" pid="111:1.9">
@@ -305,6 +318,7 @@
   </QueryResult>
   <QueryResult id="19" locationCount="5" type="FilterBy+And" terms="[terms; equal]" proximity="paragraph" filterId="PARID">
     <QueryString>terms and equal filterby parid</QueryString>
+    <ReverseQueryString>equal and terms filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("terms"),Term("equal")),PARID)</QueryExpression>
     <QueryLocations count="5">
       <QueryLocation id="69.89" pid="69:9.4">
@@ -342,6 +356,7 @@
   </QueryResult>
   <QueryResult id="20" locationCount="6" type="FilterBy+And" terms="[terms; meaning]" proximity="paragraph" filterId="PARID">
     <QueryString>terms and meaning filterby parid</QueryString>
+    <ReverseQueryString>meaning and terms filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("terms"),Term("meaning")),PARID)</QueryExpression>
     <QueryLocations count="6">
       <QueryLocation id="0.2" pid="0:0.1">
@@ -384,6 +399,7 @@
   </QueryResult>
   <QueryResult id="21" locationCount="3" type="FilterBy+And" terms="[term; service]" proximity="paragraph" filterId="PARID">
     <QueryString>term and service filterby parid</QueryString>
+    <ReverseQueryString>service and term filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("term"),Term("service")),PARID)</QueryExpression>
     <QueryLocations count="3">
       <QueryLocation id="15.166" pid="15:11.2">
@@ -408,6 +424,7 @@
   </QueryResult>
   <QueryResult id="22" locationCount="2" type="FilterBy+And" terms="[evolutionary; premind]" proximity="paragraph" filterId="PARID">
     <QueryString>evolutionary and premind filterby parid</QueryString>
+    <ReverseQueryString>premind and evolutionary filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("evolutionary"),Term("premind")),PARID)</QueryExpression>
     <QueryLocations count="2">
       <QueryLocation id="65.2" pid="65:0.1">
