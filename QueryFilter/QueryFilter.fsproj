@@ -7,12 +7,12 @@
 
   <ItemGroup>
     <Compile Include="FSharpStringExtensions.fs" />
+    <Compile Include="QueryFilterRegex.fs" />
     <Compile Include="RecordTypes.fs" />
     <Compile Include="SpecialTermSetEx.fs" />
     <Compile Include="HyphenTermSetEx.fs" />
     <Compile Include="HypenEndingTermSetEx.fs" />
     <Compile Include="CompoundTermRecordSetEx.fs" />
-    <Compile Include="QueryFilterRegex.fs" />
     <Compile Include="DataTypes.fs" />
     <Compile Include="QueryFilter.fs" />
   </ItemGroup>
