@@ -8,6 +8,17 @@ using UBViews.Models.XmlAppData;
 public class XmlAppDataService : IAppDataService
 {
     /// <summary>
+    /// Private Data Members
+    /// </summary>
+    private const string _appDataFileName = "QueryHistory.xml";
+    private XDocument _appData;
+    private XElement _appDataRoot;
+    private string _content;
+    private string _appDir;
+    private bool _cacheDirty;
+    private int _cacheCount;
+
+    /// <summary>
     /// 
     /// </summary>
     IFileService fileService;
@@ -15,6 +26,26 @@ public class XmlAppDataService : IAppDataService
     public XmlAppDataService(IFileService fileService)
     {
         this.fileService = fileService;
+        Task.Run(async () => await InitializeData());
+    }
+    private async Task InitializeData()
+    {
+        try
+        {
+            // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
+            _appDir = FileSystem.Current.AppDataDirectory;
+            _content = await LoadAppDataAsync(_appDataFileName);
+            _appData = XDocument.Parse(_content, LoadOptions.None);
+            _appDataRoot = _appData.Root;
+            _cacheCount = Int32.Parse(_appDataRoot.Attribute("count").Value);
+            _cacheDirty = false;
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
     }
     public async Task<string> LoadAppDataAsync(string filename)
     {
@@ -41,6 +72,38 @@ public class XmlAppDataService : IAppDataService
             using var stream = System.IO.File.OpenWrite(targetFile);
             using StreamWriter writer = new StreamWriter(stream);
             await writer.WriteAsync(content);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+        }
+    }
+    public async Task SaveAppDataExAsync(string fileName)
+    {
+        try
+        {
+            if (_cacheDirty)
+            {
+                string targetFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+                using var stream = File.Create(targetFilePath);
+                CancellationToken token = new CancellationToken(false);
+                await _appDataRoot.SaveAsync(stream, SaveOptions.None, token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+        }
+    }
+    public async Task AddQueryResult(XElement queryResult)
+    {
+        try
+        {
+            _appDataRoot.Add(queryResult);
+            _cacheDirty = true;
+            _cacheCount++;
+            _appDataRoot.SetAttributeValue("count", _cacheCount);
+            await SaveAppDataExAsync(_appDataFileName);
         }
         catch (Exception ex)
         {
