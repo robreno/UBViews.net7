@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
+﻿namespace UBViews.Helpers;
+
+using System.ComponentModel;
 using System.Xml.Linq;
 using UBViews.Services;
-
-namespace UBViews.Helpers;
-
 public partial class XmlAppSettingsService : IAppSettingsService
 {
     /// <summary>
