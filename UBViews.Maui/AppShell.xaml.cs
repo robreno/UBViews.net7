@@ -1,4 +1,5 @@
 ﻿using UBViews.Views;
+
 namespace UBViews
 {
     public partial class AppShell : Shell
