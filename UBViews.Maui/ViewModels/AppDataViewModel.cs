@@ -2,7 +2,7 @@
 
 using System.Collections.ObjectModel;
 using UBViews.Services;
-using UBViews.Models.XmlAppData;
+using UBViews.Models.AppData;
 
 public partial class AppDataViewModel : BaseViewModel
 {

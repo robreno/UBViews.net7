@@ -1,4 +1,4 @@
-﻿namespace UBViews.Models.XmlAppData;
+﻿namespace UBViews.Models.AppData;
 public class QueryCommandDto
 {
     public int Id { get; set; }

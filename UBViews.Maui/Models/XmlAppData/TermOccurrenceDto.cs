@@ -1,4 +1,4 @@
-﻿namespace UBViews.Models.XmlAppData;
+﻿namespace UBViews.Models.AppData;
 
 using System;
 using System.Collections.Generic;

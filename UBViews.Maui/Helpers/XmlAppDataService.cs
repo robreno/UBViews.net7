@@ -3,6 +3,7 @@
 using System.Xml.Linq;
 
 using UBViews.Services;
+using UBViews.Models;
 using UBViews.Models.XmlAppData;
 
 public class XmlAppDataService : IAppDataService
@@ -96,6 +97,21 @@ public class XmlAppDataService : IAppDataService
         }
     }
     public async Task AddQueryResult(XElement queryResult)
+    {
+        try
+        {
+            _appDataRoot.Add(queryResult);
+            _cacheDirty = true;
+            _cacheCount++;
+            _appDataRoot.SetAttributeValue("count", _cacheCount);
+            await SaveAppDataExAsync(_appDataFileName);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+        }
+    }
+    public async Task QueryResultToDto(XElement queryResult)
     {
         try
         {
