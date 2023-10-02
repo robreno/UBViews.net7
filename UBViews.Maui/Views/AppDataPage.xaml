@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
-             xmlns:model="clr-namespace:UBViews.Models.XmlAppData"
+             xmlns:model="clr-namespace:UBViews.Models.AppData"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
              x:Class="UBViews.Views.AppDataPage"
              Title="App Settings Page"

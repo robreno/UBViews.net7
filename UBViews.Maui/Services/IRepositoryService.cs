@@ -56,14 +56,14 @@ namespace UBViews.Services
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns>QueryResultDto</returns>
-        Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString);
+        Task<QueryResultLocationsDto> GetQueryResultByStringAsync(string queryString);
 
         /// <summary>
         /// GetQueryResultByIdAsync
         /// </summary>
         /// <param name="id"></param>
         /// <returns>QueryResultDto</returns>
-        Task<QueryResultLocations> GetQueryResultByIdAsync(int id);
+        Task<QueryResultLocationsDto> GetQueryResultByIdAsync(int id);
 
         /// <summary>
         /// GetQueryCommandsAsync

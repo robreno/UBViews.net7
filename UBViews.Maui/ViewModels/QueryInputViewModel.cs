@@ -12,11 +12,11 @@ using UBViews.Models;
 using UBViews.Models.Query;
 using UBViews.Models.Ubml;
 
-using UBViews.SQLiteRepository;
-using UBViews.SQLiteRepository.Dtos;
-using UBViews.SQLiteRepository.Models;
-
 using UBViews.LexParser;
+//using UBViews.SQLiteRepository;
+//using UBViews.SQLiteRepository.Dtos;
+//using UBViews.SQLiteRepository.Models;
+
 using QueryFilterLib;
 using System.Collections.Immutable;
 using UBViews.Views;
@@ -36,12 +36,14 @@ public partial class QueryInputViewModel : BaseViewModel
     public ObservableCollection<QueryCommandDto> QueryCommands { get; } = new();
 
     ParserService parserService;
+    //QueryService queryService;
 
     public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IRepositoryService repositoryService)
     {
         this.appDataService = appDataService;
         this.fileService = fileService;
         this.parserService = new ParserService();
+        // this.queryService = new QueryService();
         this.repositoryService = repositoryService;
     }
 
@@ -251,7 +253,8 @@ public partial class QueryInputViewModel : BaseViewModel
                     msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
                 }
 
-                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
+                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", 
+                                                                           "Cancel", null, -1, null, queryString);
                 if (result != null)
                 {
                     await Shell.Current.GoToAsync($"..?QueryInput={result}");
@@ -263,60 +266,50 @@ public partial class QueryInputViewModel : BaseViewModel
             }
             else
             {
-                // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState\
-                // QueryCommands.xml
+                // Test Valid and Invalid Input Queries
+                //var queryString1 = "foreword and orvonton filterby parid"; interregnum and witness filterby seqid
+                //var queryString2 = "orvonton and foreword filterby parid";
+                //var queryString3 = "\"minds of the mortals\"";
+                //var queryString4 = "\"invalidToken minds of the mortals\"";
+                //var queryString5 = "interregnum and wisdom filterby parid";
+
+                // mind and ship filterby parid
+                await NormalizeQueryString(queryString);
+                var _queryInputDto = new QueryInputDto { Text = QueryInput.Text, TokenCount = QueryInput.TokenCount };
+
+                QueryInput = _queryInputDto;
+                QueryInputString = QueryInput.Text;
+
+                // Check if query exists
                 (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
                 QueryResultExists = queryExists;
+                QueryResultLocationsDto queryResultLocationsDto = null;
                 if (queryExists)
                 {
-                    // TODO: Add to Repository .... or change to Repository?
-                    var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
-                    var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
-
-                    var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
-
-                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
-
-                    var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
-                    var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
-
-                    // 1. Get PostingList for each term in query use F# to parse QueryExpression and get posting lists
-                    var postingLst2 = await repositoryService.GetPostingByLexemeAsync("foreword");
-                    var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
-
-                    // 2. Get TokenOccurrenceList for each PostingListId
-                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
-                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
-
-                    // TODO: Navitage to QueryResultPage here for test puroses
-
-                    await LoadXaml(queryResultLocationsDto);
+                    //queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    //QueryExpression = queryResultLocationsDto.QueryExpression;
                 }
                 else
                 {
                     // Run Query
                     // 
                     var queryText = QueryInput.Text;
-                    var result = parserService.ParseQuery(queryText);
-                    var queryExpressionStr = parserService.QueryExpressionToString(result.Head);
-                    QueryExpression = result.ToString();
-                    var terms = parserService.ParseQueryStringToTermList(queryText);
+                    //var queryList = await parserService.ParseQueryAsync(queryText);
+                    //var queryHead = queryList.Head;
+                    //QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
-                    var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
-                    var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
+                    //var tokenPostingList = await queryService.RunQuery(queryHead);
+                    //var basePostingList = tokenPostingList.BasePostingList.Head;
+                    //var queryResultElm = await _queryService.ProcessTokenPostingListAsync(queryString,
+                    //queryHead, basePostingList);
+                    //var qryId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
+                    //queryResultElm.SetAttributeValue("id", qryId);
 
-                    foreach (var term in terms)
-                    {
-                        var postingLst = await repositoryService.GetPostingByLexemeAsync(term);
-                        var tokenOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst.Id);
-                        pLst.Add(postingLst);
-                        var lst = new List<UBViews.SQLiteRepository.Models.TokenOccurrence>();
-                        foreach (var token in tokenOccs)
-                        {
-                            lst.Add(token);
-                        }
-                        tLst.Add(lst);
-                    }
+                    // Create object model
+                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(qryId);
+
+                    // Add queryResultEml to QueryHistory AppData file here
+                    //await _appDataService.AddQueryResult(queryResultElm);
                 }
             }
         }
@@ -405,11 +398,13 @@ public partial class QueryInputViewModel : BaseViewModel
                 // QueryCommands.xml
                 (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
                 QueryResultExists = queryExists;
+
+
                 if (queryExists)
                 {
                     // TODO: Add to Repository .... or change to Repository?
                     var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
-                    var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
+                    var queryResultByQueryString = await repositoryService.GetQueryResultByStringAsync(queryString);
 
                     var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
 
@@ -428,7 +423,7 @@ public partial class QueryInputViewModel : BaseViewModel
 
                     // TODO: Navitage to QueryResultPage here for test puroses
 
-                    await LoadXaml(queryResultLocationsDto);
+                    //await LoadXaml(queryResultLocationsDto);
                 }
                 else
                 {
@@ -533,7 +528,7 @@ public partial class QueryInputViewModel : BaseViewModel
     }
 
     #region Helper Methods
-    private async Task LoadXaml(QueryResultLocations queryResultLocationsDto)
+    private async Task LoadXaml(QueryResultLocationsDto queryResultLocationsDto)
     {
         try
         {
@@ -734,6 +729,41 @@ public partial class QueryInputViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.ReverseQueryString => ",
                 ex.Message, "Cancel");
             return string.Empty;
+        }
+    }
+    private async Task TestMethods()
+    {
+        try
+        {
+            // TODO: Add to Repository .... or change to Repository?
+            //var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
+            //var queryResultByQueryString = await repositoryService.GetQueryResultByQueryStringAsync(queryString);
+
+            //var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
+
+            //var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
+
+            //var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
+            //var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
+
+            //// 1. Get PostingList for each term in query use F# to parse QueryExpression and get posting lists
+            //var postingLst2 = await repositoryService.GetPostingByLexemeAsync("foreword");
+            //var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
+
+            //// 2. Get TokenOccurrenceList for each PostingListId
+            //var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
+            //var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
+
+            // TODO: Navitage to QueryResultPage here for test puroses
+
+            //await LoadXaml(queryResultLocationsDto);
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.TestMethods => ",
+                ex.Message, "Cancel");
+            return;
         }
     }
     #endregion

@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 using UBViews.Services;
 using UBViews.Models;
-using UBViews.Models.XmlAppData;
+using UBViews.Models.AppData;
 
 public class XmlAppDataService : IAppDataService
 {

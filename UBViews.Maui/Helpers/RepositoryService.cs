@@ -123,12 +123,14 @@ namespace UBViews.Helpers
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
-        public async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
+        public async Task<QueryResultLocationsDto> GetQueryResultByStringAsync(string queryString)
         {
             string methodName = "GetQueryResultByQueryStringAsync";
             try
             {
-                return await QueryRepository.GetQueryResultByQueryStringAsync(queryString);
+                var obj = await QueryRepository.GetQueryResultByStringAsync(queryString);
+                var dto = await MapQueryResultToDto(obj);
+                return dto;
             }
             catch (Exception ex)
             {
@@ -142,12 +144,14 @@ namespace UBViews.Helpers
         /// </summary>
         /// <param name="queryResultId"></param>
         /// <returns></returns>
-        public async Task<QueryResultLocations> GetQueryResultByIdAsync(int queryResultId)
+        public async Task<QueryResultLocationsDto> GetQueryResultByIdAsync(int queryResultId)
         {
             string methodName = "GetQueryResultByIdAsync";
             try
             {
-                return await QueryRepository.GetQueryResultByIdAsync(queryResultId);
+                var obj = await QueryRepository.GetQueryResultByIdAsync(queryResultId);
+                var dto = await MapQueryResultToDto(obj);
+                return dto;
             }
             catch (Exception ex)
             {
@@ -320,53 +324,53 @@ namespace UBViews.Helpers
         #endregion
 
         #region Private Helper Methods
-        //private async Task<QueryResultLocationsDto> MapQueryResultToDto(QueryResultLocations queryResult)
-        //{
-        //    string methodName = "MapQueryResultToDto";
-        //    try
-        //    {
-        //        var queryResultDto = new QueryResultLocationsDto()
-        //        {
-        //            Id = queryResult.Id,
-        //            Hits = queryResult.Hits,
-        //            Type = queryResult.Type,
-        //            Terms = queryResult.Terms,
-        //            Proximity = queryResult.Proximity,
-        //            QueryString = queryResult.QueryString,
-        //            QueryExpression = queryResult.QueryExpression
-        //        };
+        private async Task<QueryResultLocationsDto> MapQueryResultToDto(QueryResultLocations queryResult)
+        {
+            string methodName = "MapQueryResultToDto";
+            try
+            {
+                var queryResultDto = new QueryResultLocationsDto()
+                {
+                    Id = queryResult.Id,
+                    Hits = queryResult.Hits,
+                    Type = queryResult.Type,
+                    Terms = queryResult.Terms,
+                    Proximity = queryResult.Proximity,
+                    QueryString = queryResult.QueryString,
+                    QueryExpression = queryResult.QueryExpression
+                };
 
-        //        var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResultDto.Id);
-        //        var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
+                var termOccurrences = await GetTermOccurrencesByQueryResultIdAsync(queryResultDto.Id);
+                var queryLocations = termOccurrences.GroupBy(g => g.ParagraphId);
 
-        //        foreach (var locations in queryLocations)
-        //        {
-        //            var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
-        //            var queryLocation = new QueryLocationDto() { Id = id, Pid = locations.Key };
+                foreach (var locations in queryLocations)
+                {
+                    var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+                    var queryLocation = new QueryLocationDto() { Id = id, Pid = locations.Key };
 
-        //            foreach (var location in locations)
-        //            {
-        //                var termLocation = new TermLocationDto()
-        //                {
-        //                    Term = location.Term,
-        //                    DocumentId = location.DocumentId,
-        //                    SequenceId = termOccurrences.First().SequenceId,
-        //                    DocumentPosition = location.DocumentPosition,
-        //                    TextPosition = location.TextPosition,
-        //                    TextLength = location.TextLength
-        //                };
-        //                queryLocation.TermOccurrences.Add(termLocation);
-        //            }
-        //            queryResultDto.QueryLocations.Add(queryLocation);
-        //        }
-        //        return queryResultDto;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
-        //        return null;
-        //    }
-        //}
+                    foreach (var location in locations)
+                    {
+                        var termLocation = new TermLocationDto()
+                        {
+                            Term = location.Term,
+                            DocumentId = location.DocumentId,
+                            SequenceId = termOccurrences.First().SequenceId,
+                            DocumentPosition = location.DocumentPosition,
+                            TextPosition = location.TextPosition,
+                            TextLength = location.TextLength
+                        };
+                        queryLocation.TermOccurrences.Add(termLocation);
+                    }
+                    queryResultDto.QueryLocations.Add(queryLocation);
+                }
+                return queryResultDto;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
+        }
 
         //private async Task<Local.PostingListDto> MapPostingListToDto(PostingList postingList)
         //{

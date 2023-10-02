@@ -65,7 +65,7 @@ namespace UBViews.SQLiteRepository
         {
             try
             {
-                var queryResult = await GetQueryResultByQueryStringAsync(queryString);
+                var queryResult = await GetQueryResultByStringAsync(queryString);
                 if (queryResult != null)
                 {
                     return (true, queryResult.Id);
@@ -107,7 +107,7 @@ namespace UBViews.SQLiteRepository
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
-        public static async Task<QueryResultLocations> GetQueryResultByQueryStringAsync(string queryString)
+        public static async Task<QueryResultLocations> GetQueryResultByStringAsync(string queryString)
         {
             try
             {
