@@ -5,21 +5,21 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Immutable;
 using Microsoft.Maui.Controls.Compatibility;
 
 using UBViews.Services;
 using UBViews.Models;
 using UBViews.Models.Query;
 using UBViews.Models.Ubml;
+using UBViews.Views;
 
-using UBViews.LexParser;
+//using UBViews.LexParser;
 //using UBViews.SQLiteRepository;
 //using UBViews.SQLiteRepository.Dtos;
 //using UBViews.SQLiteRepository.Models;
 
 using QueryFilterLib;
-using System.Collections.Immutable;
-using UBViews.Views;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
@@ -35,15 +35,13 @@ public partial class QueryInputViewModel : BaseViewModel
 
     public ObservableCollection<QueryCommandDto> QueryCommands { get; } = new();
 
-    ParserService parserService;
-    //QueryService queryService;
+    //ParserService parserService;
 
     public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IRepositoryService repositoryService)
     {
         this.appDataService = appDataService;
         this.fileService = fileService;
-        this.parserService = new ParserService();
-        // this.queryService = new QueryService();
+        //this.parserService = new ParserService();
         this.repositoryService = repositoryService;
     }
 
@@ -182,31 +180,8 @@ public partial class QueryInputViewModel : BaseViewModel
             else
             {
                 var queryText = QueryInput.Text;
-                var result = parserService.ParseQuery(queryText);
-                QueryExpression = result.ToString();
-                var terms = parserService.ParseQueryStringToTermList(queryText);
-                foreach (var term in terms)
-                {
-                    var postingList = await repositoryService.GetPostingByLexemeAsync(term);
-                    var tokOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingList.Id);
-                    var newPostingListOccurrences = new PostingListOccurrencesDto
-                    {
-                        Id = postingList.Id,
-                        Lexeme = postingList.Lexeme
-                    };
-                    foreach (var occ in tokOccs)
-                    {
-                        var occDto = new TokenOccurrenceDto
-                        { 
-                            PostingId = occ.PostingId,
-                            DocumentId = occ.DocumentId,
-                            SequenceId = occ.SequenceId,
-                            DocumentPosition = occ.DocumentPosition,
-                            TextPosition = occ.TextPosition
-                        };
-                        newPostingListOccurrences.TokenOccurrences.Add(occDto);
-                    }
-                }
+                //var result = parserService.ParseQuery(queryText);
+                //QueryExpression = result.ToString();
             }
         }
         catch (Exception ex)
@@ -346,120 +321,6 @@ public partial class QueryInputViewModel : BaseViewModel
         {
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
             return;
-        }
-    }
-
-    [RelayCommand]
-    async Task TestQuery(string queryString)
-    {
-        if (IsBusy == true)
-            return;
-
-        try
-        {
-            IsBusy = true;
-
-            var validChars = QueryFilterService.checkForValidChars(queryString);
-            var validCharsSuccess = validChars.Item1;
-            var validForm = QueryFilterService.checkForValidForm(queryString);
-            var validFormSuccess = validForm.Item1;
-
-            if (queryString == "EmptyQuery" ||
-                queryString == null ||
-                !validCharsSuccess ||
-                !validFormSuccess)
-            {
-                var errorMessage = string.Empty;
-                var msg = string.Empty;
-
-                if (!validCharsSuccess || !validFormSuccess)
-                {
-                    if (!validCharsSuccess)
-                        errorMessage = errorMessage + validChars.Item2 + ";";
-                    if (!validFormSuccess)
-                        errorMessage = errorMessage + validForm.Item2 + ";";
-
-                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
-                }
-
-                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
-                if (result != null)
-                {
-                    await Shell.Current.GoToAsync($"..?QueryInput={result}");
-                }
-                else
-                {
-                    await Shell.Current.GoToAsync("..");
-                }
-            }
-            else
-            {
-                // C:\Users\robre\AppData\Local\Packages\A5924E32-1AFA-40FB-955D-1C58BE2D2ED5_9zz4h110yvjzm\LocalState\
-                // QueryCommands.xml
-                (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
-                QueryResultExists = queryExists;
-
-
-                if (queryExists)
-                {
-                    // TODO: Add to Repository .... or change to Repository?
-                    var queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
-                    var queryResultByQueryString = await repositoryService.GetQueryResultByStringAsync(queryString);
-
-                    var testQR = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
-
-                    var termOccurrenceLst = await repositoryService.GetTermOccurrencesByQueryResultIdAsync(queryId);
-
-                    var postingLst1 = await repositoryService.GetPostingByLexemeAsync("rejuvenation");
-                    var stem = await repositoryService.GetTokenStemAsync("rejuvenation");
-
-                    // 1. Get PostingList for each term in query use F# to parse QueryExpression and get posting lists
-                    var postingLst2 = await repositoryService.GetPostingByLexemeAsync("foreword");
-                    var postingLst3 = await repositoryService.GetPostingByLexemeAsync("orvonton");
-
-                    // 2. Get TokenOccurrenceList for each PostingListId
-                    var tokenOccurrences1 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst2.Id);
-                    var tokenOccurrences2 = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst3.Id);
-
-                    // TODO: Navitage to QueryResultPage here for test puroses
-
-                    //await LoadXaml(queryResultLocationsDto);
-                }
-                else
-                {
-                    // Run Query
-                    var queryText = QueryInput.Text;
-                    var result = parserService.ParseQuery(queryText);
-                    var queryExpressionStr = parserService.QueryExpressionToString(result.Head);
-                    QueryExpression = result.ToString();
-                    var terms = parserService.ParseQueryStringToTermList(queryText);
-
-                    var pLst = new List<UBViews.SQLiteRepository.Models.PostingList>();
-                    var tLst = new List<List<UBViews.SQLiteRepository.Models.TokenOccurrence>>();
-
-                    foreach (var term in terms)
-                    {
-                        var postingLst = await repositoryService.GetPostingByLexemeAsync(term);
-                        var tokenOccs = await repositoryService.GetTokenOccurrencesByPostingListIdAsync(postingLst.Id);
-                        pLst.Add(postingLst);
-                        var lst = new List<UBViews.SQLiteRepository.Models.TokenOccurrence>();
-                        foreach (var token in tokenOccs)
-                        {
-                            lst.Add(token);
-                        }
-                        tLst.Add(lst);
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.RunQuery => ",
-                ex.Message, "Ok");
-        }
-        finally
-        {
-            IsBusy = false;
         }
     }
 

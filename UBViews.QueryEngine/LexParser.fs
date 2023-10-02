@@ -70,19 +70,4 @@ type ParserService() =
             return retval
         } |> Async.StartAsTask
 
-type QueryService() =
-
-    member this.QueryToString (query: Query) : string =
-        let retval = queryExpToString query
-        retval
-
-    member this.QueryToStringAsync (query: Query) : Task<string> =
-        async {
-            let retval = queryExpToString query
-            return retval
-        } |> Async.StartAsTask
-    
-    member this.RunQuery (query: Query) =
-        ()
-
 
