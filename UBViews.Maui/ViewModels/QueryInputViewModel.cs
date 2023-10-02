@@ -241,14 +241,6 @@ public partial class QueryInputViewModel : BaseViewModel
             }
             else
             {
-                // Test Valid and Invalid Input Queries
-                //var queryString1 = "foreword and orvonton filterby parid"; interregnum and witness filterby seqid
-                //var queryString2 = "orvonton and foreword filterby parid";
-                //var queryString3 = "\"minds of the mortals\"";
-                //var queryString4 = "\"invalidToken minds of the mortals\"";
-                //var queryString5 = "interregnum and wisdom filterby parid";
-
-                // mind and ship filterby parid
                 await NormalizeQueryString(queryString);
                 var _queryInputDto = new QueryInputDto { Text = QueryInput.Text, TokenCount = QueryInput.TokenCount };
 
