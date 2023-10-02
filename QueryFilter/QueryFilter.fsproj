@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UBViews.QueryEngine\UBViews.LexParser.fsproj" />
+    <ProjectReference Include="..\LexParser\LexParser.fsproj" />
   </ItemGroup>
 
 </Project>

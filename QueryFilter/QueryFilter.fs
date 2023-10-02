@@ -6,7 +6,6 @@ open System.Collections.Generic
 open System.Text.RegularExpressions
 open System.Xml.Linq
 open System.Linq
-open UBViews.LexParser
 
 module QueryFilterService =
 

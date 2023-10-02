@@ -12,7 +12,7 @@
 	// LexParser
 	// QueryEngine
 
-1. Make the UBViews.LexParser.Tests directory the current directory and create a new project using dotnet new xunit -lang "F#". This creates a test project that uses xUnit as the test library. The generated template configures the test runner in the FSharpLexParser.fsproj:
+1. Make the LexParser.Tests directory the current directory and create a new project using dotnet new xunit -lang "F#". This creates a test project that uses xUnit as the test library. The generated template configures the test runner in the FSharpLexParser.fsproj:
 
 <ItemGroup>
   <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />

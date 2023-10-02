@@ -14,7 +14,7 @@ using UBViews.Models.Query;
 using UBViews.Models.Ubml;
 using UBViews.Views;
 
-//using UBViews.LexParser;
+using LexParser;
 //using UBViews.SQLiteRepository;
 //using UBViews.SQLiteRepository.Dtos;
 //using UBViews.SQLiteRepository.Models;
@@ -35,13 +35,13 @@ public partial class QueryInputViewModel : BaseViewModel
 
     public ObservableCollection<QueryCommandDto> QueryCommands { get; } = new();
 
-    //ParserService parserService;
+    ParserService parserService;
 
     public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IRepositoryService repositoryService)
     {
         this.appDataService = appDataService;
         this.fileService = fileService;
-        //this.parserService = new ParserService();
+        this.parserService = new ParserService();
         this.repositoryService = repositoryService;
     }
 
@@ -261,7 +261,7 @@ public partial class QueryInputViewModel : BaseViewModel
                     // Run Query
                     // 
                     var queryText = QueryInput.Text;
-                    //var queryList = await parserService.ParseQueryAsync(queryText);
+                    var queryList = await parserService.ParseQueryAsync(queryText);
                     //var queryHead = queryList.Head;
                     //QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
