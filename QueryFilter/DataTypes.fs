@@ -1,4 +1,4 @@
-﻿namespace QueryFilterLib
+﻿namespace QueryFilter
 
 module DataTypes =
 

@@ -15,11 +15,11 @@ using UBViews.Models.Ubml;
 using UBViews.Views;
 
 using LexParser;
+using QueryFilter;
+
 //using UBViews.SQLiteRepository;
 //using UBViews.SQLiteRepository.Dtos;
 //using UBViews.SQLiteRepository.Models;
-
-using QueryFilterLib;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]

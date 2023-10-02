@@ -1,4 +1,4 @@
-﻿namespace QueryFilterLib
+﻿namespace QueryFilter
 
 open System
 open System.IO
