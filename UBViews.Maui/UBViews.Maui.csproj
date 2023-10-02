@@ -266,6 +266,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\LexParser\LexParser.fsproj" />
 	  <ProjectReference Include="..\QueryFilter\QueryFilter.fsproj" />
 	  <ProjectReference Include="..\UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj" />
 	</ItemGroup>
