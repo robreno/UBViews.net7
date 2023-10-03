@@ -8,13 +8,14 @@ using System.Text.RegularExpressions;
 using System.Collections.Immutable;
 using Microsoft.Maui.Controls.Compatibility;
 
-using UBViews.Services;
 using UBViews.Models;
+using UBViews.Services;
 using UBViews.Models.Query;
 using UBViews.Models.Ubml;
 using UBViews.Views;
 
-using LexParser;
+//using LexParser;
+using QueryEngine;
 using QueryFilter;
 
 //using UBViews.SQLiteRepository;
@@ -29,20 +30,21 @@ public partial class QueryInputViewModel : BaseViewModel
     public ContentPage contentPage;
 
     IAppDataService appDataService;
-
     IFileService fileService;
-    IRepositoryService repositoryService;
+    IFSRepositoryService repositoryService;
 
     public ObservableCollection<QueryCommandDto> QueryCommands { get; } = new();
 
     ParserService parserService;
+    QueryService queryService;
 
-    public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IRepositoryService repositoryService)
+    public QueryInputViewModel(IAppDataService appDataService, IFileService fileService, IFSRepositoryService repositoryService)
     {
         this.appDataService = appDataService;
         this.fileService = fileService;
-        this.parserService = new ParserService();
         this.repositoryService = repositoryService;
+        this.parserService = new ParserService();
+        this.queryService = new QueryService();
     }
 
     [ObservableProperty]
@@ -81,7 +83,7 @@ public partial class QueryInputViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            await repositoryService.InititializeDatabase(InitOptions.All);
+            await repositoryService.InititializeDatabase(IFSRepositoryService.InitOptions.All);
         }
         catch (Exception ex)
         {
@@ -105,22 +107,23 @@ public partial class QueryInputViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            var commands = await appDataService.GetQueryCommandsAsync();
-            var repoCommands = await repositoryService.GetQueryCommandsAsync();
-            foreach (var cmd in repoCommands)
-            {
-                var newCommand = new QueryCommandDto 
-                {
-                    Id = cmd.Id,
-                    Type = cmd.Type,
-                    Terms = cmd.Terms,
-                    Proximity = cmd.Proximity,
-                    Stemmed = cmd.Stemmed,
-                    FilterId = cmd.FilterId,
-                    QueryString = cmd.QueryString
-                };
-                QueryCommands.Add(newCommand);
-            }
+            //var commands = await appDataService.GetQueryCommandsAsync();
+            //var repoCommands = await repositoryService.GetQueryCommandsAsync();
+            //foreach (var cmd in repoCommands)
+            //{
+            //    var newCommand = new QueryCommandDto 
+            //    {
+            //        Id = cmd.Id,
+            //        Hits = cmd.Hits,
+            //        Type = cmd.Type,
+            //        Terms = cmd.Terms,
+            //        Proximity = cmd.Proximity,
+            //        QueryString = cmd.QueryString,
+            //        ReverseQueryString = cmd.ReverseQueryString,
+            //        QueryExpression = cmd.QueryExpression
+            //    };
+            //    QueryCommands.Add(newCommand);
+            //}
         }
         catch (Exception ex)
         {
@@ -180,8 +183,8 @@ public partial class QueryInputViewModel : BaseViewModel
             else
             {
                 var queryText = QueryInput.Text;
-                //var result = parserService.ParseQuery(queryText);
-                //QueryExpression = result.ToString();
+                var result = parserService.ParseQuery(queryText);
+                QueryExpression = result.ToString();
             }
         }
         catch (Exception ex)
@@ -248,13 +251,14 @@ public partial class QueryInputViewModel : BaseViewModel
                 QueryInputString = QueryInput.Text;
 
                 // Check if query exists
-                (bool queryExists, int queryId) = await repositoryService.QueryResultExistsAsync(queryString);
+                (bool queryExists, QueryResultDto dto) = await repositoryService.QueryResultExistsAsync(queryString);
+                var queryId = dto.Id;
                 QueryResultExists = queryExists;
                 QueryResultLocationsDto queryResultLocationsDto = null;
                 if (queryExists)
                 {
-                    //queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
-                    //QueryExpression = queryResultLocationsDto.QueryExpression;
+                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    QueryExpression = queryResultLocationsDto.QueryExpression;
                 }
                 else
                 {
@@ -262,18 +266,19 @@ public partial class QueryInputViewModel : BaseViewModel
                     // 
                     var queryText = QueryInput.Text;
                     var queryList = await parserService.ParseQueryAsync(queryText);
-                    //var queryHead = queryList.Head;
-                    //QueryExpression = await parserService.QueryToStringAsync(queryHead);
+                    var queryHead = queryList.Head;
+                    QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
-                    //var tokenPostingList = await queryService.RunQuery(queryHead);
-                    //var basePostingList = tokenPostingList.BasePostingList.Head;
-                    //var queryResultElm = await _queryService.ProcessTokenPostingListAsync(queryString,
-                    //queryHead, basePostingList);
-                    //var qryId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
-                    //queryResultElm.SetAttributeValue("id", qryId);
+                    var tokenPostingList = await queryService.RunQueryAsync(queryHead);
+                    var basePostingList = tokenPostingList.BasePostingList.Head;
+                    var queryResultElm = await queryService.ProcessTokenPostingListAsync(queryString, 
+                                                                                         queryHead, 
+                                                                                         basePostingList);
+                    var qryId = await repositoryService.SaveQueryResultAsync(queryResultElm);
+                    queryResultElm.SetAttributeValue("id", qryId);
 
                     // Create object model
-                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(qryId);
+                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(qryId);
 
                     // Add queryResultEml to QueryHistory AppData file here
                     //await _appDataService.AddQueryResult(queryResultElm);

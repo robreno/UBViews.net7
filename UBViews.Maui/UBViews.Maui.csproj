@@ -173,9 +173,11 @@
 	<ItemGroup>
 	  <Compile Remove="Conrols\PaperHeadingControl.xaml.cs" />
 	  <Compile Remove="Converters\DurationDisplayConverter.cs" />
+	  <Compile Remove="Helpers\RepositoryService.cs" />
 	  <Compile Remove="Models\PaperTitle.cs" />
 	  <Compile Remove="Models\Query\_PaperDto.cs" />
 	  <Compile Remove="Services\IPostingService.cs" />
+	  <Compile Remove="Services\IRepositoryService.cs" />
 	  <Compile Remove="Services\ISubscriberService.cs" />
 	  <Compile Remove="State\ContentsFilter.cs" />
 	</ItemGroup>
@@ -266,9 +268,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\LexParser\LexParser.fsproj" />
+	  <ProjectReference Include="..\QueryEngine\QueryEngine.fsproj" />
 	  <ProjectReference Include="..\QueryFilter\QueryFilter.fsproj" />
-	  <ProjectReference Include="..\UBViews.SQLiteRepository\UBViews.SQLiteRepository.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

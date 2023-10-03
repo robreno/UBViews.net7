@@ -27,6 +27,13 @@ namespace UBViews
         #region Database Initialization and Table Generation Methods
         public async Task InitializeData()
         {
+            Preferences.Default.Set("CurrentAppDataDirectory", _appLocalState);
+            Preferences.Default.Set("CurrentCacheDirectory", _appLocalCache);
+            Preferences.Default.Set("PostingDBName", _plDatabaseName);
+            Preferences.Default.Set("PostingDBPath", _postingsPathName);
+            Preferences.Default.Set("QueryDBName", _qrDatabaseName);
+            Preferences.Default.Set("QueryDBPath", _queriesPathName);
+
             // Copy Posting Lists Database
             if (!File.Exists(_postingsPathName))
                 await CopyDatabase(_plDatabaseName, _postingsPathName);

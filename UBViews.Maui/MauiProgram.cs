@@ -42,7 +42,7 @@ namespace UBViews
 
             // Services
             builder.Services.AddTransient<IFileService>((e) => new FileService());
-            builder.Services.AddTransient<IRepositoryService>((e) => new RepositoryService());
+            builder.Services.AddTransient<IFSRepositoryService>((e) => new FSRepositoryService());
 
             builder.Services.AddTransient<IAppDataService>((e) => new XmlAppDataService(new FileService()));
             builder.Services.AddTransient<IAppSettingsService>((e) => new XmlAppSettingsService(new FileService()));

@@ -21,7 +21,7 @@ using UBViews.Models.Query;
 public partial class QueryResultViewModel : BaseViewModel
 {
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
-    private bool targetRefId = false;
+    //private bool targetRefId = false;
 
     /// <summary>
     /// 

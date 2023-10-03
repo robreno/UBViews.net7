@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="FSharpExtensions.fs" />
+    <Compile Include="StringsPaths.fs" />
+    <Compile Include="Strings.fs" />
+    <Compile Include="DataTypes.fs" />
+    <Compile Include="DataTypesEx.fs" />
+    <Compile Include="CustomExceptions.fs" />
+    <Compile Include="Models.fs" />
+    <Compile Include="UtilFuncs.fs" />
+    <Compile Include="Evaluators.fs" />
+    <Compile Include="Repository.fs" />
+    <Compile Include="SimpleEnumerators.fs" />
+    <Compile Include="SimpleEnumeratorsEx.fs" />
+    <Compile Include="QueryProcessor.fs" />
+    <Compile Include="SimpleParse.fs" />
+    <Compile Include="QueryLib.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LexParser\LexParser.fsproj" />
+  </ItemGroup>
+
+</Project>
