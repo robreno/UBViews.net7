@@ -14,13 +14,8 @@ using UBViews.Models.Query;
 using UBViews.Models.Ubml;
 using UBViews.Views;
 
-//using LexParser;
 using QueryEngine;
 using QueryFilter;
-
-//using UBViews.SQLiteRepository;
-//using UBViews.SQLiteRepository.Dtos;
-//using UBViews.SQLiteRepository.Models;
 
 [QueryProperty(nameof(TokenCount), nameof(TokenCount))]
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
@@ -274,11 +269,11 @@ public partial class QueryInputViewModel : BaseViewModel
                     var queryResultElm = await queryService.ProcessTokenPostingListAsync(queryString, 
                                                                                          queryHead, 
                                                                                          basePostingList);
-                    var qryId = await repositoryService.SaveQueryResultAsync(queryResultElm);
-                    queryResultElm.SetAttributeValue("id", qryId);
+                    //var qryId = await repositoryService.SaveQueryResultAsync(queryResultElm);
+                    //queryResultElm.SetAttributeValue("id", qryId);
 
                     // Create object model
-                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(qryId);
+                    //queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(qryId);
 
                     // Add queryResultEml to QueryHistory AppData file here
                     //await _appDataService.AddQueryResult(queryResultElm);
