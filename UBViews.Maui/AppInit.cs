@@ -22,16 +22,6 @@ namespace UBViews
             { 5, "Database/postingLists.db3" },
         };
 
-        string[] srcNames = new string[]
-        {
-            "Query/Queries.template.xml",
-            "Query/Queries.xml",
-            "Query/QueryCmdList.xml",
-            "Settings/Settings.template.xml",
-            //"Database/queryResults.db3",
-            //"Database/postingLists.db3"
-        };
-
         Dictionary<int, string> TargetsSrc = new Dictionary<int, string>()
         {
             { 0, "UserQueries.xml" },
@@ -41,14 +31,19 @@ namespace UBViews
             { 4, "QueryResults.db3" },
             { 5, "PostingLists.db3" },
         };
+
+        string[] srcNames = new string[]
+        {
+            "Query/Queries.template.xml",
+            "Query/QueryResults.xml",
+            "Settings/Settings.template.xml",
+        };
+
         string[] trgNames = new string[]
         {
             "UserQueries.xml",
             "QueryHistory.xml",
-            "QueryCommands.xml",
             "Settings.xml",
-            //"QueryResults.db3",
-            //"PostingLists.db3"
         };
 
         Dictionary<string, bool> UserFiles = new();
