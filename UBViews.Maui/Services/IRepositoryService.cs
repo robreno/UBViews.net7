@@ -52,6 +52,12 @@ namespace UBViews.Services
         Task<List<QueryResult>> GetQueryResultsAsync();
 
         /// <summary>
+        /// GetQueryResultsAsync
+        /// </summary>
+        /// <returns>QueryResultDto List</returns>
+        //Task<List<QueryResultDto>> GetQueryResultsAsync();
+
+        /// <summary>
         /// GetQueryResultByQueryStringAsync
         /// </summary>
         /// <param name="queryString"></param>

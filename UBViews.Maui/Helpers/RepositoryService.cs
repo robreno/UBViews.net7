@@ -121,6 +121,31 @@ namespace UBViews.Helpers
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        //public async Task<List<QueryResultDto>> GetQueryResultsAsync()
+        //{
+        //    string methodName = "GetQueryResultsAsync";
+        //    try
+        //    {
+        //        var queryResultList = await QueryRepository.GetQueryResultsAsync();
+        //        List<QueryResultDto> queryResultListDto = new List<QueryResultDto>();
+        //        foreach (var qr in queryResultList)
+        //        {
+        //            var dto = await MapQueryResultObjTotDto(qr);
+        //            queryResultListDto.Add(dto);
+        //        }
+        //        return queryResultListDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+        //        return null;
+        //    }
+        //}
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
         public async Task<QueryResultLocationsDto> GetQueryResultByStringAsync(string queryString)
@@ -129,7 +154,7 @@ namespace UBViews.Helpers
             try
             {
                 var obj = await QueryRepository.GetQueryResultByStringAsync(queryString);
-                var dto = await MapQueryResultToDto(obj);
+                var dto = await MapQueryResultObjToDto(obj);
                 return dto;
             }
             catch (Exception ex)
@@ -150,7 +175,7 @@ namespace UBViews.Helpers
             try
             {
                 var obj = await QueryRepository.GetQueryResultByIdAsync(queryResultId);
-                var dto = await MapQueryResultToDto(obj);
+                var dto = await MapQueryResultObjToDto(obj);
                 return dto;
             }
             catch (Exception ex)
@@ -324,7 +349,7 @@ namespace UBViews.Helpers
         #endregion
 
         #region Private Helper Methods
-        private async Task<QueryResultLocationsDto> MapQueryResultToDto(QueryResultLocations queryResult)
+        private async Task<QueryResultLocationsDto> MapQueryResultObjToDto(QueryResultLocations queryResult)
         {
             string methodName = "MapQueryResultToDto";
             try
@@ -372,7 +397,7 @@ namespace UBViews.Helpers
             }
         }
 
-        //private async Task<Local.PostingListDto> MapPostingListToDto(PostingList postingList)
+        //private async Task<Local.PostingListDto> MapPostingListObjToDto(PostingList postingList)
         //{
         //    string methodName = "MapPostingListToDto";
         //    try
@@ -391,7 +416,7 @@ namespace UBViews.Helpers
         //    }
         //}
 
-        //private async Task<Local.TermOccurrenceDto> MapTermOccurrenceToDto(TermOccurrence termOccurrence)
+        //private async Task<Local.TermOccurrenceDto> MapTermOccurrenceObjToDto(TermOccurrence termOccurrence)
         //{
         //    string methodName = "MapTermOccurrenceToDto";
         //    try
@@ -417,7 +442,7 @@ namespace UBViews.Helpers
         //    }
         //}
 
-        //private async Task<Local.TokenOccurrenceDto> MapTokenOccurrenceToDto(TokenOccurrence tokenOccurrence)
+        //private async Task<Local.TokenOccurrenceDto> MapTokenOccurrenceObjToDto(TokenOccurrence tokenOccurrence)
         //{
         //    string methodName = "MapTokenOccurrenceToDto";
         //    try
@@ -440,7 +465,7 @@ namespace UBViews.Helpers
         //    }
         //}
 
-        //private async Task<Local.TokenStemDto> MapTokenStemToDto(TokenStem tokenStem)
+        //private async Task<Local.TokenStemDto> MapTokenStemObjToDto(TokenStem tokenStem)
         //{
         //    string methodName = "MapTokenStemToDto";
         //    try
