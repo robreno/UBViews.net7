@@ -241,29 +241,35 @@ module QueryProcessor =
         reverseQueryString
 
     // TODO: Save to Database so move out from here
-    let processTokenPostingSequence (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
-        let _str = queryExpToString query
-        let _queryType = getQueryType input
-        let _queryStr = XElement("QueryString", [XText(input)])
-        let _reverseQueryStr = reverseQueryString input _queryType
-        let _reverseQuery = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
-        let _queryExpr = XElement("QueryExpression", [XText(_str)])
+    let processTokenPostingSequence (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
+        let _queryExpStr = queryExpToString query
+        let _queryType = getQueryType queryString
+        let _queryStrElm = XElement("QueryString", [XText(queryString)])
+        let _reverseQueryStr = reverseQueryString queryString _queryType
+        let _reverseQueryElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
+        let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
         
-        let mutable _queryResult = XElement("QueryResult", [])
-        _queryResult.SetAttributeValue("id", "0")
-        _queryResult.SetAttributeValue("locationCount", 0)
-        _queryResult.Add(_queryStr)
+        let mutable _queryResultElm = XElement("QueryResult", [])
+        _queryResultElm.SetAttributeValue("id", "0")
+        _queryResultElm.SetAttributeValue("locationCount", 0)
+        _queryResultElm.Add(_queryStrElm)
         if (_reverseQueryStr <> "") then
-            _queryResult.Add(_reverseQuery)
-        _queryResult.Add(_queryExpr)
+            _queryResultElm.Add(_reverseQueryElm)
+        _queryResultElm.Add(_queryExprElm)
 
-        evaluateQuery _queryResult query |> ignore
-        let queryType = _queryResult.Attribute("type").Value
+        evaluateQuery _queryResultElm query |> ignore
+        let mutable _expandedQueryStr = String.Empty
+        let _proximity = _queryResultElm.Attribute("proximity").Value;
+        
+        if (_queryType.Equals("And") && _proximity.Equals("paragraph")) then 
+            _expandedQueryStr <- queryString + " filterby parid"
+            _reverseQueryElm.AddAfterSelf(XElement("DefaultQueryString", [XText(_expandedQueryStr)]))
+
         let mutable _length = 0
         let mutable _queryString = String.Empty
         let mutable _isPhraseOrCTerm = false
-        if queryType.Equals("Phrase") || queryType.Equals("CTerm") then
-            _queryString <- _queryResult.Descendants("QueryString").FirstOrDefault().Value
+        if _queryType.Equals("Phrase") || _queryType.Equals("CTerm") then
+            _queryString <- _queryResultElm.Descendants("QueryString").FirstOrDefault().Value
             _queryString <- _queryString.Substring(1, _queryString.Length - 2)
             _length <- _queryString.Length
             _isPhraseOrCTerm <- true
@@ -320,9 +326,9 @@ module QueryProcessor =
         |> Seq.iter(fun l -> _queryLocs.AddFirst(l))
         let _hits = _queryLocs.Descendants("QueryLocation").Count()
         _queryLocs.SetAttributeValue("count", _hits)
-        _queryResult.Add(_queryLocs)
-        _queryResult.SetAttributeValue("locationCount", _hits)
-        _queryResult
+        _queryResultElm.Add(_queryLocs)
+        _queryResultElm.SetAttributeValue("locationCount", _hits)
+        _queryResultElm
 
     // See: https://stackoverflow.com/questions/27131774/f-issue-with-async-workflow-and-try-with
     let processTokenPostingSequenceAsync (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) 
