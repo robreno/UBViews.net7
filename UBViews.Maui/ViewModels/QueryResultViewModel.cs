@@ -50,6 +50,24 @@ public partial class QueryResultViewModel : BaseViewModel
     string scrollToLabelName;
 
     [RelayCommand]
+    async Task QueryResultAppearing(QueryResultLocationsDto dto)
+    {
+        string methodName = "QueryResultAppearing";
+        try
+        {
+            if (dto == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    [RelayCommand]
     async Task QueryResultLoaded(QueryResultLocationsDto dto)
     {
         string methodName = "QueryResultLoaded";
