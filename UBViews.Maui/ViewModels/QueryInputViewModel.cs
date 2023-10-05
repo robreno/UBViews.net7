@@ -247,12 +247,12 @@ public partial class QueryInputViewModel : BaseViewModel
 
                 // Check if query exists
                 (bool queryExists, QueryResultDto dto) = await repositoryService.QueryResultExistsAsync(queryString);
-                var queryId = dto.Id;
                 QueryResultExists = queryExists;
+                
                 QueryResultLocationsDto queryResultLocationsDto = null;
                 if (queryExists)
                 {
-                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryId);
+                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(dto.Id);
                     QueryExpression = queryResultLocationsDto.QueryExpression;
                 }
                 else
