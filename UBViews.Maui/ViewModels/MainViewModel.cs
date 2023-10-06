@@ -168,6 +168,7 @@ public partial class MainViewModel : BaseViewModel
                     // interregnum and wisdom filterby parid
                     // jesus and courtesans filterby parid
                     // resurrection and halls
+                    // premind and capacity filterby parid
 
                     var astQuery = await parserService.ParseQueryAsync(queryString);
                     var queryHead = astQuery.Head;
@@ -178,21 +179,20 @@ public partial class MainViewModel : BaseViewModel
                     var qrlDto = await repositoryService.GetQueryResultLocationsAsync(qryString, queryHead, tokenPostingList);
 
                     QueryLocations = qrlDto;
+                    // Navigate to QueryResultPage here
                     await NavigateTo("QueryResults");
 
-                    //var astQuery = await parserService.ParseQueryAsync(queryString);
-                    //var queryHead = astQuery.Head;
-                    //QueryExpression = await parserService.QueryToStringAsync(queryHead);
+                    //var queryRowId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
+                    //queryResultElm.SetAttributeValue("id", queryRowId);
 
-                    //var tokenPostingList = await queryService.RunQueryAsync(queryHead);
-                    //var basePostingList = tokenPostingList.BasePostingList.Head;
-                    //// premind and capacity filterby parid
-                    //var queryResultElm = await queryService.ProcessTokenPostingListAsync(qryString,
-                    //                                                                      queryHead,
-                    //                                                                      basePostingList);
+                    // Create object model
+                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
 
+                    // Add queryResultEml to QueryHistory AppData file here
+                    //await _appDataService.AddQueryResult(queryResultElm);
 
-                    //QueryResultLocationsDto qrl = GetQueryLocationsFromQueryElement(queryResultElm);
+                    // Navigate to QueryResultPage here
+                    //await NavigateTo("QueryResults");
                 }
             }
         }
