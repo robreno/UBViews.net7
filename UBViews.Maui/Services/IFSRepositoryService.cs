@@ -4,9 +4,9 @@ using static QueryEngine.QueryRepository;
 using static QueryEngine.PostingRepository;
 using static QueryEngine.Models;
 using static QueryEngine.SimpleEnumeratorsEx;
+using static UBViews.Query.Ast;
 
 using UBViews.Models.Query;
-
 
 namespace UBViews.Services
 {
@@ -24,13 +24,6 @@ namespace UBViews.Services
         #endregion
 
         #region Database Repository Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryString"></param>
-        /// <returns></returns>
-        Task<TokenPostingList> RunQueryAsync(string queryString);
-
         /// <summary>
         /// SaveQueryResultAsync
         /// </summary>
@@ -144,6 +137,31 @@ namespace UBViews.Services
         /// <param name="stem"></param>
         /// <returns></returns>
         Task<List<TokenOccurrenceDto>> GetTokenOccurrencesByStemAsync(string stem);
+        #endregion
+
+        #region Database Helper Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        Task<TokenPostingList> RunQueryAsync(string queryString);
+
+        // <summary>
+        /// 
+        /// </summary>
+        /// <param name="tpl"></param>
+        /// <returns></returns>
+        Task<XElement> ProcessTokenPostingListAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <param name="query"></param>
+        /// <param name="tpl"></param>
+        /// <returns></returns>
+        Task<QueryResultLocationsDto> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl);
         #endregion
     }
 }

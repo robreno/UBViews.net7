@@ -169,6 +169,17 @@ public partial class MainViewModel : BaseViewModel
                     // jesus and courtesans filterby parid
                     // resurrection and halls
 
+                    var astQuery = await parserService.ParseQueryAsync(queryString);
+                    var queryHead = astQuery.Head;
+                    QueryExpression = await parserService.QueryToStringAsync(queryHead);
+
+                    var tokenPostingList = await repositoryService.RunQueryAsync(queryString);
+                    //var queryResultElm = await repositoryService.ProcessTokenPostingListAsync(qryString, queryHead, tokenPostingList);
+                    var qrlDto = await repositoryService.GetQueryResultLocationsAsync(qryString, queryHead, tokenPostingList);
+
+                    QueryLocations = qrlDto;
+                    await NavigateTo("QueryResults");
+
                     //var astQuery = await parserService.ParseQueryAsync(queryString);
                     //var queryHead = astQuery.Head;
                     //QueryExpression = await parserService.QueryToStringAsync(queryHead);

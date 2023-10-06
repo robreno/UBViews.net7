@@ -9,6 +9,7 @@ using static QueryEngine.QueryRepository;
 using static QueryEngine.PostingRepository;
 using static QueryEngine.Models;
 using static QueryEngine.SimpleEnumeratorsEx;
+using static UBViews.Query.Ast;
 
 using UBViews.Models.Query;
 using UBViews.Services;
@@ -71,27 +72,6 @@ namespace UBViews.Helpers
         #endregion
 
         #region Database Repository Methods
-        /// <summary>
-        /// RunQuery
-        /// </summary>
-        /// <param name="queryString"></param>
-        /// <returns></returns>
-        public async Task<TokenPostingList> RunQueryAsync(string queryString)
-        {
-            string methodName = "RunQueryAsync";
-            try
-            {
-                var query = await LexParser.LexParser.parseQueryStringAsync(queryString);
-                var retval = _queryService.RunQuery(query.Head);
-                return retval;
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
-                return null;
-            }
-        }
-
         /// <summary>
         /// SaveQueryResultAsync
         /// </summary>
@@ -648,6 +628,79 @@ namespace UBViews.Helpers
         }
         #endregion
 
+        #region Database Helper Methods
+        /// <summary>
+        /// RunQuery
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        public async Task<TokenPostingList> RunQueryAsync(string queryString)
+        {
+            string methodName = "RunQueryAsync";
+            try
+            {
+                var query = await LexParser.LexParser.parseQueryStringAsync(queryString);
+                var retval = _queryService.RunQuery(query.Head);
+                return retval;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <param name="query"></param>
+        /// <param name="tpl"></param>
+        /// <returns></returns>
+        public async Task<XElement> ProcessTokenPostingListAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
+        {
+            string methodName = "ProcessTokenPostingListAsync";
+            try
+            {
+                var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
+                XElement queryResult = null;
+                queryResult = QueryProcessor.processTokenPostingSequence(queryString, query, _tpl);
+                return queryResult;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <param name="query"></param>
+        /// <param name="tpl"></param>
+        /// <returns></returns>
+        public async Task<QueryResultLocationsDto> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
+        {
+            string methodName = "ProcessTokenPostingListAsync";
+            try
+            {
+                QueryResultLocationsDto dto = null;
+                var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
+                XElement queryResult = null;
+                queryResult = QueryProcessor.processTokenPostingSequence(queryString, query, _tpl);
+                dto = await MapQueryResultElmToDto(queryResult);
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
+        }
+        #endregion
+
         #region Private Helper Methods
         // obj -> dto
         private async Task<QueryResultDto> MapQueryResultObjTotDto(QueryResultObject obj)
@@ -855,6 +908,75 @@ namespace UBViews.Helpers
                                                                     dto.ParagraphId,
                                                                     dto.Term);
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                return null;
+            }
+        }
+        private async Task<QueryResultLocationsDto> MapQueryResultElmToDto(XElement queryResultElm)
+        {
+            string methodName = "MapQueryResultElmToDto";
+            try
+            {
+                var queryId = Int32.Parse(queryResultElm.Attribute("id").Value);
+                var locationCount = Int32.Parse(queryResultElm.Attribute("locationCount").Value);
+                var queryType = queryResultElm.Attribute("type").Value;
+                var terms = queryResultElm.Attribute("terms").Value;
+                var proximity = queryResultElm.Attribute("proximity").Value;
+
+                var queryStrElm = queryResultElm.Descendants("QueryString").FirstOrDefault();
+                var reverseQueryStrElm = queryResultElm.Descendants("ReverseQueryString").FirstOrDefault();
+                var defaultQueryStrElm = queryResultElm.Descendants("DefaultQueryString").FirstOrDefault();
+                var queryExpressionElm = queryResultElm.Descendants("QueryExpression").FirstOrDefault();
+
+                QueryResultLocationsDto dto = new QueryResultLocationsDto
+                {
+                    Id = queryId,
+                    Hits = locationCount,
+                    Type = queryType,
+                    Terms = terms,
+                    Proximity = proximity,
+                    QueryString = queryStrElm.Value,
+                    ReverseQueryString = reverseQueryStrElm != null ? reverseQueryStrElm.Value : null,
+                    DefaultQueryString = defaultQueryStrElm != null ? defaultQueryStrElm.Value : null,
+                    QueryExpression = queryExpressionElm.Value
+                };
+
+                var queryLocations = queryResultElm.Descendants("QueryLocation");
+                foreach (var location in queryLocations)
+                {
+
+                    var id = location.Attribute("id").Value;
+                    var pid = location.Attribute("pid").Value;
+                    QueryLocationDto ql = new QueryLocationDto { Id = id, Pid = pid };
+                    dto.QueryLocations.Add(ql);
+                    var termOccurrences = location.Descendants("TermOccurrence");
+                    foreach (var occurrence in termOccurrences)
+                    {
+                        var docId = Int32.Parse(occurrence.Attribute("docId").Value);
+                        var seqId = Int32.Parse(occurrence.Attribute("seqId").Value);
+                        var dpoId = Int32.Parse(occurrence.Attribute("dpoId").Value);
+                        var tpoId = Int32.Parse(occurrence.Attribute("tpoId").Value);
+                        var len = Int32.Parse(occurrence.Attribute("len").Value);
+                        var term = occurrence.Attribute("term").Value;
+                        TermLocationDto loc = new TermLocationDto
+                        {
+                            Id = 0,
+                            QueryResultId = 0,
+                            DocumentId = docId,
+                            SequenceId = seqId,
+                            DocumentPosition = dpoId,
+                            TextPosition = tpoId,
+                            TextLength = len,
+                            ParagraphId = pid,
+                            Term = term
+                        };
+                        ql.TermOccurrences.Add(loc);
+                    }
+                }
+                return dto;
             }
             catch (Exception ex)
             {

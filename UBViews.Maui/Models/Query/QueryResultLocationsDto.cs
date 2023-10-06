@@ -8,6 +8,7 @@ public class QueryResultLocationsDto
     public string Proximity { get; set; }
     public string QueryString { get; set; }
     public string ReverseQueryString { get; set; }
+    public string DefaultQueryString { get; set; }
     public string QueryExpression { get; set; }
     public List<QueryLocationDto> QueryLocations { get; set; } = new();
 }
