@@ -699,7 +699,10 @@ namespace UBViews.Helpers
                     var queryLocations = termOccs.GroupBy(g => g.ParagraphId);
                     foreach (var locations in queryLocations)
                     {
-                        var id = locations.First().DocumentId + ":" + locations.First().SequenceId;
+                        // Note: The separator for id is "docId.seqId" to differentiate from pid.
+                        // This is how the QueryResults.xml file handles the id separator. 
+                        // This could be changed later if desired as not intrinsic in database.
+                        var id = locations.First().DocumentId + "." + locations.First().SequenceId;
                         var queryLocation = new QueryLocationDto() { Id = id, Pid = locations.Key };
 
                         foreach (var location in locations)

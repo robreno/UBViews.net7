@@ -223,7 +223,14 @@ public partial class QueryResultViewModel : BaseViewModel
             {
                 var id = location.Id;
                 var pid = location.Pid;
-                var arry = id.Split(':');
+                // TODO: potential bug here; see FSRepository.MapQueryResultObjToDto
+                // Creates QueryResultLocationsDto with "docId:seqId" rather than "docId.seqId"
+                // Fixed (changed to docId.seqId) on 10/6/2023.
+                // QueryResult.xml file uses "docId.seqId" and should be consistently used.
+                // Note: the separator for id is "docId.seqId" to differentiate from pid.
+                // This could be changed later if desired as not intrinsic in database.
+                // Would require changes to QueryResults.xml file and AppData processing.
+                var arry = id.Split('.');
                 var paperId = Int32.Parse(arry[0]);
                 var seqId = Int32.Parse(arry[1]);
                 var paragraph = await fileService.GetParagraphAsync(paperId, seqId);

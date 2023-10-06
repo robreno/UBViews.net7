@@ -136,12 +136,6 @@ public partial class MainViewModel : BaseViewModel
                 {
                     await Shell.Current.GoToAsync("..");
                 }
-
-                // Original
-                //_queryInput.Text = "Empty Query";
-                //_queryInput.TokenCount = 0;
-                //QueryInput = await App.Current.MainPage.DisplayPromptAsync("Query empty", 
-                //    "Bad query, enter a valid query");
             }
             else
             {
@@ -174,6 +168,20 @@ public partial class MainViewModel : BaseViewModel
                     // interregnum and wisdom filterby parid
                     // jesus and courtesans filterby parid
                     // resurrection and halls
+
+                    //var astQuery = await parserService.ParseQueryAsync(queryString);
+                    //var queryHead = astQuery.Head;
+                    //QueryExpression = await parserService.QueryToStringAsync(queryHead);
+
+                    //var tokenPostingList = await queryService.RunQueryAsync(queryHead);
+                    //var basePostingList = tokenPostingList.BasePostingList.Head;
+                    //// premind and capacity filterby parid
+                    //var queryResultElm = await queryService.ProcessTokenPostingListAsync(qryString,
+                    //                                                                      queryHead,
+                    //                                                                      basePostingList);
+
+
+                    //QueryResultLocationsDto qrl = GetQueryLocationsFromQueryElement(queryResultElm);
                 }
             }
         }
