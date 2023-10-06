@@ -76,7 +76,7 @@
                         VerticalOptions="Center"
                         HorizontalScrollBarVisibility="Always">
                 <VerticalStackLayout x:Name="queryResultVSL">
-                    <Border Stroke="Blue" Padding="10" Margin=".5">
+                    <!--<Border Stroke="Blue" Padding="10" Margin=".5">
                         <Label StyleId="_000_005" Style="{StaticResource RegularParagraph}" 
                                ToolTipProperties.Text="Tap to go to paragraph.">
                             <Label.GestureRecognizers>
@@ -98,7 +98,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                    </Border>
+                    </Border>-->
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

@@ -46,7 +46,7 @@ public partial class QueryInputViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    QueryResultLocationsDto locationsDto;
+    QueryResultLocationsDto queryLocations;
 
     [ObservableProperty]
     QueryInputDto queryInput;
@@ -166,6 +166,7 @@ public partial class QueryInputViewModel : BaseViewModel
                 }
 
                 var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK", "Cancel", null, -1, null, queryString);
+                
                 if (result != null)
                 {
                     await Shell.Current.GoToAsync($"..?QueryInput={result}");
@@ -250,10 +251,15 @@ public partial class QueryInputViewModel : BaseViewModel
                 QueryResultExists = queryExists;
                 
                 QueryResultLocationsDto queryResultLocationsDto = null;
+                int queryResultId = 0;
                 if (queryExists)
                 {
-                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(dto.Id);
+                    queryResultId = dto.Id;
+                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryResultId);
                     QueryExpression = queryResultLocationsDto.QueryExpression;
+                    QueryLocations = queryResultLocationsDto;
+                    // Navigate to QueryResultPage
+                    await NavigateTo("QueryResultPage");
                 }
                 else
                 {
@@ -269,14 +275,21 @@ public partial class QueryInputViewModel : BaseViewModel
                     var queryResultElm = await queryService.ProcessTokenPostingListAsync(queryString, 
                                                                                          queryHead, 
                                                                                          basePostingList);
-                    //var qryId = await repositoryService.SaveQueryResultAsync(queryResultElm);
-                    //queryResultElm.SetAttributeValue("id", qryId);
+
+                    // QueryResultLocationsDto dto = GetQueryLocationsFromQueryElement(queryResultElm);
+
+                    //var queryRowId = await repositoryService.SaveQueryResultAsync(queryResultElm);
+                    //queryResultElm.SetAttributeValue("id", queryRowId);
 
                     // Create object model
-                    //queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(qryId);
+                    //queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryRowId);
+                    //QueryLocations = queryResultLoctionsDto;
 
                     // Add queryResultEml to QueryHistory AppData file here
                     //await _appDataService.AddQueryResult(queryResultElm);
+
+                    // Navigate to QueryResultPage
+                    //await NavigateTo("QueryResultPage");
                 }
             }
         }
@@ -625,13 +638,8 @@ public partial class QueryInputViewModel : BaseViewModel
     [RelayCommand]
     async Task NavigateTo(string target)
     {
-        if (IsBusy)
-            return;
-
         try
         {
-            LocationsDto = new QueryResultLocationsDto();
-
             IsBusy = true;
 
             string targetName = string.Empty;
@@ -645,9 +653,10 @@ public partial class QueryInputViewModel : BaseViewModel
             }
 
 
+            QueryResultLocationsDto dto = QueryLocations;
             await Shell.Current.GoToAsync(targetName, new Dictionary<string, object>()
             {
-                {"QueryResultLocatinsDto", LocationsDto }
+                {"LocationsDto", dto }
             });
         }
         catch (Exception ex)
