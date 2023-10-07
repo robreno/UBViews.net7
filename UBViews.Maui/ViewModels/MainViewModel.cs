@@ -204,6 +204,7 @@ public partial class MainViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 
@@ -282,6 +283,7 @@ public partial class MainViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 

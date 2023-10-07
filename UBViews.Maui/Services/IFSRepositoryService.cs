@@ -147,7 +147,7 @@ namespace UBViews.Services
         /// <returns></returns>
         Task<TokenPostingList> RunQueryAsync(string queryString);
 
-        // <summary>
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="tpl"></param>

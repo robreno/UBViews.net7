@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 using Microsoft.Maui.Controls;
 
@@ -48,6 +49,9 @@ public partial class QueryResultViewModel : BaseViewModel
     string queryString;
 
     [ObservableProperty]
+    int queryHits;
+
+    [ObservableProperty]
     bool showReferencePids;
 
     [ObservableProperty]
@@ -68,7 +72,9 @@ public partial class QueryResultViewModel : BaseViewModel
             }
 
             QueryString = dto.QueryString;
-            string titleMessage = $"Query Result for: {QueryString}";
+            QueryHits = dto.Hits;
+
+            string titleMessage = $"Query Result {queryHits} hits ...";
             PageTitle = titleMessage;
 
             var locations = dto.QueryLocations;
@@ -90,17 +96,24 @@ public partial class QueryResultViewModel : BaseViewModel
         string methodName = "QueryResultLoaded";
         try
         {
+            IsBusy = true;
+
             var locations = QueryLocations;
             if (locations == null)
             {
                 return;
             }
-            await LoadXaml();
+            await LoadXamlEx();
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
             return;
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
         }
     }
 
@@ -109,6 +122,8 @@ public partial class QueryResultViewModel : BaseViewModel
     {
         try
         {
+            IsBusy = true;
+
             var arry = lableName.Split('_', StringSplitOptions.RemoveEmptyEntries);
             var paperId = Int32.Parse(arry[0]);
             var seqId = Int32.Parse(arry[1]);
@@ -127,14 +142,16 @@ public partial class QueryResultViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
             return;
         }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
     }
 
     [RelayCommand]
     async Task GoToDetails(PaperDto dto)
     {
-        if (IsBusy)
-            return;
-
         try
         {
             IsBusy = true;
@@ -161,11 +178,63 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     #region Helper Methods
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="paragraph"></param>
-    /// <returns></returns>
+    private async Task LoadXaml()
+    {
+        try
+        {
+            // See: https://learn.microsoft.com/en-us/dotnet/maui/xaml/runtime-load
+            /*
+            string navigationButtonXAML = "<Button Text=\"Navigate\" />";
+            Button navigationButton = new Button().LoadFromXaml(navigationButtonXAML);
+            stackLayout.Add(navigationButton); ...
+            */
+
+            var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
+            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
+            var locations = QueryLocations;
+            foreach (var location in locations)
+            {
+                var id = location.Id;
+                var pid = location.Pid;
+                var arry = id.Split('.');
+                var paperId = Int32.Parse(arry[0]);
+                var seqId = Int32.Parse(arry[1]);
+                var paragraph = await fileService.GetParagraphAsync(paperId, seqId);
+                var text = paragraph.Text;
+                var paraStyle = paragraph.ParaStyle;
+
+                // Study the .NET Maui ScrollView examples
+
+                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+                // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
+                FormattedString fs = await CreateFormattedString(paragraph);
+
+                Label label = new Label { FormattedText = fs };
+                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
+                tapGestureRecognizer.CommandParameter = $"{labelName}";
+                tapGestureRecognizer.NumberOfTapsRequired = 1;
+                label.GestureRecognizers.Add(tapGestureRecognizer);
+
+                label.SetValue(ToolTipProperties.TextProperty, "Tap to go to paragraph.");
+
+                Border newBorder = new Border()
+                {
+                    Stroke = Colors.Blue,
+                    Padding = new Thickness(10),
+                    Margin = new Thickness(.5),
+                    Content = label
+                };
+                contentVSL.Add(newBorder);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
+                ex.Message, "Ok");
+        }
+    }
     private async Task<FormattedString> CreateFormattedString(Paragraph paragraph)
     {
         // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
@@ -204,7 +273,7 @@ public partial class QueryResultViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task LoadXaml()
+    private async Task LoadXamlEx()
     {
         try
         {
@@ -219,30 +288,35 @@ public partial class QueryResultViewModel : BaseViewModel
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
 
             var locations = QueryLocations;
+            int hit = 0;
             foreach (var location in locations)
             {
+                hit++;
                 var id = location.Id;
                 var pid = location.Pid;
-                // TODO: potential bug here; see FSRepository.MapQueryResultObjToDto
-                // Creates QueryResultLocationsDto with "docId:seqId" rather than "docId.seqId"
-                // Fixed (changed to docId.seqId) on 10/6/2023.
-                // QueryResult.xml file uses "docId.seqId" and should be consistently used.
-                // Note: the separator for id is "docId.seqId" to differentiate from pid.
-                // This could be changed later if desired as not intrinsic in database.
-                // Would require changes to QueryResults.xml file and AppData processing.
                 var arry = id.Split('.');
                 var paperId = Int32.Parse(arry[0]);
                 var seqId = Int32.Parse(arry[1]);
                 var paragraph = await fileService.GetParagraphAsync(paperId, seqId);
-                var text = paragraph.Text;
                 var paraStyle = paragraph.ParaStyle;
-
-                // Study the .NET Maui ScrollView examples
-
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 
-                // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
-                FormattedString fs = await CreateFormattedString(paragraph);
+                string text = paragraph.Text;
+                List<string> termList = new List<string>();
+                foreach (var termOcc in location.TermOccurrences)
+                {
+                    var position = termOcc.TextPosition;
+                    var length = termOcc.TextLength;
+                    var term = paragraph.Text.Substring(position, length);
+                    var termReplacement = "_{" + term + "}_";
+                    if (termList.Contains(term))
+                        continue;
+                    var rgx = new Regex(term);
+                    text = Regex.Replace(text, "\\b" + term + "\\b", termReplacement);
+                    termList.Add(term);
+                }
+                var txtArray = text.Split('_');
+                FormattedString fs = await CreateFormattedStringEx(paragraph, txtArray, hit);
 
                 Label label = new Label { FormattedText = fs };
                 TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
@@ -251,7 +325,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
                 label.GestureRecognizers.Add(tapGestureRecognizer);
 
-                label.SetValue(ToolTipProperties.TextProperty, "Tap to go to paragraph.");
+                label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid}");
 
                 Border newBorder = new Border()
                 {
@@ -261,13 +335,6 @@ public partial class QueryResultViewModel : BaseViewModel
                     Content = label
                 };
                 contentVSL.Add(newBorder);
-
-                foreach (var termOcc in location.TermOccurrences)
-                {
-                    var position = termOcc.TextPosition;
-                    var length = termOcc.TextLength;
-                    var term = text.Substring(position, length);
-                }
             }
         }
         catch (Exception ex)
@@ -276,5 +343,53 @@ public partial class QueryResultViewModel : BaseViewModel
                 ex.Message, "Ok");
         }
     }
+    private async Task<FormattedString> CreateFormattedStringEx(Paragraph paragraph, string[] textArray, int hit)
+    {
+        // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
+        try
+        {
+            FormattedString formattedString = new FormattedString();
+            await Task.Run(() =>
+            {
+                var paperId = paragraph.Id;
+                var seqId = paragraph.SeqId;
+                var pid = paragraph.Pid;
+                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
+                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
+                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
+                Span hitsSpan = new Span() { Style = (Style)App.Current.Resources["HID"], StyleId = labelName, Text = $"[hit {hit}]" };
+
+                var runs = paragraph.Runs;
+                Span newSpan = null;
+
+                formattedString.Spans.Add(tabSpan);
+                formattedString.Spans.Add(pidSpan);
+                formattedString.Spans.Add(spaceSpan);
+
+                foreach (var textRun in textArray)
+                {
+                    if (textRun.Contains('{'))
+                        newSpan = new Span() { Style = (Style)App.Current.Resources["HighlightSpan"], Text = textRun };
+                    else
+                        newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = textRun };
+                    formattedString.Spans.Add(newSpan);
+                }
+
+                formattedString.Spans.Add(spaceSpan);
+                formattedString.Spans.Add(hitsSpan);
+
+            });
+            return formattedString;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
+                ex.Message, "Ok");
+            return null;
+        }
+    }
+
     #endregion
 }

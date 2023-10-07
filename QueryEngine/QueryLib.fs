@@ -99,12 +99,13 @@ type QueryService() =
             return queryResult
         } |> Async.StartAsTask
 
-    member this.RunQuery (query: Query) : SimpleEnumeratorsEx.TokenPostingList =
+    member this.RunQuery (dbpath: string) (query: Query) : SimpleEnumeratorsEx.TokenPostingList =
         let tpl = getIteratorEx query
         tpl
 
-    member this.RunQueryAsync (query: Query) : Task<SimpleEnumeratorsEx.TokenPostingList> =
+    member this.RunQueryAsync (dbpath: string) (query: Query) : Task<SimpleEnumeratorsEx.TokenPostingList> =
         async {
+            setDatabasePath dbpath
             let tpl = getIteratorEx query
             return tpl
         } |> Async.StartAsTask

@@ -270,7 +270,9 @@ public partial class QueryInputViewModel : BaseViewModel
                     var queryHead = queryList.Head;
                     QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
-                    var tokenPostingList = await queryService.RunQueryAsync(queryHead);
+                    var dbp = Preferences.Get("PostingDBPath", "BAD");
+
+                    var tokenPostingList = await queryService.RunQueryAsync(dbp, queryHead);
                     var basePostingList = tokenPostingList.BasePostingList.Head;
                     var queryResultElm = await queryService.ProcessTokenPostingListAsync(queryString, 
                                                                                          queryHead, 

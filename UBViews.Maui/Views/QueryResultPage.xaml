@@ -45,7 +45,16 @@
                 </VerticalStackLayout>
 
         </ScrollView>
-        
+
+        <ActivityIndicator
+             Color="{AppThemeBinding Light={StaticResource ActivityIndicatorLightBackground}, 
+                                     Dark={StaticResource ActivityIndicatorDarkBackground}}"
+             HorizontalOptions="CenterAndExpand"
+             VerticalOptions="CenterAndExpand"
+             IsRunning="{Binding IsBusy}"
+             IsVisible="{Binding IsBusy}" />
+
+
     </Grid>
 
 </ContentPage>

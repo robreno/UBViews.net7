@@ -79,6 +79,12 @@
                 <Setter Property="FontFamily" Value="OldStyle7Std" />
             </Style>
 
+            <Style x:Key="HID" TargetType="Span">
+                <Setter Property="TextColor" Value="Blue"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="OldStyle7Std" />
+            </Style>
+
             <Style x:Key="Superscript" TargetType="Span" BasedOn="{StaticResource BaseSpan}" />
 
             <Style x:Key="OldStyle" TargetType="Span" BasedOn="{StaticResource BaseSpan}">

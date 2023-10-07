@@ -92,7 +92,7 @@ namespace UBViews.Helpers
                                                           queryResult.ReverseQueryString,
                                                           queryResult.QueryExpression);
 
-                var result = await QueryEngine.QueryRepository.insertQueryResultAsync(_queriesDbPathLocalState, obj);
+                var result = await QueryRepository.insertQueryResultAsync(_queriesDbPathLocalState, obj);
                 if (result != null)
                 { return 1; }
                 else
@@ -273,7 +273,7 @@ namespace UBViews.Helpers
             string methodName = "GetQueryResultsAsync";
             try
             {
-                var queryResultList = await QueryEngine.QueryRepository.getQueryResultsAsync(queryDB_Path);
+                var queryResultList = await QueryRepository.getQueryResultsAsync(queryDB_Path);
                 List<QueryResultDto> queryResultListDto = new List<QueryResultDto>();
                 foreach (var qr in queryResultList) 
                 {
@@ -434,7 +434,7 @@ namespace UBViews.Helpers
             try
             {
                 List<TermOccurrenceDto> dtoList = new List<TermOccurrenceDto>();
-                var termOccurrences = await QueryEngine.QueryRepository.getTermOccurrencesAsync(queryDB_Path);
+                var termOccurrences = await QueryRepository.getTermOccurrencesAsync(queryDB_Path);
                 var isSome = OptionModule.IsSome(termOccurrences);
                 if (isSome)
                 {
@@ -576,7 +576,7 @@ namespace UBViews.Helpers
             string methodName = "GetPostingListsByStemAsync";
             try
             {
-                var postingLists = await QueryEngine.PostingRepository.getPostingListsByStemAsync(postingDB_Path, stem);
+                var postingLists = await PostingRepository.getPostingListsByStemAsync(postingDB_Path, stem);
                 List<PostingListDto> list = new List<PostingListDto>();
                 var isSome = OptionModule.IsSome(postingLists);
                 if (isSome) 
@@ -640,7 +640,7 @@ namespace UBViews.Helpers
             try
             {
                 var query = await LexParser.LexParser.parseQueryStringAsync(queryString);
-                var retval = _queryService.RunQuery(query.Head);
+                var retval = await _queryService.RunQueryAsync(postingDB_Path, query.Head);
                 return retval;
             }
             catch (Exception ex)

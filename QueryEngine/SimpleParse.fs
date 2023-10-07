@@ -16,12 +16,15 @@ module SimpleParse =
     let compoundTermFromList(ctl: string list) =
         String.concat " " <| List.map string (List.rev ctl)
 
-    // Map a query object into a single document interator.
+    let mutable _dbpath = ""
+    let setDatabasePath (dbpath: string) =
+        _dbpath <- dbpath
+
     let rec getIteratorEx (query : Query) : TokenPostingList =
         match query with
         | Term(term) ->
             let mutable tpl = new TokenPostingList([])
-            let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync postingDbPath term 
+            let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath term 
                                                 |> Async.AwaitTask 
                               return retval } |> Async.StartAsTask
             
@@ -29,7 +32,7 @@ module SimpleParse =
             if (isSome) then
                 let postingList = opt.Result.Value
                 let postingListId = postingList.Id
-                let tokOccs = async { let! retval = PostingRepository.getTokenOccurrencesByPostingListIdAsync postingDbPath postingListId 
+                let tokOccs = async { let! retval = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath postingListId 
                                                     |> Async.AwaitTask
                                       let tokPosSeq = retval.Value
                                                       |> List.map(fun o -> let tp = { PostingListID = postingListId
@@ -54,13 +57,13 @@ module SimpleParse =
             // TODO: Add error handling. SQLiteException raised if path DBPath is bad.
             let mutable tpl = new TokenPostingList([])
             try
-                let plObjList = async { let! result = PostingRepository.getTokenStemAsync postingDbPath term |> Async.AwaitTask
+                let plObjList = async { let! result = PostingRepository.getTokenStemAsync _dbpath term |> Async.AwaitTask
                                         // handle bad return value here
                                         if (result.IsNone) then
                                             // failwith here and return empty TokenPostingList
                                             failwithf "Invalid Token -> [%s] in query." term
                                         let stem = result.Value
-                                        let! plist = PostingRepository.getPostingListsByStemAsync postingDbPath stem.Stemmed 
+                                        let! plist = PostingRepository.getPostingListsByStemAsync _dbpath stem.Stemmed 
                                                                 |> Async.AwaitTask
                                         return plist} |> Async.StartAsTask
             
@@ -76,7 +79,7 @@ module SimpleParse =
                     failwithf "Invalid Token -> [%s] in query." term
 
                 plo.Value
-                |> List.iter(fun pl -> let ol = async { let! occs = PostingRepository.getTokenOccurrencesByPostingListIdAsync postingDbPath pl.Id |> Async.AwaitTask
+                |> List.iter(fun pl -> let ol = async { let! occs = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath pl.Id |> Async.AwaitTask
                                                         // Pass thru postingLists exist
                                                         return occs.Value } |> Async.StartAsTask
                                        ol.Result |> List.iteri(fun i o -> let tp = { PostingListID = o.PostingId
@@ -105,14 +108,14 @@ module SimpleParse =
                 let individualTokenIterators =
                     phrase
                     |> List.rev 
-                    |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync postingDbPath token |> Async.AwaitTask                                               
+                    |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath token |> Async.AwaitTask                                               
                                                                return retval } |> Async.StartAsTask
                                              if (opt.Result.IsNone) then
                                                 // failwith here and return empty TokenPostingList
                                                 failwithf "Invalid Token -> [%s] in query prhase." token
                                              else
                                                 opt.Result.Value)
-                    |> List.map(fun pl -> let tokOccs = async { let! retval = PostingRepository.getTokenOccurrencesByPostingListIdAsync postingDbPath pl.Id
+                    |> List.map(fun pl -> let tokOccs = async { let! retval = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath pl.Id
                                                                                     |> Async.AwaitTask
                                                                 // Pass thru postingLists exist
                                                                 let tokPosSeq = retval.Value
