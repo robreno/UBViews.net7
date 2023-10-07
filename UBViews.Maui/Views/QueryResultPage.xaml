@@ -26,14 +26,31 @@
              Command="{Binding QueryResultLoadedCommand}"/>
     </ContentPage.Behaviors>
 
-    <Grid x:Name="contentGrid" 
+    <Grid x:Name="contentGrid"
           VerticalOptions="StartAndExpand"
           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                             Dark={StaticResource UBDarkBackground}}">
-        
-        <!--<Label Text="{Binding QueryString}" />-->
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" Margin="5,10,5,10">
+            <Label VerticalOptions="Start" 
+           Style="{DynamicResource RegularParagraph}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Style="{StaticResource RegularSpan}" Text="Query Entered:" />
+                        <Span Style="{StaticResource RegularSpan}" Text="  " />
+                        <Span Style="{StaticResource QueryResultSpan}" Text="{Binding QueryString}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </HorizontalStackLayout>
+
         <ScrollView x:Name="contentScrollView" 
+                    Grid.Row="1"
                     VerticalOptions="Center" 
                     HorizontalScrollBarVisibility="Always">
 
