@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:model="clr-namespace:UBViews.Models"
              x:Class="UBViews.Views.QueryResultPage"
-             Title="{Binding PageTitle}"
+             Title="{Binding Title}"
              x:DataType="viewmodel:QueryResultViewModel">
 
     <ContentPage.Resources>
@@ -27,8 +28,11 @@
 
     <Grid x:Name="contentGrid" 
           VerticalOptions="StartAndExpand"
-          BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource UBDarkBackground}}">
-
+          BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                            Dark={StaticResource UBDarkBackground}}">
+        
+        <!--<Label Text="{Binding QueryString}" />-->
+        
         <ScrollView x:Name="contentScrollView" 
                     VerticalOptions="Center" 
                     HorizontalScrollBarVisibility="Always">
