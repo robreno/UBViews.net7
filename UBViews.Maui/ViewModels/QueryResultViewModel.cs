@@ -364,6 +364,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 var runs = paragraph.Runs;
                 Span newSpan = null;
 
+                formattedString.Spans.Add(hitsSpan);
                 formattedString.Spans.Add(tabSpan);
                 formattedString.Spans.Add(pidSpan);
                 formattedString.Spans.Add(spaceSpan);
@@ -377,8 +378,8 @@ public partial class QueryResultViewModel : BaseViewModel
                     formattedString.Spans.Add(newSpan);
                 }
 
-                formattedString.Spans.Add(spaceSpan);
-                formattedString.Spans.Add(hitsSpan);
+                //formattedString.Spans.Add(spaceSpan);
+                //formattedString.Spans.Add(hitsSpan);
 
             });
             return formattedString;
