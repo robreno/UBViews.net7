@@ -75,7 +75,7 @@ public partial class QueryResultViewModel : BaseViewModel
             QueryHits = dto.Hits;
 
             string titleMessage = $"Query Result {queryHits} hits ...";
-            PageTitle = titleMessage;
+            Title = titleMessage;
 
             var locations = dto.QueryLocations;
             foreach (var location in locations)
