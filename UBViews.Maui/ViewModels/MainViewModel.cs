@@ -31,7 +31,7 @@ public partial class MainViewModel : BaseViewModel
     IFSRepositoryService repositoryService;
 
     ParserService parserService;
-    QueryService queryService;
+    //QueryService queryService;
 
     public MainViewModel(IFileService fileService, IAppDataService appDataSerivce, 
                          IFSRepositoryService repositoryService, IConnectivity connectivityService)
@@ -42,26 +42,26 @@ public partial class MainViewModel : BaseViewModel
 
         this.repositoryService = repositoryService;
         this.parserService = new ParserService();
-        this.queryService = new QueryService();
+        //this.queryService = new QueryService();
     }
+
+    //[ObservableProperty]
+    //string pageTitle;
 
     [ObservableProperty]
     bool isRefreshing;
 
     [ObservableProperty]
-    string queryInput;
-
-    [ObservableProperty]
-    QueryInputDto queryInputObj;
-
-    [ObservableProperty]
     int tokenCount;
 
     [ObservableProperty]
-    string searchInput;
+    string queryInput;
 
     [ObservableProperty]
     string queryInputString;
+
+    //[ObservableProperty]
+    //string searchInput;
 
     [ObservableProperty]
     string queryExpression;
@@ -73,17 +73,27 @@ public partial class MainViewModel : BaseViewModel
     bool queryResultExists;
 
     [ObservableProperty]
-    string partId;
+    QueryInputDto queryInputObj;
 
     [ObservableProperty]
     QueryResultLocationsDto queryLocations;
+
+    [ObservableProperty]
+    string partId;
+
+    [ObservableProperty]
+    List<string> termList;
+
+    [ObservableProperty]
+    string stem;
 
     [RelayCommand]
     async Task MainPageAppearing()
     {
         try
         {
-            QueryInput = queryInput;
+            string titleMessage = $"UBViews Home";
+            Title = titleMessage;
         }
         catch (Exception ex)
         {
@@ -93,13 +103,24 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task MainPageLoaded()
+    {
+        try
+        {
+            // Handle Setup
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainPageLoaded => ",
+                ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
     async Task SumbitQuery(string queryString)
     {
         try
         {
-            if (IsBusy)
-                return;
-
             IsBusy = true;
 
             var validChars = QueryFilterService.checkForValidChars(queryString);
@@ -140,15 +161,9 @@ public partial class MainViewModel : BaseViewModel
             else
             {
                 await NormalizeQueryString(queryString);
-                string qryString = _queryInput.Text;
-
-                var _queryInputDto = new QueryInputDto { Text = qryString, TokenCount = _queryInput.TokenCount };
-
-                QueryInputObj = _queryInputDto;
-                QueryInputString = qryString;
 
                 // Check if query exists
-                (bool queryExists, QueryResultDto dto) = await repositoryService.QueryResultExistsAsync(queryString);
+                (bool queryExists, QueryResultDto dto) = await repositoryService.QueryResultExistsAsync(QueryInputString);
                 QueryResultExists = queryExists;
                 QueryResultLocationsDto queryResultLocationsDto = null;
                 int queryResultId = 0;
@@ -170,13 +185,17 @@ public partial class MainViewModel : BaseViewModel
                     // resurrection and halls
                     // premind and capacity filterby parid
 
-                    var astQuery = await parserService.ParseQueryAsync(queryString);
+                    var astQuery = await parserService.ParseQueryAsync(QueryInputString);
                     var queryHead = astQuery.Head;
                     QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
-                    var tokenPostingList = await repositoryService.RunQueryAsync(queryString);
-                    //var queryResultElm = await repositoryService.ProcessTokenPostingListAsync(qryString, queryHead, tokenPostingList);
-                    var qrlDto = await repositoryService.GetQueryResultLocationsAsync(qryString, queryHead, tokenPostingList);
+                    var tokenPostingList = await repositoryService.RunQueryAsync(QueryInputString);
+                    var queryResultElm = await repositoryService.ProcessTokenPostingListAsync(QueryInputString, 
+                                                                                              queryHead, 
+                                                                                              tokenPostingList);
+                    var qrlDto = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, 
+                                                                                      queryHead, 
+                                                                                      tokenPostingList);
 
                     QueryLocations = qrlDto;
                     // Navigate to QueryResultPage here
@@ -301,8 +320,9 @@ public partial class MainViewModel : BaseViewModel
             }
             qs = sb.ToString().Trim();
             _queryInput = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
-            QueryInput = _queryInput.Text;
             TokenCount = _queryInput.TokenCount;
+            QueryInputObj = _queryInput;
+            QueryInputString = _queryInput.Text;
         }
         catch (Exception ex)
         {
