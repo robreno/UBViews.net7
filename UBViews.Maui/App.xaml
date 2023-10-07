@@ -246,6 +246,10 @@
                 <!--<Setter Property="TextDecorations" Value="Underline" />-->
             </Style>
 
+            <Style x:Key="QueryResultSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="TextColor" Value="Blue"/>
+            </Style>
+
             <Style x:Key="RegularSpaceSpan" TargetType="Span" BasedOn="{StaticResource RegularSpan}">
                 <Setter Property="Text" Value=" " />
             </Style>
