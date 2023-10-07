@@ -79,7 +79,8 @@ module SimpleParse =
                     failwithf "Invalid Token -> [%s] in query." term
 
                 plo.Value
-                |> List.iter(fun pl -> let ol = async { let! occs = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath pl.Id |> Async.AwaitTask
+                |> List.iter(fun pl -> let ol = async { let! occs = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath pl.Id 
+                                                                        |> Async.AwaitTask
                                                         // Pass thru postingLists exist
                                                         return occs.Value } |> Async.StartAsTask
                                        ol.Result |> List.iteri(fun i o -> let tp = { PostingListID = o.PostingId
@@ -108,7 +109,8 @@ module SimpleParse =
                 let individualTokenIterators =
                     phrase
                     |> List.rev 
-                    |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath token |> Async.AwaitTask                                               
+                    |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath token 
+                                                                                |> Async.AwaitTask                                               
                                                                return retval } |> Async.StartAsTask
                                              if (opt.Result.IsNone) then
                                                 // failwith here and return empty TokenPostingList
