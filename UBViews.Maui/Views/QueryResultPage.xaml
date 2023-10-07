@@ -36,7 +36,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout Grid.Row="0" Margin="5,10,5,10">
+        <HorizontalStackLayout Grid.Row="0" Margin="15,10,5,10">
             <Label VerticalOptions="Start" 
            Style="{DynamicResource RegularParagraph}">
                 <Label.FormattedText>
@@ -57,7 +57,7 @@
             <VerticalStackLayout x:Name="outerVerticalStackLayout">
 
                 <VerticalStackLayout x:Name="contentVerticalStackLayout" 
-                                     Style="{DynamicResource PaperContentVSL}" 
+                                     Style="{DynamicResource QueryResultContentVSL}" 
                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                        Dark={StaticResource DarkBackground}}">
                     

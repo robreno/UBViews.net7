@@ -369,6 +369,10 @@
                 <Setter Property="Padding" Value="50,50,0,0" />
             </Style>
 
+            <Style x:Key="QueryResultContentVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Margin" Value="10,0,10,30" />
+            </Style>
+
             <!-- End UB Specific Styles -->
 
         </ResourceDictionary>
