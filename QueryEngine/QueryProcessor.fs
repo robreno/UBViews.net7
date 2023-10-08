@@ -108,8 +108,16 @@ module QueryProcessor =
     let rec evaluateQuery (queryElement: XElement) (query: Query) =
         let joinSymbol = "+"
         match query with
-        | Term(term) -> let e = XElement("Term", [term])
-                        e
+        | Term(term) -> let att = queryElement.Attribute("type")
+                        if att = null then
+                            queryElement.SetAttributeValue("type", "Term")
+                        else
+                            let v = queryElement.Attribute("type").Value
+                            queryElement.SetAttributeValue("type", v + joinSymbol + "STerm")
+                        let termList = queryToTermList(Term(term))
+                        queryElement.SetAttributeValue("terms", termList)
+                        queryElement.SetAttributeValue("proximity", "book")
+                        queryElement
         | STerm(term) -> let att = queryElement.Attribute("type")
                          if att = null then 
                             queryElement.SetAttributeValue("type", "STerm")
