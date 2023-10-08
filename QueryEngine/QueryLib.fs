@@ -89,23 +89,22 @@ type QueryService() =
             return queryString
         } |> Async.StartAsTask
 
-    member this.ProcessTokenPostingList (input: string) (query: Query) (tpl: seq<TokenPositionEx>) =
-        let queryResult = QueryProcessor.processTokenPostingSequence input query tpl
+    member this.ProcessTokenPostingList (dbPath: string) (input: string) (query: Query) (tpl: seq<TokenPositionEx>) =
+        let queryResult = QueryProcessor.processTokenPostingSequence dbPath input query tpl
         queryResult
 
-    member this.ProcessTokenPostingListAsync (input: string) (query: Query) (tpl: seq<TokenPositionEx>) =
+    member this.ProcessTokenPostingListAsync (dbPath: string) (input: string) (query: Query) (tpl: seq<TokenPositionEx>) =
         async {
-            let queryResult = QueryProcessor.processTokenPostingSequence input query tpl
+            let! queryResult = QueryProcessor.processTokenPostingSequenceAsync dbPath input query tpl |> Async.AwaitTask
             return queryResult
         } |> Async.StartAsTask
 
-    member this.RunQuery (dbpath: string) (query: Query) : SimpleEnumeratorsEx.TokenPostingList =
-        let tpl = getIteratorEx query
+    member this.RunQuery (dbPath: string) (query: Query) : SimpleEnumeratorsEx.TokenPostingList =
+        let tpl = SimpleParse.runQuery dbPath query
         tpl
 
     member this.RunQueryAsync (dbPath: string) (query: Query) : Task<SimpleEnumeratorsEx.TokenPostingList> =
         async {
-            setDatabasePath dbPath
-            let tpl = getIteratorEx query
+            let! tpl = SimpleParse.runQueryAsync dbPath query |> Async.AwaitTask
             return tpl
         } |> Async.StartAsTask

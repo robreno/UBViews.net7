@@ -43,6 +43,10 @@ module QueryProcessor =
        | FilterValue.SEQID -> "sequence"
        | FilterValue.PARID -> "paragraph"
 
+    let mutable _dbpath = ""
+    let setDatabasePath (dbpath: string) =
+        _dbpath <- dbpath
+
     let rec queryExpToString (query: Query) : string =
         match query with
         | Term(term)   -> "Term(\"" + term + "\")"
@@ -113,7 +117,7 @@ module QueryProcessor =
                             let v = queryElement.Attribute("type").Value
                             queryElement.SetAttributeValue("type", v + joinSymbol + "STerm")
                          let termList = queryToTermList(STerm(term))
-                         let opt = async { let! retval = QueryEngine.PostingRepository.getTokenStemAsync postingDbPath term |> Async.AwaitTask 
+                         let opt = async { let! retval = QueryEngine.PostingRepository.getTokenStemAsync _dbpath term |> Async.AwaitTask 
                                            return retval
                                       } |> Async.StartAsTask
                          if (opt.Result.IsNone) then
@@ -241,7 +245,8 @@ module QueryProcessor =
         reverseQueryString
 
     // TODO: Save to Database so move out from here
-    let processTokenPostingSequence (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
+    let processTokenPostingSequence (dbPath: string) (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
+        setDatabasePath dbPath
         let _queryExpStr = queryExpToString query
         let _queryType = getQueryType queryString
         let _queryStrElm = XElement("QueryString", [XText(queryString)])
@@ -331,9 +336,10 @@ module QueryProcessor =
         _queryResultElm
 
     // See: https://stackoverflow.com/questions/27131774/f-issue-with-async-workflow-and-try-with
-    let processTokenPostingSequenceAsync (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) 
+    let processTokenPostingSequenceAsync (dbPath: string) (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) 
                                          : Task<XElement> =
         async {
+            setDatabasePath dbPath
             let _queryType = getQueryType input
             let _str = queryExpToString query
             let _queryStr = XElement("QueryString", [XText(input)])

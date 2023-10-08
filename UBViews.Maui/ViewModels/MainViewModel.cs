@@ -189,29 +189,43 @@ public partial class MainViewModel : BaseViewModel
                     var queryHead = astQuery.Head;
                     QueryExpression = await parserService.QueryToStringAsync(queryHead);
 
-                    var tokenPostingList = await repositoryService.RunQueryAsync(QueryInputString);
-                    var queryResultElm = await repositoryService.ProcessTokenPostingListAsync(QueryInputString, 
-                                                                                              queryHead, 
-                                                                                              tokenPostingList);
-                    var qrlDto = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, 
-                                                                                      queryHead, 
-                                                                                      tokenPostingList);
+                    // ~caucasoid
+                    // ~rejuvenated
+                    var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
-                    QueryLocations = qrlDto;
-                    // Navigate to QueryResultPage here
-                    await NavigateTo("QueryResults");
+                    bool isAtEnd = tpl.AtEnd;
+                    if (!isAtEnd)
+                    {
+                        var qre = await repositoryService.ProcessTokenPostingListAsync(QueryInputString,
+                                                                                       queryHead,
+                                                                                       tpl);
 
-                    //var queryRowId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
-                    //queryResultElm.SetAttributeValue("id", queryRowId);
+                        var qrl = await repositoryService.GetQueryResultLocationsAsync(QueryInputString,
+                                                                                       queryHead,
+                                                                                       tpl);
 
-                    // Create object model
-                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
+                        QueryLocations = qrl;
+                        // Navigate to QueryResultPage here
+                        await NavigateTo("QueryResults");
 
-                    // Add queryResultEml to QueryHistory AppData file here
-                    //await _appDataService.AddQueryResult(queryResultElm);
+                        //var queryRowId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
+                        //queryResultElm.SetAttributeValue("id", queryRowId);
 
-                    // Navigate to QueryResultPage here
-                    //await NavigateTo("QueryResults");
+                        // Create object model
+                        //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
+
+                        // Add queryResultEml to QueryHistory AppData file here
+                        //await _appDataService.AddQueryResult(queryResultElm);
+
+                        // Navigate to QueryResultPage here
+                        //await NavigateTo("QueryResults");
+                    }
+                    else
+                    {
+                        string msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
+                        await App.Current.MainPage.DisplayAlert("SumbitQuery => ", msg, "Cancel");
+                        await Shell.Current.GoToAsync("..");
+                    }
                 }
             }
         }

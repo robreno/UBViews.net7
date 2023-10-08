@@ -141,21 +141,21 @@ namespace UBViews.Services
 
         #region Database Helper Methods
         /// <summary>
-        /// 
+        /// RunQueryAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
         Task<TokenPostingList> RunQueryAsync(string queryString);
 
         /// <summary>
-        /// 
+        /// ProcessTokenPostingListAsync
         /// </summary>
         /// <param name="tpl"></param>
         /// <returns></returns>
         Task<XElement> ProcessTokenPostingListAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl);
 
         /// <summary>
-        /// 
+        /// GetQueryResultLocationsAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <param name="query"></param>

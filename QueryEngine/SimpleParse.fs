@@ -168,3 +168,15 @@ module SimpleParse =
                             tpl
         | NoOpQuery   -> new TokenPostingList([])
 
+    let runQuery (dbPath: string) (query: Query) =
+        setDatabasePath dbPath
+        let result = getIteratorEx query
+        result
+
+    let runQueryAsync (dbPath: string) (query: Query) =
+        async {
+            setDatabasePath dbPath
+            let result = getIteratorEx query
+            return result
+        } |> Async.StartAsTask
+

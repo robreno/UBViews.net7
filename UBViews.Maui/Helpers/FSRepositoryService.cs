@@ -664,7 +664,7 @@ namespace UBViews.Helpers
             {
                 var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
                 XElement queryResult = null;
-                queryResult = QueryProcessor.processTokenPostingSequence(queryString, query, _tpl);
+                queryResult = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _tpl);
                 return queryResult;
             }
             catch (Exception ex)
@@ -675,7 +675,7 @@ namespace UBViews.Helpers
         }
 
         /// <summary>
-        /// 
+        /// GetQueryResultLocationsAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <param name="query"></param>
@@ -689,7 +689,7 @@ namespace UBViews.Helpers
                 QueryResultLocationsDto dto = null;
                 var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
                 XElement queryResult = null;
-                queryResult = QueryProcessor.processTokenPostingSequence(queryString, query, _tpl);
+                queryResult = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _tpl);
                 dto = await MapQueryResultElmToDto(queryResult);
                 return dto;
             }
