@@ -149,8 +149,9 @@ module SimpleParse =
                             (getIteratorEx x) (getIteratorEx y)
             results
         | Or(x, y) -> 
-            let tpl = new TokenPostingList([])
-            tpl
+            let results = disjunctiveQueryWithRangePID
+                            (getIteratorEx x) (getIteratorEx y)
+            results
         | SubQuery(q) -> getIteratorEx q
         | FilterBy(q, f) -> let tpl =
                                 match q with

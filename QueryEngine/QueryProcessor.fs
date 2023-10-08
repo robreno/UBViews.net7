@@ -170,7 +170,16 @@ module QueryProcessor =
                             queryElement.SetAttributeValue("terms", termList)
                             queryElement.SetAttributeValue("proximity", "paragraph")
                             queryElement
-        | Or(x, y)       -> XElement("QueryResult", [])
+        | Or(x, y)       -> let att = queryElement.Attribute("type")
+                            if att = null then 
+                               queryElement.SetAttributeValue("type", "Or")
+                            else 
+                               let v = queryElement.Attribute("type").Value
+                               queryElement.SetAttributeValue("type", v + joinSymbol + "Or" )
+                            let termList = queryToTermList(Or(x, y))
+                            queryElement.SetAttributeValue("terms", termList)
+                            queryElement.SetAttributeValue("proximity", "book")
+                            queryElement
         | SubQuery(q)    -> XElement("QueryResult", [])
         | FilterBy(q, f) -> let att = queryElement.Attribute("type")
                             if att = null then 

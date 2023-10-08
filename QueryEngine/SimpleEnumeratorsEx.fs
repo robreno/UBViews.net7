@@ -486,31 +486,39 @@ module SimpleEnumeratorsEx =
 
         /// Combine two enumerators to return only documents found in both enumerators.
     let disjunctiveQueryWithRangeTOP (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
-        let seqList1 = iter1.BasePostingList
-        let seqList2 = iter2.BasePostingList
-        let falseRetVal = new TokenPostingList([])
-        falseRetVal
+        let seq1 = iter1.BasePostingList.Head
+        let seq2 = iter2.BasePostingList.Head
+
+        let newSeq = Seq.append seq1 seq2
+        let tpl = new TokenPostingList(newSeq)
+        tpl
     
     /// Combine two enumerators to return only documents found in both enumerators.
     let disjunctiveQueryWithRangeDID (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
-        let seqList1 = iter1.BasePostingList
-        let seqList2 = iter2.BasePostingList
-        let falseRetVal = new TokenPostingList([])
-        falseRetVal
+        let seq1 = iter1.BasePostingList.Head
+        let seq2 = iter2.BasePostingList.Head
+
+        let newSeq = Seq.append seq1 seq2
+        let tpl = new TokenPostingList(newSeq)
+        tpl
     
     /// Combine two enumerators to return only documents found in both enumerators.
     let disjunctiveQueryWithRangeSID (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
-        let seqList1 = iter1.BasePostingList
-        let seqList2 = iter2.BasePostingList
-        let falseRetVal = new TokenPostingList([])
-        falseRetVal
+        let seq1 = iter1.BasePostingList.Head
+        let seq2 = iter2.BasePostingList.Head
+
+        let newSeq = Seq.append seq1 seq2
+        let tpl = new TokenPostingList(newSeq)
+        tpl
     
     /// Combine two enumerators to return only documents found in both enumerators.
     let disjunctiveQueryWithRangePID (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
-        let seqList1 = iter1.BasePostingList
-        let seqList2 = iter2.BasePostingList
-        let falseRetVal = new TokenPostingList([])
-        falseRetVal
+        let seq1 = iter1.BasePostingList.Head
+        let seq2 = iter2.BasePostingList.Head
+
+        let newSeq = Seq.append seq1 seq2
+        let tpl = new TokenPostingList(newSeq)
+        tpl
     
     /// Combine two enumerators to return only documents found in both enumerators.
     let disjunctiveQueryWithRange (iter1 : TokenPostingList) 
