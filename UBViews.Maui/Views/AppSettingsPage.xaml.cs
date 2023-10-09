@@ -1,7 +1,12 @@
+namespace UBViews.Views;
+
 using UBViews.Services;
 using UBViews.ViewModels;
 
-namespace UBViews.Views;
+// TODO: I don't think any of the code behind is used now
+// as it is all done in the viewmodel. Need to cleanup
+// and remove it to simplify. First confirm it is never
+// used.
 
 /// <summary>
 /// 
@@ -11,11 +16,13 @@ public partial class AppSettingsPage : ContentPage
     /// <summary>
     /// 
     /// </summary>
+    bool useCaching;
     int maxNumber;
     bool showPids;
     double lineHeight;
     int screenSize;
 
+    bool useCachingDirty;
     bool maxNumDirty;
     bool showPidsDirty;
     bool lineHeightDirty;
@@ -48,6 +55,7 @@ public partial class AppSettingsPage : ContentPage
     {
         try
         {
+            useCaching = await appSettingsService.Get("use_caching", false);
             maxNumber = await appSettingsService.Get("max_query_results", 50);
             this.maxNumberEntry.Text = maxNumber.ToString("0");
             showPids = await appSettingsService.Get("show_reference_pids", false);
@@ -111,6 +119,19 @@ public partial class AppSettingsPage : ContentPage
         {
             showPids = pidsCheckBox.IsChecked;
             showPidsDirty = true;
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+        }
+    }
+
+    private async void OnUseCachingCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        try
+        {
+            useCaching = cachingCheckBox.IsChecked;
+            useCachingDirty = true;
         }
         catch (Exception ex)
         {
