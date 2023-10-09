@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Settings count="7">
+  <Setting name="use_caching" type="bool" value="false" />
   <Setting name="max_query_results" type="int" value="50" />
   <Setting name="line_height" type="double" value="1.0" />
   <Setting name="show_reference_pids" type="bool" value="false" />

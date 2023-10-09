@@ -20,12 +20,14 @@ public partial class AppSettingsViewModel : BaseViewModel
     /// </summary>
     public ContentPage contentPage;
 
+    bool previousUseCaching;
     int previousMaxQuery;
     double previousLineHeight;
     bool previousShowPids;
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
     int previousWindowSize;
+    bool settingsDirty;
 
     private IAppSettingsService settingsService;
 
@@ -45,6 +47,9 @@ public partial class AppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     bool showReferencePids;
+
+    [ObservableProperty]
+    bool useCaching;
 
     [ObservableProperty]
     bool showPaperContents;
@@ -73,6 +78,20 @@ public partial class AppSettingsViewModel : BaseViewModel
             windowSizeHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
 #endif
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
+    async Task AppSettingPageLoaded()
+    {
+        try
+        {
+            // Do nothing for now
         }
         catch (Exception ex)
         {
@@ -132,6 +151,21 @@ public partial class AppSettingsViewModel : BaseViewModel
         {
             previousShowPids = ShowReferencePids;
             ShowReferencePids  = value;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
+    async Task UseCachingCheckedChanged(bool value)
+    {
+        try
+        {
+            previousUseCaching = UseCaching;
+            UseCaching = value;
         }
         catch (Exception ex)
         {
@@ -205,12 +239,14 @@ public partial class AppSettingsViewModel : BaseViewModel
     {
         try
         {
+            UseCaching = previousUseCaching = await settingsService.Get("use_caching", false);
             MaxQueryResults = previousMaxQuery = await settingsService.Get("max_query_results", 50);
             ShowReferencePids = previousShowPids = await settingsService.Get("show_reference_pids", false);
             LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
             ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
+            settingsDirty = false;
         }
         catch (Exception ex)
         {
@@ -224,29 +260,44 @@ public partial class AppSettingsViewModel : BaseViewModel
     {
         try
         {
+            if (previousUseCaching != UseCaching)
+            {
+                await settingsService.SetCache("use_caching", UseCaching);
+                settingsDirty = true;
+            }
             if (previousMaxQuery != MaxQueryResults)
             {
                 await settingsService.SetCache("max_query_results", MaxQueryResults);
+                settingsDirty = true;
             }
             if (previousShowPids != ShowReferencePids)
             {
                 await settingsService.SetCache("show_reference_pids", ShowReferencePids);
+                settingsDirty = true;
             }
             if (previousLineHeight != LineHeight)
             {
                 await settingsService.SetCache("line_height", LineHeight);
+                settingsDirty = true;
             }
             if (previousShowPaperContents != ShowPaperContents)
             {
                 await settingsService.SetCache("show_paper_contents", ShowPaperContents);
+                settingsDirty = true;
             }
             if (previousShowPlaybackControls != ShowPlaybackControls)
             {
                 await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
+                settingsDirty = true;
             }
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);
+                settingsDirty = true;
+            }
+            if (settingsDirty && !UseCaching)
+            {
+                await SaveCacheSettings();
             }
             await App.Current.MainPage.DisplayAlert("Settings", "Settings were saved!", "Ok");
         }

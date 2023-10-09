@@ -81,7 +81,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
             string targetFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
             using var stream = File.Create(targetFilePath);
             CancellationToken token = new CancellationToken(false);
-            await _settingsRoot.SaveAsync(stream, SaveOptions.DisableFormatting, token);
+            await _settingsRoot.SaveAsync(stream, SaveOptions.None, token);
         }
         catch (Exception ex)
         {
@@ -280,6 +280,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
                 return;
             }
             await SaveAppSettingsAsync(_settingsFileName);
+            _cacheDirty = false;
         }
         catch (Exception ex)
         {

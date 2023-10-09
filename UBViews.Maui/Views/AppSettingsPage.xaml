@@ -6,8 +6,7 @@
              xmlns:converter="clr-namespace:UBViews.Converters"
              x:Class="UBViews.Views.AppSettingsPage"
              x:DataType="viewmodel:AppSettingsViewModel"
-             Title="App Settings Page"
-             Loaded="OnLoaded">
+             Title="App Settings Page">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,6 +17,8 @@
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
             EventName="Appearing" Command="{Binding AppSettingPageAppearingCommand}" />
+        <behavior:EventToCommandBehavior 
+            EventName="Appearing" Command="{Binding AppSettingPageLoadedCommand}" />
         <behavior:EventToCommandBehavior 
             EventName="Disappearing" Command="{Binding AppSettingPageDisappearingCommand}" />
     </ContentPage.Behaviors>
@@ -154,6 +155,22 @@
                             CommandParameter="{Binding Source={x:Reference windowSizePicker}, Path=SelectedIndex}"/>
                     </Picker.Behaviors>
                 </Picker>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout x:Name="CachingHSL" Margin=".5">
+                <Label x:Name="useCachingLabel" 
+                       Text="Use Caching:"
+                        Style="{StaticResource AppSettingsLabels}"/>
+                <CheckBox x:Name="cachingCheckBox"
+                          Color="Blue"
+                          IsChecked="{Binding UseCaching, Mode=OneWay}">
+                    <CheckBox.Behaviors>
+                        <behavior:EventToCommandBehavior 
+                            EventName="CheckedChanged" 
+                            Command="{Binding UseCachingCheckedChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference cachingCheckBox}, Path=IsChecked}"/>
+                    </CheckBox.Behaviors>
+                </CheckBox>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

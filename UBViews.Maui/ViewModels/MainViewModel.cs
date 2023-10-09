@@ -73,8 +73,8 @@ public partial class MainViewModel : BaseViewModel
     //[ObservableProperty]
     //int queryHits;
 
-    //[ObservableProperty]
-    //int maxQueryResults;
+    [ObservableProperty]
+    int maxQueryResults;
 
     [ObservableProperty]
     QueryInputDto queryInputObj;
