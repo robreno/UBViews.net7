@@ -24,17 +24,15 @@ public partial class MainViewModel : BaseViewModel
 {
     QueryInputDto _queryInput = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
 
-    IFileService fileService;
-    IAppSettingsService appSettingsService;
-
+    // TODO: Add in later when AudioService is added
     //ConnectivityViewModel connectivityViewModel;
     //IConnectivity connectivityService;
 
+    IFileService fileService;
+    IAppSettingsService appSettingsService;
     IFSRepositoryService repositoryService;
 
     ParserService parserService;
-    //QueryService queryService;
-
     public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService)
     {
         this.fileService = fileService;
