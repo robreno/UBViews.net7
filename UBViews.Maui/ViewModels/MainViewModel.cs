@@ -24,21 +24,21 @@ public partial class MainViewModel : BaseViewModel
 {
     QueryInputDto _queryInput = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
 
-    ConnectivityViewModel connectivityViewModel;
-
-    IConnectivity connectivityService;
     IFileService fileService;
+    IAppSettingsService appSettingsService;
+
+    //ConnectivityViewModel connectivityViewModel;
+    //IConnectivity connectivityService;
+
     IFSRepositoryService repositoryService;
 
     ParserService parserService;
     //QueryService queryService;
 
-    public MainViewModel(IFileService fileService, IAppDataService appDataSerivce, 
-                         IFSRepositoryService repositoryService, IConnectivity connectivityService)
+    public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService)
     {
-        this.connectivityService = Connectivity.Current;
-        connectivityViewModel = new ConnectivityViewModel(this.connectivityService);
         this.fileService = fileService;
+        this.appSettingsService = appSettingsService;
 
         this.repositoryService = repositoryService;
         this.parserService = new ParserService();
@@ -72,6 +72,12 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     bool queryResultExists;
 
+    //[ObservableProperty]
+    //int queryHits;
+
+    //[ObservableProperty]
+    //int maxQueryResults;
+
     [ObservableProperty]
     QueryInputDto queryInputObj;
 
@@ -94,6 +100,7 @@ public partial class MainViewModel : BaseViewModel
         {
             string titleMessage = $"UBViews Home";
             Title = titleMessage;
+            //MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
         }
         catch (Exception ex)
         {
@@ -107,7 +114,7 @@ public partial class MainViewModel : BaseViewModel
     {
         try
         {
-            // Handle Setup
+           
         }
         catch (Exception ex)
         {
@@ -191,6 +198,7 @@ public partial class MainViewModel : BaseViewModel
 
                     // ~caucasoid
                     // ~rejuvenated
+                    // crime or punishment
                     var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
                     bool isAtEnd = tpl.AtEnd;
@@ -203,6 +211,9 @@ public partial class MainViewModel : BaseViewModel
                         var qrl = await repositoryService.GetQueryResultLocationsAsync(QueryInputString,
                                                                                        queryHead,
                                                                                        tpl);
+
+                        //var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
+                        //qrl.QueryLocations = maxQryLocs;
 
                         QueryLocations = qrl;
                         // Navigate to QueryResultPage here
@@ -241,29 +252,29 @@ public partial class MainViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand]
-    async Task CheckInternet()
-    {
-        if (IsBusy)
-            return;
+    //[RelayCommand]
+    //async Task CheckInternet()
+    //{
+    //    if (IsBusy)
+    //        return;
 
-        try
-        {
-            IsBusy = true;
+    //    try
+    //    {
+    //        IsBusy = true;
 
-            var hasInternet = await connectivityViewModel.CheckInternet();
-            await App.Current.MainPage.DisplayAlert("Has Internet", hasInternet ? "YES!" : "NO!", "OK");
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.CheckInternet => ",
-                ex.Message, "Cancel");
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
+    //        var hasInternet = await connectivityViewModel.CheckInternet();
+    //        await App.Current.MainPage.DisplayAlert("Has Internet", hasInternet ? "YES!" : "NO!", "OK");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.CheckInternet => ",
+    //            ex.Message, "Cancel");
+    //    }
+    //    finally
+    //    {
+    //        IsBusy = false;
+    //    }
+    //}
 
     [RelayCommand]
     async Task NavigateTo(string target)

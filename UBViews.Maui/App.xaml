@@ -247,7 +247,7 @@
             </Style>
 
             <Style x:Key="QueryResultSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
-                <Setter Property="TextColor" Value="Blue"/>
+                <Setter Property="TextColor" Value="DarkGoldenrod"/>
             </Style>
 
             <Style x:Key="RegularSpaceSpan" TargetType="Span" BasedOn="{StaticResource RegularSpan}">

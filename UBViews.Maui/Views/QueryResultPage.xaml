@@ -36,12 +36,16 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout Grid.Row="0" Margin="15,10,5,10">
-            <Label VerticalOptions="Start" 
-           Style="{DynamicResource RegularParagraph}">
+        <HorizontalStackLayout Grid.Row="0" Margin="5,10,0,10">
+            <Label VerticalOptions="Start"
+                   Style="{DynamicResource RegularParagraph}"
+                   ToolTipProperties.Text="To display more query results go to settings page.">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Style="{StaticResource RegularSpan}" Text="Query Entered:" />
+                        <Span Style="{StaticResource RegularSpan}" Text="Query (" />
+                        <Span Style="{StaticResource RegularSpan}" Text="max " />
+                        <Span Style="{StaticResource RegularSpan}" Text="{Binding MaxQueryResults}" />
+                        <Span Style="{StaticResource RegularSpan}" Text="):" />
                         <Span Style="{StaticResource RegularSpan}" Text="  " />
                         <Span Style="{StaticResource QueryResultSpan}" Text="{Binding QueryString}" />
                     </FormattedString>

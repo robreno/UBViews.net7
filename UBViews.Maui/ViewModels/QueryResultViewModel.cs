@@ -30,10 +30,12 @@ public partial class QueryResultViewModel : BaseViewModel
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
 
     IFileService fileService;
+    IAppSettingsService appSettingsService;
 
-    public QueryResultViewModel(IFileService fileService)
+    public QueryResultViewModel(IFileService fileService, IAppSettingsService appSettingsService)
     {
         this.fileService = fileService;
+        this.appSettingsService = appSettingsService;
     }
 
     [ObservableProperty]
@@ -50,6 +52,9 @@ public partial class QueryResultViewModel : BaseViewModel
 
     [ObservableProperty]
     int queryHits;
+
+    [ObservableProperty]
+    int maxQueryResults;
 
     [ObservableProperty]
     bool showReferencePids;
@@ -73,12 +78,13 @@ public partial class QueryResultViewModel : BaseViewModel
 
             QueryString = dto.QueryString;
             QueryHits = dto.Hits;
+            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
 
             string titleMessage = $"Query Result {queryHits} hits ...";
             Title = titleMessage;
 
-            var locations = dto.QueryLocations;
-            foreach (var location in locations)
+            var qlr = dto.QueryLocations.Take(MaxQueryResults).ToList();
+            foreach (var location in qlr)
             {
                 QueryLocations.Add(location);
             }

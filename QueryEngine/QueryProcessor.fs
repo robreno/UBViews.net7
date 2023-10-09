@@ -180,7 +180,7 @@ module QueryProcessor =
                             queryElement.SetAttributeValue("terms", termList)
                             queryElement.SetAttributeValue("proximity", "book")
                             queryElement
-        | SubQuery(q)    -> XElement("QueryResult", [])
+        | SubQuery(q)    -> evaluateQuery queryElement q 
         | FilterBy(q, f) -> let att = queryElement.Attribute("type")
                             if att = null then 
                                queryElement.SetAttributeValue("type", "FilterBy")
