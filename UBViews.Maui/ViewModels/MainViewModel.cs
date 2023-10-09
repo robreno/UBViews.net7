@@ -9,7 +9,6 @@ using Microsoft.Maui.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-
 using UBViews.Services;
 using UBViews.Helpers;
 using UBViews.Models.Query;
@@ -112,7 +111,7 @@ public partial class MainViewModel : BaseViewModel
     {
         try
         {
-           
+            //MaxQueryResults = await appSettingsService.Get("max_query_results", 50);  
         }
         catch (Exception ex)
         {
