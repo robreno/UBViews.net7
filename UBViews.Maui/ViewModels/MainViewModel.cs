@@ -42,9 +42,6 @@ public partial class MainViewModel : BaseViewModel
         //this.queryService = new QueryService();
     }
 
-    //[ObservableProperty]
-    //string pageTitle;
-
     [ObservableProperty]
     bool isRefreshing;
 
