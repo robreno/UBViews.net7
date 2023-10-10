@@ -5,8 +5,6 @@ open SQLite
 open Models
 open UtilFuncs
 
-// https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/xml-documentation
-
 module PostingRepository =
 
     // PostingList Tables
