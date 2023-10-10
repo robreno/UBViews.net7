@@ -124,28 +124,33 @@ public partial class MainViewModel : BaseViewModel
         {
             IsBusy = true;
 
+            var isNullOrEmpty = string.IsNullOrEmpty(queryString);
             var validChars = QueryFilterService.checkForValidChars(queryString);
             var validCharsSuccess = validChars.Item1;
             var validForm = QueryFilterService.checkForValidForm(queryString);
             var validFormSuccess = validForm.Item1;
 
-            if (queryString == null ||
-                    queryString == string.Empty ||
-                    !validCharsSuccess ||
-                    !validFormSuccess)
+            var errorMessage = string.Empty;
+            var msg = string.Empty;
+            if (isNullOrEmpty || !validCharsSuccess || !validFormSuccess)
             {
-                var errorMessage = string.Empty;
-                var msg = string.Empty;
-
-                if (!validCharsSuccess || !validFormSuccess)
+                if (isNullOrEmpty)
+                {
+                    errorMessage = "[Empty Query String]";
+                }
+                else if (!validCharsSuccess || !validFormSuccess)
                 {
                     if (!validCharsSuccess)
-                        errorMessage = errorMessage + validChars.Item2 + ";";
+                        errorMessage = errorMessage + "at " + validChars.Item2 + "; ";
                     if (!validFormSuccess)
-                        errorMessage = errorMessage + validForm.Item2 + ";";
-
-                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                        errorMessage = errorMessage + "at " + validForm.Item2 + "; ";
                 }
+                else
+                {
+                    errorMessage = "Unknown Query Error";
+                }
+
+                msg = $"Bad query {errorMessage}. \r\nEdit and click Ok or cancel query.";
 
                 var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
                                                                            "Cancel", null, -1, null, queryString);
@@ -227,7 +232,7 @@ public partial class MainViewModel : BaseViewModel
                     }
                     else
                     {
-                        string msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
+                        msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
                         await App.Current.MainPage.DisplayAlert("SumbitQuery => ", msg, "Cancel");
                         await Shell.Current.GoToAsync("..");
                     }
