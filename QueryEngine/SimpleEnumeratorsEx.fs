@@ -22,6 +22,10 @@ module SimpleEnumeratorsEx =
 
         member this.BasePostingList = [_basePostingList]
 
+        member this.GetBasePostingList() =
+            let tokenPositionList = _basePostingList.ToList()
+            tokenPositionList
+
         member this.AdvanceTo(tokenPosition) =
             while (not this.AtEnd) && (this.Current < tokenPosition) do
                 this.MoveNext()

@@ -9,7 +9,7 @@ open System.Text.RegularExpressions
 
 open UBViews.Query.Ast
 open DataTypesEx
-open StringPaths
+//open StringPaths
 open UtilFuncs
 
 
@@ -48,6 +48,7 @@ module QueryProcessor =
         _dbpath <- dbpath
 
     let rec queryExpToString (query: Query) : string =
+        let qs = query.ToString()
         match query with
         | Term(term)   -> "Term(\"" + term + "\")"
         | STerm(term)  -> "STerm(\"" + term + "\")"
@@ -59,12 +60,15 @@ module QueryProcessor =
                                      ns)
             "CTerm(\"" + newStringList.ToString() + "\")"
         | Phrase(phrase) -> 
+            let mutable ns: string = String.Empty
             let newStringList = 
                 phrase
-                |> List.rev 
-                |> List.map (fun s -> let ns = s
+                |> List.map (fun w -> ns <- ns + "\"" + w + "\"; "
                                       ns)
-            "Phrase(" + newStringList.ToString() + ")"
+            ns <- ns.Substring(0, ns.Length-2)
+            let qes = "Phrase [" + ns + "]"
+            let isExact = qs.Equals(qes)
+            qes
         | And(x, y)   -> "And(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
         | Or(x, y)    -> "Or(" + queryExpToString(x) + "," + queryExpToString(y) + ")"
         | SubQuery(q) -> "SubQuery(" + queryExpToString(q) + ")"
@@ -89,10 +93,10 @@ module QueryProcessor =
                            cterm |> List.rev |> List.iter (fun t -> sb.Append(t + " ") |> ignore)
                            let term = sb.ToString().Trim()
                            term :: []
-       | Phrase(phrase) -> let mutable sb = new StringBuilder()
-                           phrase |> List.rev |> List.iter (fun t -> sb.Append(t + " ") |> ignore)
-                           let phraseStr = sb.ToString().Trim()
-                           phraseStr :: []
+       | Phrase(phrase) -> let mutable nl: string list = [] 
+                           phrase
+                           |> List.iter (fun w -> nl <- w :: nl)
+                           nl
        | And(x, y)      -> let term1 = queryToTermList(x) 
                            let term2 = queryToTermList(y)
                            let terms = term1 @ term2
@@ -152,12 +156,11 @@ module QueryProcessor =
                             else 
                                 let v = queryElement.Attribute("type").Value
                                 queryElement.SetAttributeValue("type", v + joinSymbol + "Phrase" )
-                            let phraseParts =
-                                phrase
-                                |> List.rev 
-                                |> List.toArray
-                            let termList = queryToTermList(Phrase(phrase))
-                            queryElement.SetAttributeValue("terms", termList)
+                            let mutable ns: string = String.Empty
+                            phrase
+                            |> List.iter (fun w -> ns <- ns + w + "; ")
+                            ns <- "[" + ns.Substring(0, ns.Length-2) + "]"
+                            queryElement.SetAttributeValue("terms", ns)
                             queryElement.SetAttributeValue("proximity", "paragraph")
                             queryElement
         | And(x, y)      -> let att = queryElement.Attribute("type")
@@ -220,11 +223,15 @@ module QueryProcessor =
         let rgxFilterBy = new Regex("filterb")
         let rgxAnd = new Regex(@"\sand\s")
         let rgxOr  = new Regex(@"\sor\s")
+        let rgxPhrase = new Regex(@"^\""")
+
         let mutable queryType = String.Empty
 
         let filterByOp = rgxFilterBy.Match(queryString).Success
         let andOp = rgxAnd.Match(queryString).Success
         let orOp = rgxOr.Match(queryString).Success
+        let phraseOp = rgxPhrase.Match(queryString).Success
+
         if (andOp && filterByOp) then
             queryType <- "FilterBy+And"
         else if (orOp && filterByOp) then
@@ -233,6 +240,8 @@ module QueryProcessor =
             queryType <- "And"
         else if (orOp && not filterByOp) then
             queryType <- "Or"
+        else if (phraseOp) then
+            queryType <- "Phrase"
         else
             queryType <- "Unknown"
 
@@ -358,19 +367,19 @@ module QueryProcessor =
         async {
             setDatabasePath dbPath
             let _queryType = getQueryType input
-            let _str = queryExpToString query
-            let _queryStr = XElement("QueryString", [XText(input)])
+            let _queryExpStr = queryExpToString query
+            let _queryStrElm = XElement("QueryString", [XText(input)])
             let _reverseQueryStr = reverseQueryString input _queryType
-            let _reverseQuery = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
-            let _queryExpr = XElement("QueryExpression", [XText(_str)])
+            let _reverseQueryElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
+            let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
 
             let mutable _queryResult = XElement("QueryResult", [])
             _queryResult.SetAttributeValue("id", "0")
             _queryResult.SetAttributeValue("locationCount", 0)
-            _queryResult.Add(_queryStr)
+            _queryResult.Add(_queryStrElm)
             if (_reverseQueryStr <> "") then
-                _queryResult.Add(_reverseQuery)
-            _queryResult.Add(_queryExpr)
+                _queryResult.Add(_reverseQueryElm)
+            _queryResult.Add(_queryExprElm)
             
             evaluateQuery _queryResult query |> ignore
             let queryType = _queryResult.Attribute("type").Value
@@ -413,18 +422,18 @@ module QueryProcessor =
                                                          let _term = t.Token
 
                                                          let _occ = XElement("TermOccurrence", [])
+
+                                                         _occ.SetAttributeValue("term", _term)
+                                                         _occ.SetAttributeValue("docId", _did)
+                                                         _occ.SetAttributeValue("seqId", _sid)
+                                                         _occ.SetAttributeValue("dpoId", _dpo)
+                                                         _occ.SetAttributeValue("tpoId", _tpo)
+                                                         _occ.SetAttributeValue("len", _term.Length)
+
                                                          if _isPhraseOrCTerm then
                                                             _occ.SetAttributeValue("term", _queryString)
-                                                         else
-                                                            _occ.SetAttributeValue("term", _term)
-                                                            _occ.SetAttributeValue("docId", _did)
-                                                            _occ.SetAttributeValue("seqId", _sid)
-                                                            _occ.SetAttributeValue("dpoId", _dpo)
-                                                            _occ.SetAttributeValue("tpoId", _tpo)
-                                                         if _isPhraseOrCTerm then
                                                             _occ.SetAttributeValue("len", _length)
-                                                         else
-                                                            _occ.SetAttributeValue("len", _term.Length)
+
                                                          _occList.Add(_occ)
                                                          _occList.SetAttributeValue("count", _occList.Elements().Count())
                                              )
