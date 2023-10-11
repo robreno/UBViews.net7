@@ -192,8 +192,8 @@ public partial class MainViewModel : BaseViewModel
                     // premind and capacity filterby parid
 
                     var astQuery = await parserService.ParseQueryAsync(QueryInputString);
-                    var queryHead = astQuery.Head;
-                    QueryExpression = await parserService.QueryToStringAsync(queryHead);
+                    var query = astQuery.Head;
+                    QueryExpression = await parserService.QueryToStringAsync(query);
 
                     // ~caucasoid
                     // ~rejuvenated
@@ -203,19 +203,11 @@ public partial class MainViewModel : BaseViewModel
                     bool isAtEnd = tpl.AtEnd;
                     if (!isAtEnd)
                     {
-                        var qre = await repositoryService.ProcessTokenPostingListAsync(QueryInputString,
-                                                                                       queryHead,
-                                                                                       tpl);
-
-                        var qrl = await repositoryService.GetQueryResultLocationsAsync(QueryInputString,
-                                                                                       queryHead,
-                                                                                       tpl);
-
-                        //var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
+                        (QueryResultLocationsDto qrl, XElement qre) = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, query, tpl);
+                        var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
                         //qrl.QueryLocations = maxQryLocs;
 
                         QueryLocations = qrl;
-                        // Navigate to QueryResultPage here
                         await NavigateTo("QueryResults");
 
                         //var queryRowId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
