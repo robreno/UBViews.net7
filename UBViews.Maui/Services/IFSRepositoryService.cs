@@ -161,7 +161,7 @@ namespace UBViews.Services
         /// <param name="query"></param>
         /// <param name="tpl"></param>
         /// <returns></returns>
-        Task<QueryResultLocationsDto> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl);
+        Task<(QueryResultLocationsDto, XElement)> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl);
         #endregion
     }
 }

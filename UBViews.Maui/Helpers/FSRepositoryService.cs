@@ -662,9 +662,9 @@ namespace UBViews.Helpers
             string methodName = "ProcessTokenPostingListAsync";
             try
             {
-                var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
+                var _basePL = tpl.BasePostingList.Head;
                 XElement queryResult = null;
-                queryResult = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _tpl);
+                queryResult = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _basePL);
                 return queryResult;
             }
             catch (Exception ex)
@@ -681,22 +681,22 @@ namespace UBViews.Helpers
         /// <param name="query"></param>
         /// <param name="tpl"></param>
         /// <returns></returns>
-        public async Task<QueryResultLocationsDto> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
+        public async Task<(QueryResultLocationsDto, XElement)> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
         {
             string methodName = "ProcessTokenPostingListAsync";
             try
             {
                 QueryResultLocationsDto dto = null;
-                var _tpl = (IEnumerable<DataTypesEx.TokenPositionEx>)tpl.BasePostingList.Head;
-                XElement queryResult = null;
-                queryResult = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _tpl);
-                dto = await MapQueryResultElmToDto(queryResult);
-                return dto;
+                var _basePL = tpl.BasePostingList.Head;
+                XElement qre = null;
+                qre = await QueryProcessor.processTokenPostingSequenceAsync(postingDB_Path, queryString, query, _basePL);
+                dto = await MapQueryResultElmToDto(qre);
+                return (dto, qre);
             }
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
-                return null;
+                return (null, null);
             }
         }
         #endregion
