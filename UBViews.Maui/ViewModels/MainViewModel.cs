@@ -124,6 +124,12 @@ public partial class MainViewModel : BaseViewModel
         {
             IsBusy = true;
 
+            var isMinusHyphenated = queryString.Contains("-");
+            if (isMinusHyphenated)
+            {
+                queryString = queryString.Replace("-", "‑");
+            }
+
             var isNullOrEmpty = string.IsNullOrEmpty(queryString);
             var validChars = QueryFilterService.checkForValidChars(queryString);
             var validCharsSuccess = validChars.Item1;
