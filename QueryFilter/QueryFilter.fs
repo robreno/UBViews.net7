@@ -13,9 +13,10 @@ module QueryFilterService =
     let atozuSeq = set {'A'..'Z'}
     let numeric  = set {'0'..'9';}
     let ops      = set [|'~';'(';')';'[';']';' ';'"';|]
-    let dash     = set [|'-';|]
+    let minus    = set [|'-';|]
+    let nbhyph   = set [|'‑';|]
     let alphanumeric = atozlSeq + atozuSeq + numeric
-    let allVaidCharsSet = alphanumeric + ops + dash
+    let allVaidCharsSet = alphanumeric + ops + nbhyph
 
     // failwith strings
     let invalidStringsSet = 
@@ -23,7 +24,9 @@ module QueryFilterService =
             ["and and"; "or or"; "and filterby"; "or filterby";]
 
     // TODO: Create Regex and get match and capture
-    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?";|]
+    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?"; "-";|]
+        
+
     let containsInvalidChars (queryString : string) : bool =
         let isNullOrEmptyQueryString = String.IsNullOrEmpty(queryString)
         if (isNullOrEmptyQueryString) then
