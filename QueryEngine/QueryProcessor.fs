@@ -398,6 +398,8 @@ module QueryProcessor =
             let groups = tokenPositionSeq 
                          |> Seq.groupBy(fun t -> t.DocumentID, t.SequenceID, t.ParagraphID)
 
+            let grps = groups.DefaultIfEmpty();
+
             let mutable _qryLocList = []
             groups
             |> Seq.iter(fun g -> let _tpl, _occs = g
