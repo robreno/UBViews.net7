@@ -198,6 +198,8 @@ public partial class MainViewModel : BaseViewModel
                     // ~caucasoid
                     // ~rejuvenated
                     // crime or punishment
+                    // "name of your world"
+                    // "be of good cheer"
                     var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
                     bool isAtEnd = tpl.AtEnd;
