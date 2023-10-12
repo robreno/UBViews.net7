@@ -21,10 +21,10 @@
 
   <ItemGroup>
     <!--<FsYacc Include="Parser.fsy">
-      <OtherFlags>dash-dash module UBViews.Query.Parser</OtherFlags>
+      <OtherFlags>dashdash module UBViews.Query.Parser</OtherFlags>
     </FsYacc>
     <FsLex Include="Lexer.fsl">
-      <OtherFlags>dash-dash unicode</OtherFlags>
+      <OtherFlags>dashdash unicode</OtherFlags>
     </FsLex>-->
     <Compile Include="FSharpStringExtensions.fs" />
     <Compile Include="QueryTypes.fs" />

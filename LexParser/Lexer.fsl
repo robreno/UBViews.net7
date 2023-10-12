@@ -1,11 +1,11 @@
-﻿// UBViews.LexParser.Lexer definition file.
-// fslex --unicode QueryLexer.fsl
+﻿// UBViews.Query.Lexer definition file.
+// fslex --unicode Lexer.fsl
 
 {
-module UBViews.LexParser.Lexer
+module UBViews.Query.Lexer
 
 open System
-open UBViews.LexParser.Parser
+open UBViews.Query.Parser
 
 open FSharp.Text.Lexing
 
@@ -23,7 +23,7 @@ let newline = ('\n' | '\r' '\n')
 // Just grab a sequence of characters to form a token. We will turn that into
 // a 'document token' later.
 let wordcharacter = ['a'-'z''A'-'Z''\'']
-let softcharacter = ['.' ',' '!' '?']
+let softcharacter = ['‑']
 let term = (wordcharacter | softcharacter)+
 
 rule tokenize = parse

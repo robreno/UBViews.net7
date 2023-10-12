@@ -1,9 +1,9 @@
-﻿// UBViews.LexParser.Parser definition file.
-// fsyacc --module UBViews.LexParser.Parser QueryParser.fsy
+﻿// UBViews.Query.Parser definition file.
+// fsyacc --module UBViews.Query.Parser Parser.fsy
 
 %{
 
-open UBViews.LexParser.Ast
+open UBViews.Query.Ast
 
 let toFilterValue s =
     match s with
