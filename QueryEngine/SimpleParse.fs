@@ -22,6 +22,13 @@ module SimpleParse =
     let compoundTermFromList(ctl: string list) =
         String.concat " " <| List.map string (List.rev ctl)
 
+    /// Combines a list of query objects into a single one.
+    /// e.g., And(Term("foreword"), Term("orvonton")) ->
+    /// Or (NoOpQuery, And (Term "foreword", Term "orvonton"))
+    let rec joinQueries (queries : Query list) =
+        List.fold(fun acc query -> Or(acc, query)) NoOpQuery queries
+
+    // Map a query object into a single document interator.
     let rec getIteratorEx (query : Query) : TokenPostingList =
         match query with
         | Term(term) ->
