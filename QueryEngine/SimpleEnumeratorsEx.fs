@@ -340,8 +340,16 @@ module SimpleEnumeratorsEx =
 
     let conjunctiveQueryWithRangePID_test (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
 
-        let seq1 = iter1.BasePostingList.Head
-        let seq2 = iter2.BasePostingList.Head
+        // TODO: Bug: never-ending  and "infinite perfection"
+        // iter1 and iter2 have different types of underlying Enumerators
+        // don't know why and causes bug.
+        // Force to same type using ToList()
+
+        let lst1 = iter1.BasePostingList.Head.ToList()
+        let lst2 = iter2.BasePostingList.Head.ToList()
+
+        let seq1 = Seq.toList lst1 |> Seq.ofList
+        let seq2 = Seq.toList lst2 |> Seq.ofList
 
         let query1 = query { for tp in seq1 do
                              select (tp.DocumentID, tp.SequenceID) }
@@ -357,8 +365,8 @@ module SimpleEnumeratorsEx =
                              sortBy (tp.DocumentID, tp.SequenceID, tp.DocumentPosition)
                              select (tp) }
 
-        let pl = new TokenPostingList(newSeq)
-        pl
+        let tpl = new TokenPostingList(newSeq)
+        tpl
 
     /// Combine two enumerators to return only documents found in both enumerators.
     let conjunctiveQueryWithRangeSID (iter1 : TokenPostingList) (iter2 : TokenPostingList) =
