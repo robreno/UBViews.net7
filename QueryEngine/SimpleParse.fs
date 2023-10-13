@@ -93,7 +93,9 @@ module SimpleParse =
                                                         // Pass thru postingLists exist
                                                         return occs.Value } |> Async.StartAsTask
                                        ol.Result |> List.iteri(fun i o -> let tp = { PostingListID = o.PostingId
-                                                                                     Token = plo.Value.AsQueryable().Where(fun oc -> oc.Id = o.PostingId).FirstOrDefault().Lexeme
+                                                                                     Token = plo.Value.AsQueryable()
+                                                                                                      .Where(fun oc -> oc.Id = o.PostingId)
+                                                                                                      .FirstOrDefault().Lexeme
                                                                                      DocumentID = o.DocumentId
                                                                                      SequenceID = o.SequenceId
                                                                                      SectionID = o.SectionId
