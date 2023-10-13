@@ -133,6 +133,35 @@ module QueryProcessor =
        | FilterBy(q, f) -> queryToTermList(q)
        | NoOpQuery      -> ["NoOp"]
 
+    let rec evaluateQueryType query : string = 
+        match query with
+        | Term(term)     -> "Term"
+        | STerm(sterm)   -> "STerm"
+        | CTerm(cterm)   -> "CTerm"
+        | Phrase(phrase) -> "Phrase"
+        | And(x, y)      -> "And" + joinSymbol 
+                                  + evaluateQueryType(x) 
+                                  + evaluateQueryType(y)
+        | Or(x, y)       -> "Or" + joinSymbol 
+                                 + evaluateQueryType(x)
+                                 + evaluateQueryType(y)
+        | SubQuery(q)    -> "SubQuery" + joinSymbol
+        | FilterBy(q, f) -> let results =
+                                match q with
+                                | Term(term)     -> "FilterBy+Term"
+                                | STerm(term)    -> "FilterBy+STerm"
+                                | CTerm(cterm)   -> "FilterBy+CTerm"
+                                | Phrase(phrase) -> "FilterBy+Phrase"
+                                | And(x, y)      -> "FilterBy" + joinSymbol 
+                                                               + evaluateQueryType(x) 
+                                                               + evaluateQueryType(y)
+                                | Or(x, y)       -> "FilterBy" + joinSymbol 
+                                                               + evaluateQueryType(q) 
+                                                               + evaluateQueryType(y)
+                                | _ -> "Unknown_FilterBy" + joinSymbol + evaluateQueryType(q)
+                            results
+        | NoOpQuery      -> "NoOpQuery"
+
     let rec evaluateQuery (queryElement: XElement) (query: Query) =
         let joinSymbol = "+"
         match query with
