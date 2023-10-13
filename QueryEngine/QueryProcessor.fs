@@ -253,34 +253,6 @@ module QueryProcessor =
                             queryElement
         | NoOpQuery      -> XElement("NoOpQuery", [])
 
-    let getQueryType queryString =    
-        let rgxFilterBy = new Regex("filterb")
-        let rgxAnd = new Regex(@"\sand\s")
-        let rgxOr  = new Regex(@"\sor\s")
-        let rgxPhrase = new Regex(@"^\""")
-
-        let mutable queryType = String.Empty
-
-        let filterByOp = rgxFilterBy.Match(queryString).Success
-        let andOp = rgxAnd.Match(queryString).Success
-        let orOp = rgxOr.Match(queryString).Success
-        let phraseOp = rgxPhrase.Match(queryString).Success
-
-        if (andOp && filterByOp) then
-            queryType <- "FilterBy+And"
-        else if (orOp && filterByOp) then
-            queryType <- "Filterby+Or"
-        else if (andOp && not filterByOp) then
-            queryType <- "And"
-        else if (orOp && not filterByOp) then
-            queryType <- "Or"
-        else if (phraseOp) then
-            queryType <- "Phrase"
-        else
-            queryType <- "Unknown"
-
-        queryType
-
     let reverseQueryString (queryString : string) (queryType : string) =
         let rgxFilterBy = new Regex("filterby")
         let rgxAnd = new Regex(@"\sand\s")
