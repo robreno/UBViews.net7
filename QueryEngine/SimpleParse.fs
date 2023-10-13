@@ -13,6 +13,12 @@ module SimpleParse =
     let setDatabasePath (dbpath: string) =
         _dbpath <- dbpath
 
+    let makeTokenPostingList (tokenExLst: List<TokenPositionEx>) : TokenPostingList =
+        let mutable tpl = new TokenPostingList([])
+        let newSeq = Seq.ofList tokenExLst
+        tpl <- SimpleEnumeratorsEx.TokenPostingList(newSeq)
+        tpl
+
     let compoundTermFromList(ctl: string list) =
         String.concat " " <| List.map string (List.rev ctl)
 
