@@ -155,7 +155,7 @@ module SimpleParse =
         | Phrase(phrase) ->
             let mutable tpl = new TokenPostingList([])
             try 
-                let individualTokenIterators =
+                let tokenIters  =
                     phrase
                     |> List.rev 
                     |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath token 
@@ -187,7 +187,7 @@ module SimpleParse =
                     |> Seq.toList
                     |> List.map(fun tokenHits -> new TokenPostingList(tokenHits))
                     |> List.toArray
-                tpl <- createExactPhraseEnumerator individualTokenIterators
+                tpl <- createExactPhraseEnumerator tokenIters 
                 tpl
             with
             | _ as ex -> tpl
