@@ -207,6 +207,11 @@ public partial class MainViewModel : BaseViewModel
                     // "name of your world"
                     // "be of good cheer"
 
+                    // Bug here: SimpleParse.getIteratorEx return types wrong
+                    // never-ending  and "infinite perfection"  => "And+Phrase"
+                    // "infinite perfection" and never-ending   => "And+Phrase"
+                    // [energy transmitter]
+
                     var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
                     bool isAtEnd = tpl.AtEnd;
