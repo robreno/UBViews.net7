@@ -310,6 +310,22 @@ module QueryProcessor =
         tpl <- SimpleEnumeratorsEx.TokenPostingList(newSeq)
         tpl
 
+    let getPhraseString (terms: string) =
+        let mutable phraseStr = String.Empty
+        let rgx = new Regex("(?<=\{)[^}]*(?=\})")
+        let m = rgx.Match(terms)
+        if m.Success then
+            phraseStr <- m.Value
+        phraseStr
+
+    let getCTermString (terms: string) =
+        let mutable phraseStr = String.Empty
+        let rgx = new Regex("(?<=\[)[^}]*(?=\])")
+        let m = rgx.Match(terms)
+        if m.Success then
+            phraseStr <- m.Value
+        phraseStr
+
     // TODO: Save to Database so move out from here
     let processTokenPostingSequence (dbPath: string) (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
         setDatabasePath dbPath
