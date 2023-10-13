@@ -253,25 +253,6 @@ module QueryProcessor =
                             queryElement
         | NoOpQuery      -> XElement("NoOpQuery", [])
 
-    // TODO: Save to Database so move out from here
-    let saveQuery (queryFilePath: string) (queryResult : XElement) =
-        let _xdoc = XDocument.Load(queryFilePath)
-        let _root = _xdoc.Root
-        let mutable _cnt = Int32.Parse(_root.Attribute("count").Value)
-        queryResult.SetAttributeValue("id", _cnt + 1)
-        let _filterType = queryResult.Attribute("type").Value
-        let _terms = queryResult.Attribute("terms").Value
-        let _proximity = queryResult.Attribute("proximity").Value
-        let _queryResult = _root.Descendants("QueryResult").Where(fun q -> q.Attribute("type").Value = _filterType &&
-                                                                           q.Attribute("terms").Value = _terms &&
-                                                                           q.Attribute("proximity").Value = _proximity)
-                                                           .FirstOrDefault()
-        if _queryResult = null then
-            _root.Add(query)
-            _cnt <- _cnt + 1
-            _root.SetAttributeValue("count", _cnt)
-            _root.Save(queryFilePath)
-
     let getQueryType queryString =    
         let rgxFilterBy = new Regex("filterb")
         let rgxAnd = new Regex(@"\sand\s")
