@@ -194,13 +194,13 @@ module SimpleParse =
             //| _ as ex -> raise <| ArgumentNullException(ex.Message, ex.InnerException)
             
         | And(x, y) -> 
-            let results = conjunctiveQueryWithRangePID 
+            let tpl = conjunctiveQueryWithRangePID 
                             (getIteratorEx x) (getIteratorEx y)
-            results
+            tpl
         | Or(x, y) -> 
-            let results = disjunctiveQueryWithRangePID
+            let tpl = disjunctiveQueryWithRangePID
                             (getIteratorEx x) (getIteratorEx y)
-            results
+            tpl
         | SubQuery(q) -> getIteratorEx q
         | FilterBy(q, f) -> let tpl =
                                 match q with
