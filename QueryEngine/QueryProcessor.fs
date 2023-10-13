@@ -86,7 +86,29 @@ module QueryProcessor =
 
     let termFromList(tl: string list) =
         String.concat " " <| List.map string (List.rev tl)
-    
+
+    let rec queryToTermListStrings (query: Query) =
+        match query with
+       | Term(term)     -> term
+       | STerm(term)    -> term
+       | CTerm(cterm)   -> let s = termFromList cterm 
+                           let ct = "[" + s + "]"
+                           ct
+       | Phrase(phrase) -> let s = termFromList phrase
+                           let pt = "{" + s + "}"
+                           pt
+       | And(x, y)      -> let term1 = queryToTermListStrings(x) 
+                           let term2 = queryToTermListStrings(y)
+                           let terms = term1 + "|" + term2
+                           terms
+       | Or(x, y)       -> let term1 = queryToTermListStrings(x) 
+                           let term2 = queryToTermListStrings(y)
+                           let terms = term1 + "|" + term2
+                           terms
+       | SubQuery(q)    -> queryToTermListStrings(q)
+       | FilterBy(q, f) -> queryToTermListStrings(q)
+       | NoOpQuery      -> "NoOp"
+
     let rec queryToTermList (query: Query) =
        match query with
        | Term(term)     -> term :: []
@@ -110,28 +132,6 @@ module QueryProcessor =
        | SubQuery(q)    -> queryToTermList(q)
        | FilterBy(q, f) -> queryToTermList(q)
        | NoOpQuery      -> ["NoOp"]
-
-    let rec queryToTermListStrings (query: Query) =
-        match query with
-       | Term(term)     -> term
-       | STerm(term)    -> term
-       | CTerm(cterm)   -> let s = termFromList cterm 
-                           let ct = "[" + s + "]"
-                           ct
-       | Phrase(phrase) -> let s = termFromList phrase
-                           let pt = "{" + s + "}"
-                           pt
-       | And(x, y)      -> let term1 = queryToTermListStrings(x) 
-                           let term2 = queryToTermListStrings(y)
-                           let terms = term1 + "|" + term2
-                           terms
-       | Or(x, y)       -> let term1 = queryToTermListStrings(x) 
-                           let term2 = queryToTermListStrings(y)
-                           let terms = term1 + "|" + term2
-                           terms
-       | SubQuery(q)    -> queryToTermListStrings(q)
-       | FilterBy(q, f) -> queryToTermListStrings(q)
-       | NoOpQuery      -> "NoOp"
 
     let rec evaluateQuery (queryElement: XElement) (query: Query) =
         let joinSymbol = "+"
