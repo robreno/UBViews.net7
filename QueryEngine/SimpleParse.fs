@@ -1,17 +1,12 @@
 ﻿namespace QueryEngine
 
 module SimpleParse =
-    open System
-    open System.Xml.Linq
-    open System.Linq
-    open System.Threading.Tasks
     
+    open System.Linq
     open QueryEngine.Models
     open SimpleEnumeratorsEx 
     open DataTypesEx
     open UBViews.Query.Ast
-    open StringPaths
-    open UtilFuncs
 
     let compoundTermFromList(ctl: string list) =
         String.concat " " <| List.map string (List.rev ctl)
