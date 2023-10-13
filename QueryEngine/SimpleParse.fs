@@ -8,12 +8,13 @@ module SimpleParse =
     open DataTypesEx
     open UBViews.Query.Ast
 
-    let compoundTermFromList(ctl: string list) =
-        String.concat " " <| List.map string (List.rev ctl)
 
     let mutable _dbpath = ""
     let setDatabasePath (dbpath: string) =
         _dbpath <- dbpath
+
+    let compoundTermFromList(ctl: string list) =
+        String.concat " " <| List.map string (List.rev ctl)
 
     let rec getIteratorEx (query : Query) : TokenPostingList =
         match query with
