@@ -9,9 +9,6 @@ open System.Text.RegularExpressions
 
 open UBViews.Query.Ast
 open DataTypesEx
-//open StringPaths
-open UtilFuncs
-
 
 //open PostingRepository
 //open QueryRepository
@@ -42,6 +39,8 @@ module QueryProcessor =
        | FilterValue.SECID -> "section"
        | FilterValue.SEQID -> "sequence"
        | FilterValue.PARID -> "paragraph"
+
+    let joinSymbol = "+"
 
     let mutable _dbpath = ""
     let setDatabasePath (dbpath: string) =
@@ -85,6 +84,9 @@ module QueryProcessor =
             results
         | NoOpQuery   -> string []
 
+    let termFromList(tl: string list) =
+        String.concat " " <| List.map string (List.rev tl)
+    
     let rec queryToTermList (query: Query) =
        match query with
        | Term(term)     -> term :: []
