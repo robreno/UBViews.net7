@@ -304,6 +304,12 @@ module QueryProcessor =
 
         reverseQueryString
 
+    let makeTokenPostingList (tokenExLst: List<TokenPositionEx>) : TokenPostingList =
+        let mutable tpl = new TokenPostingList([])
+        let newSeq = Seq.ofList tokenExLst
+        tpl <- SimpleEnumeratorsEx.TokenPostingList(newSeq)
+        tpl
+
     // TODO: Save to Database so move out from here
     let processTokenPostingSequence (dbPath: string) (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
         setDatabasePath dbPath
