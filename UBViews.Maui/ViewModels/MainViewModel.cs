@@ -206,6 +206,7 @@ public partial class MainViewModel : BaseViewModel
                     // crime or punishment
                     // "name of your world"
                     // "be of good cheer"
+
                     var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
                     bool isAtEnd = tpl.AtEnd;

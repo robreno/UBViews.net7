@@ -223,7 +223,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
                 label.GestureRecognizers.Add(tapGestureRecognizer);
 
-                label.SetValue(ToolTipProperties.TextProperty, "Tap to go to paragraph.");
+                label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid} ...   ");
 
                 Border newBorder = new Border()
                 {
