@@ -326,61 +326,66 @@ module QueryProcessor =
             phraseStr <- m.Value
         phraseStr
 
-    // TODO: Save to Database so move out from here
-    let processTokenPostingSequence (dbPath: string) (queryString: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
+    let processTokenPostingSequence (dbPath: string) (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) =
         setDatabasePath dbPath
+        let _queryType = evaluateQueryType query
         let _queryExpStr = queryExpToString query
-        let _queryType = getQueryType queryString
-        let _queryStrElm = XElement("QueryString", [XText(queryString)])
-        let _reverseQueryStr = reverseQueryString queryString _queryType
-        let _reverseQueryElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
+        let _queryStrElm = XElement("QueryString", [XText(input)])
+        let _reverseQueryStr = reverseQueryString input _queryType
+        let _reverseQueryStrElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
         let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
-        
-        let mutable _queryResultElm = XElement("QueryResult", [])
-        _queryResultElm.SetAttributeValue("id", "0")
-        _queryResultElm.SetAttributeValue("locationCount", 0)
-        _queryResultElm.Add(_queryStrElm)
+
+        let mutable _queryResult = XElement("QueryResult", [])
+        _queryResult.SetAttributeValue("id", "0")
+        _queryResult.SetAttributeValue("locationCount", 0)
+        _queryResult.Add(_queryStrElm)
         if (_reverseQueryStr <> "") then
-            _queryResultElm.Add(_reverseQueryElm)
-        _queryResultElm.Add(_queryExprElm)
-
-        evaluateQuery _queryResultElm query |> ignore
-        let mutable _expandedQueryStr = String.Empty
-        let _proximity = _queryResultElm.Attribute("proximity").Value;
-        
-        if (_queryType.Equals("And") && _proximity.Equals("paragraph")) then 
-            _expandedQueryStr <- queryString + " filterby parid"
-            _reverseQueryElm.AddAfterSelf(XElement("DefaultQueryString", [XText(_expandedQueryStr)]))
-
+            _queryResult.Add(_reverseQueryStrElm)
+        _queryResult.Add(_queryExprElm)
+            
+        evaluateQuery _queryResult query |> ignore
+        _queryResult.SetAttributeValue("type", _queryType)
+        let queryType = _queryResult.Attribute("type").Value
+            
+            
         let mutable _length = 0
-        let mutable _queryString = String.Empty
-        let mutable _isPhraseOrCTerm = false
-        if _queryType.Equals("Phrase") || _queryType.Equals("CTerm") then
-            _queryString <- _queryResultElm.Descendants("QueryString").FirstOrDefault().Value
-            _queryString <- _queryString.Substring(1, _queryString.Length - 2)
-            _length <- _queryString.Length
-            _isPhraseOrCTerm <- true
+        let mutable _isPhrase = false
+        let mutable _phraseString = String.Empty
+        if queryType.Contains("Phrase") then
+            let trms = _queryResult.Attribute("terms").Value
+            _phraseString <- getPhraseString trms
+            _length <-  _phraseString.Length
+            _isPhrase <- true
+
+        let mutable _isCTerm = false 
+        let mutable _ctermString = String.Empty
+        if queryType.Contains("CTerm") then
+            let trms = _queryResult.Attribute("terms").Value
+            _ctermString <- getCTermString trms
+            _length <-  _ctermString.Length
+            _isCTerm <- true
 
         let mutable _queryLocs = XElement("QueryLocations", 
                                         [XAttribute("count", 0)])
     
         let groups = tokenPositionSeq 
-                     |> Seq.groupBy(fun t -> t.DocumentID, t.SequenceID, t.ParagraphID)
+                        |> Seq.groupBy(fun t -> t.DocumentID, t.SequenceID, t.ParagraphID)
+
+        let grps = groups.DefaultIfEmpty();
 
         let mutable _qryLocList = []
-        groups
+
+        grps
         |> Seq.iter(fun g -> let _tpl, _occs = g
                              let _did, _sid, _pid = _tpl
                              let _id = _did.ToString("0") 
-                                       + "." + 
-                                       _sid.ToString("0")
+                                        + "." + 
+                                        _sid.ToString("0")
                              
-                             let termList = queryToTermList(query)
                              let mutable _occList = XElement("TermOccurrenceList", [XAttribute("count", 0)])
                              let mutable _qryLoc = XElement("QueryLocation", 
-                                                            [XAttribute("id", _id)
-                                                             XAttribute("pid", _pid)
-                                                             (*XAttribute("termList", termList)*)])
+                                                                [XAttribute("id", _id)
+                                                                 XAttribute("pid", _pid)])
                              _occs
                              |> Seq.sortBy(fun o -> o.TermPosition)
                              |> Seq.iteri(fun i t -> let _pid  = t.ParagraphID
@@ -391,21 +396,25 @@ module QueryProcessor =
                                                      let _term = t.Token
 
                                                      let _occ = XElement("TermOccurrence", [])
-                                                     if _isPhraseOrCTerm then
-                                                        _occ.SetAttributeValue("term", _queryString)
-                                                     else
-                                                        _occ.SetAttributeValue("term", _term)
-                                                        _occ.SetAttributeValue("docId", _did)
-                                                        _occ.SetAttributeValue("seqId", _sid)
-                                                        _occ.SetAttributeValue("dpoId", _dpo)
-                                                        _occ.SetAttributeValue("tpoId", _tpo)
-                                                     if _isPhraseOrCTerm then
+
+                                                     _occ.SetAttributeValue("term", _term)
+                                                     _occ.SetAttributeValue("docId", _did)
+                                                     _occ.SetAttributeValue("seqId", _sid)
+                                                     _occ.SetAttributeValue("dpoId", _dpo)
+                                                     _occ.SetAttributeValue("tpoId", _tpo)
+                                                     _occ.SetAttributeValue("len", _term.Length)
+
+                                                     if _isPhrase && _phraseString.Contains(_term) then
+                                                        _occ.SetAttributeValue("term", _phraseString)
                                                         _occ.SetAttributeValue("len", _length)
-                                                     else
-                                                        _occ.SetAttributeValue("len", _term.Length)
+
+                                                     if _isCTerm && _ctermString.Contains(_term) then
+                                                        _occ.SetAttributeValue("term", _ctermString)
+                                                        _occ.SetAttributeValue("len", _length)
+
                                                      _occList.Add(_occ)
                                                      _occList.SetAttributeValue("count", _occList.Elements().Count())
-                                         )
+                                        )
                              _qryLoc.Add(_occList)
                              _qryLocList <- _qryLoc :: _qryLocList
                    )
@@ -413,20 +422,18 @@ module QueryProcessor =
         |> Seq.iter(fun l -> _queryLocs.AddFirst(l))
         let _hits = _queryLocs.Descendants("QueryLocation").Count()
         _queryLocs.SetAttributeValue("count", _hits)
-        _queryResultElm.Add(_queryLocs)
-        _queryResultElm.SetAttributeValue("locationCount", _hits)
-        _queryResultElm
+        _queryResult.Add(_queryLocs)
+        _queryResult.SetAttributeValue("locationCount", _hits)
+        _queryResult
 
-    // See: https://stackoverflow.com/questions/27131774/f-issue-with-async-workflow-and-try-with
-    let processTokenPostingSequenceAsync (dbPath: string) (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) 
-                                         : Task<XElement> =
+    let processTokenPostingSequenceAsync (dbPath: string) (input: string) (query: Query) (tokenPositionSeq: seq<TokenPositionEx>) : Task<XElement> =
         async {
             setDatabasePath dbPath
-            let _queryType = getQueryType input
+            let _queryType = evaluateQueryType query
             let _queryExpStr = queryExpToString query
             let _queryStrElm = XElement("QueryString", [XText(input)])
             let _reverseQueryStr = reverseQueryString input _queryType
-            let _reverseQueryElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
+            let _reverseQueryStrElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
             let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
 
             let mutable _queryResult = XElement("QueryResult", [])
@@ -434,19 +441,30 @@ module QueryProcessor =
             _queryResult.SetAttributeValue("locationCount", 0)
             _queryResult.Add(_queryStrElm)
             if (_reverseQueryStr <> "") then
-                _queryResult.Add(_reverseQueryElm)
+                _queryResult.Add(_reverseQueryStrElm)
             _queryResult.Add(_queryExprElm)
             
             evaluateQuery _queryResult query |> ignore
+            _queryResult.SetAttributeValue("type", _queryType)
             let queryType = _queryResult.Attribute("type").Value
+            
+            
             let mutable _length = 0
-            let mutable _queryString = String.Empty
-            let mutable _isPhraseOrCTerm = false
-            if queryType.Equals("Phrase") || queryType.Equals("CTerm") then
-                _queryString <- _queryResult.Descendants("QueryString").FirstOrDefault().Value
-                _queryString <- _queryString.Substring(1, _queryString.Length - 2)
-                _length <- _queryString.Length
-                _isPhraseOrCTerm <- true
+            let mutable _isPhrase = false
+            let mutable _phraseString = String.Empty
+            if queryType.Contains("Phrase") then
+                let trms = _queryResult.Attribute("terms").Value
+                _phraseString <- getPhraseString trms
+                _length <-  _phraseString.Length
+                _isPhrase <- true
+
+            let mutable _isCTerm = false 
+            let mutable _ctermString = String.Empty
+            if queryType.Contains("CTerm") then
+                let trms = _queryResult.Attribute("terms").Value
+                _ctermString <- getCTermString trms
+                _length <-  _ctermString.Length
+                _isCTerm <- true
 
             let mutable _queryLocs = XElement("QueryLocations", 
                                             [XAttribute("count", 0)])
@@ -457,19 +475,18 @@ module QueryProcessor =
             let grps = groups.DefaultIfEmpty();
 
             let mutable _qryLocList = []
-            groups
+
+            grps
             |> Seq.iter(fun g -> let _tpl, _occs = g
                                  let _did, _sid, _pid = _tpl
                                  let _id = _did.ToString("0") 
                                            + "." + 
                                            _sid.ToString("0")
                              
-                                 let termList = queryToTermList(query)
                                  let mutable _occList = XElement("TermOccurrenceList", [XAttribute("count", 0)])
                                  let mutable _qryLoc = XElement("QueryLocation", 
                                                                 [XAttribute("id", _id)
-                                                                 XAttribute("pid", _pid)
-                                                                 (*XAttribute("termList", termList)*)])
+                                                                 XAttribute("pid", _pid)])
                                  _occs
                                  |> Seq.sortBy(fun o -> o.TermPosition)
                                  |> Seq.iteri(fun i t -> let _pid  = t.ParagraphID
@@ -488,8 +505,12 @@ module QueryProcessor =
                                                          _occ.SetAttributeValue("tpoId", _tpo)
                                                          _occ.SetAttributeValue("len", _term.Length)
 
-                                                         if _isPhraseOrCTerm then
-                                                            _occ.SetAttributeValue("term", _queryString)
+                                                         if _isPhrase && _phraseString.Contains(_term) then
+                                                            _occ.SetAttributeValue("term", _phraseString)
+                                                            _occ.SetAttributeValue("len", _length)
+
+                                                         if _isCTerm && _ctermString.Contains(_term) then
+                                                            _occ.SetAttributeValue("term", _ctermString)
                                                             _occ.SetAttributeValue("len", _length)
 
                                                          _occList.Add(_occ)
