@@ -220,13 +220,13 @@ module SimpleParse =
 
     let runQuery (dbPath: string) (query: Query) =
         setDatabasePath dbPath
-        let result = getIteratorEx query
-        result
+        let tpl = getIteratorEx query
+        tpl
 
     let runQueryAsync (dbPath: string) (query: Query) =
         async {
             setDatabasePath dbPath
-            let result = getIteratorEx query
-            return result
+            let tpl = getIteratorEx query
+            return tpl
         } |> Async.StartAsTask
 
