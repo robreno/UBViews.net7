@@ -62,6 +62,7 @@ module SimpleParse =
             else
                 tpl <- new TokenPostingList([])
                 tpl 
+
         | STerm(term) ->
             // TODO: Add error handling. SQLiteException raised if path DBPath is bad.
             let mutable tpl = new TokenPostingList([])
@@ -110,10 +111,47 @@ module SimpleParse =
                 tpl
             with
             | _ as ex -> tpl
+
         | CTerm(cterm) ->
-            let tpl = new TokenPostingList([])
-            let key = compoundTermFromList(cterm)
-            tpl
+            let mutable tpl = new TokenPostingList([])
+            try 
+                let tokenIters =
+                    cterm
+                    |> List.rev 
+                    |> List.map(fun token -> let opt = async { let! retval = PostingRepository.getPostingListByLexemeAsync _dbpath token |> Async.AwaitTask                                               
+                                                               return retval } |> Async.StartAsTask
+                                             if (opt.Result.IsNone) then
+                                                // failwith here and return empty TokenPostingList
+                                                failwithf "Invalid Token -> [%s] in query prhase." token
+                                             else
+                                                opt.Result.Value)
+                    |> List.map(fun pl -> let tokOccs = async { let! retval = PostingRepository.getTokenOccurrencesByPostingListIdAsync _dbpath pl.Id 
+                                                                                                    |> Async.AwaitTask
+                                                                // Pass thru postingLists exist
+                                                                let tokPosSeq = retval.Value
+                                                                                |> List.map(fun o -> let tp = { Token = pl.Lexeme 
+                                                                                                                PostingListID = pl.Id                                                                                                               
+                                                                                                                ParagraphID = o.ParagraphId
+                                                                                                                DocumentID = o.DocumentId 
+                                                                                                                SequenceID = o.SequenceId 
+                                                                                                                SectionID = o.SectionId
+                                                                                                                DocumentPosition = o.DocumentPosition
+                                                                                                                TermPosition = o.TextPosition }
+                                                                                                     tp)
+                                                                                |> List.toSeq
+                                                                return tokPosSeq
+                                                            } |> Async.StartAsTask
+                                          let occs = tokOccs.Result
+                                          occs) 
+                    |> Seq.toList
+                    |> List.map(fun tokenHits -> new TokenPostingList(tokenHits))
+                    |> List.toArray
+                tpl <- createCompoundTermEnumerator tokenIters
+                tpl
+            with
+            | _ as ex -> tpl
+            //| _ as ex -> raise <| ArgumentNullException(ex.Message, ex.InnerException)
+
         | Phrase(phrase) ->
             let mutable tpl = new TokenPostingList([])
             try 
