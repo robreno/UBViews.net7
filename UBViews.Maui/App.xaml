@@ -145,7 +145,7 @@
             <Style x:Key="HeaderBoxView" TargetType="BoxView">
                 <Setter Property="Grid.ColumnSpan" Value="3" />
                 <Setter Property="HeightRequest" Value="160" />
-                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
             </Style>
             <Style x:Key="LargeHeaderImage" TargetType="Image">
                 <Setter Property="Aspect" Value="AspectFill" />
