@@ -18,7 +18,7 @@
         <behavior:EventToCommandBehavior 
             EventName="Appearing" Command="{Binding AppSettingPageAppearingCommand}" />
         <behavior:EventToCommandBehavior 
-            EventName="Appearing" Command="{Binding AppSettingPageLoadedCommand}" />
+            EventName="Loaded" Command="{Binding AppSettingPageLoadedCommand}" />
         <behavior:EventToCommandBehavior 
             EventName="Disappearing" Command="{Binding AppSettingPageDisappearingCommand}" />
     </ContentPage.Behaviors>
