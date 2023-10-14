@@ -194,7 +194,7 @@ module SimpleParse =
             //| _ as ex -> raise <| ArgumentNullException(ex.Message, ex.InnerException)
             
         | And(x, y) -> 
-            let tpl = conjunctiveQueryWithRangePID 
+            let tpl = conjunctiveQueryWithRangePID_test
                             (getIteratorEx x) (getIteratorEx y)
             tpl
         | Or(x, y) -> 

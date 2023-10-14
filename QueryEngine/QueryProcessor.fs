@@ -137,8 +137,8 @@ module QueryProcessor =
         match query with
         | Term(term)     -> "Term"
         | STerm(sterm)   -> "STerm"
-        | CTerm(cterm)   -> "CTerm"
-        | Phrase(phrase) -> "Phrase"
+        | CTerm(cterm)   -> "CTerm" + joinSymbol
+        | Phrase(phrase) -> "Phrase" + joinSymbol
         | And(x, y)      -> "And" + joinSymbol 
                                   + evaluateQueryType(x) 
                                   + evaluateQueryType(y)
@@ -163,116 +163,169 @@ module QueryProcessor =
         | NoOpQuery      -> "NoOpQuery"
 
     let rec evaluateQuery (queryElement: XElement) (query: Query) =
-        let joinSymbol = "+"
         match query with
-        | Term(term) -> let att = queryElement.Attribute("type")
-                        if att = null then
-                            queryElement.SetAttributeValue("type", "Term")
-                        else
-                            let v = queryElement.Attribute("type").Value
-                            queryElement.SetAttributeValue("type", v + joinSymbol + "STerm")
-                        let termList = queryToTermList(Term(term))
-                        queryElement.SetAttributeValue("terms", termList)
-                        queryElement.SetAttributeValue("proximity", "book")
-                        queryElement
-        | STerm(term) -> let att = queryElement.Attribute("type")
-                         if att = null then 
-                            queryElement.SetAttributeValue("type", "STerm")
-                         else 
-                            let v = queryElement.Attribute("type").Value
-                            queryElement.SetAttributeValue("type", v + joinSymbol + "STerm")
-                         let termList = queryToTermList(STerm(term))
-                         let opt = async { let! retval = QueryEngine.PostingRepository.getTokenStemAsync _dbpath term |> Async.AwaitTask 
-                                           return retval
-                                      } |> Async.StartAsTask
-                         if (opt.Result.IsNone) then
-                            // failwith here and return empty TokenPostingList
-                            failwithf "Invalid Token -> [%s] in query." term
-                         let sterm = opt.Result.Value.Stemmed
-                         queryElement.SetAttributeValue("terms", termList)
-                         queryElement.SetAttributeValue("stemmed", sterm)
-                         queryElement.SetAttributeValue("proximity", "book")
-                         queryElement
-        | CTerm(cterm) -> let att = queryElement.Attribute("type")
-                          if att = null then 
-                            queryElement.SetAttributeValue("type", "CTerm")
-                          else 
-                            let v = queryElement.Attribute("type").Value
-                            queryElement.SetAttributeValue("type", v + joinSymbol + "CTerm" )
-                          let termList = queryToTermList(CTerm(cterm))
-                          queryElement.SetAttributeValue("terms", termList)
-                          queryElement.SetAttributeValue("proximity", "paragraph")
-                          queryElement
-        | Phrase(phrase) -> let att = queryElement.Attribute("type")
-                            if att = null then 
+        | Term(term)    -> let tyAtt = queryElement.Attribute("type")
+                           if tyAtt = null then
+                                queryElement.SetAttributeValue("type", "Term")
+                           else
+                                let v = queryElement.Attribute("type").Value
+                                queryElement.SetAttributeValue("type", "Term" + joinSymbol + v)
+
+                           let tls = queryToTermListStrings(Term(term))
+                           let trmAtt = queryElement.Attribute("terms")
+                           if trmAtt = null then
+                                queryElement.SetAttributeValue("terms", tls)
+                           else
+                                let t = queryElement.Attribute("terms").Value
+                                let nt = tls + "|" + t;
+                                queryElement.SetAttributeValue("terms", nt)
+
+                           queryElement.SetAttributeValue("proximity", "paragraph")
+                           queryElement
+
+        | STerm(term)    -> let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
+                                queryElement.SetAttributeValue("type", "STerm")
+                            else 
+                                let v = queryElement.Attribute("type").Value
+                                queryElement.SetAttributeValue("type", "STerm" + joinSymbol + v)
+
+                            let tls = queryToTermListStrings(STerm(term))
+                            let trmAtt = queryElement.Attribute("terms")
+                            if trmAtt = null then
+                                queryElement.SetAttributeValue("terms", tls)
+                            else
+                                let t = queryElement.Attribute("terms").Value
+                                let nt = tls + "|" + t;
+                                queryElement.SetAttributeValue("terms", nt)
+
+                            let opt = async { let! retval = QueryEngine.PostingRepository.getTokenStemAsync _dbpath term |> Async.AwaitTask 
+                                              return retval
+                                            } |> Async.StartAsTask
+                            if (opt.Result.IsNone) then
+                                // failwith here and return empty TokenPostingList
+                                failwithf "Invalid Token -> [%s] in QueryProcessor.evalutateQuery." term
+
+                            let sterm = opt.Result.Value.Stemmed
+                            queryElement.SetAttributeValue("stemmed", sterm)
+                            queryElement.SetAttributeValue("proximity", "paragraph")
+                            queryElement
+
+        | CTerm(cterm)   -> let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
+                                queryElement.SetAttributeValue("type", "CTerm")
+                            else 
+                                let v = queryElement.Attribute("type").Value
+                                queryElement.SetAttributeValue("type", "CTerm" + joinSymbol + v )
+
+                            let tls = queryToTermListStrings(CTerm(cterm))
+                            let trAtt = queryElement.Attribute("terms")
+                            if trAtt = null then
+                                queryElement.SetAttributeValue("terms", tls)
+                            else
+                                let t = queryElement.Attribute("terms").Value
+                                let nt = tls + "|" + t;
+                                queryElement.SetAttributeValue("terms", nt)
+
+                            queryElement.SetAttributeValue("proximity", "paragraph")
+                            queryElement
+
+        | Phrase(phrase) -> let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
                                 queryElement.SetAttributeValue("type", "Phrase")
                             else 
                                 let v = queryElement.Attribute("type").Value
-                                queryElement.SetAttributeValue("type", v + joinSymbol + "Phrase" )
-                            let mutable ns: string = String.Empty
-                            phrase
-                            |> List.iter (fun w -> ns <- ns + w + "; ")
-                            ns <- "[" + ns.Substring(0, ns.Length-2) + "]"
-                            queryElement.SetAttributeValue("terms", ns)
+                                queryElement.SetAttributeValue("type", "Phrase" + joinSymbol + v )
+
+                            let tls = queryToTermListStrings(Phrase(phrase))
+                            let trAtt = queryElement.Attribute("terms")
+                            if trAtt = null then
+                                queryElement.SetAttributeValue("terms", tls)
+                            else
+                                let t = queryElement.Attribute("terms").Value
+                                let nt = tls + "|" + t;
+                                queryElement.SetAttributeValue("terms", nt)
+
                             queryElement.SetAttributeValue("proximity", "paragraph")
                             queryElement
-        | And(x, y)      -> let att = queryElement.Attribute("type")
-                            if att = null then 
+
+        | And(x, y)      -> evaluateQuery queryElement x |> ignore
+                            evaluateQuery queryElement y |> ignore
+
+                            let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
                                queryElement.SetAttributeValue("type", "And")
                             else 
                                let v = queryElement.Attribute("type").Value
-                               queryElement.SetAttributeValue("type", v + joinSymbol + "And" )
-                            let termList = queryToTermList(And(x, y))
-                            queryElement.SetAttributeValue("terms", termList)
+                               queryElement.SetAttributeValue("type", "And" + joinSymbol + v )
+
+                            let tls = queryToTermListStrings(And(x, y))
+                            queryElement.SetAttributeValue("terms", tls)
+
                             queryElement.SetAttributeValue("proximity", "paragraph")
                             queryElement
-        | Or(x, y)       -> let att = queryElement.Attribute("type")
-                            if att = null then 
+
+        | Or(x, y)       -> let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
                                queryElement.SetAttributeValue("type", "Or")
                             else 
                                let v = queryElement.Attribute("type").Value
-                               queryElement.SetAttributeValue("type", v + joinSymbol + "Or" )
-                            let termList = queryToTermList(Or(x, y))
-                            queryElement.SetAttributeValue("terms", termList)
-                            queryElement.SetAttributeValue("proximity", "book")
+                               queryElement.SetAttributeValue("type", "Or" + joinSymbol + v )
+
+                            let tls = queryToTermListStrings(Or(x, y))
+                            queryElement.SetAttributeValue("terms", tls)
+
+                            queryElement.SetAttributeValue("proximity", "paragraph")
                             queryElement
+
         | SubQuery(q)    -> evaluateQuery queryElement q 
-        | FilterBy(q, f) -> let att = queryElement.Attribute("type")
-                            if att = null then 
+
+        | FilterBy(q, f) -> let tyAtt = queryElement.Attribute("type")
+                            if tyAtt = null then 
                                queryElement.SetAttributeValue("type", "FilterBy")
                             else 
                                let v = queryElement.Attribute("type").Value
-                               queryElement.SetAttributeValue("type", v + joinSymbol + "FilterBy" )
+                               queryElement.SetAttributeValue("type", "FilterBy" + joinSymbol + v )
+
                             let fb = XElement("FilterBy", [])
                             fb.SetAttributeValue("filterId", toFilterId f)
                             let qrueryval = evaluateQuery queryElement q
                             fb.Add(qrueryval)
-                            //queryElement.Add(fb)
+
                             queryElement.SetAttributeValue("filterId", toFilterId f)
                             queryElement.SetAttributeValue("proximity", toProximityValue f)
                             queryElement
+
         | NoOpQuery      -> XElement("NoOpQuery", [])
 
-    let reverseQueryString (queryString : string) (queryType : string) =
-        let rgxFilterBy = new Regex("filterby")
-        let rgxAnd = new Regex(@"\sand\s")
-        let rgxOr  = new Regex(@"\sor\s")
+    let reverseQueryString (queryString : string) : string =
         let mutable reverseQueryString = ""
         let mutable filterByOp = ""
+        let mutable phraseOp = ""
         let mutable baseQuery = ""
-        let len = queryString.Length
 
-        if (queryType = "And") then
-            let m = rgxAnd.Match(queryString)
-            let terms = queryString.Split(' ')
-            reverseQueryString <- terms[2] + " and " + terms[0]
-        else if (queryType = "FilterBy+And") then
-            let m = rgxFilterBy.Match(queryString)
-            if (m.Success) then
-                filterByOp <- queryString.Substring(m.Index, queryString.Length - m.Index)
-                baseQuery <- queryString.Substring(0, m.Index - 1)
-                let terms = baseQuery.Split(' ')
-                reverseQueryString <- terms[2] + " and " + terms[0] + " " + filterByOp
+        let rgxFilterBy = new Regex("(filterby)\s{1}\w{4,9}") // filterby\s{1}\w{54,9}
+        let rgxAnd = new Regex(@"\sand\s")
+        let rgxOr  = new Regex(@"\sor\s")
+        let rgxPhrase = new Regex(@"""(.*?)""")
+
+        let isfilterby = rgxFilterBy.Match(queryString)
+        let isand = rgxAnd.Match(queryString)
+        let isphrase = rgxPhrase.Match(queryString)
+
+        baseQuery <- queryString
+        if isfilterby.Success then
+            filterByOp <- isfilterby.Value
+            baseQuery <- queryString.Replace(filterByOp, "").Trim()
+        if isphrase.Success then
+            phraseOp <- isphrase.Value
+        if isand.Success then
+            let andParams = baseQuery.Split(" and ")
+            baseQuery <- andParams[1] + " and " + andParams[0]
+            if isfilterby.Success then
+                baseQuery <- baseQuery + " " + filterByOp
+
+        reverseQueryString <- baseQuery
 
         reverseQueryString
 
@@ -303,7 +356,7 @@ module QueryProcessor =
         let _queryType = evaluateQueryType query
         let _queryExpStr = queryExpToString query
         let _queryStrElm = XElement("QueryString", [XText(input)])
-        let _reverseQueryStr = reverseQueryString input _queryType
+        let _reverseQueryStr = reverseQueryString input
         let _reverseQueryStrElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
         let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
 
@@ -404,7 +457,7 @@ module QueryProcessor =
             let _queryType = evaluateQueryType query
             let _queryExpStr = queryExpToString query
             let _queryStrElm = XElement("QueryString", [XText(input)])
-            let _reverseQueryStr = reverseQueryString input _queryType
+            let _reverseQueryStr = reverseQueryString input
             let _reverseQueryStrElm = XElement("ReverseQueryString", [XText(_reverseQueryStr)])
             let _queryExprElm = XElement("QueryExpression", [XText(_queryExpStr)])
 
