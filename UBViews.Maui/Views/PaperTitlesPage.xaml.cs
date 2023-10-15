@@ -8,7 +8,6 @@ public partial class PaperTitlesPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-        vm.Title = "Titles of the Papers";
 		vm.contentPage = this;
     }
 }
