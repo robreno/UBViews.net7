@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using mauiCore = CommunityToolkit.Maui.Core;
+
 using UBViews.Models;
 using UBViews.Services;
 using UBViews.Views;
@@ -34,6 +35,7 @@ namespace UBViews.ViewModels
                 IsBusy = true;
                 IsRefreshing = true;
 
+                Title = "Titles of the Papers";
                 ShowPaperContents = await settingsService.Get("show_paper_contents", false);
 
             }
