@@ -66,19 +66,6 @@ namespace UBViews.ViewModels
                 int paperId = Int32.Parse(arr.ElementAt(0));
                 PaperDto paperDto = await fileService.GetPaperDtoAsync(paperId);
 
-                Label currentLabel = (Label)contentPage.FindByName(id);
-                string timeSpan = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
-                string timeSpanMsg = timeSpan.Replace("_", " - ");
-                string msg = "Current Paper (" + paperDto.Id + ") Timespan (" + timeSpanMsg + ")";
-
-                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
-                {
-                    mauiCore.ToastDuration duration = mauiCore.ToastDuration.Short;
-                    double fontSize = 14;
-                    var toast = Toast.Make(msg, duration, fontSize);
-                    await toast.Show(cancellationTokenSource.Token);
-                }
-                IsBusy = false;
                 await GoToDetails(paperDto);
             }
             catch (Exception ex)
@@ -86,7 +73,11 @@ namespace UBViews.ViewModels
                 await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
                 return;
             }
-            finally { IsBusy = false; }
+            finally 
+            { 
+                IsBusy = false; 
+                IsRefreshing = false; 
+            }
         }
 
         [RelayCommand]
