@@ -53,9 +53,6 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task TappedGesture(string id)
         {
-            if (IsBusy)
-                return;
-
             try
             {
                 IsBusy = true;
@@ -83,13 +80,12 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task GoToDetails(PaperDto dto)
         {
-            if (IsBusy)
-                return;
-
             try
             {
                 if (dto == null)
                     return;
+
+                IsRefreshing = true;
 
                 string className;
                 if (ShowPaperContents)
@@ -114,6 +110,7 @@ namespace UBViews.ViewModels
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
     }

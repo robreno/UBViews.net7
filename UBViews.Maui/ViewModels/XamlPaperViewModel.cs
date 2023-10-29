@@ -1,8 +1,10 @@
-﻿using System.Globalization;
+﻿using System.Text;
+using System.Globalization;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Primitives;
+
 using UBViews.Models;
 using UBViews.Models.Ubml;
 using UBViews.Models.Audio;
@@ -470,6 +472,119 @@ namespace UBViews.ViewModels
                 }
 
                 await StopAudio();
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task PointGesture(string actionId)
+        {
+            try
+            {
+                if (contentPage == null)
+                    return;
+
+                var msg = "PointGestureCommand " + actionId;
+                await App.Current.MainPage.DisplayAlert("Gesture Regognizer =>", msg, "Cancel");
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task SwipeRightGesture(string actionId)
+        {
+            try
+            {
+                if (contentPage == null)
+                    return;
+
+                //var msg = "SwipRightGestureCommand " + actionId;
+                //await App.Current.MainPage.DisplayAlert("Gesture Regognizer =>", msg, "Cancel");
+                // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/pop-ups
+                string action = await App.Current.MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
+                await App.Current.MainPage.DisplayAlert("Sending Paragraph to =>", action, "Cancel");
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task SwipeLeftGesture(string actionId)
+        {
+            try
+            {
+                if (contentPage == null)
+                    return;
+
+                // https://learn.microsoft.com/en-us/answers/questions/1187166/maui-android-is-it-possible-to-highlights-text-in
+                // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/clipboard
+                // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/share?tabs=android
+                string action = await App.Current.MainPage.DisplayActionSheet("ActionSheet: Archive to?", "Cancel", null, "Local", "Server", "Clipboard");
+
+                string msg = string.Empty;
+                switch (action)
+                {
+                    case "Cancel":
+                        // Do nothing
+                        break;
+                    case "Local":
+                        msg = "Archive to local storage is not implemented";
+                        await App.Current.MainPage.DisplayAlert("Action =>", msg, "Cancel");
+                        break;
+                    case "Server":
+                        msg = "Archive to server storage is not implemented";
+                        await App.Current.MainPage.DisplayAlert("Action =>", msg, "Cancel");
+                        break;
+                    case "Clipboard":
+                        var lbl = contentPage.FindByName(actionId) as Label;
+                        var formattedText = lbl.FormattedText;
+                        var spans = formattedText.Spans;
+                        StringBuilder sb = new StringBuilder();
+                        var pretext = "I thought of you when I read this quote from The Urantia Book by The Urantia Foundation - ";
+                        sb.AppendLine(pretext);
+                        sb.AppendLine("");
+                        foreach (var span in spans)
+                        {
+                            sb.Append(span.Text);
+                        }
+                        var text = sb.ToString();
+                        // Cleear Clipboard of any old content
+                        await Clipboard.Default.SetTextAsync(null);
+                        // Add paragraph text to clipboard
+                        await Clipboard.Default.SetTextAsync(text);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Gesture Regognizer => ", ex.Message, "Cancel");
+                return;
+            }
+        }
+
+        [RelayCommand]
+        async Task FlyoutMenu(string actionId)
+        {
+            try
+            {
+                if (contentPage == null)
+                    return;
+
+                var msg = "FlyoutMenuCommand " + actionId;
+                await App.Current.MainPage.DisplayAlert("Gesture Regognizer => ", msg, "Cancel");
             }
             catch (Exception ex)
             {
