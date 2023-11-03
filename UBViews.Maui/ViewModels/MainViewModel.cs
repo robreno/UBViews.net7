@@ -124,6 +124,7 @@ public partial class MainViewModel : BaseViewModel
         {
             IsBusy = true;
 
+            queryString = queryString.Trim();
             var isNullOrEmpty = string.IsNullOrEmpty(queryString);
             if (!isNullOrEmpty)
             {
