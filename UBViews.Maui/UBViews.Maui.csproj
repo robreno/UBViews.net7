@@ -225,6 +225,7 @@
 	  <None Remove="Resources\Raw\Audio\UB.000.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.0.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.mp3" />
+	  <None Remove="Resources\Raw\Email\Contacts.template.xml" />
 	  <None Remove="Resources\Raw\JsonData\partTitles.json" />
 	  <None Remove="Resources\Raw\Query\Queries.template.xml" />
 	  <None Remove="Resources\Raw\Query\QueryCmdList.xml" />
@@ -300,6 +301,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Conrols\AddContactsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Conrols\CirclesHeader.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -307,6 +311,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Themes\UBLightTheme.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AddContactsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContentTitlesPage.xaml">
