@@ -313,6 +313,11 @@ public partial class MainViewModel : BaseViewModel
                 targetName = nameof(AppDataPage);
                 await Shell.Current.GoToAsync(targetName);
             }
+            else if (target == "AppContacts")
+            {
+                targetName = nameof(AddContactsPage);
+                await Shell.Current.GoToAsync(targetName);
+            }
             else if (target == "QueryResults")
             {
                 targetName = nameof(QueryResultPage);
