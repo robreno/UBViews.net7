@@ -37,6 +37,7 @@ namespace UBViews
             "Query/Queries.template.xml",
             "Query/QueryResults.xml",
             "Settings/Settings.template.xml",
+            "Emal/Contacts.template.xml"
         };
 
         string[] trgNames = new string[]
@@ -44,6 +45,7 @@ namespace UBViews
             "UserQueries.xml",
             "QueryHistory.xml",
             "Settings.xml",
+            "Contacts.xml",
         };
 
         Dictionary<string, bool> UserFiles = new();
@@ -84,6 +86,9 @@ namespace UBViews
                 Preferences.Default.Set("small_window", "680,520");
                 Preferences.Default.Set("medium_window", "880,720");
                 Preferences.Default.Set("large_window", "1080,920");
+
+                Preferences.Default.Set("auto_send_on", "false");
+                Preferences.Default.Set("auto_send", "");
 
                 // SetupDefaultData();
                 int size = srcNames.Length;
