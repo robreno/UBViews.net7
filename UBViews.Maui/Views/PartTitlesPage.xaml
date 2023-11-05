@@ -114,10 +114,10 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding Id, StringFormat='{0}'}"
-                                                            Style="{StaticResource PaperTitleNumberSpan}" />
+                                                          Style="{StaticResource PaperTitleNumberSpan}" />
                                                     <Span Style="{StaticResource TitleTabsSpan}" />
                                                     <Span Text="{Binding Title}"
-                                                            Style="{StaticResource PaperTitleSpan}"/>
+                                                          Style="{StaticResource PaperTitleSpan}"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
