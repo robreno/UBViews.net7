@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:UBViews.Behaviors"
+             xmlns:models="clr-namespace:UBViews.Models.AppData"
+             xmlns:viewmodels="clr-namespace:UBViews.ViewModels"
+             x:Class="UBViews.Controls.AddContactsControl"
+             x:DataType="viewmodels:AddContactsViewModel">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="ButtonWidth">165</x:String>
+            <x:String x:Key="SearchBarWidth">300</x:String>
+        </ResourceDictionary>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentView.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout x:Name="AddContactsControlMainVSL"
+                             Spacing="25"
+                             Padding="30,0"
+                             VerticalOptions="Center">
+
+            <Label x:Name="ContactsHeaderLabel" 
+                   Style="{StaticResource AppContactsLabels}"
+                   HorizontalOptions="Center"
+                   Text="Contacts" />
+
+            <VerticalStackLayout x:Name="AddContactsControlVSL"
+                                 Style="{StaticResource AppContactsVSL}">
+
+                <Label x:Name="FirstNameLabel" 
+                       Style="{StaticResource AppContactsLabels}"
+                       Text="First Name:" />
+                <Entry x:Name="FirstNameEntry"
+                       Style="{StaticResource AppContactsEntry}"
+                       Text="{Binding FirstName, Mode=TwoWay}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       IsEnabled="True"
+                       Placeholder="Enter first name ..." />
+                <Label x:Name="LastNameLabel" 
+                       Style="{StaticResource AppContactsLabels}"
+                       Text="Last Name:" />
+                <Entry x:Name="LastNameEntry"
+                       Style="{StaticResource AppContactsEntry}"
+                       Text="{Binding LastName, Mode=TwoWay}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       IsEnabled="True"
+                       Placeholder="Enter last name ..." />
+                <Label x:Name="DisplayNameLabel" 
+                       Style="{StaticResource AppContactsLabels}"
+                       Text="Display Name:" />
+                <Entry x:Name="DisplayNameEntry"
+                       Style="{StaticResource AppContactsEntry}"
+                       Text="{Binding DisplayName, Mode=TwoWay}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       IsEnabled="True"
+                       Placeholder="Enter display name ..." />
+                <Label x:Name="EmailLabel" 
+                       Style="{StaticResource AppContactsLabels}"
+                       Text="Email:" />
+                <Entry x:Name="EmailEntry"
+                       Style="{StaticResource AppContactsEntry}"
+                       Text="{Binding Email, Mode=TwoWay}"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       IsEnabled="True"
+                       IsTextPredictionEnabled="False"
+                       IsSpellCheckEnabled="False"
+                       Placeholder="Enter email ...">
+                    <Entry.Behaviors>
+                        <behaviors:EventToCommandBehavior
+                            EventName="Completed"
+                            Command="{Binding EmailEntryCompletedCommand}"
+                            CommandParameter="{Binding Source={x:Reference EmailEntry}, 
+                                                       Path=Text}" />
+                        <behaviors:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding EmailTextChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference EmailEntry}, 
+                                                       Path=Text}" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="AutoSendLabel" 
+                       Text="Auto Send:"
+                       Style="{StaticResource AppContactsLabels}"/>
+                <CheckBox x:Name="AutoSendCheckBox"
+                          Color="Blue"
+                          IsEnabled="{Binding EmailIsValid}"
+                          IsChecked="{Binding AutoSendEmail, Mode=TwoWay}">
+                    <CheckBox.Behaviors>
+                        <behaviors:EventToCommandBehavior 
+                            EventName="CheckedChanged" 
+                            Command="{Binding AutoSendCheckedChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference AutoSendCheckBox}, 
+                                                       Path=IsChecked}"/>
+                    </CheckBox.Behaviors>
+                </CheckBox>
+
+            </VerticalStackLayout>
+
+            <Button Text="Save Contact" 
+                    FontSize="18"
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Center" 
+                    SemanticProperties.HeadingLevel="None"
+                    SemanticProperties.Description="Button for saving new contact."
+                    SemanticProperties.Hint="Save Button."
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding SaveContactCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentView>
