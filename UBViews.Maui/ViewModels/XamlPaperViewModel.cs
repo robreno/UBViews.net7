@@ -481,46 +481,7 @@ namespace UBViews.ViewModels
         }
 
         [RelayCommand]
-        async Task PointGesture(string actionId)
-        {
-            try
-            {
-                if (contentPage == null)
-                    return;
-
-                var msg = "PointGestureCommand " + actionId;
-                await App.Current.MainPage.DisplayAlert("Gesture Regognizer =>", msg, "Cancel");
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-                return;
-            }
-        }
-
-        [RelayCommand]
-        async Task SwipeRightGesture(string actionId)
-        {
-            try
-            {
-                if (contentPage == null)
-                    return;
-
-                //var msg = "SwipRightGestureCommand " + actionId;
-                //await App.Current.MainPage.DisplayAlert("Gesture Regognizer =>", msg, "Cancel");
-                // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/pop-ups
-                string action = await App.Current.MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
-                await App.Current.MainPage.DisplayAlert("Sending Paragraph to =>", action, "Cancel");
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-                return;
-            }
-        }
-
-        [RelayCommand]
-        async Task SwipeLeftGesture(string actionId)
+        async Task SwipeGesture(string actionId)
         {
             try
             {
@@ -530,41 +491,47 @@ namespace UBViews.ViewModels
                 // https://learn.microsoft.com/en-us/answers/questions/1187166/maui-android-is-it-possible-to-highlights-text-in
                 // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/clipboard
                 // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/share?tabs=android
-                string action = await App.Current.MainPage.DisplayActionSheet("ActionSheet: Archive to?", "Cancel", null, "Local", "Server", "Clipboard");
+                // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/pop-ups
+#if WINDOWS
+                string action = await App.Current.MainPage.DisplayActionSheet("Share to?", "Cancel", null, "Clipboard", "Email", "AutoSend");
+#else
+                string action = await App.Current.MainPage.DisplayActionSheet("Share to?", "Cancel", null, "Clipboard", "Email");
+#endif
+
+                var lbl = contentPage.FindByName(actionId) as Label;
+                var formattedText = lbl.FormattedText;
+                var spans = formattedText.Spans;
+                StringBuilder sb = new StringBuilder();
+                var pretext = "I thought of you when I read this quote from The Urantia Book by The Urantia Foundation - ";
+                var postText = "UBViews: The Urantia Book Viewer & Search Engine – Agondonter Media.";
+                sb.AppendLine(pretext);
+                sb.AppendLine("");
+                foreach (var span in spans)
+                {
+                    sb.Append(span.Text);
+                }
+                sb.AppendLine("");
+                sb.AppendLine("");
+                sb.AppendLine(postText);
+                var text = sb.ToString();
 
                 string msg = string.Empty;
                 switch (action)
                 {
-                    case "Cancel":
-                        // Do nothing
-                        break;
-                    case "Local":
-                        msg = "Archive to local storage is not implemented";
-                        await App.Current.MainPage.DisplayAlert("Action =>", msg, "Cancel");
-                        break;
-                    case "Server":
-                        msg = "Archive to server storage is not implemented";
-                        await App.Current.MainPage.DisplayAlert("Action =>", msg, "Cancel");
-                        break;
                     case "Clipboard":
-                        var lbl = contentPage.FindByName(actionId) as Label;
-                        var formattedText = lbl.FormattedText;
-                        var spans = formattedText.Spans;
-                        StringBuilder sb = new StringBuilder();
-                        var pretext = "I thought of you when I read this quote from The Urantia Book by The Urantia Foundation - ";
-                        sb.AppendLine(pretext);
-                        sb.AppendLine("");
-                        foreach (var span in spans)
-                        {
-                            sb.Append(span.Text);
-                        }
-                        var text = sb.ToString();
                         // Cleear Clipboard of any old content
                         await Clipboard.Default.SetTextAsync(null);
                         // Add paragraph text to clipboard
                         await Clipboard.Default.SetTextAsync(text);
                         break;
+                    case "Email":
+                        await ShareText(text);
+                        break;
+                    case "AutoSend":
+                        await FlyoutMenu(actionId);
+                        break;
                     default:
+                        // Do nothing
                         break;
                 }
             }
@@ -583,8 +550,76 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
-                var msg = "FlyoutMenuCommand " + actionId;
-                await App.Current.MainPage.DisplayAlert("Gesture Regognizer => ", msg, "Cancel");
+                var actionArry = actionId.Split('_');
+                var paperSeqId = "_" + actionArry[1] + "_" + actionArry[2];
+                var action = actionArry[0];
+
+                var lbl = contentPage.FindByName(paperSeqId) as Label;
+                var formattedText = lbl.FormattedText;
+                var spans = formattedText.Spans;
+                StringBuilder sb = new StringBuilder();
+                var pretext = "I thought of you when I read this quote from The Urantia Book by Urantia Foundation - ";
+                var postText = "UBViews: The Urantia Book Viewer & Search Engine – Agondonter Media.";
+                sb.AppendLine(pretext);
+                sb.AppendLine("");
+                foreach (var span in spans)
+                {
+                    sb.Append(span.Text);
+                }
+                sb.AppendLine("");
+                sb.AppendLine("");
+                sb.AppendLine(postText);
+
+                var text = sb.ToString();
+
+                var auto_send = await settingsService.Get("auto_send", "");
+
+                // TODO: if empty pop-up a dialogugue 
+                // Tell user to add contact on contactd page
+                // set auto_send to correct value here
+
+                var emailArray = auto_send.Split(';');
+                List<string> emailList = new();
+                foreach (var r in emailArray)
+                {
+                    emailList.Add(r);
+                }
+
+                string errorMsg = string.Empty;
+                switch (action)
+                {
+                    case "Copy":
+                        // Cleear Clipboard of any old content
+                        await Clipboard.Default.SetTextAsync(null);
+                        // Add paragraph text to clipboard
+                        await Clipboard.Default.SetTextAsync(text);
+                        break;
+                    case "Email":
+                        errorMsg = "Send Email not implemented";
+                        //await App.Current.MainPage.DisplayAlert("Action =>", errorMsg, "Cancel");
+                        if (Email.Default.IsComposeSupported)
+                        {
+                            string subject = "UBViews Quote of the day ...";
+                            string body = text;
+                            //string[] auto_send = new[] { "robreno@hotmail.com", "brad@urantia.org" };
+                            string[] emails = emailArray;
+
+                            var message = new EmailMessage
+                            {
+                                Subject = subject,
+                                Body = body,
+                                BodyFormat = EmailBodyFormat.PlainText,
+                                To = new List<string>(emails)
+                            };
+
+                            await Email.Default.ComposeAsync(message);
+                        }
+                        break;
+                    
+                        default:
+                            // Do nothing
+                            break;
+                }
             }
             catch (Exception ex)
             {
@@ -908,6 +943,14 @@ namespace UBViews.ViewModels
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
                 return null;
             }
+        }
+        async Task ShareText(string text)
+        {
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Text = text,
+                Title = "Share Text"
+            });
         }
     }
 }
