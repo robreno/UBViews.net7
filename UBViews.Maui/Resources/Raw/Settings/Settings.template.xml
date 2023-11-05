@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Settings count="7">
+<Settings count="14">
   <Setting name="use_caching" type="bool" value="false" />
   <Setting name="max_query_results" type="int" value="50" />
   <Setting name="line_height" type="double" value="1.0" />
@@ -12,4 +12,6 @@
   <Setting name="small_window" type="string" value="680,520" />
   <Setting name="medium_window" type="string" value="880,720" />
   <Setting name="large_window" type="string" value="1080,920" />
+  <Setting name="auto_send_on" type="bool" value="false" />
+  <Setting name="auto_send" type="string" value="" />
 </Settings>
