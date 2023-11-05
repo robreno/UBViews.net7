@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Contacts count="3">
+  <Contact id="1">
+    <FirstName>Rob</FirstName>
+    <LastName>Reno</LastName>
+    <Email>robreno@hotmail.com</Email>
+  </Contact>
+  <Contact id="2">
+    <FirstName>Brad</FirstName>
+    <LastName>Garner</LastName>
+    <Email>brad@urantia.org</Email>
+  </Contact>
+  <Contact id="3">
+    <FirstName>Pat</FirstName>
+    <LastName>Sonti</LastName>
+    <Email>ps010@my.tamuct.edu</Email>
+  </Contact>
+</Contacts>
