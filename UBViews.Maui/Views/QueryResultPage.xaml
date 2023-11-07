@@ -9,6 +9,9 @@
              x:DataType="viewmodel:QueryResultViewModel">
 
     <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="ButtonWidth">160</x:String>
+        </ResourceDictionary>
         <Style x:Key="basePidStyle" TargetType="Label">
             <Setter Property="Margin" Value="0,20,5,0" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -28,15 +31,16 @@
 
     <Grid x:Name="contentGrid"
           VerticalOptions="StartAndExpand"
+          Margin="15,0,15,30"
           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                             Dark={StaticResource UBDarkBackground}}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout Grid.Row="0" Margin="5,10,0,10">
+        <!--<HorizontalStackLayout Grid.Row="0" Margin="5,10,0,10">
             <Label VerticalOptions="Start"
                    Style="{DynamicResource RegularParagraph}"
                    ToolTipProperties.Text="To display more query results go to settings page.">
@@ -51,10 +55,74 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-        </HorizontalStackLayout>
+        </HorizontalStackLayout>-->
+
+        <Grid x:Name="headerGrid" 
+              Grid.Row="0">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <VerticalStackLayout Grid.Row="0"
+                                 Grid.Column="0"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start">
+                <Label x:Name="maxQueryResultsLable" 
+                        VerticalOptions="Center"
+                        Style="{DynamicResource RegularParagraph}"
+                        ToolTipProperties.Text="To display more query results go to settings page.">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource RegularSpan}" Text="Query Entered (" />
+                            <Span Style="{StaticResource RegularSpan}" Text="max displayed " />
+                            <Span Style="{StaticResource RegularSpan}" Text="{Binding MaxQueryResults}" />
+                            <Span Style="{StaticResource RegularSpan}" Text="):" />
+                            <Span Style="{StaticResource RegularSpan}" Text="  " />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Border Stroke="Purple" Padding="1,1,1,1">
+                    <Label x:Name="queryStringLabel" 
+                            Style="{DynamicResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Style="{StaticResource RegularSpan}" Text="  " />
+                                <Span Style="{StaticResource QueryResultSpan}" Text="{Binding QueryString}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>
+                <!--<HorizontalStackLayout>
+                    <CheckBox VerticalOptions="Center" />
+                    <Label Text="Hide Unchecked" Style="{StaticResource RegularParagraph}" VerticalOptions="Center" />
+                </HorizontalStackLayout>-->
+                <HorizontalStackLayout>
+
+                    <Button x:Name="shareChecked" 
+                            HorizontalOptions="Start"
+                            Margin="0,10,0,10"
+                            Text="Share Selected" 
+                            HeightRequest="40" 
+                            WidthRequest="{x:StaticResource ButtonWidth}"
+                            BorderColor="Blue"
+                            FontSize="15"
+                            Command="{Binding ShareSelectedCommand}"
+                            CommandParameter="{Binding QueryString}"/>
+
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+        </Grid>
 
         <ScrollView x:Name="contentScrollView" 
-                    Grid.Row="1"
+                    Grid.Row="2"
                     VerticalOptions="Center" 
                     HorizontalScrollBarVisibility="Always">
 
