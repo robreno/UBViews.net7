@@ -100,7 +100,7 @@ public class XmlContactsService : IContactsService
 
             XElement newContact = new XElement("Contact",
                                     new XAttribute("id", contact.Id),
-                                    new XAttribute("autoSend", contact.AutoSendEmail),
+                                    new XAttribute("autoSendEmail", contact.AutoSendEmail),
                                     new XElement("FirstName", contact.FirstName),
                                     new XElement("LastName", contact.LastName),
                                     new XElement("DisplayName", contact.DisplayName),
@@ -154,7 +154,7 @@ public class XmlContactsService : IContactsService
             foreach (var elm in contactElms) 
             {
                 var id = Int32.Parse(elm.Attribute("id").Value);
-                var autoSend = "false" == elm.Attribute("autoSend").Value ? false : true;
+                var autoSendEmail = "false" == elm.Attribute("autoSendEmail").Value ? false : true;
                 var firstName = elm.Element("FirstName").Value;
                 var lastName = elm.Element("LastName").Value;
                 var displayName = elm.Element("DisplayName").Value;
@@ -162,7 +162,7 @@ public class XmlContactsService : IContactsService
                 var newContact = new ContactDto()
                 {
                     Id = id,
-                    AutoSendEmail = autoSend,
+                    AutoSendEmail = autoSendEmail,
                     FirstName = firstName,
                     LastName = lastName,
                     DisplayName = displayName,

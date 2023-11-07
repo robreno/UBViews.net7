@@ -185,7 +185,6 @@
 	<ItemGroup>
 	  <MauiAsset Remove="Resources\Raw\Database\postingLists.db3" />
 	  <MauiAsset Remove="Resources\Raw\Database\queryResults.db3" />
-	  <MauiAsset Remove="Resources\Raw\Email\Contact.text.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -226,7 +225,7 @@
 	  <None Remove="Resources\Raw\Audio\UB.000.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.0.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.mp3" />
-	  <None Remove="Resources\Raw\Email\Contact.text.xml" />
+	  <None Remove="Resources\Raw\Email\Contact.test.xml" />
 	  <None Remove="Resources\Raw\Email\Contacts.template.xml" />
 	  <None Remove="Resources\Raw\JsonData\partTitles.json" />
 	  <None Remove="Resources\Raw\Query\Queries.template.xml" />

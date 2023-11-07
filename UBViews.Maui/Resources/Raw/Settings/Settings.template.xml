@@ -12,6 +12,6 @@
   <Setting name="small_window" type="string" value="680,520" />
   <Setting name="medium_window" type="string" value="880,720" />
   <Setting name="large_window" type="string" value="1080,920" />
-  <Setting name="auto_send_on" type="bool" value="false" />
-  <Setting name="auto_send" type="string" value="" />
+  <Setting name="auto_send_email" type="bool" value="false" />
+  <Setting name="auto_send_list" type="string" value="" />
 </Settings>

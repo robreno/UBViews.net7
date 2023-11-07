@@ -26,6 +26,8 @@
             <Color x:Key="LabelText">#1F1F1F</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
+            <x:String x:Key="ButtonWidth">160</x:String>
+
             <!-- UB Specific Styles -->
             <!-- Span Styles -->
             <Style x:Key="BaseSpan" TargetType="Span">
