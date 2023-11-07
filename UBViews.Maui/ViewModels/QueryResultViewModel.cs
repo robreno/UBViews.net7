@@ -335,18 +335,11 @@ public partial class QueryResultViewModel : BaseViewModel
     {
         try
         {
-            // See: https://learn.microsoft.com/en-us/dotnet/maui/xaml/runtime-load
-            /*
-            string navigationButtonXAML = "<Button Text=\"Navigate\" />";
-            Button navigationButton = new Button().LoadFromXaml(navigationButtonXAML);
-            stackLayout.Add(navigationButton); ...
-            */
-
             var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
-
             var locations = QueryLocations;
             int hit = 0;
+
             foreach (var location in locations)
             {
                 hit++;
