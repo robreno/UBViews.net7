@@ -90,8 +90,9 @@
                     </Entry.Behaviors>
                 </Entry>
                 <Label x:Name="AutoSendLabel" 
-                       Text="Auto Send:"
-                       Style="{StaticResource AppContactsLabels}"/>
+                       Style="{StaticResource AppContactsLabels}"
+                       HorizontalOptions="Start"
+                       Text="Auto Send:"/>
                 <CheckBox x:Name="AutoSendCheckBox"
                           Color="Blue"
                           IsEnabled="{Binding EmailIsValid}"

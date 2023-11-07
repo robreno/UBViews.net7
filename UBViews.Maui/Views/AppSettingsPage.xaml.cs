@@ -12,7 +12,7 @@ public partial class AppSettingsPage : ContentPage
     /// 
     /// </summary>
     /// <param name="vm"></param>
-    public AppSettingsPage(AppSettingsViewModel vm)
+    public AppSettingsPage(XmlAppSettingsViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

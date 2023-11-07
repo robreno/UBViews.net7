@@ -107,7 +107,7 @@
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="AppData" />
 
-            <Button Text="Contacts" 
+            <!--<Button Text="Contacts" 
                     FontSize="18"
                     FontAttributes="Bold" 
                     HorizontalOptions="Center" 
@@ -116,7 +116,7 @@
                     SemanticProperties.Hint="Navigation Button."
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppContacts" />
+                    CommandParameter="AppContacts" />-->
 
             <!--<Button 
                 Text="Check Internet" 

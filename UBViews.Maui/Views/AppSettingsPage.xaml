@@ -5,14 +5,8 @@
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
              xmlns:converter="clr-namespace:UBViews.Converters"
              x:Class="UBViews.Views.AppSettingsPage"
-             x:DataType="viewmodel:AppSettingsViewModel"
+             x:DataType="viewmodel:XmlAppSettingsViewModel"
              Title="App Settings Page">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
@@ -101,6 +95,22 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
+            <HorizontalStackLayout x:Name="AutoSendEmailHSL" Margin=".5">
+                <Label x:Name="autoSendEmailLabel" 
+                       Text="Auto Send Email:"
+                       Style="{StaticResource AppSettingsLabels}" />
+                <CheckBox x:Name="autoSendEmailCheckBox"
+                          Color="Blue"
+                          IsChecked="{Binding AutoSendEmail, Mode=OneWay}">
+                    <CheckBox.Behaviors>
+                        <behavior:EventToCommandBehavior 
+                            EventName="CheckedChanged" 
+                            Command="{Binding AutoSendEmailCheckedChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference autoSendEmailCheckBox}, Path=IsChecked}"/>
+                    </CheckBox.Behaviors>
+                </CheckBox>
+            </HorizontalStackLayout>
+
             <HorizontalStackLayout x:Name="PlaybackControlsHSL" Margin=".5">
                 <Label x:Name="showControlsLabel" 
                        Text="Show Media Controls:"
@@ -176,14 +186,14 @@
         </VerticalStackLayout>
 
         <Button Text="Save Settings" 
-                WidthRequest="120"
+                WidthRequest="{x:StaticResource ButtonWidth}"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Margin="0,20,0,0">
             <Button.Behaviors>
                 <behavior:EventToCommandBehavior 
-                            EventName="Clicked" 
-                            Command="{Binding SaveSettingsCommand}"/>
+                    EventName="Clicked" 
+                    Command="{Binding SaveSettingsCommand}"/>
             </Button.Behaviors>
         </Button>
 

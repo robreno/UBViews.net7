@@ -223,9 +223,9 @@ public partial class AddContactsViewModel : ObservableValidator
                     Contacts.Add(_contact);
                     if (EmailIsValid && AutoSendEmail)
                     {
-                        var recipients = await settingsService.Get("auto_send", "");
+                        var recipients = await settingsService.Get("auto_send_list", "");
                         recipients = recipients + _contact.Email + ";";
-                        await settingsService.Set("auto_send", recipients);
+                        await settingsService.Set("auto_send_list", recipients);
                     }
                     await ClearForm();
                 }

@@ -26,6 +26,7 @@ public partial class QueryResultViewModel : BaseViewModel
 {
     public ContentPage contentPage;
     public ObservableCollection<QueryLocationDto> QueryLocations { get; } = new();
+    public ObservableCollection<Label> SelectedHits { get; } = new();
 
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
 
@@ -152,6 +153,57 @@ public partial class QueryResultViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task SwipeLeftGesture(string value)
+    {
+        try
+        {
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task ShareSelected(string value)
+    {
+        try
+        {
+            var query = value;
+            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
+            if (contentVSL == null)
+            {
+                return;
+            }
+            var children = contentVSL.Children;
+            foreach (var child in children)
+            {
+                Border border = (Border)child;
+                var content = border.Content;
+                var visualTree = content.GetVisualTreeDescendants();
+                var vsl = (VerticalStackLayout)visualTree[0];
+                var lbl = (Label)visualTree[1];
+                var chk = (CheckBox)visualTree[2];
+                var isChecked = chk.IsChecked;
+                if (isChecked)
+                {
+                    SelectedHits.Add(lbl);
+                }
+                else
+                {
+                    border.IsVisible = false;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
         }
     }
 
@@ -325,6 +377,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 FormattedString fs = await CreateFormattedStringEx(paragraph, txtArray, hit);
 
                 Label label = new Label { FormattedText = fs };
+                label.ClassId = pid + "_" + seqId;
                 TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
                 tapGestureRecognizer.CommandParameter = $"{labelName}";
@@ -333,13 +386,22 @@ public partial class QueryResultViewModel : BaseViewModel
 
                 label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid}");
 
+                VerticalStackLayout vsl = new VerticalStackLayout();
+
+                CheckBox checkBox = new CheckBox();
+                checkBox.HorizontalOptions = LayoutOptions.End;
+
+                vsl.Add(label);
+                vsl.Add(checkBox);
+
                 Border newBorder = new Border()
                 {
                     Stroke = Colors.Blue,
                     Padding = new Thickness(10),
                     Margin = new Thickness(.5),
-                    Content = label
+                    Content = vsl
                 };
+
                 contentVSL.Add(newBorder);
             }
         }

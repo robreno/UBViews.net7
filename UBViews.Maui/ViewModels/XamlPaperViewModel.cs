@@ -572,13 +572,21 @@ namespace UBViews.ViewModels
 
                 var text = sb.ToString();
 
-                var auto_send = await settingsService.Get("auto_send", "");
+                // Get AutoSendList
+                var autoSendList = await settingsService.Get("auto_send_list", "");
+                // Empty AutoSendList
+                if (string.IsNullOrEmpty(autoSendList))
+                {
+                    string msg = $"There are no auto send recipients to send to.";
+                    await App.Current.MainPage.DisplayAlert("Auto Send Email Error! =>", msg, "Cancel");
+                    return;
+                }
 
                 // TODO: if empty pop-up a dialogugue 
                 // Tell user to add contact on contactd page
                 // set auto_send to correct value here
 
-                var emailArray = auto_send.Split(';');
+                var emailArray = autoSendList.Split(';');
                 List<string> emailList = new();
                 foreach (var r in emailArray)
                 {
