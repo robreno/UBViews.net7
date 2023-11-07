@@ -453,5 +453,37 @@ public partial class QueryResultViewModel : BaseViewModel
         }
     }
 
+    private async Task<string> CreateEmailText()
+    {
+        try
+        {
+            var text = string.Empty;
+
+            foreach (var hit in SelectedHits)
+            {
+                var id = hit.ClassId;
+                var arry = id.Split('_');
+                var pid = arry[0];
+                var seqId = arry[1];
+                var spans = hit.FormattedText.Spans;
+                foreach (var span in spans)
+                {
+                    var style = span.Style;
+                    var fontFamily = span.FontFamily;
+                    var textDecorations = span.TextDecorations;
+                    var txt = span.Text;
+                }
+                text = hit.Text;
+            }
+
+            return text;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return null;
+        }
+    }
+
     #endregion
 }
