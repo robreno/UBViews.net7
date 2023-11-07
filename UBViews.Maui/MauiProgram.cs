@@ -77,7 +77,7 @@ namespace UBViews
             builder.Services.AddTransient<AppDataViewModel>();
             builder.Services.AddTransient<AppDataPage>();
 
-            builder.Services.AddTransient<AppSettingsViewModel>();
+            builder.Services.AddTransient<XmlAppSettingsViewModel>();
             builder.Services.AddTransient<AppSettingsPage>();
 
             builder.Services.AddTransient<AddContactsViewModel>();
