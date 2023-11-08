@@ -452,7 +452,6 @@ public partial class QueryResultViewModel : BaseViewModel
             return null;
         }
     }
-
     private async Task<string> CreateEmailText()
     {
         try
