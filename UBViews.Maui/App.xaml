@@ -303,6 +303,12 @@
                 <Setter Property="FontSize" Value="17.5" />
             </Style>
 
+            <!-- CheckBox Caption -->
+            <Style x:Key="CheckBoxCaption" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
+                <Setter Property="FontSize" Value="16.5"/>
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            
             <!-- Poem -->
             <Style x:Key="Poem" TargetType="Label" BasedOn="{StaticResource RegularParagraph}" />
 
