@@ -66,6 +66,9 @@ public partial class QueryResultViewModel : BaseViewModel
     [ObservableProperty]
     string scrollToLabelName;
 
+    [ObservableProperty]
+    bool hideUnselected;
+
     [RelayCommand]
     async Task QueryResultAppearing(QueryResultLocationsDto dto)
     {
@@ -161,6 +164,47 @@ public partial class QueryResultViewModel : BaseViewModel
     {
         try
         {
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task SelectedCheckboxChanged(bool value)
+    {
+        try
+        {
+            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
+            var checkedLabel = contentPage.FindByName("hideUncheckedLabel") as Label;
+            if (contentVSL == null)
+            {
+                return;
+            }
+            var children = contentVSL.Children;
+            foreach (var child in children)
+            {
+                Border border = (Border)child;
+                var content = border.Content;
+                var visualTree = content.GetVisualTreeDescendants();
+                var vsl = (VerticalStackLayout)visualTree[0];
+                var lbl = (Label)visualTree[1];
+                var chk = (CheckBox)visualTree[2];
+                var isChecked = chk.IsChecked;
+                var borderIsVisible = border.IsVisible;
+                if (!isChecked && borderIsVisible)
+                {
+                    border.IsVisible = false;
+                    checkedLabel.Text = "Show Unchecked";
+                }
+                else if (!isChecked && !borderIsVisible)
+                {
+                    border.IsVisible = true;
+                    checkedLabel.Text = "Hide Unchecked";
+                }
+            }
         }
         catch (Exception ex)
         {

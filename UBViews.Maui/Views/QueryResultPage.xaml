@@ -82,10 +82,21 @@
                         </Label.FormattedText>
                     </Label>
                 </Border>
-                <!--<HorizontalStackLayout>
-                    <CheckBox VerticalOptions="Center" />
-                    <Label Text="Hide Unchecked" Style="{StaticResource RegularParagraph}" VerticalOptions="Center" />
-                </HorizontalStackLayout>-->
+                <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
+                    <CheckBox x:Name="selectedCheckBox" 
+                              VerticalOptions="Start"
+                              IsChecked="{Binding HideUnselected, Mode=TwoWay}">
+                        <CheckBox.Behaviors>
+                            <behavior:EventToCommandBehavior 
+                                EventName="CheckedChanged" 
+                                Command="{Binding SelectedCheckboxChangedCommand}"
+                                CommandParameter="{Binding Source={x:Reference selectedCheckBox}, Path=IsChecked}"/>
+                        </CheckBox.Behaviors>
+                    </CheckBox>
+                    <Label x:Name="hideUncheckedLabel" 
+                           Text="Hide Unchecked" 
+                           Style="{StaticResource CheckBoxCaption}"  />
+                </HorizontalStackLayout>
                 <HorizontalStackLayout>
 
                     <Button x:Name="shareChecked" 
