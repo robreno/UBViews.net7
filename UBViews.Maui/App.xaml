@@ -5,10 +5,15 @@
              x:Class="UBViews.App">
     <Application.Resources>
         <ResourceDictionary>
-            
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        
             <!-- Main Grid and VerticalStackLayout Styles -->
             <!-- Color Styles -->
-            <Color x:Key="Primary">#007fff</Color>
+            <!--<Color x:Key="Primary">#007fff</Color>-->
             <Color x:Key="PrimaryDark">#013963</Color>
             <Color x:Key="BlueCrayola">#1F75FE</Color>
             <Color x:Key="Accent">#00BFFF</Color>
