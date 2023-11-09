@@ -252,11 +252,13 @@ public class FileService : IFileService
                           "." +
                           Int32.Parse(uidArr[3]);
 
+                var paperIdSeqId = paperId + "." + seqId;
+
                 Paragraph newParagraph = new()
                 {
-                    Id = paperId,
-                    paperId = paperId,
+                    PaperId = paperId,
                     SeqId = seqId,
+                    PaperIdSeqId = paperIdSeqId,
                     Uid = uid,
                     Pid = pid,
                     Type = paraType,
@@ -266,6 +268,7 @@ public class FileService : IFileService
                     Text = sb.ToString(),
                     Runs = paragraphRuns
                 };
+                newParagraph.Runs = paragraphRuns;
                 paragraphList.Add(newParagraph);
             }
             return paragraphList;
@@ -325,10 +328,13 @@ public class FileService : IFileService
                       "." +
                       Int32.Parse(uidArr[3]);
 
+            var paperIdSeqId = paperId + "." + seqId;
+
             Paragraph newParagraph = new()
             {
-                Id = paperId,
+                PaperId = paperId,
                 SeqId = seqId,
+                PaperIdSeqId = paperIdSeqId,
                 Uid = uid,
                 Pid = pid,
                 Type = paraType,
@@ -338,7 +344,7 @@ public class FileService : IFileService
                 Text = sb.ToString(),
                 Runs = paragraphRuns
             };
-
+            newParagraph.Runs = paragraphRuns;
             return newParagraph;
         }
         catch (Exception ex)
