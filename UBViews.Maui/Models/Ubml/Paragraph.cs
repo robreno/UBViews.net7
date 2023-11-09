@@ -2,9 +2,9 @@
 public class Paragraph
 {
     private string endTime;
-    public int Id { get; set; }
     public int PaperId { get; set; }
     public int SeqId { get; set; }
+    public string PaperIdSeqId { get; set; }
     public string Uid { get; set; }
     public string Pid { get; set; }
     public string Type { get; set; }

@@ -345,7 +345,7 @@ public partial class QueryResultViewModel : BaseViewModel
             FormattedString formattedString = new FormattedString();
             await Task.Run(() =>
             {
-                var paperId = paragraph.Id;
+                var paperId = paragraph.PaperId;
                 var seqId = paragraph.SeqId;
                 var pid = paragraph.Pid;
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
@@ -482,7 +482,7 @@ public partial class QueryResultViewModel : BaseViewModel
             FormattedString formattedString = new FormattedString();
             await Task.Run(() =>
             {
-                var paperId = paragraph.Id;
+                var paperId = paragraph.PaperId;
                 var seqId = paragraph.SeqId;
                 var pid = paragraph.Pid;
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");

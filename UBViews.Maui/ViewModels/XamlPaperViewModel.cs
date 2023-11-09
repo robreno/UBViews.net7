@@ -550,11 +550,15 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
-                var actionArry = actionId.Split('_');
-                var paperSeqId = "_" + actionArry[1] + "_" + actionArry[2];
-                var action = actionArry[0];
+                var actionArray = actionId.Split('_');
+                var action = actionArray[0];
+                var labelName = "_" + actionArray[1] + "_" + actionArray[2];
+                var paperId = Int32.Parse(actionArray[1]).ToString("0");
+                var seqId = Int32.Parse(actionArray[2]).ToString("0");
+                var paperIdSeqId = paperId + "." + seqId;
+                var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
 
-                var lbl = contentPage.FindByName(paperSeqId) as Label;
+                var lbl = contentPage.FindByName(labelName) as Label;
                 var formattedText = lbl.FormattedText;
                 var spans = formattedText.Spans;
                 StringBuilder sb = new StringBuilder();
