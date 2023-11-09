@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 public interface IContactsService
 {
-    Task<int> SaveContactAsync(ContactDto contact);
     Task SaveContactsAsync();
+    Task<int> SaveContactAsync(ContactDto contact);
     Task<List<ContactDto>> GetContactsAsync();
 }
