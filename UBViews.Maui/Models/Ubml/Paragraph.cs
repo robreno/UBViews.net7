@@ -3,6 +3,7 @@ public class Paragraph
 {
     private string endTime;
     public int Id { get; set; }
+    public int paperId { get; set; }
     public int SeqId { get; set; }
     public string Uid { get; set; }
     public string Pid { get; set; }
