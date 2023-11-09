@@ -402,7 +402,7 @@ public partial class QueryResultViewModel : BaseViewModel
                     SequenceId = seqId,
                     Pid = pid,
                     Selected = false,
-                    ParagraphHit = paragraph
+                    Paragraph = paragraph
                 };
                 Paragraphs.Add(queryHit);
 
