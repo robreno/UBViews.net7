@@ -255,6 +255,7 @@ public class FileService : IFileService
                 Paragraph newParagraph = new()
                 {
                     Id = paperId,
+                    paperId = paperId,
                     SeqId = seqId,
                     Uid = uid,
                     Pid = pid,
