@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 using Microsoft.Maui.Controls;
-
+using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -16,8 +17,8 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Platform;
 
 using UBViews.Models;
-using UBViews.Models.Query;
 using UBViews.Models.Ubml;
+using UBViews.Models.Query;
 using UBViews.Services;
 
 
@@ -26,7 +27,7 @@ public partial class QueryResultViewModel : BaseViewModel
 {
     public ContentPage contentPage;
     public ObservableCollection<QueryLocationDto> QueryLocations { get; } = new();
-    public ObservableCollection<Label> SelectedHits { get; } = new();
+    public ObservableCollection<QueryHit> Paragraphs { get; set; } = new();
 
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
 
@@ -214,34 +215,30 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task ParagraphSelected(CheckBox checkbox)
+    {
+        try
+        {
+            string id = checkbox.ClassId;
+            bool isSelected = checkbox.IsChecked;
+            QueryHit hit = Paragraphs.Where(h => h.Id == id).FirstOrDefault();
+            hit.Selected = isSelected;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    [RelayCommand]
     async Task ShareSelected(string value)
     {
         try
         {
-            var query = value;
-            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
-            if (contentVSL == null)
+            foreach (var paragraph in Paragraphs)
             {
-                return;
-            }
-            var children = contentVSL.Children;
-            foreach (var child in children)
-            {
-                Border border = (Border)child;
-                var content = border.Content;
-                var visualTree = content.GetVisualTreeDescendants();
-                var vsl = (VerticalStackLayout)visualTree[0];
-                var lbl = (Label)visualTree[1];
-                var chk = (CheckBox)visualTree[2];
-                var isChecked = chk.IsChecked;
-                if (isChecked)
-                {
-                    SelectedHits.Add(lbl);
-                }
-                else
-                {
-                    border.IsVisible = false;
-                }
+
             }
         }
         catch (Exception ex)
@@ -396,6 +393,19 @@ public partial class QueryResultViewModel : BaseViewModel
                 var paraStyle = paragraph.ParaStyle;
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 
+                QueryHit queryHit = new QueryHit
+                {
+                    Id = paperId + "." + seqId,
+                    Query = QueryString,
+                    Hit = hit,
+                    PaperId = paperId,
+                    SequenceId = seqId,
+                    Pid = pid,
+                    Selected = false,
+                    ParagraphHit = paragraph
+                };
+                Paragraphs.Add(queryHit);
+
                 string text = paragraph.Text;
                 List<string> termList = new List<string>();
                 foreach (var termOcc in location.TermOccurrences)
@@ -426,7 +436,20 @@ public partial class QueryResultViewModel : BaseViewModel
                 VerticalStackLayout vsl = new VerticalStackLayout();
 
                 CheckBox checkBox = new CheckBox();
+                checkBox.ClassId = paperId + "." + seqId;
                 checkBox.HorizontalOptions = LayoutOptions.End;
+
+                var binding = new Binding();
+                binding.Source = nameof(QueryResultViewModel);
+                binding.Path = "IsChecked";
+
+                var behavior = new EventToCommandBehavior
+                {
+                    EventName = "CheckedChanged",
+                    Command = ParagraphSelectedCommand,
+                    CommandParameter = checkBox
+                };
+                checkBox.Behaviors.Add(behavior);
 
                 vsl.Add(label);
                 vsl.Add(checkBox);
@@ -502,21 +525,21 @@ public partial class QueryResultViewModel : BaseViewModel
         {
             var text = string.Empty;
 
-            foreach (var hit in SelectedHits)
+            foreach (var paragraph in Paragraphs)
             {
-                var id = hit.ClassId;
-                var arry = id.Split('_');
-                var pid = arry[0];
-                var seqId = arry[1];
-                var spans = hit.FormattedText.Spans;
-                foreach (var span in spans)
-                {
-                    var style = span.Style;
-                    var fontFamily = span.FontFamily;
-                    var textDecorations = span.TextDecorations;
-                    var txt = span.Text;
-                }
-                text = hit.Text;
+                //var id = hit.ClassId;
+                //var arry = id.Split('_');
+                //var pid = arry[0];
+                //var seqId = arry[1];
+                //var spans = hit.FormattedText.Spans;
+                //foreach (var span in spans)
+                //{
+                //    var style = span.Style;
+                //    var fontFamily = span.FontFamily;
+                //    var textDecorations = span.TextDecorations;
+                //    var txt = span.Text;
+                //}
+                //text = hit.Text;
             }
 
             return text;
@@ -527,6 +550,5 @@ public partial class QueryResultViewModel : BaseViewModel
             return null;
         }
     }
-
     #endregion
 }
