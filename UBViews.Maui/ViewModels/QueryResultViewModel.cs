@@ -32,11 +32,13 @@ public partial class QueryResultViewModel : BaseViewModel
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
 
     IFileService fileService;
+    IEmailService emailService;
     IAppSettingsService appSettingsService;
 
-    public QueryResultViewModel(IFileService fileService, IAppSettingsService appSettingsService)
+    public QueryResultViewModel(IFileService fileService, IEmailService emailService, IAppSettingsService appSettingsService)
     {
         this.fileService = fileService;
+        this.emailService = emailService;
         this.appSettingsService = appSettingsService;
     }
 
@@ -236,6 +238,7 @@ public partial class QueryResultViewModel : BaseViewModel
     {
         try
         {
+            var contacts = await emailService.GetContactsAsync();
             foreach (var paragraph in Paragraphs)
             {
 
