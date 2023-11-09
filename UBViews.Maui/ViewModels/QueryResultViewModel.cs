@@ -519,30 +519,12 @@ public partial class QueryResultViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<string> CreateEmailText()
+    private async Task<string> CreateEmailText(string pretext, string postText, string subject, List<string> recipients, EmailBodyFormat bodyFormat = EmailBodyFormat.PlainText)
     {
         try
         {
-            var text = string.Empty;
-
-            foreach (var paragraph in Paragraphs)
-            {
-                //var id = hit.ClassId;
-                //var arry = id.Split('_');
-                //var pid = arry[0];
-                //var seqId = arry[1];
-                //var spans = hit.FormattedText.Spans;
-                //foreach (var span in spans)
-                //{
-                //    var style = span.Style;
-                //    var fontFamily = span.FontFamily;
-                //    var textDecorations = span.TextDecorations;
-                //    var txt = span.Text;
-                //}
-                //text = hit.Text;
-            }
-
-            return text;
+            string emailText = string.Empty;
+            return emailText;
         }
         catch (Exception ex)
         {
