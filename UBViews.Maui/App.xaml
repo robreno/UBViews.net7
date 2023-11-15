@@ -406,6 +406,13 @@
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
             </Style>
+            <Style x:Key="CheckBoxLabels" TargetType="Label">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Padding" Value="0,0,0,10" />
+            </Style>
 
             <!-- End UB Specific Styles -->
 
