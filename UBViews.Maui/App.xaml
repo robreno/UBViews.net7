@@ -414,6 +414,17 @@
                 <Setter Property="Padding" Value="0,0,0,10" />
             </Style>
 
+            <!--<Color x:Key="DisplayNameColor">Green</Color>
+            <Style x:Key="DisplayNameEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="{DynamicResource DisplayNameColor}" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="240" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+            </Style>-->
+
             <!-- End UB Specific Styles -->
 
         </ResourceDictionary>
