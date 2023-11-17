@@ -13,5 +13,22 @@ public class ContactDto
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string DisplayName { get; set; }
-    public string Email {  get; set; }
+    public string Email { get; set; }
+    public bool EqualTo(ContactDto dto)
+    {
+        bool isEqual = false;
+        if (dto == null) { return false; }
+        else
+        {
+            if (dto.AutoSendEmail == AutoSendEmail &&
+                dto.FirstName == FirstName &&
+                dto.LastName == LastName &&
+                dto.DisplayName == DisplayName &&
+                dto.Email == Email)
+            {
+                isEqual = true;
+            }
+        }
+        return isEqual;
+    }
 }
