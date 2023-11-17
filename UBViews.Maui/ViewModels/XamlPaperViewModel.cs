@@ -57,6 +57,11 @@ namespace UBViews.ViewModels
         IAudioService audioService;
 
         /// <summary>
+        /// IEmailService
+        /// </summary>
+        IEmailService emailService;
+
+        /// <summary>
         /// 
         /// </summary>
         IAppSettingsService settingsService;
@@ -65,9 +70,10 @@ namespace UBViews.ViewModels
         /// 
         /// </summary>
         /// <param name="fileService"></param>
-        public XamlPaperViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService)
+        public XamlPaperViewModel(IFileService fileService, IEmailService emailService, IAppSettingsService settingsService, IAudioService audioService)
         {
             this.fileService = fileService;
+            this.emailService = emailService;
             this.audioService = audioService;
             this.settingsService = settingsService;
             this.cultureInfo = new CultureInfo("en-US");
@@ -488,50 +494,58 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
-                // https://learn.microsoft.com/en-us/answers/questions/1187166/maui-android-is-it-possible-to-highlights-text-in
-                // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/clipboard
-                // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/share?tabs=android
-                // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/pop-ups
-#if WINDOWS
-                string action = await App.Current.MainPage.DisplayActionSheet("Share to?", "Cancel", null, "Clipboard", "Email", "AutoSend");
-#else
-                string action = await App.Current.MainPage.DisplayActionSheet("Share to?", "Cancel", null, "Clipboard", "Email");
-#endif
+                var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
+                var paperId = Int32.Parse(actionArray[0]).ToString("0");
+                var seqId = Int32.Parse(actionArray[1]).ToString("0");
+                var paperIdSeqId = paperId + "." + seqId;
+                var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
+                var pid = paragraph.Pid;
 
-                var lbl = contentPage.FindByName(actionId) as Label;
-                var formattedText = lbl.FormattedText;
-                var spans = formattedText.Spans;
-                StringBuilder sb = new StringBuilder();
-                var pretext = "I thought of you when I read this quote from The Urantia Book by The Urantia Foundation - ";
-                var postText = "UBViews: The Urantia Book Viewer & Search Engine – Agondonter Media.";
-                sb.AppendLine(pretext);
-                sb.AppendLine("");
-                foreach (var span in spans)
+                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
+                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
+
+                if (autoSendRecipients.Count == 0)
                 {
-                    sb.Append(span.Text);
-                }
-                sb.AppendLine("");
-                sb.AppendLine("");
-                sb.AppendLine(postText);
-                var text = sb.ToString();
+                    var contactsCount = await emailService.ContactsCount();
+                    string promptMessage = string.Empty;
+                    string secondAction = string.Empty;
 
-                string msg = string.Empty;
+                    secondAction = " add or set contact(s) to AutoSend.";
+                    promptMessage = $"You have no contacts or none are set to auto send.\r" +
+                                    $"Please go to the Settigs => Contacts page and {secondAction}.";
+
+                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                    return;
+                }
+
+                string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
+
+                string errorMsg = string.Empty;
                 switch (action)
                 {
-                    case "Clipboard":
-                        // Cleear Clipboard of any old content
-                        await Clipboard.Default.SetTextAsync(null);
+                    case "Copy":
                         // Add paragraph text to clipboard
-                        await Clipboard.Default.SetTextAsync(text);
+                        await Clipboard.Default.SetTextAsync(plainText);
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        break;
+                    case "Share":
+                        // Share Paragraph
+                        await emailService.ShareParagraph(paragraph);
                         break;
                     case "Email":
-                        await ShareText(text);
+                        // Email Paragraph
+#if WINDOWS
+                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+#elif ANDROID
+                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
+#endif
                         break;
-                    case "AutoSend":
-                        await FlyoutMenu(actionId);
+                    case "Cancel":
                         break;
                     default:
-                        // Do nothing
+                        errorMsg = "Unkown Command!";
+                        await App.Current.MainPage.DisplayAlert("Unknown Action =>", errorMsg, "Cancel");
                         break;
                 }
             }
@@ -550,87 +564,57 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
-                var actionArray = actionId.Split('_');
-                var action = actionArray[0];
-                var labelName = "_" + actionArray[1] + "_" + actionArray[2];
-                var paperId = Int32.Parse(actionArray[1]).ToString("0");
-                var seqId = Int32.Parse(actionArray[2]).ToString("0");
+                var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
+                var paperId = Int32.Parse(actionArray[0]).ToString("0");
+                var seqId = Int32.Parse(actionArray[1]).ToString("0");
                 var paperIdSeqId = paperId + "." + seqId;
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
+                var pid = paragraph.Pid;
 
-                var lbl = contentPage.FindByName(labelName) as Label;
-                var formattedText = lbl.FormattedText;
-                var spans = formattedText.Spans;
-                StringBuilder sb = new StringBuilder();
-                var pretext = "I thought of you when I read this quote from The Urantia Book by Urantia Foundation - ";
-                var postText = "UBViews: The Urantia Book Viewer & Search Engine – Agondonter Media.";
-                sb.AppendLine(pretext);
-                sb.AppendLine("");
-                foreach (var span in spans)
+                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
+                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
+
+                if (autoSendRecipients.Count == 0)
                 {
-                    sb.Append(span.Text);
-                }
-                sb.AppendLine("");
-                sb.AppendLine("");
-                sb.AppendLine(postText);
+                    var contactsCount = await emailService.ContactsCount();
+                    string promptMessage = string.Empty;
+                    string secondAction = string.Empty;
 
-                var text = sb.ToString();
+                    secondAction = " add or set contact(s) to AutoSend.";
+                    promptMessage = $"You have no contacts or none are set to auto send.\r" +
+                                    $"Please go to the Settigs => Contacts page and {secondAction}.";
 
-                // Get AutoSendList
-                var autoSendList = await settingsService.Get("auto_send_list", "");
-                // Empty AutoSendList
-                if (string.IsNullOrEmpty(autoSendList))
-                {
-                    string msg = $"There are no auto send recipients to send to.";
-                    await App.Current.MainPage.DisplayAlert("Auto Send Email Error! =>", msg, "Cancel");
+                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
                     return;
                 }
 
-                // TODO: if empty pop-up a dialogugue 
-                // Tell user to add contact on contactd page
-                // set auto_send to correct value here
-
-                var emailArray = autoSendList.Split(';');
-                List<string> emailList = new();
-                foreach (var r in emailArray)
-                {
-                    emailList.Add(r);
-                }
+                string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
 
                 string errorMsg = string.Empty;
                 switch (action)
                 {
                     case "Copy":
-                        // Cleear Clipboard of any old content
-                        await Clipboard.Default.SetTextAsync(null);
                         // Add paragraph text to clipboard
-                        await Clipboard.Default.SetTextAsync(text);
+                        await Clipboard.Default.SetTextAsync(plainText);
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        break;
+                    case "Share":
+                        // Share Paragraph
+                        await emailService.ShareParagraph(paragraph);
                         break;
                     case "Email":
-                        errorMsg = "Send Email not implemented";
-                        //await App.Current.MainPage.DisplayAlert("Action =>", errorMsg, "Cancel");
-                        if (Email.Default.IsComposeSupported)
-                        {
-                            string subject = "UBViews Quote of the day ...";
-                            string body = text;
-                            //string[] auto_send = new[] { "robreno@hotmail.com", "brad@urantia.org" };
-                            string[] emails = emailArray;
-
-                            var message = new EmailMessage
-                            {
-                                Subject = subject,
-                                Body = body,
-                                BodyFormat = EmailBodyFormat.PlainText,
-                                To = new List<string>(emails)
-                            };
-
-                            await Email.Default.ComposeAsync(message);
-                        }
+                        // Email Paragraph
+#if WINDOWS
+                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+#elif ANDROID
+                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
+#endif
                         break;
-                    
-                        default:
-                            // Do nothing
-                            break;
+                    default:
+                        errorMsg = "Unkown Command!";
+                        await App.Current.MainPage.DisplayAlert("Unknown Action =>", errorMsg, "Cancel");
+                        break;
                 }
             }
             catch (Exception ex)
@@ -956,13 +940,28 @@ namespace UBViews.ViewModels
                 return null;
             }
         }
-        async Task ShareText(string text)
+        /// <summary>
+        /// SendToast
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        async Task SendToast(string message)
         {
-            await Share.Default.RequestAsync(new ShareTextRequest
+            try
             {
-                Text = text,
-                Title = "Share Text"
-            });
+                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+                {
+                    ToastDuration duration = ToastDuration.Short;
+                    double fontSize = 14;
+                    var toast = Toast.Make(message, duration, fontSize);
+                    await toast.Show(cancellationTokenSource.Token);
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                return;
+            }
         }
     }
 }

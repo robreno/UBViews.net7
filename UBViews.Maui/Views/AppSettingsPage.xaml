@@ -194,7 +194,8 @@
                     SemanticProperties.HeadingLevel="None"
                     SemanticProperties.Description="Button for saving settings."
                     SemanticProperties.Hint="Save Settings Button."
-                    WidthRequest="{x:StaticResource ButtonWidth}" />
+                    WidthRequest="{x:StaticResource ButtonWidth}"
+                    Command="{Binding SaveSettingsCommand}" />
 
             <Button Text="Contacts" 
                     FontSize="18"

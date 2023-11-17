@@ -22,6 +22,9 @@
             <Color x:Key="LightBackground">White</Color>
             <Color x:Key="DarkBackground">Black</Color>
 
+            <Color x:Key="ContactsLightBackground">#F5F5F5</Color>
+            <Color x:Key="ContactsDarkBackground">Black</Color>
+
             <Color x:Key="UBLightBackground">White</Color>
             <Color x:Key="UBDarkBackground">Black</Color>
 

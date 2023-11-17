@@ -59,6 +59,8 @@
                    Text="First Name:" />
             <Entry x:Name="FirstNameEntry"
                    Style="{StaticResource AppContactsEntry}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource ContactsLightBackground}, 
+                                                     Dark={StaticResource ContactsDarkBackground}}"
                    Text="{Binding FirstName, Mode=TwoWay}"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"
@@ -82,6 +84,8 @@
                    Text="Display Name:" />
             <Entry x:Name="DisplayNameEntry"
                    Style="{DynamicResource AppContactsEntry}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource ContactsLightBackground}, 
+                                                     Dark={StaticResource ContactsDarkBackground}}"
                    Text="{Binding DisplayName, Mode=TwoWay}"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"
@@ -101,6 +105,8 @@
                    Text="Email:" />
             <Entry x:Name="EmailEntry"
                    Style="{StaticResource AppContactsEntry}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource ContactsLightBackground}, 
+                                                     Dark={StaticResource ContactsDarkBackground}}"        
                    Text="{Binding Email, Mode=TwoWay}"
                    HorizontalOptions="Start"
                    VerticalOptions="Start"
