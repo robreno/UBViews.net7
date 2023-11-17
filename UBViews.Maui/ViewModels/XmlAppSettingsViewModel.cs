@@ -368,6 +368,11 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
                 targetName = nameof(ContactsPage);
                 await Shell.Current.GoToAsync(targetName);
             }
+            else if (target == "AppData")
+            {
+                targetName = nameof(AppDataPage);
+                await Shell.Current.GoToAsync(targetName);
+            }
             else
             {
                 targetName = nameof(MainPage);

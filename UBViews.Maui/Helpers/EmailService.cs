@@ -29,15 +29,15 @@ public class EmailService : IEmailService
     private string _subject = string.Empty;
     private List<string> _recipients = new List<string>();
     private List<ContactDto> _contacts = new List<ContactDto>();
-    private int _tries = 0;
-    private int _maxTries = 3;
+    //private int _tries = 0;
+    //private int _maxTries = 3;
     private bool _contactsInitialized = false;
     private bool _recipientsInitialized = false;
 
     // /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     private static string validEmailPattern1 = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-    private static string validEmailPattern2 = @"^[0-9a-zA-Z] ([-.\w]*[0 - 9a - zA - Z_ +])*@([0 - 9a - zA - Z][-\w]*[0 - 9a - zA - Z]\.)+[a-zA-Z]{2,9}$";
-    private static string validEmailPattern3 = @"^[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_+])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$";
+    //private static string validEmailPattern2 = @"^[0-9a-zA-Z] ([-.\w]*[0 - 9a - zA - Z_ +])*@([0 - 9a - zA - Z][-\w]*[0 - 9a - zA - Z]\.)+[a-zA-Z]{2,9}$";
+    //private static string validEmailPattern3 = @"^[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_+])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$";
     private Regex _rgxEmail1 = new Regex(validEmailPattern1);
     #endregion
 

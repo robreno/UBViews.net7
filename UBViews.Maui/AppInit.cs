@@ -37,7 +37,7 @@ namespace UBViews
             "Query/Queries.template.xml",
             "Query/QueryResults.xml",
             "Settings/Settings.template.xml",
-            "Emal/Contacts.template.xml"
+            "Email/Contacts.template.xml"
         };
 
         string[] trgNames = new string[]
