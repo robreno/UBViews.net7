@@ -186,16 +186,24 @@
         </VerticalStackLayout>
 
         <Button Text="Save Settings" 
+                FontSize="18"
+                FontAttributes="Bold" 
+                HorizontalOptions="Center" 
+                SemanticProperties.HeadingLevel="None"
+                SemanticProperties.Description="Button for saving settings."
+                SemanticProperties.Hint="Save Settings Button."
+                WidthRequest="{x:StaticResource ButtonWidth}" />
+
+        <Button Text="Contacts" 
+                FontSize="18"
+                FontAttributes="Bold" 
+                HorizontalOptions="Center" 
+                SemanticProperties.HeadingLevel="None"
+                SemanticProperties.Description="Button for navigating to Contacts page."
+                SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                Margin="0,20,0,0">
-            <Button.Behaviors>
-                <behavior:EventToCommandBehavior 
-                    EventName="Clicked" 
-                    Command="{Binding SaveSettingsCommand}"/>
-            </Button.Behaviors>
-        </Button>
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="AppContacts" />
 
     </VerticalStackLayout>
 

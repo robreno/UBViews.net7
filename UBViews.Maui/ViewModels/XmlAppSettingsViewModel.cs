@@ -1,7 +1,7 @@
-﻿using UBViews.Services;
+﻿namespace UBViews.ViewModels;
 
-namespace UBViews.ViewModels;
-
+using UBViews.Services;
+using UBViews.Views;
 public partial class XmlAppSettingsViewModel : BaseViewModel
 {
     const int SMALL = 0;
@@ -352,6 +352,36 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         {
             await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.SaveSettings => ",
                 ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
+    async Task NavigateTo(string target)
+    {
+        try
+        {
+            IsBusy = true;
+
+            string targetName = string.Empty;
+            if (target == "AppContacts")
+            {
+                targetName = nameof(ContactsPage);
+                await Shell.Current.GoToAsync(targetName);
+            }
+            else
+            {
+                targetName = nameof(MainPage);
+                await Shell.Current.GoToAsync("..");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
+                ex.Message, "Cancel");
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }

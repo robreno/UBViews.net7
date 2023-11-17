@@ -6,9 +6,9 @@
 	/UBViews.SQLiteRepository.Tests
 
 /FSharpDB
-	// FSharpSQLiteRepo.Tests
+	// UBViews.Tests
 	// FSharpLexParser.Tests
-	// FSharpSQLiteRepo
+	// UBViews
 	// LexParser
 	// QueryEngine
 

@@ -84,6 +84,9 @@ namespace UBViews
             builder.Services.AddTransient<AddContactsViewModel>();
             builder.Services.AddTransient<AddContactsPage>();
 
+            builder.Services.AddTransient<ContactsViewModel>();
+            builder.Services.AddTransient<ContactsPage>();
+
             // Xaml Pages ViewModel
             builder.Services.AddTransient<XamlPaperViewModel>();
             // Generated Xaml Pages Foreword
