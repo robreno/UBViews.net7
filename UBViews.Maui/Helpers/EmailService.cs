@@ -351,50 +351,13 @@ public class EmailService : IEmailService
         try
         {
             string emailText = string.Empty;
-
-            var pid = paragraph.Pid;
-            var runs = paragraph.Runs;
+            string body = paragraph.CreatePlainTextBody();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(_preText);
             sb.AppendLine("");
-            sb.Append(pid);
-            sb.Append(" ");
-            var txt = string.Empty;
-            foreach (Run run in runs)
-            {
-                var runStyle = run.Style;
-                var runText = run.Text;
-                switch (runStyle)
-                {
-                    case "{StaticResource PID}":
-                        sb.Append(pid);
-                        break;
-                    case "{StaticResource RegularSpaceSpan}":
-                        sb.Append(" ");
-                        break;
-                    case "{StaticResource OpeningSpan}":
-                    case "{StaticResource SmallCapsSpan}":
-                    case "{StaticResource AllSmallCapsSpan}":
-                        txt = runText.ToUpper();
-                        sb.Append(txt);
-                        break;
-                    case "{StaticResource ItalicSpan}":
-                        txt = "_" + runText + "_";
-                        sb.Append(txt);
-                        break;
-                    case "{StaticResource SmallCapsItalicSpan}":
-                    case "{StaticResource AllSmallCapsItalicSpan}":
-                        txt = runText.ToUpper();
-                        txt = "_" + txt + "_";
-                        sb.Append(txt);
-                        break;
-                    // Default to RegularSpan
-                    default:
-                        sb.Append(runText);
-                        break;
-                }
-            }
+
+            sb.Append(body);
 
             sb.AppendLine("");
             sb.AppendLine("");
@@ -421,6 +384,7 @@ public class EmailService : IEmailService
         try
         {
             string emailText = string.Empty;
+            string body = paragraph.CreateHtmlTextBody();
 
             var e = XElement.Parse(_htmlEmailTemplate);
 
@@ -430,48 +394,7 @@ public class EmailService : IEmailService
             pre.Value = _preTextHtml;
             post.Value = _postText;
 
-            var pid = paragraph.Pid;
-            var runs = paragraph.Runs;
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append(pid);
-            sb.Append(" ");
-            foreach (Run run in runs)
-            {
-                var runStyle = run.Style;
-                var runText = run.Text;
-                var txt = string.Empty;
-                switch (runStyle)
-                {
-                    case "{StaticResource PID}":
-                        sb.Append(pid);
-                        break;
-                    case "{StaticResource RegularSpaceSpan}":
-                        sb.Append(" ");
-                        break;
-                    case "{StaticResource OpeningSpan}":
-                    case "{StaticResource SmallCapsSpan}":
-                    case "{StaticResource AllSmallCapsSpan}":
-                        txt = runText.ToUpper();
-                        sb.Append(txt);
-                        break;
-                    case "{StaticResource ItalicSpan}":
-                        txt = "<i>" + runText + "</i>";
-                        sb.Append(txt);
-                        break;
-                    case "{StaticResource SmallCapsItalicSpan}":
-                    case "{StaticResource AllSmallCapsItalicSpan}":
-                        txt = runText.ToUpper();
-                        txt = "<i>" + txt + "</i>";
-                        break;
-                    // Default to RegularSpan
-                    default:
-                        sb.Append(runText);
-                        break;
-                }
-            }
-
-            blockquote.Value = sb.ToString();
+            blockquote.Value = body;
             emailText = e.ToString();
 
             return emailText;
