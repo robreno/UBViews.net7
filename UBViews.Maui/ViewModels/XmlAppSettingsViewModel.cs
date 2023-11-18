@@ -27,7 +27,6 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
     bool previousAutoSendEmail;
-    bool previousAutoSendList;
     int previousWindowSize;
     bool settingsDirty;
 
@@ -77,17 +76,17 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
             var playbackControlsHSL = contentPage.FindByName("PlaybackControlsHSL") as HorizontalStackLayout;
             var lineHeightHSL = contentPage.FindByName("LineHeightHSL") as HorizontalStackLayout;
-            var autoSendEmailHSL = contentPage.FindByName("AutoSendEmailHSL") as HorizontalStackLayout;
+            //var autoSendEmailHSL = contentPage.FindByName("AutoSendEmailHSL") as HorizontalStackLayout;
 #if WINDOWS
             windowSizeHSL.IsVisible = false;
             playbackControlsHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
-            autoSendEmailHSL.IsVisible = false;
+            //autoSendEmailHSL.IsVisible = false;
 #elif ANDROID
             playbackControlsHSL.IsVisible = false;
             windowSizeHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
-            autoSendEmailHSL.IsVisible = false;
+            //autoSendEmailHSL.IsVisible = false;
 #endif
         }
         catch (Exception ex)
@@ -271,7 +270,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
             ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
-            AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
+            //AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
             settingsDirty = false;
         }
@@ -317,11 +316,11 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
                 await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
                 settingsDirty = true;
             }
-            if (previousAutoSendEmail != AutoSendEmail)
-            {
-                await settingsService.SetCache("auto_send_email", AutoSendEmail);
-                settingsDirty = true;
-            }
+            //if (previousAutoSendEmail != AutoSendEmail)
+            //{
+            //    await settingsService.SetCache("auto_send_email", AutoSendEmail);
+            //    settingsDirty = true;
+            //}
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);

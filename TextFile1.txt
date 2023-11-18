@@ -273,3 +273,33 @@ protected override void OnLaunched(LaunchActivatedEventArgs args)
 These methods of resizing are still not ideal as it will flicker when it's changing window size. This is simply because of the time taken between OnLaunch being fired and the window being resized by native win32 API calls. However, moving it directly to the Platform-specific code is a bit more semantic.
 
 Unlike the other answer we cannot get the Requested dimensions from client pages to use as our Window dimensions.
+
+private async Task<string> GetFileSizeInBytes(long TotalBytes)        
+{            
+    if (TotalBytes = 1073741824) //Giga Bytes            
+    {                
+        Decimal FileSize = Decimal.Divide(TotalBytes, 1073741824);                
+        return String.Format("{0:##.##} GB", FileSize); 
+    }            
+    else if (TotalBytes = 1048576) //Mega Bytes            
+    {                
+        Decimal FileSize = Decimal.Divide(TotalBytes, 1048576);                
+        return String.Format("{0:##.##} MB", FileSize);            
+    }            
+    else if (TotalBytes = 1024) //Kilo Bytes            
+    {                
+        Decimal FileSize = Decimal.Divide(TotalBytes, 1024);                
+        return String.Format("{0:##.##} KB", FileSize);            
+    }            
+    else if (TotalBytes  0 & TotalBytes              
+    {                
+        Decimal FileSize = TotalBytes;                
+        return String.Format("{0:##.##} Bytes", FileSize);            
+    }            
+    else            
+    {                
+        return "0 Bytes";            
+    }        
+    
+ }        
+ 

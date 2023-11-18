@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Alerts;
@@ -521,6 +522,8 @@ namespace UBViews.ViewModels
 
                 string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
 
+                action = await App.Current.MainPage.DisplayActionSheet("Test Action?", "Cancel", null, "Copy", "Share");
+
                 string errorMsg = string.Empty;
                 switch (action)
                 {
@@ -565,8 +568,9 @@ namespace UBViews.ViewModels
                     return;
 
                 var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
-                var paperId = Int32.Parse(actionArray[0]).ToString("0");
-                var seqId = Int32.Parse(actionArray[1]).ToString("0");
+                var action = actionArray[0];
+                var paperId = Int32.Parse(actionArray[1]).ToString("0");
+                var seqId = Int32.Parse(actionArray[2]).ToString("0");
                 var paperIdSeqId = paperId + "." + seqId;
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
@@ -582,14 +586,12 @@ namespace UBViews.ViewModels
                     string secondAction = string.Empty;
 
                     secondAction = " add or set contact(s) to AutoSend.";
-                    promptMessage = $"You have no contacts or none are set to auto send.\r" +
+                    promptMessage = $"You have no contacts ({contactsCount}) or none are set to auto send.\r" +
                                     $"Please go to the Settigs => Contacts page and {secondAction}.";
 
-                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                    await App.Current.MainPage.DisplayAlert("Send Email", promptMessage, "Cancel");
                     return;
                 }
-
-                string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
 
                 string errorMsg = string.Empty;
                 switch (action)
@@ -602,6 +604,11 @@ namespace UBViews.ViewModels
                     case "Share":
                         // Share Paragraph
                         await emailService.ShareParagraph(paragraph);
+#if WINDOWS
+                        await SendToast($"Paragraph {pid} shared!");
+#elif ANDROID
+                        // Do Nothing, Android raises Share functionality
+#endif
                         break;
                     case "Email":
                         // Email Paragraph

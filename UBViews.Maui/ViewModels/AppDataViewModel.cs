@@ -1,6 +1,9 @@
 ﻿namespace UBViews.ViewModels;
 
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 using UBViews.Services;
 using UBViews.Models.AppData;
 
@@ -19,6 +22,8 @@ public partial class AppDataViewModel : BaseViewModel
             "QueryCommands.xml"
     };
 
+    readonly string _className = "AppDataViewModel";
+
     public ObservableCollection<AppFileDto> DataFiles { get; } = new();
     private IAppDataService appDataService;
     public AppDataViewModel(IAppDataService appDataService)
@@ -30,10 +35,25 @@ public partial class AppDataViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    public string sourceNames;
+    string name;
 
     [ObservableProperty]
-    public string targetNames;
+    string path;
+
+    [ObservableProperty]
+    string folder;
+
+    [ObservableProperty]
+    long length;
+
+    [ObservableProperty]
+    string size;
+
+    [ObservableProperty]
+    DateTime created;
+
+    [ObservableProperty]
+    string dateCreated;
 
     [RelayCommand]
     async Task RefreshingView()
@@ -64,8 +84,9 @@ public partial class AppDataViewModel : BaseViewModel
             IsBusy = true;
 
             if (DataFiles.Count != 0)
+            {
                 return;
-
+            }
             await LoadData();
         }
         catch (Exception ex)
@@ -77,6 +98,34 @@ public partial class AppDataViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task SelectionChanged(object selectedItem)
+    {
+        string _methodName = "SelectionChanged";
+
+        try
+        {
+            if (selectedItem == null)
+            {
+                return;
+            }
+
+            var item = selectedItem as AppFileDto;
+
+            Name = item.Name;
+            Folder = item.Folder;
+            Path = item.Path;
+            Length = item.Length;
+            Size = item.Size;
+            Created = item.Created;
+            DateCreated = Created.ToShortTimeString();
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
         }
     }
 
@@ -112,7 +161,9 @@ public partial class AppDataViewModel : BaseViewModel
 
             var files = await appDataService.GetAppFilesAsync();
             foreach (var file in files)
+            {
                 DataFiles.Add(file);
+            }
         }
         catch (Exception ex)
         {
@@ -131,7 +182,7 @@ public partial class AppDataViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            // NotImpl;
+            throw new NotImplementedException();
         }
         catch (Exception ex)
         {
