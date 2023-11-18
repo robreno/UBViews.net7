@@ -4,42 +4,81 @@
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              xmlns:model="clr-namespace:UBViews.Models.AppData"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:converter="clr-namespace:UBViews.Converters" 
              x:Class="UBViews.Views.AppDataPage"
              Title="App Settings Page"
              x:DataType="viewmodel:AppDataViewModel">
+
+    <ContentPage.Resources>
+        <converter:SecondsToStringConverter x:Key="SecondsToStringConverter" />
+    </ContentPage.Resources>
+    
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior
             EventName="Loaded"
             Command="{Binding AppDataPageAppearingCommand}"/>
     </ContentPage.Behaviors>
+
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="25">
-            <Label 
-                Text="Application Files"
-                FontSize="Title"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding DataFiles}">
+
+        <VerticalStackLayout Spacing="25" 
+                             Padding="25">
+            <Label Text="Application Files"
+                   FontSize="Title"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center" />
+
+            <CollectionView x:Name="DataFilesCollection" 
+                            ItemsSource="{Binding DataFiles}"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding SelectionChangedCommand}"
+                            SelectionChangedCommandParameter="{Binding Path=SelectedItem, 
+                                                                       Source={RelativeSource Self}}">
                 <CollectionView.ItemTemplate>
+
                     <DataTemplate x:DataType="model:AppFileDto">
-                        <VerticalStackLayout>
-                            <Label Padding="10,0,10,0">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding Id, StringFormat='{0}.'}" />
-                                        <Span Text=" " />
-                                        <Span Text="{Binding FileName, StringFormat='{0}'}" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label Text="{Binding FilePath, StringFormat='Path: {0}'}"
-                                    Padding="10,0,0,10"/>
-                        </VerticalStackLayout>
+
+                        <Border x:Name="ItemsBorder">
+                            <VerticalStackLayout>
+                                <Label Style="{StaticResource AppDataLabels}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="File Name: " />
+                                            <Span Text="{Binding Name}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource AppDataLabels}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="File Folder: " />
+                                            <Span Text="{Binding Folder}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource AppDataLabels}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="File Size: " />
+                                            <Span Text="{Binding Size}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Style="{StaticResource AppDataLabels}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Created: " />
+                                            <Span Text="{Binding Created}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>
