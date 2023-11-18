@@ -11,13 +11,15 @@ public class XmlAppDataService : IAppDataService
     /// <summary>
     /// Private Data Members
     /// </summary>
-    private const string _appDataFileName = "QueryHistory.xml";
-    private XDocument _appData;
-    private XElement _appDataRoot;
-    private string _content;
-    private string _appDir;
-    private bool _cacheDirty;
-    private int _cacheCount;
+    //private const string _appDataFileName = "QueryHistory.xml";
+    private XDocument _appData = null;
+    private XElement _appDataRoot = null;
+    private string _content = null;
+    private string _appDir = null;
+    private bool _cacheDirty = false;
+    private int _fileCount = 0;
+
+    readonly string[] sizeSuffixes = { "Bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
 
     /// <summary>
     /// 
@@ -27,26 +29,6 @@ public class XmlAppDataService : IAppDataService
     public XmlAppDataService(IFileService fileService)
     {
         this.fileService = fileService;
-        Task.Run(async () => await InitializeData());
-    }
-    private async Task InitializeData()
-    {
-        try
-        {
-            // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
-            _appDir = FileSystem.Current.AppDataDirectory;
-            _content = await LoadAppDataAsync(_appDataFileName);
-            _appData = XDocument.Parse(_content, LoadOptions.None);
-            _appDataRoot = _appData.Root;
-            _cacheCount = Int32.Parse(_appDataRoot.Attribute("count").Value);
-            _cacheDirty = false;
-            return;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-            return;
-        }
     }
     public async Task<string> LoadAppDataAsync(string filename)
     {
@@ -96,36 +78,6 @@ public class XmlAppDataService : IAppDataService
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
         }
     }
-    public async Task AddQueryResult(XElement queryResult)
-    {
-        try
-        {
-            _appDataRoot.Add(queryResult);
-            _cacheDirty = true;
-            _cacheCount++;
-            _appDataRoot.SetAttributeValue("count", _cacheCount);
-            await SaveAppDataExAsync(_appDataFileName);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-        }
-    }
-    public async Task QueryResultToDto(XElement queryResult)
-    {
-        try
-        {
-            _appDataRoot.Add(queryResult);
-            _cacheDirty = true;
-            _cacheCount++;
-            _appDataRoot.SetAttributeValue("count", _cacheCount);
-            await SaveAppDataExAsync(_appDataFileName);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-        }
-    }
     public async Task<List<AppFileDto>> GetAppFilesAsync()
     {
         try
@@ -138,20 +90,27 @@ public class XmlAppDataService : IAppDataService
             int count = 0;
             foreach (string file in files)
             {
-                var fileName = file.Substring(mainDir.Length + 1);
-                var newFile = new AppFileDto { Id = ++count, FilePath = file, FileName = fileName };
+                var _fi = new FileInfo(file);
+                var _fileName = _fi.Name;
+                var _fileLength = _fi.Length;
+                var _creationTime = _fi.CreationTime;
+                var _ns = _fi.DirectoryName.Normalize();
+                var _folderName = _fi.Directory.Name;
+
+                var _size = await GetFileSize(_fileLength);
+
+                var newFile = new AppFileDto
+                {
+                    Id = ++count,
+                    Name = _fileName,
+                    Path = _ns,
+                    Folder = _folderName,
+                    Length = _fileLength,
+                    Size = _size,
+                    Created = _creationTime
+                };
                 appFiles.Add(newFile);
             }
-
-            string audioDir = Path.Combine(FileSystem.Current.AppDataDirectory, "AudioMarkers");
-            string[] audioFiles = Directory.GetFiles(audioDir);
-            foreach (string audioFile in audioFiles)
-            {
-                var fileName = audioFile.Substring(mainDir.Length + 14);
-                var newFile = new AppFileDto { Id = ++count, FilePath = audioFile, FileName = fileName };
-                appFiles.Add(newFile);
-            }
-
             return appFiles;
         }
         catch (Exception ex)
@@ -160,265 +119,38 @@ public class XmlAppDataService : IAppDataService
             return null;
         }
     }
-    public async Task<(bool, int)> QueryResultExistsAsync(string query)
+
+    #region  Private Methods
+    private async Task<string> GetFileSize(long length)
     {
-        XDocument xdoc = null;
-        bool queryExists = false;
-        int queryId = 0;
         try
         {
+            const string formatTemplate  = "{0}{1:0.#} {2}";
+            const string formatTemplate2 = "{0:0.##} {1}";
 
-            var qryCmds = await LoadAppDataAsync("QueryCommands.xml");
-            xdoc = XDocument.Parse(qryCmds);
-            var root = xdoc.Root;
-            var qryCmd = root.Descendants("QueryString").Where(e => e.Value == query)
-                                                        .FirstOrDefault();
-            var qryResult = qryCmd == null ? null : qryCmd.Parent;
-            if (qryResult != null)
+            if (length == 0)
             {
-                queryId = Int32.Parse(qryResult.Attribute("id").Value);
-                queryExists = true;
+                return string.Format(formatTemplate, null, 0, sizeSuffixes[0]);
             }
-            return (queryExists, queryId);
+
+            var absSize = Math.Abs((double)length);
+            var fpPower = Math.Log(absSize, 1000);
+            var intPower = (int)fpPower;
+            var iUnit = intPower >= sizeSuffixes.Length
+                ? sizeSuffixes.Length - 1
+                : intPower;
+            var normSize = absSize / Math.Pow(1000, iUnit);
+
+            return string.Format(
+                formatTemplate,
+                length < 0 ? "-" : null, normSize, sizeSuffixes[iUnit]);
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadQueryResult => ",
-                ex.Message, "Ok");
-            return (false, -1);
-        }
-        finally
-        {
-            xdoc = null;
-        }
-    }
-    public async Task<QueryResultLocationsDto> GetQueryResultByIdAsync(int queryId)
-    {
-        XDocument xdoc = null;
-        QueryResultLocationsDto queryResultLocationsDto = null;
-        try
-        {
-            var queryHistory = await LoadAppDataAsync("QueryHistory.xml");
-            xdoc = XDocument.Parse(queryHistory);
-            var root = xdoc.Root;
-            var qryId = queryId.ToString("0");
-            var queryResult = root.Descendants("QueryResult").Where(e => e.Attribute("id").Value == qryId)
-                                                             .FirstOrDefault();
-            if (queryResult != null)
-            {
-                // Load Dto mind and ship filterby parid
-                string id = queryResult.Attribute("id").Value;
-                string type = queryResult.Attribute("type").Value;
-                string terms = queryResult.Attribute("terms").Value;
-                string proximity = queryResult.Attribute("proximity").Value;
-                string filterId = queryResult.Attribute("filterId").Value;
-
-                XElement queryStringElm = queryResult.Descendants("QueryString").FirstOrDefault();
-                string queryString = queryStringElm.Value;
-                XElement queryExpressionElm = queryResult.Descendants("QueryExpression").FirstOrDefault();
-                string queryExpression = queryExpressionElm.Value;
-                XElement queryLocationsElm = queryResult.Descendants("QueryLocations").FirstOrDefault();
-
-                queryResultLocationsDto = new QueryResultLocationsDto()
-                {
-                    Id = Int32.Parse(id),
-                    Type = type,
-                    Terms = terms,
-                    Proximity = proximity,
-                    QueryString = queryString,
-                    QueryExpression = queryExpression,
-                    QueryLocations = new List<QueryLocationDto>()
-                };
-
-                var locs = queryLocationsElm.Descendants("QueryLocation");
-                QueryLocationDto qlocDto;
-                foreach (XElement loc in locs)
-                {
-                    var locId = loc.Attribute("id").Value;
-                    var pid = loc.Attribute("pid").Value;
-                    qlocDto = new QueryLocationDto()
-                    {
-                        Id = locId,
-                        Pid = pid,
-                        TermOccurrences = new List<TermOccurrenceDto>()
-                    };
-                    queryResultLocationsDto.QueryLocations.Add(qlocDto);
-
-                    var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurrenceDto occDto;
-                    foreach (XElement occ in occLst)
-                    {
-                        var term = occ.Attribute("term").Value;
-                        var docId = occ.Attribute("docId").Value;
-                        var seqId = occ.Attribute("seqId").Value;
-                        var dpoId = occ.Attribute("dpoId").Value;
-                        var tpoId = occ.Attribute("tpoId").Value;
-                        var len = occ.Attribute("len").Value;
-                        // TODO: Change to TermLocationDtoEx
-                        // Change Type Here
-                        // Xml attribute names
-                        occDto = new TermOccurrenceDto()
-                        {
-                            Term = term,
-                            DocId = Int32.Parse(docId),
-                            SeqId = Int32.Parse(seqId),
-                            DpoId = Int32.Parse(dpoId),
-                            TpoId = Int32.Parse(tpoId),
-                            Len = Int32.Parse(len)
-                        };
-                        qlocDto.TermOccurrences.Add(occDto);
-                    }
-                }
-            }
-            return queryResultLocationsDto;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadQueryResult => ",
+            await App.Current.MainPage.DisplayAlert("Exception raised in SettingsViewModel.SaveSettings => ",
                 ex.Message, "Ok");
             return null;
         }
-        finally
-        {
-            xdoc = null;
-            queryResultLocationsDto = null;
-        }
     }
-    public async Task<QueryResultLocationsDto> GetQueryResultAsync(string query)
-    {
-        XDocument xdoc = null;
-        QueryResultLocationsDto queryResultLocationsDto = null;
-
-        try
-        {
-            var userQueries = await LoadAppDataAsync("QueryHistory.xml");
-            xdoc = XDocument.Parse(userQueries);
-            var root = xdoc.Root;
-            var qry = root.Descendants("QueryString").Where(e => e.Value == query)
-                                                     .FirstOrDefault();
-            var queryResult = qry == null ? null : qry.Parent;
-            if (queryResult != null)
-            {
-                // Load Dto mind and ship filterby parid
-                string id = queryResult.Attribute("id").Value;
-                string type = queryResult.Attribute("type").Value;
-                string terms = queryResult.Attribute("terms").Value;
-                string proximity = queryResult.Attribute("proximity").Value;
-                string filterId = queryResult.Attribute("filterId").Value;
-
-                XElement queryStringElm = queryResult.Descendants("QueryString").FirstOrDefault();
-                string queryString = queryStringElm.Value;
-                XElement queryExpressionElm = queryResult.Descendants("QueryExpression").FirstOrDefault();
-                string queryExpression = queryExpressionElm.Value;
-                XElement queryLocationsElm = queryResult.Descendants("QueryLocations").FirstOrDefault();
-
-                queryResultLocationsDto = new QueryResultLocationsDto()
-                {
-                    Id = Int32.Parse(id),
-                    Type = type,
-                    Terms = terms,
-                    Proximity = proximity,
-                    QueryString = queryString,
-                    QueryExpression = queryExpression,
-                    QueryLocations = new List<QueryLocationDto>()
-                };
-
-                var locs = queryLocationsElm.Descendants("QueryLocation");
-                QueryLocationDto qlocDto;
-                foreach (XElement loc in locs)
-                {
-                    var locId = loc.Attribute("id").Value;
-                    var pid = loc.Attribute("pid").Value;
-                    qlocDto = new QueryLocationDto()
-                    {
-                        Id = locId,
-                        Pid = pid,
-                        TermOccurrences = new List<TermOccurrenceDto>()
-                    };
-                    queryResultLocationsDto.QueryLocations.Add(qlocDto);
-
-                    var occLst = loc.Descendants("TermOccurrence");
-                    TermOccurrenceDto occDto;
-                    foreach (XElement occ in occLst)
-                    {
-                        var term = occ.Attribute("term").Value;
-                        var docId = occ.Attribute("docId").Value;
-                        var seqId = occ.Attribute("seqId").Value;
-                        var dpoId = occ.Attribute("dpoId").Value;
-                        var tpoId = occ.Attribute("tpoId").Value;
-                        var len = occ.Attribute("len").Value;
-                        occDto = new TermOccurrenceDto()
-                        {
-                            Term = term,
-                            DocId = Int32.Parse(docId),
-                            SeqId = Int32.Parse(seqId),
-                            DpoId = Int32.Parse(dpoId),
-                            TpoId = Int32.Parse(tpoId),
-                            Len = Int32.Parse(len)
-                        };
-                        qlocDto.TermOccurrences.Add(occDto);
-                    }
-                }
-            }
-            return queryResultLocationsDto;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadQueryResult => ",
-                ex.Message, "Ok");
-            return null;
-        }
-        finally
-        {
-            xdoc = null;
-            queryResultLocationsDto = null;
-        }
-    }
-    public async Task<List<QueryCommandDto>> GetQueryCommandsAsync()
-    {
-        XDocument xdoc = null;
-        List<QueryCommandDto> queryCommands = null; ;
-
-        try
-        {
-            var queryHistory = await LoadAppDataAsync("QueryCommands.xml");
-            xdoc = XDocument.Parse(queryHistory);
-            var root = xdoc.Root;
-            var qryCmds = root.Descendants("QueryCmd");
-            queryCommands = new List<QueryCommandDto>();
-            foreach (var cmd in qryCmds)
-            {
-                var id = Int32.Parse(cmd.Attribute("id").Value);
-                var type = cmd.Attribute("type").Value;
-                var terms = cmd.Attribute("terms").Value;
-                var proximity = cmd.Attribute("proximity").Value;
-                var stemmed = cmd.Attribute("stemmed") == null ? string.Empty : cmd.Attribute("stemmed").Value;
-                var filterId = cmd.Attribute("filterId") == null ? string.Empty : cmd.Attribute("filterId").Value;
-                var queryString = cmd.Descendants("QueryString").FirstOrDefault().Value;
-                QueryCommandDto dto = new QueryCommandDto()
-                {
-                    Id = id,
-                    Type = type,
-                    Terms = terms,
-                    Proximity = proximity,
-                    Stemmed = stemmed,
-                    FilterId = filterId,
-                    QueryString = queryString
-                };
-                queryCommands.Add(dto);
-            }
-            return queryCommands;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadQueryResult => ",
-                ex.Message, "Ok");
-            return null;
-        }
-        finally
-        {
-            xdoc = null;
-            queryCommands = null;
-        }
-    }
+    #endregion
 }
