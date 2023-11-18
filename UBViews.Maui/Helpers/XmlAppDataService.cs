@@ -30,6 +30,7 @@ public class XmlAppDataService : IAppDataService
     {
         this.fileService = fileService;
     }
+    #region  Public Methods
     public async Task<string> LoadAppDataAsync(string filename)
     {
         try
@@ -119,6 +120,7 @@ public class XmlAppDataService : IAppDataService
             return null;
         }
     }
+    #endregion
 
     #region  Private Methods
     private async Task<string> GetFileSize(long length)
@@ -126,7 +128,7 @@ public class XmlAppDataService : IAppDataService
         try
         {
             const string formatTemplate  = "{0}{1:0.#} {2}";
-            const string formatTemplate2 = "{0:0.##} {1}";
+            //const string formatTemplate2 = "{0:0.##} {1}";
 
             if (length == 0)
             {
