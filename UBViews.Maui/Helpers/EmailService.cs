@@ -23,7 +23,7 @@ public class EmailService : IEmailService
     private const string _shareTitle = "Quote From Urantia Book";
     private const string _shareSubject = "Sharing a quote from The Urantia Book";
     private const string _preText = "I thought of you when I read this quote from The Urantia Book by The Urantia Foundation - ";
-    private const string _preTextHtml = "I thought of you when I read this quote from <em>The Urantia Book</em> by The Urantia Foundation - ";
+    private const string _preTextHtml = "I thought of you when I read this quote from <i>The Urantia Book</i> by The Urantia Foundation - ";
     private const string _postText = "UBViews: The Urantia Book Viewer & Search Engine – Agondonter Media.";
 
     private string _subject = string.Empty;
@@ -39,6 +39,8 @@ public class EmailService : IEmailService
     //private static string validEmailPattern2 = @"^[0-9a-zA-Z] ([-.\w]*[0 - 9a - zA - Z_ +])*@([0 - 9a - zA - Z][-\w]*[0 - 9a - zA - Z]\.)+[a-zA-Z]{2,9}$";
     //private static string validEmailPattern3 = @"^[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_+])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$";
     private Regex _rgxEmail1 = new Regex(validEmailPattern1);
+
+    private readonly string _className = "EmailService";
     #endregion
 
     #region  Services
@@ -73,7 +75,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -284,28 +286,35 @@ public class EmailService : IEmailService
         try
         {
             var _body = string.Empty;
-            EmailBodyFormat _format;
             List<string> autoSendRecipients = new();
 
             autoSendRecipients = await GetAutoSendEmailListAsync();
 
             if (autoSendRecipients.Count == 0)
             {
-                throw new NotImplementedException();
+                var contactsCount = await ContactsCount();
+                string promptMessage = string.Empty;
+                string secondAction = string.Empty;
+
+                secondAction = " add or set contact(s) to AutoSend.";
+                promptMessage = $"You have no contacts ({contactsCount}) or none are set to auto send.\r" +
+                                $"Please go to the Settigs => Contacts page and {secondAction}.";
+
+                await App.Current.MainPage.DisplayAlert("Email Paragraph", promptMessage, "Cancel");
+                return;
             }
 
             switch (type)
             {
                 case IEmailService.EmailType.PlainText:
                     _body = await CreatePlainTextBodyAsync(paragraph);
-                    _format = EmailBodyFormat.PlainText;
                     break;
                 case IEmailService.EmailType.Html:
                     _body = await CreateHtmlBodyAsync(paragraph);
-                    _format = EmailBodyFormat.Html;
                     break;
                 default:
                     // Default to plain text
+                    _body = await CreatePlainTextBodyAsync(paragraph);
                     break;
             }
 
@@ -349,6 +358,8 @@ public class EmailService : IEmailService
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(_preText);
             sb.AppendLine("");
+            sb.Append(pid);
+            sb.Append(" ");
             var txt = string.Empty;
             foreach (Run run in runs)
             {
@@ -376,6 +387,7 @@ public class EmailService : IEmailService
                     case "{StaticResource AllSmallCapsItalicSpan}":
                         txt = runText.ToUpper();
                         txt = "_" + txt + "_";
+                        sb.Append(txt);
                         break;
                     // Default to RegularSpan
                     default:
@@ -422,6 +434,8 @@ public class EmailService : IEmailService
             var runs = paragraph.Runs;
 
             StringBuilder sb = new StringBuilder();
+            sb.Append(pid);
+            sb.Append(" ");
             foreach (Run run in runs)
             {
                 var runStyle = run.Style;
@@ -442,13 +456,13 @@ public class EmailService : IEmailService
                         sb.Append(txt);
                         break;
                     case "{StaticResource ItalicSpan}":
-                        txt = "<em>" + runText + "</em>";
+                        txt = "<i>" + runText + "</i>";
                         sb.Append(txt);
                         break;
                     case "{StaticResource SmallCapsItalicSpan}":
                     case "{StaticResource AllSmallCapsItalicSpan}":
                         txt = runText.ToUpper();
-                        txt = "<em>" + txt + "</em>";
+                        txt = "<i>" + txt + "</i>";
                         break;
                     // Default to RegularSpan
                     default:
