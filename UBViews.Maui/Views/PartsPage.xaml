@@ -32,7 +32,7 @@
                                                                    Dark={StaticResource DarkBackground}}">
 
                 <!-- Headers Control -->
-                <control:CirclesHeader />
+                <control:CirclesHeader Margin="20" />
                 
                 <!-- mainContentVerticalStackLayout -->
                 <VerticalStackLayout x:Name="mainContent" 
@@ -40,10 +40,9 @@
                                      HorizontalOptions="Center"
                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                        Dark={StaticResource DarkBackground}}">
-                    <!-- forewordFrame -->
+                    <!-- Foreword Border -->
                     <Border  x:Name="forwardBorder"
-                             BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                               Dark={StaticResource DarkBackground}}">
+                             Style="{StaticResource PartBorderStyle}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource 
@@ -52,7 +51,7 @@
                                         CommandParameter="0" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                               Dark={StaticResource UBDarkBackground}}"
+                                                                               Dark={StaticResource DarkBackground}}"
                                              VerticalOptions="FillAndExpand">
                             <Label Style="{StaticResource ContentsPartsHeading}">
                                 <Label.FormattedText>
@@ -92,8 +91,9 @@
                         BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                           Dark={StaticResource DarkBackground}}">
                         <!-- Parts Heading -->
-                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                          Dark={StaticResource UBDarkBackground}}">
+                        <Border Stroke="Transparent"  
+                                BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                  Dark={StaticResource DarkBackground}}">
                             <Label Style="{StaticResource ContentsPartsHeading}">
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -104,10 +104,9 @@
                             </Label>
                         </Border>
                         
-                        <!-- part1Border -->
+                        <!-- Part I Border -->
                         <Border x:Name="part1Frame"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                 Dark={StaticResource DarkBackground}}">
+                                Style="{StaticResource PartBorderStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource 
@@ -118,7 +117,7 @@
                             </Border.GestureRecognizers>
                             <VerticalStackLayout VerticalOptions="FillAndExpand"
                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                                                                   Dark={StaticResource DarkBackground}}">
                                 <Label Style="{StaticResource ContentsPartNumber}">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -150,10 +149,9 @@
                                 </Label>
                             </VerticalStackLayout>
                         </Border>
-                        <!-- part2Border -->
+                        <!-- Part II Border -->
                         <Border x:Name="part2Border"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                 Dark={StaticResource DarkBackground}}">
+                                Style="{StaticResource PartBorderStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource 
@@ -164,7 +162,7 @@
                             </Border.GestureRecognizers>
                             <VerticalStackLayout VerticalOptions="FillAndExpand"
                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                                                                   Dark={StaticResource DarkBackground}}">
                                 <Label Style="{StaticResource ContentsPartNumber}">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -196,10 +194,9 @@
                                 </Label>
                             </VerticalStackLayout>
                         </Border>
-                        <!-- part3Border -->
+                        <!-- Part III Border -->
                         <Border x:Name="part3Border"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                 Dark={StaticResource DarkBackground}}">
+                                Style="{StaticResource PartBorderStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource 
@@ -210,7 +207,7 @@
                             </Border.GestureRecognizers>
                             <VerticalStackLayout VerticalOptions="FillAndExpand"
                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                                                                   Dark={StaticResource DarkBackground}}">
                                 <Label Style="{StaticResource ContentsPartNumber}">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -242,11 +239,10 @@
                                 </Label>
                             </VerticalStackLayout>
                         </Border>
-                        <!-- part4Border -->
+                        <!-- Part IV Border -->
                         <Border x:Name="part4Border"
                                VerticalOptions="FillAndExpand"
-                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                 Dark={StaticResource DarkBackground}}">
+                               Style="{StaticResource PartBorderStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource 
@@ -257,7 +253,7 @@
                             </Border.GestureRecognizers>
                             <VerticalStackLayout VerticalOptions="FillAndExpand"
                                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                   Dark={StaticResource UBDarkBackground}}">
+                                                                                   Dark={StaticResource DarkBackground}}">
                                 <Label Style="{StaticResource ContentsPartNumber}">
                                     <Label.FormattedText>
                                         <FormattedString>
