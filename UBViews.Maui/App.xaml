@@ -14,6 +14,7 @@
             <!-- Main Grid and VerticalStackLayout Styles -->
             <!-- Color Styles -->
             <!--<Color x:Key="Primary">#007fff</Color>-->
+            <Color x:Key="PrimaryLight">#007fff</Color>
             <Color x:Key="PrimaryDark">#013963</Color>
             <Color x:Key="BlueCrayola">#1F75FE</Color>
             <Color x:Key="Accent">#00BFFF</Color>
@@ -211,6 +212,7 @@
                 <Setter Property="FontSize" Value="20.5" />
                 <Setter Property="Margin" Value="0,0,0,0" />
                 <Setter Property="Padding" Value="0,0,0,0" />
+                <Setter Property="Background" Value="Transparent" />
             </Style>
             <Style x:Key="ContentsPartSponsor" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
                 <Setter Property="Padding" Value="30,0,30,0" />
@@ -422,6 +424,36 @@
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
                 <Setter Property="Margin" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="AppButtonsStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                               Dark={StaticResource DarkBackground}}" />
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+
+            <Style x:Key="AppUrantiaBookViewer" TargetType="Label">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                               Dark={StaticResource DarkBackground}}" />
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+
+            <Style x:Key="PartBorderStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                           Dark={StaticResource DarkBackground}}" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 30,30,30,30" />
+                <Setter Property="StrokeThickness" Value="3" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="20" />
+            </Style>
+
+            <Style x:Key="TitleBorderStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                           Dark={StaticResource DarkBackground}}" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
+                <Setter Property="StrokeThickness" Value="3" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="10,0,10,0" />
             </Style>
 
             <!--<Color x:Key="DisplayNameColor">Green</Color>
