@@ -303,3 +303,10 @@ private async Task<string> GetFileSizeInBytes(long TotalBytes)
     
  }        
  
+ <Border Style="{{StaticResource TitlesPageBorder}}"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
+                                                                              Dark={StaticResource UBDarkBackground}}"
+                                            StrokeShape="Rectangle"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand"
+                                            Padding="10,10,10,0">
