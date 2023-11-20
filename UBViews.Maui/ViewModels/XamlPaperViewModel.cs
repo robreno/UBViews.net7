@@ -578,6 +578,7 @@ namespace UBViews.ViewModels
                 var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                 var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
                 var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
+                var autoSendSetting = await settingsService.Get("auto_send_email", false);
 
                 if (autoSendRecipients.Count == 0)
                 {
