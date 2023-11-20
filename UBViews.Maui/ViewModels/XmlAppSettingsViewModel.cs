@@ -270,7 +270,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
             ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
-            //AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
+            AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
             settingsDirty = false;
         }
@@ -316,11 +316,11 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
                 await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
                 settingsDirty = true;
             }
-            //if (previousAutoSendEmail != AutoSendEmail)
-            //{
-            //    await settingsService.SetCache("auto_send_email", AutoSendEmail);
-            //    settingsDirty = true;
-            //}
+            if (previousAutoSendEmail != AutoSendEmail)
+            {
+                await settingsService.SetCache("auto_send_email", AutoSendEmail);
+                settingsDirty = true;
+            }
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);
