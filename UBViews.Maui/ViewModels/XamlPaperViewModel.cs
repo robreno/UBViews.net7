@@ -12,6 +12,7 @@ using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
 using UBViews.Views;
+using Windows.Media.Capture;
 
 namespace UBViews.ViewModels
 {
@@ -82,6 +83,9 @@ namespace UBViews.ViewModels
             PreviousState = "None";
             CurrentState = "None";
         }
+
+        [ObservableProperty]
+        private bool streamAudio;
 
         [ObservableProperty]
         bool isRefreshing;
@@ -174,6 +178,8 @@ namespace UBViews.ViewModels
         {
             try
             {
+                StreamAudio = Preferences.Default.Get("stream_audio", false);
+
                 CurrentState = "None";
                 PreviousState = "None";
 
@@ -279,6 +285,9 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
+                if (!StreamAudio)
+                    return;
+
                 string paperTitle = PaperTitle;
 
                 string message = $"Playing {paperTitle}";
@@ -328,6 +337,9 @@ namespace UBViews.ViewModels
                 if (contentPage == null)
                     return;
 
+                if (!StreamAudio)
+                    return;
+
                 string paperTitle = PaperTitle;
                 string message = $"Stopping {paperTitle}";
 
@@ -354,6 +366,9 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
+                    return;
+
+                if (!StreamAudio)
                     return;
 
                 int paperId = Int32.Parse(id.Substring(1, 3));
@@ -444,6 +459,9 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
+                    return;
+
+                if (!StreamAudio)
                     return;
 
                 Label currentLabel = (Label)contentPage.FindByName(id);

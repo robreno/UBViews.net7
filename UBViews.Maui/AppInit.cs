@@ -87,8 +87,8 @@ namespace UBViews
                 Preferences.Default.Set("medium_window", "880,720");
                 Preferences.Default.Set("large_window", "1080,920");
 
-                Preferences.Default.Set("auto_send_email", "false");
-                Preferences.Default.Set("auto_send_list", "");
+                Preferences.Default.Set("auto_send_email", false);
+                Preferences.Default.Set("stream_audio", false);
 
                 // SetupDefaultData();
                 int size = srcNames.Length;

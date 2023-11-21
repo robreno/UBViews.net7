@@ -21,6 +21,8 @@ using QueryFilter;
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class MainViewModel : BaseViewModel
 {
+    public ContentPage contentPage;
+
     QueryInputDto _queryInput = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
 
     // TODO: Add in later when AudioService is added
@@ -125,6 +127,14 @@ public partial class MainViewModel : BaseViewModel
             IsBusy = true;
 
             queryString = queryString.Trim();
+
+            if (queryString.Contains("^"))
+            {
+                var value = queryString.Substring(1, queryString.Length-1);
+                await SetAudioStreaming(value);
+                return;
+            }
+
             var isNullOrEmpty = string.IsNullOrEmpty(queryString);
             if (!isNullOrEmpty)
             {
@@ -367,6 +377,34 @@ public partial class MainViewModel : BaseViewModel
         {
             await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NormalizeQueryString => ",
                 ex.Message, "Cancel");
+        }
+    }
+
+    private async Task SetAudioStreaming(string value)
+    {
+        try
+        {
+            if (value == "on")
+            {
+                Preferences.Default.Set("stream_audio", true);
+            }
+            if (value == "off")
+            {
+                Preferences.Default.Set("stream_audio", false);
+            }
+
+            var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
+            await MainThread.InvokeOnMainThreadAsync(() => 
+            {
+                searchBar.Text = null;
+            });
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SetAudioStreaming => ",
+                ex.Message, "Cancel");
+            return;
         }
     }
 }
