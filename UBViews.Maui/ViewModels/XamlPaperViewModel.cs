@@ -11,6 +11,7 @@ using UBViews.Models.Ubml;
 using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
+using UBViews.Views;
 
 namespace UBViews.ViewModels
 {
@@ -509,20 +510,21 @@ namespace UBViews.ViewModels
                 if (autoSendRecipients.Count == 0)
                 {
                     var contactsCount = await emailService.ContactsCount();
+                    var autoSendSetting = await settingsService.Get("auto_send_email", false);
+
                     string promptMessage = string.Empty;
-                    string secondAction = string.Empty;
-
-                    secondAction = " add or set contact(s) to AutoSend.";
-                    promptMessage = $"You have no contacts or none are set to auto send.\r" +
-                                    $"Please go to the Settigs => Contacts page and {secondAction}.";
-
+                    if (autoSendSetting == false && contactsCount == 0)
+                    {
+                        string autoSendAction = $" check \'Auto Send Email\', and\r";
+                        string emptyContactsAction = $" add contact and set to AutoSend.\r";
+                        promptMessage = $"You have no contacts and 'Auto Send Email' is not set.\r" +
+                                        $"Please go to the Settigs and {autoSendAction} and {emptyContactsAction}.";
+                    }
                     await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
                     return;
                 }
 
                 string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
-
-                action = await App.Current.MainPage.DisplayActionSheet("Test Action?", "Cancel", null, "Copy", "Share");
 
                 string errorMsg = string.Empty;
                 switch (action)
@@ -577,20 +579,14 @@ namespace UBViews.ViewModels
 
                 var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                 var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+
                 var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
-                var autoSendSetting = await settingsService.Get("auto_send_email", false);
+                bool autoSendSetting = await settingsService.Get("auto_send_email", false);
 
-                if (autoSendRecipients.Count == 0)
+                bool canSendEmails = await CanSendEmail(autoSendSetting, autoSendRecipients.Count);
+
+                if (!canSendEmails)
                 {
-                    var contactsCount = await emailService.ContactsCount();
-                    string promptMessage = string.Empty;
-                    string secondAction = string.Empty;
-
-                    secondAction = " add or set contact(s) to AutoSend.";
-                    promptMessage = $"You have no contacts ({contactsCount}) or none are set to auto send.\r" +
-                                    $"Please go to the Settigs => Contacts page and {secondAction}.";
-
-                    await App.Current.MainPage.DisplayAlert("Send Email", promptMessage, "Cancel");
                     return;
                 }
 
@@ -948,6 +944,7 @@ namespace UBViews.ViewModels
                 return null;
             }
         }
+
         /// <summary>
         /// SendToast
         /// </summary>
@@ -969,6 +966,57 @@ namespace UBViews.ViewModels
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
                 return;
+            }
+        }
+
+        /// <summary>
+        /// GetAutoRecipients
+        /// </summary>
+        /// <returns></returns>
+        async Task<bool> CanSendEmail(bool autoSendFlag, int recipientsCount)
+        {
+            try
+            {
+                bool _canSendEmail = true;
+                string promptMessage = string.Empty;
+                string autoSendAction = $" set \'Auto Send Email\'";
+                string emptyContactsAction = $" add contact and set to AutoSend.";
+
+                if (recipientsCount == 0)
+                {
+
+                    if (autoSendFlag == false && recipientsCount == 0)
+                    {
+                        promptMessage = $"You have no contacts and 'Auto Send Email' is not set.\r" +
+                                        $"Please go to Settigs and {autoSendAction} and {emptyContactsAction}.";
+                    }
+                    if (autoSendFlag == false && recipientsCount > 0)
+                    {
+                        promptMessage = $"'Auto Send Email' is not set." +
+                                        $"Please go to Settigs and {autoSendAction}.";
+                    }
+                    if (autoSendFlag == true && recipientsCount == 0)
+                    {
+                        promptMessage = $"You have no contacts.\r" +
+                                        $"Please go to Settigs => Contacts and {emptyContactsAction}.";
+                    }
+                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                    _canSendEmail = false;
+                }
+                else if (recipientsCount > 0 && autoSendFlag == false)
+                {
+                    promptMessage = $"'Auto Send Email' is not set. " +
+                                    $"Please go to Settigs and {autoSendAction}.";
+
+                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                    _canSendEmail = false;
+                }
+                return _canSendEmail;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                return false;
             }
         }
     }

@@ -115,7 +115,10 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     {
         try
         {
-            await SaveCacheSettings();
+            if (settingsDirty == true)
+            {
+                await SaveCacheSettings();
+            }
         }
         catch (Exception ex)
         {
@@ -345,7 +348,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         try
         {
             await settingsService.SaveCache();
-            //await App.Current.MainPage.DisplayAlert("Settings", "Cached settings were saved!", "Ok");
+            settingsDirty = false;
         }
         catch (Exception ex)
         {
