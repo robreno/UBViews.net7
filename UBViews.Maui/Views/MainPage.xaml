@@ -44,7 +44,8 @@
                SemanticProperties.Description="Opening Title"
                SemanticProperties.Hint="Title"/>
 
-        <SearchBar Text="{Binding QueryInput, Mode=TwoWay}" 
+        <SearchBar x:Name="searchBarControl" 
+                   Text="{Binding QueryInput, Mode=TwoWay}" 
                    WidthRequest="{x:StaticResource SearchBarWidth}"
                    Placeholder="Enter search query ..."
                    SemanticProperties.Description="SearchBar for entering search query text."
