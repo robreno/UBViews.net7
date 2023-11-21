@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Settings count="14">
-  <Setting name="use_caching" type="bool" value="false" />
-  <Setting name="max_query_results" type="int" value="50" />
-  <Setting name="line_height" type="double" value="1.0" />
-  <Setting name="show_reference_pids" type="bool" value="false" />
-  <Setting name="show_paper_contents" type="bool" value="false" />
-  <Setting name="show_playback_controls" type="bool" value="false" />
-  <Setting name="culture" type="string" value="en-US" />
-  <Settign name="default_theme" type="string" value="light" />
-  <Setting name="window_size" type="int" value="2" />
-  <Setting name="small_window" type="string" value="680,520" />
-  <Setting name="medium_window" type="string" value="880,720" />
-  <Setting name="large_window" type="string" value="1080,920" />
-  <Setting name="auto_send_email" type="bool" value="false" />
+  <Setting id="1" name="use_caching" type="bool" value="false" />
+  <Setting id="2" name="max_query_results" type="int" value="50" />
+  <Setting id="3" name="line_height" type="double" value="1.0" />
+  <Setting id="4" name="show_reference_pids" type="bool" value="false" />
+  <Setting id="5" name="show_paper_contents" type="bool" value="false" />
+  <Setting id="6" name="show_playback_controls" type="bool" value="false" />
+  <Setting id="7" name="culture" type="string" value="en-US" />
+  <Setting id="8" name="default_theme" type="string" value="light" />
+  <Setting id="9" name="window_size" type="int" value="2" />
+  <Setting id="10" name="small_window" type="string" value="680,520" />
+  <Setting id="11" name="medium_window" type="string" value="880,720" />
+  <Setting id="12" name="large_window" type="string" value="1080,920" />
+  <Setting id="13" name="auto_send_email" type="bool" value="false" />
+  <Setting id="14" name="stream_audio" type="bool" value="false" />
 </Settings>
