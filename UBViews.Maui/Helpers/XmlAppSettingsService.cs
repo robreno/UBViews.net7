@@ -82,6 +82,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
             using var stream = File.Create(targetFilePath);
             CancellationToken token = new CancellationToken(false);
             await _settingsRoot.SaveAsync(stream, SaveOptions.None, token);
+            _cacheDirty = false;
         }
         catch (Exception ex)
         {
@@ -99,6 +100,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
         {
             _settingsRoot.RemoveNodes();
             _settingsRoot.SetAttributeValue("count", 0);
+            _cacheDirty = false;
         }
         catch (Exception ex)
         {
@@ -221,6 +223,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
 
             item.SetAttributeValue("value", value);
             await SaveAppSettingsAsync(_settingsFileName);
+            _cacheDirty = false;
         }
         catch (Exception ex)
         {
