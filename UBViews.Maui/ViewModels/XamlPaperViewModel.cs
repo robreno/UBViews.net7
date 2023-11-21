@@ -505,22 +505,14 @@ namespace UBViews.ViewModels
 
                 var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                 var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+
                 var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
+                bool autoSendSetting = await settingsService.Get("auto_send_email", false);
 
-                if (autoSendRecipients.Count == 0)
+                bool canSendEmails = await CanSendEmail(autoSendSetting, autoSendRecipients.Count);
+
+                if (!canSendEmails)
                 {
-                    var contactsCount = await emailService.ContactsCount();
-                    var autoSendSetting = await settingsService.Get("auto_send_email", false);
-
-                    string promptMessage = string.Empty;
-                    if (autoSendSetting == false && contactsCount == 0)
-                    {
-                        string autoSendAction = $" check \'Auto Send Email\', and\r";
-                        string emptyContactsAction = $" add contact and set to AutoSend.\r";
-                        promptMessage = $"You have no contacts and 'Auto Send Email' is not set.\r" +
-                                        $"Please go to the Settigs and {autoSendAction} and {emptyContactsAction}.";
-                    }
-                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
                     return;
                 }
 
