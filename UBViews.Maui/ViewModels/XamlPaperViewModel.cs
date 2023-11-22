@@ -12,7 +12,6 @@ using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
 using UBViews.Views;
-using Windows.Media.Capture;
 
 namespace UBViews.ViewModels
 {

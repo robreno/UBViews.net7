@@ -8,6 +8,18 @@
              x:DataType="viewmodel:XmlAppSettingsViewModel"
              Title="App Settings Page">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="ButtonWidth">160</x:String>
+            <x:String x:Key="SearchBarWidth">300</x:String>
+        </ResourceDictionary>
+
+        <Style x:Name="TestLabelHeading" TargetType="Label">
+            <Setter Property="Margin" Value="20, 30, 20, 20" />
+        </Style>
+            
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
             EventName="Appearing" Command="{Binding AppSettingPageAppearingCommand}" />
@@ -17,8 +29,12 @@
             EventName="Disappearing" Command="{Binding AppSettingPageDisappearingCommand}" />
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout x:Name="mainVSL"
-                         Padding="20,20,20,20">
+    <VerticalStackLayout x:Name="mainVSL">
+
+        <Label Style="{StaticResource PageLabelHeading}"  
+               Text="Application Settings"
+               FontSize="Title" 
+               HorizontalOptions="Center" />
 
         <VerticalStackLayout x:Name="controlSettingsVSL"
                              Style="{StaticResource AppSettingsVSL}">
@@ -197,7 +213,7 @@
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding SaveSettingsCommand}" />
 
-            <Button Text="Contacts" 
+            <!--<Button Text="Contacts" 
                     FontSize="18"
                     FontAttributes="Bold" 
                     HorizontalOptions="Center" 
@@ -206,9 +222,9 @@
                     SemanticProperties.Hint="Navigation Button."
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppContacts" />
+                    CommandParameter="AppContacts" />-->
 
-            <Button Text="App Data" 
+            <!--<Button Text="App Data" 
                     FontSize="18"
                     FontAttributes="Bold" 
                     HorizontalOptions="Center"
@@ -217,7 +233,7 @@
                     SemanticProperties.Hint="Navigation Button."
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppData" />
+                    CommandParameter="AppData" />-->
 
         </VerticalStackLayout>
 

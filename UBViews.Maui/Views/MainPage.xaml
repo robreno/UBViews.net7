@@ -63,7 +63,7 @@
                 Command="{Binding SumbitQueryCommand}"
                 CommandParameter="{Binding QueryInput}" />
 
-        <Button Text="Parts of Book"
+        <!--<Button Text="Parts of Book"
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -72,9 +72,9 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="PartsPage" />
+                CommandParameter="PartsPage" />-->
 
-        <Button Text="Titles of Papers"
+        <!--Button Text="Titles of Papers"
                 FontSize="18"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" 
@@ -83,9 +83,9 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="PaperTitles"/>
+                CommandParameter="PaperTitles"/>-->
 
-        <Button Text="App Settings" 
+        <!--<Button Text="Settings" 
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -94,18 +94,7 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="AppSettings" />
-
-        <!--<Button Text="App Data" 
-                    FontSize="18"
-                    FontAttributes="Bold" 
-                    HorizontalOptions="Center"
-                    SemanticProperties.HeadingLevel="None"
-                    SemanticProperties.Description="Button for navigating to App Data page."
-                    SemanticProperties.Hint="Navigation Button."
-                    WidthRequest="{x:StaticResource ButtonWidth}"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppData" />-->
+                CommandParameter="AppSettings" />-->
 
         <!--<Button Text="Contacts" 
                     FontSize="18"
@@ -117,6 +106,17 @@
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="AppContacts" />-->
+
+        <!--<Button Text="App Data" 
+            FontSize="18"
+            FontAttributes="Bold" 
+            HorizontalOptions="Center"
+            SemanticProperties.HeadingLevel="None"
+            SemanticProperties.Description="Button for navigating to App Data page."
+            SemanticProperties.Hint="Navigation Button."
+            WidthRequest="{x:StaticResource ButtonWidth}"
+            Command="{Binding NavigateToCommand}"
+            CommandParameter="AppData" />-->
 
         <!--<Button 
                 Text="Check Internet" 

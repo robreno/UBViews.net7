@@ -21,11 +21,11 @@
 
     <ScrollView>
 
-        <VerticalStackLayout Spacing="25" 
-                             Padding="25">
-            <Label Text="Application Files"
-                   FontSize="Title"
-                   VerticalOptions="Center" 
+        <VerticalStackLayout Style="{StaticResource AppDataVSL}">
+            
+            <Label Style="{StaticResource PageLabelHeading}"
+                   Text="Application Files"
+                   FontSize="Title" 
                    HorizontalOptions="Center" />
 
             <CollectionView x:Name="DataFilesCollection" 

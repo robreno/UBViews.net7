@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="UBViews.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:UBViews"
-    Shell.FlyoutBehavior="Disabled">
+<Shell x:Class="UBViews.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:UBViews"
+       xmlns:views="clr-namespace:UBViews.Views"
+       FlyoutBackgroundColor="{StaticResource Primary}"
+       Shell.FlyoutBehavior="Flyout"
+       Shell.TabBarIsVisible="False">
 
-    <ShellContent
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Label Text="{Binding Title}"
+               TextColor="White"
+               FontSize="Medium"
+               Margin="10"/>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <Label Text="© 2023 Agondonter Media"
+               TextColor="White"
+               HorizontalOptions="Center" 
+               FontSize="Small"
+               Padding="30"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+
+    <FlyoutItem Title="Main" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+             Title="Query"
+             ContentTemplate="{DataTemplate local:MainPage}"
+             Route="MainPage" />
+        <ShellContent
+            Title="Parts of Book"
+            ContentTemplate="{DataTemplate views:PartsPage}"
+            Route="PartsPage" />
+        <ShellContent
+            Title="Titles of Papers"
+            ContentTemplate="{DataTemplate views:PaperTitlesPage}"
+            Route="PaperTtilesPage" />
+        <ShellContent
+            Title="Settings"
+            ContentTemplate="{DataTemplate views:AppSettingsPage}"
+            Route="AppSettingsPage" />
+        <ShellContent
+            Title="Contacts"
+            ContentTemplate="{DataTemplate views:ContactsPage}"
+            Route="ContactsPage" />
+        <ShellContent
+            Title="Files"
+            ContentTemplate="{DataTemplate views:AppDataPage}"
+            Route="AppDataPage" />
+    </FlyoutItem>
+
+    <!--<ShellContent
         Title="Home"
-        Icon="ub606_100x100.png"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
 
 </Shell>

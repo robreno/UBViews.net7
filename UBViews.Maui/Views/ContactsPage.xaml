@@ -48,12 +48,18 @@
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL"
-                         Padding="50    "
+                         VerticalOptions="Start"
                          HorizontalOptions="Center">
 
+        <Label Style="{StaticResource PageLabelHeading}" 
+               Text="Application Contacts"
+               FontSize="Title" 
+               HorizontalOptions="Center" />
+
         <VerticalStackLayout x:Name="formVSL"
-                             Margin="10,0,0,0"
+                             Style="{StaticResource AppContactsVSL}"
                              HorizontalOptions="Center">
+            
             <Label x:Name="FirstNameLabel" 
                    Style="{StaticResource AppContactsLabels}"
                    Text="First Name:" />
