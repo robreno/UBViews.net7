@@ -383,14 +383,22 @@
                 <Setter Property="HorizontalTextAlignment" Value="End" />
                 <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
+            
             <!-- AppData Styles -->
             <Style x:Key="AppDataVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Margin" Value="50,0,50,0" />
+            </Style>
+            <Style x:Key="AppDataLabels" TargetType="Label">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
                 <Setter Property="Margin" Value="0,0,0,0" />
             </Style>
+
             <!-- AppContacts Styles -->
             <Style x:Key="AppContactsVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Margin" Value="0,0,0,0" />
-                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
             <Style x:Key="AppContactsLabels" TargetType="Label">
@@ -413,31 +421,22 @@
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="Padding" Value="0,0,0,10" />
+                <Setter Property="Padding" Value="0,0,0,0" />
             </Style>
-            <Style x:Key="AppDataLabels" TargetType="Label">
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
-                <Setter Property="Margin" Value="0,0,0,0" />
-            </Style>
+
             <!-- QueryResult Styles -->
             <Style x:Key="QueryResultContentVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Margin" Value="10,0,10,30" />
             </Style>
 
+            <!-- Button Styles -->
             <Style x:Key="AppButtonsStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                Dark={StaticResource DarkBackground}}" />
                 <Setter Property="TextColor" Value="White"/>
             </Style>
 
-            <Style x:Key="AppUrantiaBookViewer" TargetType="Label">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                               Dark={StaticResource DarkBackground}}" />
-                <Setter Property="TextColor" Value="White"/>
-            </Style>
-
+            <!-- Parts Border Styles -->
             <Style x:Key="PartBorderStyle" TargetType="Border">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                            Dark={StaticResource DarkBackground}}" />
@@ -447,6 +446,7 @@
                 <Setter Property="Margin" Value="20" />
             </Style>
 
+            <!-- Paper Titles Border Styles -->
             <Style x:Key="TitleBorderStyle" TargetType="Border">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                            Dark={StaticResource DarkBackground}}" />
@@ -456,20 +456,10 @@
                 <Setter Property="Margin" Value="10,0,10,0" />
             </Style>
 
-            <Style x:Name="PageLabelHeading" TargetType="Label">
-                <Setter Property="Margin" Value="0, 0, 0, 0" />
+            <Style x:Name="PageHeadingVSL" TargetType="VerticalStackLayout">
+                <Setter Property="Margin" Value="0, 20, 0, 20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
-
-            <!--<Color x:Key="DisplayNameColor">Green</Color>
-            <Style x:Key="DisplayNameEntryStyle" TargetType="Entry">
-                <Setter Property="TextColor" Value="{DynamicResource DisplayNameColor}" />
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="WidthRequest" Value="240" />
-                <Setter Property="Margin" Value="0,0,0,10" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
-            </Style>-->
 
             <!-- End UB Specific Styles -->
 

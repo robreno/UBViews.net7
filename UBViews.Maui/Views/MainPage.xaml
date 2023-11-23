@@ -63,7 +63,7 @@
                 Command="{Binding SumbitQueryCommand}"
                 CommandParameter="{Binding QueryInput}" />
 
-        <!--<Button Text="Parts of Book"
+        <Button Text="Parts of Book"
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -72,9 +72,9 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="PartsPage" />-->
+                CommandParameter="PartsPage" />
 
-        <!--Button Text="Titles of Papers"
+        <Button Text="Titles of Papers"
                 FontSize="18"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" 
@@ -83,9 +83,9 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="PaperTitles"/>-->
+                CommandParameter="PaperTitles"/>
 
-        <!--<Button Text="Settings" 
+        <Button Text="Settings" 
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -94,9 +94,9 @@
                 SemanticProperties.Hint="Navigation Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="AppSettings" />-->
+                CommandParameter="AppSettings" />
 
-        <!--<Button Text="Contacts" 
+        <Button Text="Contacts" 
                     FontSize="18"
                     FontAttributes="Bold" 
                     HorizontalOptions="Center" 
@@ -105,7 +105,7 @@
                     SemanticProperties.Hint="Navigation Button."
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppContacts" />-->
+                    CommandParameter="AppContacts" />
 
         <!--<Button Text="App Data" 
             FontSize="18"

@@ -23,7 +23,7 @@
 
         <VerticalStackLayout Style="{StaticResource AppDataVSL}">
             
-            <Label Style="{StaticResource PageLabelHeading}"
+            <Label Style="{StaticResource PageHeadingLabel}"
                    Text="Application Files"
                    FontSize="Title" 
                    HorizontalOptions="Center" />

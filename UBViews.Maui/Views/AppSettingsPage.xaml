@@ -31,10 +31,11 @@
 
     <VerticalStackLayout x:Name="mainVSL">
 
-        <Label Style="{StaticResource PageLabelHeading}"  
-               Text="Application Settings"
-               FontSize="Title" 
-               HorizontalOptions="Center" />
+        <VerticalStackLayout Style="{StaticResource PageHeadingVSL}">
+            <Label Text="Application Settings"
+                   FontSize="Title" 
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
 
         <VerticalStackLayout x:Name="controlSettingsVSL"
                              Style="{StaticResource AppSettingsVSL}">
@@ -111,22 +112,6 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout x:Name="AutoSendEmailHSL" Margin=".5">
-                <Label x:Name="autoSendEmailLabel" 
-                       Text="Auto Send Email:"
-                       Style="{StaticResource AppSettingsLabels}" />
-                <CheckBox x:Name="autoSendEmailCheckBox"
-                          Color="Blue"
-                          IsChecked="{Binding AutoSendEmail, Mode=OneWay}">
-                    <CheckBox.Behaviors>
-                        <behavior:EventToCommandBehavior 
-                            EventName="CheckedChanged" 
-                            Command="{Binding AutoSendEmailCheckedChangedCommand}"
-                            CommandParameter="{Binding Source={x:Reference autoSendEmailCheckBox}, Path=IsChecked}"/>
-                    </CheckBox.Behaviors>
-                </CheckBox>
-            </HorizontalStackLayout>
-
             <HorizontalStackLayout x:Name="PlaybackControlsHSL" Margin=".5">
                 <Label x:Name="showControlsLabel" 
                        Text="Show Media Controls:"
@@ -156,6 +141,23 @@
                             EventName="CheckedChanged" 
                             Command="{Binding ShowPaperContentsCheckedChangedCommand}"
                             CommandParameter="{Binding Source={x:Reference paperContentsCheckBox}, Path=IsChecked}"/>
+                    </CheckBox.Behaviors>
+                </CheckBox>
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout x:Name="AutoSendEmailHSL" Margin=".5">
+                <Label x:Name="autoSendEmailLabel" 
+                       Text="Auto Send Email:"
+                       Style="{StaticResource AppSettingsLabels}" />
+                <CheckBox x:Name="autoSendEmailCheckBox"
+                          Color="Blue"
+                          IsChecked="{Binding AutoSendEmail, Mode=OneWay}">
+                    <CheckBox.Behaviors>
+                        <behavior:EventToCommandBehavior 
+                            EventName="CheckedChanged" 
+                            Command="{Binding AutoSendEmailCheckedChangedCommand}"
+                            CommandParameter="{Binding Source={x:Reference autoSendEmailCheckBox}, Path=IsChecked}"/>
                     </CheckBox.Behaviors>
                 </CheckBox>
             </HorizontalStackLayout>

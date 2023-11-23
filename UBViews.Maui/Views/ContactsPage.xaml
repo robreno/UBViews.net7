@@ -14,17 +14,6 @@
         <ResourceDictionary>
             <x:String x:Key="ButtonHeight">45</x:String>
             <x:String x:Key="ButtonWidth">65</x:String>
-            <x:String x:Key="SearchBarWidth">300</x:String>
-            <Color x:Key="DisplayNameColor">Green</Color>
-            <Style x:Key="DisplayNameEntryStyle" TargetType="Entry">
-                <Setter Property="TextColor" Value="{DynamicResource DisplayNameColor}" />
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="WidthRequest" Value="240" />
-                <Setter Property="Margin" Value="0,0,0,10" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
-            </Style>
         </ResourceDictionary>
         <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
@@ -48,13 +37,14 @@
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL"
-                         VerticalOptions="Start"
+                         Padding="50"
                          HorizontalOptions="Center">
 
-        <Label Style="{StaticResource PageLabelHeading}" 
-               Text="Application Contacts"
-               FontSize="Title" 
-               HorizontalOptions="Center" />
+        <VerticalStackLayout Style="{StaticResource PageHeadingVSL}">
+            <Label Text="Application Contacts"
+                   FontSize="Title" 
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
 
         <VerticalStackLayout x:Name="formVSL"
                              Style="{StaticResource AppContactsVSL}"
@@ -63,6 +53,7 @@
             <Label x:Name="FirstNameLabel" 
                    Style="{StaticResource AppContactsLabels}"
                    Text="First Name:" />
+            
             <Entry x:Name="FirstNameEntry"
                    Style="{StaticResource AppContactsEntry}"
                    BackgroundColor="{AppThemeBinding Light={StaticResource ContactsLightBackground}, 
@@ -243,7 +234,7 @@
                 
                 <DataTemplate x:DataType="models:ContactDto">
                     
-                    <Border Padding=".5">
+                    <Border Padding="0">
 
                         <!--<VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">
