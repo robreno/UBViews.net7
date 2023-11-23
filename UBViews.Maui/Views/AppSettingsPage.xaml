@@ -11,13 +11,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:String x:Key="ButtonWidth">160</x:String>
-            <x:String x:Key="SearchBarWidth">300</x:String>
         </ResourceDictionary>
-
-        <Style x:Name="TestLabelHeading" TargetType="Label">
-            <Setter Property="Margin" Value="20, 30, 20, 20" />
-        </Style>
-            
     </ContentPage.Resources>
 
     <ContentPage.Behaviors>
@@ -31,7 +25,7 @@
 
     <VerticalStackLayout x:Name="mainVSL">
 
-        <VerticalStackLayout Style="{StaticResource PageHeadingVSL}">
+        <VerticalStackLayout Margin="0,20,0,20" HorizontalOptions="Center">
             <Label Text="Application Settings"
                    FontSize="Title" 
                    HorizontalOptions="Center" />
@@ -204,7 +198,7 @@
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            
+
             <Button Text="Save Settings" 
                     FontSize="18"
                     FontAttributes="Bold" 
@@ -214,28 +208,6 @@
                     SemanticProperties.Hint="Save Settings Button."
                     WidthRequest="{x:StaticResource ButtonWidth}"
                     Command="{Binding SaveSettingsCommand}" />
-
-            <!--<Button Text="Contacts" 
-                    FontSize="18"
-                    FontAttributes="Bold" 
-                    HorizontalOptions="Center" 
-                    SemanticProperties.HeadingLevel="None"
-                    SemanticProperties.Description="Button for navigating to Contacts page."
-                    SemanticProperties.Hint="Navigation Button."
-                    WidthRequest="{x:StaticResource ButtonWidth}"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppContacts" />-->
-
-            <!--<Button Text="App Data" 
-                    FontSize="18"
-                    FontAttributes="Bold" 
-                    HorizontalOptions="Center"
-                    SemanticProperties.HeadingLevel="None"
-                    SemanticProperties.Description="Button for navigating to App Data page."
-                    SemanticProperties.Hint="Navigation Button."
-                    WidthRequest="{x:StaticResource ButtonWidth}"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppData" />-->
 
         </VerticalStackLayout>
 

@@ -386,7 +386,9 @@
             
             <!-- AppData Styles -->
             <Style x:Key="AppDataVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Margin" Value="50,0,50,0" />
+                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Padding" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
             <Style x:Key="AppDataLabels" TargetType="Label">
                 <Setter Property="VerticalOptions" Value="Center" />
