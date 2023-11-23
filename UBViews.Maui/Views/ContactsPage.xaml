@@ -37,17 +37,16 @@
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL"
-                         Padding="50"
                          HorizontalOptions="Center">
 
-        <VerticalStackLayout Style="{StaticResource PageHeadingVSL}">
+        <VerticalStackLayout Margin="0,20,0,20" HorizontalOptions="Center">
             <Label Text="Application Contacts"
                    FontSize="Title" 
                    HorizontalOptions="Center" />
         </VerticalStackLayout>
 
         <VerticalStackLayout x:Name="formVSL"
-                             Style="{StaticResource AppContactsVSL}"
+                             Margin="10,0,0,0"
                              HorizontalOptions="Center">
             
             <Label x:Name="FirstNameLabel" 
@@ -141,24 +140,6 @@
                              Command="{Binding AutoSendCheckedChangedCommand}"
                              CommandParameter="{Binding Source={x:Reference AutoSendCheckBox}, Path=IsChecked}"/>
                     </CheckBox.Behaviors>
-
-                    <!--<VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="Color" Value="Red" />
-                                </VisualState.Setters>
-                            </VisualState>
-
-                            <VisualState x:Name="IsChecked">
-                                <VisualState.Setters>
-                                    <Setter Property="Color"
-                            Value="Green" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>-->
-                    
                 </CheckBox>
             </HorizontalStackLayout>
 
@@ -233,23 +214,8 @@
             <CollectionView.ItemTemplate>
                 
                 <DataTemplate x:DataType="models:ContactDto">
-                    
-                    <Border Padding="0">
 
-                        <!--<VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="White" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightSkyBlue" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>-->
+                    <Border Padding="0">
 
                         <VerticalStackLayout Padding="10">
                             <Label>
