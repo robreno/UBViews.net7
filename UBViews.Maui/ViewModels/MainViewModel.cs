@@ -325,7 +325,7 @@ public partial class MainViewModel : BaseViewModel
             }
             else if (target == "AppContacts")
             {
-                targetName = nameof(AddContactsPage);
+                targetName = nameof(ContactsPage);
                 await Shell.Current.GoToAsync(targetName);
             }
             else if (target == "QueryResults")
