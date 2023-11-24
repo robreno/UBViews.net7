@@ -45,12 +45,14 @@ public class EmailService : IEmailService
 
     #region  Services
     IContactsService contactService;
+    IAppSettingsService settingsService;
     #endregion
 
     #region  Constructors
-    public EmailService(IContactsService contactService)
+    public EmailService(IContactsService contactService, IAppSettingsService settingsService)
     {
         this.contactService = contactService;
+        this.settingsService = settingsService;
     }
     #endregion
 
@@ -122,10 +124,90 @@ public class EmailService : IEmailService
             Uri = uri
         });
     }
+
+    /// <summary>
+    /// SendToast
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    private async Task SendToast(string message)
+    {
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            return;
+        }
+    }
     //private Task<string> CreateHtmlBodyAsync(string pretext, string postText, string subject, List<string> recipients)
     #endregion
 
     #region  Interface Implementations
+    /// <summary>
+    /// GetAutoRecipients
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> CanSendEmail()
+    {
+        try
+        {
+            if (!_contactsInitialized)
+            {
+                await InitializeContacts();
+            }
+
+            bool autoSendFlag = false;
+            int recipientsCount = 0;
+
+            recipientsCount = _recipients.Count;
+            autoSendFlag = await settingsService.Get("auto_send_email", false);
+
+            bool _canSendEmail = true;
+            string promptMessage = string.Empty;
+            string autoSendAction = $" set \'Auto Send Email\'";
+            string emptyContactsAction = $" add contact and set to AutoSend.";
+
+            if (recipientsCount == 0)
+            {
+                if (autoSendFlag == false)
+                {
+                    promptMessage = $"You have no contacts and 'Auto Send Email' is not set.\r" +
+                                    $"Please go to Settigs and {autoSendAction} and {emptyContactsAction}.";
+                }
+                if (autoSendFlag == true)
+                {
+                    promptMessage = $"You have no contacts.\r" +
+                                    $"Please go to Settigs => Contacts and {emptyContactsAction}.";
+                }
+                await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                _canSendEmail = false;
+            }
+            else if (recipientsCount > 0 && autoSendFlag == false)
+            {
+                promptMessage = $"'Auto Send Email' is not set. " +
+                                $"Please go to Settigs and {autoSendAction}.";
+
+                await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                _canSendEmail = false;
+            }
+            return _canSendEmail;
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            return false;
+        }
+    }
+
     /// <summary>
     /// IsValidEmail
     /// </summary>
@@ -264,8 +346,35 @@ public class EmailService : IEmailService
         {
             var bodyText = await CreatePlainTextBodyAsync(paragraph);
             await ShareParagarphText(bodyText);
+            await SendToast($"Paragraph {paragraph.Pid} shared!");
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
 
-            string message = $"Shared Paragaph";
+    public async Task ShareParagraphs(List<Paragraph> paragraphs)
+    {
+        try
+        {
+            string bodyText = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(_preText);
+            sb.AppendLine();
+            sb.AppendLine();
+            foreach (var paragraph in paragraphs)
+            {
+                var text = paragraph.CreatePlainTextBody();
+                sb.Append(text);
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+            sb.Append(_postText);
+            bodyText = sb.ToString();
+            await ShareParagarphText(bodyText);
+            await SendToast($"Paragraphs shared!");
         }
         catch (Exception ex)
         {

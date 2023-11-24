@@ -17,12 +17,14 @@ public interface IEmailService
     #endregion
 
     #region   Interface
+    Task<bool> CanSendEmail();
     Task<bool> IsValidEmail(string email);
     Task<int> ContactsCount();
     Task<List<ContactDto>> GetContactsAsync();
     Task<List<ContactDto>> GetAutoSendContactsAsync();
     Task<List<string>> GetAutoSendEmailListAsync();
     Task ShareParagraph(Paragraph paragraph);
+    Task ShareParagraphs(List<Paragraph> paragarphs);
     Task EmailParagraph(Paragraph paragraph, EmailType type, SendMode mode);
     Task<string> CreatePlainTextBodyAsync(Paragraph paragraph);
     Task<string> CreateHtmlBodyAsync(Paragraph paragraph);
