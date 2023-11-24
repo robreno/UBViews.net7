@@ -27,7 +27,8 @@ public partial class QueryResultViewModel : BaseViewModel
 {
     public ContentPage contentPage;
     public ObservableCollection<QueryLocationDto> QueryLocations { get; } = new();
-    public ObservableCollection<QueryHit> Paragraphs { get; set; } = new();
+    public ObservableCollection<QueryHit> Hits { get; set; } = new();
+    public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
 
     Dictionary<string, Span> _spans = new Dictionary<string, Span>();
 
@@ -223,7 +224,8 @@ public partial class QueryResultViewModel : BaseViewModel
         {
             string id = checkbox.ClassId;
             bool isSelected = checkbox.IsChecked;
-            QueryHit hit = Paragraphs.Where(h => h.Id == id).FirstOrDefault();
+            // Hits
+            QueryHit hit = Hits.Where(h => h.Id == id).FirstOrDefault();
             hit.Selected = isSelected;
         }
         catch (Exception ex)
@@ -238,11 +240,14 @@ public partial class QueryResultViewModel : BaseViewModel
     {
         try
         {
-            var contacts = await emailService.GetContactsAsync();
-            foreach (var paragraph in Paragraphs)
+            var selectedHits = Hits.Where(p => p.Selected == true).ToList();
+            List<Paragraph> paragraphs = new();
+            foreach (var hit in selectedHits)
             {
-
+                var paragraph = hit.Paragraph;
+                paragraphs.Add(paragraph);
             }
+            await emailService.ShareParagraphs(paragraphs);
         }
         catch (Exception ex)
         {
@@ -407,7 +412,7 @@ public partial class QueryResultViewModel : BaseViewModel
                     Selected = false,
                     Paragraph = paragraph
                 };
-                Paragraphs.Add(queryHit);
+                Hits.Add(queryHit);
 
                 string text = paragraph.Text;
                 List<string> termList = new List<string>();
