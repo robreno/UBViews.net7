@@ -42,6 +42,7 @@ public class EmailService : IEmailService
     private Regex _rgxEmail1 = new Regex(validEmailPattern1);
 
     private readonly string _className = "EmailService";
+
     #endregion
 
     #region  Services
@@ -58,9 +59,13 @@ public class EmailService : IEmailService
     #endregion
 
     #region Private Methods
-    private async Task InitializeContacts()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private async Task InitializeContactsAsync()
     {
-        string _methodName = "InitializeContacts";
+        string _methodName = "InitializeContactsAsync";
 
         try
         {
@@ -91,14 +96,16 @@ public class EmailService : IEmailService
 
     #region Private Email Methods
     /// <summary>
-    /// ShareParagarphText
+    /// ShareParagarphTextAsync
     /// </summary>
     /// <param name="text"></param>
     /// <param name="title"></param>
     /// <param name="subject"></param>
     /// <returns></returns>
-    private async Task ShareParagarphText(string text, string title = _shareTitle, string subject = _shareSubject)
+    private async Task ShareParagarphTextAsync(string text, string title = _shareTitle, string subject = _shareSubject)
     {
+        string _methodName = "ShareParagarphTextAsync";
+
         try
         {
             await Share.Default.RequestAsync(new ShareTextRequest
@@ -110,34 +117,46 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
 
     /// <summary>
-    /// ShareUri
+    /// ShareUriAsync
     /// </summary>
     /// <param name="title"></param>
     /// <param name="uri"></param>
     /// <param name="share"></param>
     /// <returns></returns>
-    private async Task ShareUri(string title, string uri, IShare share)
+    private async Task ShareUriAsync(string title, string uri, IShare share)
     {
-        await share.RequestAsync(new ShareTextRequest
+        string _methodName = "ShareUriAsync";
+
+        try
         {
-            Title = title,
-            Uri = uri
-        });
+            await share.RequestAsync(new ShareTextRequest
+            {
+                Title = title,
+                Uri = uri
+            });
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            return;
+        }
     }
 
     /// <summary>
-    /// SendToast
+    /// SendToastAsync
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    private async Task SendToast(string message)
+    private async Task SendToastAsync(string message)
     {
+        string _methodName = "SendToastAsync";
+
         try
         {
             using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -150,7 +169,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -159,16 +178,18 @@ public class EmailService : IEmailService
 
     #region  Interface Implementations
     /// <summary>
-    /// GetAutoRecipients
+    /// GetAutoRecipientsAsync
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> CanSendEmail()
+    public async Task<bool> CanSendEmailAsync()
     {
+        string _methodName = "CanSendEmailAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             bool autoSendFlag = false;
@@ -209,18 +230,20 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return false;
         }
     }
 
     /// <summary>
-    /// IsValidEmail
+    /// IsValidEmailAsync
     /// </summary>
     /// <param name="emailAddress"></param>
     /// <returns></returns>
-    public async Task<bool> IsValidEmail(string emailAddress)
+    public async Task<bool> IsValidEmailAsync(string emailAddress)
     {
+        string _methodName = "IsValidEmailAsync";
+
         try
         {
             bool isValidEmail = false;
@@ -229,22 +252,24 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return false;
         }
     }
 
     /// <summary>
-    /// ContactsCount
+    /// ContactsCountAsync
     /// </summary>
     /// <returns></returns>
-    public async Task<int> ContactsCount()
+    public async Task<int> ContactsCountAsync()
     {
+        string _methodName = "ContactsCountAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             var contacts = await GetContactsAsync();
@@ -253,7 +278,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return 0;
         }
 
@@ -265,22 +290,19 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<ContactDto>> GetContactsAsync()
     {
+        string _methodName = "ContactsCountAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
-            }
-
-            if (!_contactsInitialized)
-            {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
             return _contacts;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -291,29 +313,28 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<ContactDto>> GetAutoSendContactsAsync()
     {
+        string _methodName = "GetAutoSendContactsAsync";
+
         try
         {
             if(!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             List<ContactDto> contacts = new List<ContactDto>();
-            if (_contactsInitialized)
+            foreach (var contact in _contacts)
             {
-                foreach (var contact in _contacts)
+                if (contact.AutoSendEmail)
                 {
-                    if (contact.AutoSendEmail)
-                    {
-                        contacts.Add(contact);
-                    }
+                    contacts.Add(contact);
                 }
             }
             return contacts;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -324,70 +345,73 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<string>> GetAutoSendEmailListAsync()
     {
+        string _methodName = "GetAutoSendEmailListAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             List<string> recipients = new();
-            if (_contactsInitialized)
+            foreach (var contact in _contacts)
             {
-                foreach (var contact in _contacts)
+                if (contact.AutoSendEmail)
                 {
-                    if (contact.AutoSendEmail)
-                    {
-                        recipients.Add(contact.Email);
-                    }
+                    recipients.Add(contact.Email);
                 }
             }
             return recipients;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
 
     /// <summary>
-    /// ShareParagraph
+    /// ShareParagraphAsync
     /// </summary>
     /// <param name="paragraph"></param>
     /// <returns></returns>
-    public async Task ShareParagraph(Paragraph paragraph)
+    public async Task ShareParagraphAsync(Paragraph paragraph)
     {
+        string _methodName = "GetAutoSendContactsAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             var bodyText = await CreatePlainTextBodyAsync(paragraph);
-            await ShareParagarphText(bodyText);
-            await SendToast($"Paragraph {paragraph.Pid} shared!");
+            await ShareParagarphTextAsync(bodyText);
+            await SendToastAsync($"Paragraph {paragraph.Pid} shared!");
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
 
     /// <summary>
-    /// ShareParagraphs
+    /// ShareParagraphsAsync
     /// </summary>
     /// <param name="paragraphs"></param>
     /// <returns></returns>
-    public async Task ShareParagraphs(List<Paragraph> paragraphs)
-    {
+    public async Task ShareParagraphsAsync(List<Paragraph> paragraphs)
+    { 
+        string _methodName = "ShareParagraphsAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string bodyText = string.Empty;
@@ -404,30 +428,32 @@ public class EmailService : IEmailService
             }
             sb.Append(_postText);
             bodyText = sb.ToString();
-            await ShareParagarphText(bodyText);
-            await SendToast($"Paragraphs shared!");
+            await ShareParagarphTextAsync(bodyText);
+            await SendToastAsync($"Paragraphs shared!");
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
 
     /// <summary>
-    /// EmailParagraph
+    /// EmailParagraphAsync
     /// </summary>
     /// <param name="paragraph"></param>
     /// <param name="type"></param>
     /// <param name="mode"></param>
     /// <returns></returns>
-    public async Task EmailParagraph(Paragraph paragraph, IEmailService.EmailType type, IEmailService.SendMode mode)
+    public async Task EmailParagraphAsync(Paragraph paragraph, IEmailService.EmailType type, IEmailService.SendMode mode)
     {
+        string _methodName = "EmailParagraphAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             var _body = string.Empty;
@@ -437,7 +463,7 @@ public class EmailService : IEmailService
 
             if (autoSendRecipients.Count == 0)
             {
-                var contactsCount = await ContactsCount();
+                var contactsCount = await ContactsCountAsync();
                 string promptMessage = string.Empty;
                 string secondAction = string.Empty;
 
@@ -481,28 +507,30 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
 
     /// <summary>
-    /// EmailParagraphs
+    /// EmailParagraphsAsync
     /// </summary>
     /// <param name="paragraphs"></param>
     /// <param name="type"></param>
     /// <param name="mode"></param>
     /// <returns></returns>
-    public async Task EmailParagraphs(List<Paragraph> paragraphs, IEmailService.EmailType type, IEmailService.SendMode mode)
+    public async Task EmailParagraphsAsync(List<Paragraph> paragraphs, IEmailService.EmailType type, IEmailService.SendMode mode)
     {
+        string _methodName = "EmailParagraphsAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
-            var canSendEmail = await CanSendEmail();
+            var canSendEmail = await CanSendEmailAsync();
             if (!canSendEmail)
             {
                 return;
@@ -541,7 +569,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -553,11 +581,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextBodyAsync(Paragraph paragraph)
     {
+        string _methodName = "CreatePlainTextBodyAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -579,7 +609,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -591,11 +621,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextBodyAsync(List<Paragraph> paragraphs)
     {
+        string _methodName = "CreatePlainTextBodyAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string bodyText = string.Empty;
@@ -617,7 +649,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -629,11 +661,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateHtmlBodyAsync(Paragraph paragraph)
     {
+        string _methodName = "CreateHtmlBodyAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -654,23 +688,25 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
 
     /// <summary>
-    /// CreateEmailText
+    /// CreateEmailTextAsync
     /// </summary>
     /// <param name="paragraph"></param>
     /// <returns></returns>
-    public async Task<string> CreateEmailText(Paragraph paragraph)
+    public async Task<string> CreateEmailTextAsync(Paragraph paragraph)
     {
+        string _methodName = "CreateEmailTextAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -678,7 +714,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -694,11 +730,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateEmailTextAsync(string pretext, string postText, string subject, List<string> recipients, EmailBodyFormat bodyFormat = EmailBodyFormat.PlainText)
     {
+        string _methodName = "CreateEmailTextAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -706,7 +744,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -721,11 +759,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateHtmlTextEmailAsync(string pretext, string postText, string subject, List<string> recipients)
     {
+        string _methodName = "CreateHtmlTextEmailAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -733,7 +773,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -747,11 +787,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextEmailAsync(Paragraph paragraph, string pretext = _preText, string postText = _postText)
     {
+        string _methodName = "CreatePlainTextEmailAsync";
+
         try
         {
             if (!_isInitialized)
             {
-                await InitializeContacts();
+                await InitializeContactsAsync();
             }
 
             string emailText = string.Empty;
@@ -759,7 +801,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }

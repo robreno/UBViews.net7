@@ -520,7 +520,7 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var canSendEmail = await emailService.CanSendEmail();
+                var canSendEmail = await emailService.CanSendEmailAsync();
                 if (!canSendEmail)
                 {
                     return;
@@ -539,14 +539,14 @@ namespace UBViews.ViewModels
                         break;
                     case "Share":
                         // Share Paragraph
-                        await emailService.ShareParagraph(paragraph);
+                        await emailService.ShareParagraphAsync(paragraph);
                         break;
                     case "Email":
                         // Email Paragraph
 #if WINDOWS
-                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
 #elif ANDROID
-                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
 #endif
                         break;
                     case "Cancel":
@@ -580,7 +580,7 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var canSendEmail = await emailService.CanSendEmail();
+                var canSendEmail = await emailService.CanSendEmailAsync();
                 if (!canSendEmail)
                 {
                     return;
@@ -597,7 +597,7 @@ namespace UBViews.ViewModels
                         break;
                     case "Share":
                         // Share Paragraph
-                        await emailService.ShareParagraph(paragraph);
+                        await emailService.ShareParagraphAsync(paragraph);
 #if WINDOWS
                         await SendToast($"Paragraph {pid} shared!");
 #elif ANDROID
@@ -607,9 +607,9 @@ namespace UBViews.ViewModels
                     case "Email":
                         // Email Paragraph
 #if WINDOWS
-                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
 #elif ANDROID
-                        await emailService.EmailParagraph(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
 #endif
                         break;
                     default:

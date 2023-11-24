@@ -247,7 +247,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 var paragraph = hit.Paragraph;
                 paragraphs.Add(paragraph);
             }
-            await emailService.EmailParagraphs(paragraphs, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+            await emailService.EmailParagraphsAsync(paragraphs, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
         }
         catch (Exception ex)
         {
