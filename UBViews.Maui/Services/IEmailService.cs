@@ -26,6 +26,7 @@ public interface IEmailService
     Task ShareParagraph(Paragraph paragraph);
     Task ShareParagraphs(List<Paragraph> paragarphs);
     Task EmailParagraph(Paragraph paragraph, EmailType type, SendMode mode);
+    Task EmailParagraphs(List<Paragraph> paragraphs, IEmailService.EmailType type, IEmailService.SendMode mode);
     Task<string> CreatePlainTextBodyAsync(Paragraph paragraph);
     Task<string> CreateHtmlBodyAsync(Paragraph paragraph);
     #endregion

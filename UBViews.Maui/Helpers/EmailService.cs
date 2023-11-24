@@ -355,6 +355,11 @@ public class EmailService : IEmailService
         }
     }
 
+    /// <summary>
+    /// ShareParagraphs
+    /// </summary>
+    /// <param name="paragraphs"></param>
+    /// <returns></returns>
     public async Task ShareParagraphs(List<Paragraph> paragraphs)
     {
         try
@@ -426,6 +431,79 @@ public class EmailService : IEmailService
                     _body = await CreatePlainTextBodyAsync(paragraph);
                     break;
             }
+
+            // Send Email
+            if (Email.Default.IsComposeSupported)
+            {
+                string subject = "UBViews Quote of the day ...";
+
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = _body,
+                    BodyFormat = (type.Equals(IEmailService.EmailType.PlainText) ? EmailBodyFormat.PlainText : EmailBodyFormat.Html),
+                    To = autoSendRecipients
+                };
+
+                await Email.Default.ComposeAsync(message);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// EmailParagraphs
+    /// </summary>
+    /// <param name="paragraphs"></param>
+    /// <param name="type"></param>
+    /// <param name="mode"></param>
+    /// <returns></returns>
+    public async Task EmailParagraphs(List<Paragraph> paragraphs, IEmailService.EmailType type, IEmailService.SendMode mode)
+    {
+        try
+        {
+            var _body = string.Empty;
+            List<string> autoSendRecipients = new();
+
+            autoSendRecipients = await GetAutoSendEmailListAsync();
+
+            if (autoSendRecipients.Count == 0)
+            {
+                var contactsCount = await ContactsCount();
+                string promptMessage = string.Empty;
+                string secondAction = string.Empty;
+
+                secondAction = " add or set contact(s) to AutoSend.";
+                promptMessage = $"You have no contacts ({contactsCount}) or none are set to auto send.\r" +
+                                $"Please go to the Settigs => Contacts page and {secondAction}.";
+
+                await App.Current.MainPage.DisplayAlert("Email Paragraph", promptMessage, "Cancel");
+                return;
+            }
+
+            var text = string.Empty;
+            foreach (var pargraph in paragraphs)
+            {
+
+            }
+
+            //switch (type)
+            //{
+            //    case IEmailService.EmailType.PlainText:
+            //        _body = await CreatePlainTextBodyAsync(paragraph);
+            //        break;
+            //    case IEmailService.EmailType.Html:
+            //        _body = await CreateHtmlBodyAsync(paragraph);
+            //        break;
+            //    default:
+            //        // Default to plain text
+            //        _body = await CreatePlainTextBodyAsync(paragraph);
+            //        break;
+            //}
 
             // Send Email
             if (Email.Default.IsComposeSupported)
