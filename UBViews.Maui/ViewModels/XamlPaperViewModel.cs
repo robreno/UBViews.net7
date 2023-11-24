@@ -520,15 +520,8 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
-                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
-
-                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
-                bool autoSendSetting = await settingsService.Get("auto_send_email", false);
-
-                bool canSendEmails = await CanSendEmail(autoSendSetting, autoSendRecipients.Count);
-
-                if (!canSendEmails)
+                var canSendEmail = await emailService.CanSendEmail();
+                if (!canSendEmail)
                 {
                     return;
                 }
@@ -540,6 +533,7 @@ namespace UBViews.ViewModels
                 {
                     case "Copy":
                         // Add paragraph text to clipboard
+                        var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
                         await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
@@ -586,15 +580,8 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
-                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
-
-                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
-                bool autoSendSetting = await settingsService.Get("auto_send_email", false);
-
-                bool canSendEmails = await CanSendEmail(autoSendSetting, autoSendRecipients.Count);
-
-                if (!canSendEmails)
+                var canSendEmail = await emailService.CanSendEmail();
+                if (!canSendEmail)
                 {
                     return;
                 }
@@ -604,6 +591,7 @@ namespace UBViews.ViewModels
                 {
                     case "Copy":
                         // Add paragraph text to clipboard
+                        var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
                         await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
@@ -975,57 +963,6 @@ namespace UBViews.ViewModels
             {
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
                 return;
-            }
-        }
-
-        /// <summary>
-        /// GetAutoRecipients
-        /// </summary>
-        /// <returns></returns>
-        async Task<bool> CanSendEmail(bool autoSendFlag, int recipientsCount)
-        {
-            try
-            {
-                bool _canSendEmail = true;
-                string promptMessage = string.Empty;
-                string autoSendAction = $" set \'Auto Send Email\'";
-                string emptyContactsAction = $" add contact and set to AutoSend.";
-
-                if (recipientsCount == 0)
-                {
-
-                    if (autoSendFlag == false && recipientsCount == 0)
-                    {
-                        promptMessage = $"You have no contacts and 'Auto Send Email' is not set.\r" +
-                                        $"Please go to Settigs and {autoSendAction} and {emptyContactsAction}.";
-                    }
-                    if (autoSendFlag == false && recipientsCount > 0)
-                    {
-                        promptMessage = $"'Auto Send Email' is not set." +
-                                        $"Please go to Settigs and {autoSendAction}.";
-                    }
-                    if (autoSendFlag == true && recipientsCount == 0)
-                    {
-                        promptMessage = $"You have no contacts.\r" +
-                                        $"Please go to Settigs => Contacts and {emptyContactsAction}.";
-                    }
-                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
-                    _canSendEmail = false;
-                }
-                else if (recipientsCount > 0 && autoSendFlag == false)
-                {
-                    promptMessage = $"'Auto Send Email' is not set. " +
-                                    $"Please go to Settigs and {autoSendAction}.";
-
-                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
-                    _canSendEmail = false;
-                }
-                return _canSendEmail;
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
-                return false;
             }
         }
     }

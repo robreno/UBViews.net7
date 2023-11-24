@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Code Language="CSharp">
+  <![CDATA[
+  async Task MethodName(string value)
+  {
+      string _method = "MethodName";
+      try
+      {
+          
+      }
+      catch (Exception ex)
+      {
+          await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+          return;
+      }
+  }
+  ]]>
+</Code>
