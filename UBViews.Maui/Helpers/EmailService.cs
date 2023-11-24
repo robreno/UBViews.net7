@@ -33,6 +33,7 @@ public class EmailService : IEmailService
     //private int _maxTries = 3;
     private bool _contactsInitialized = false;
     private bool _recipientsInitialized = false;
+    private bool _isInitialized = false;
 
     // /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     private static string validEmailPattern1 = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
@@ -73,6 +74,11 @@ public class EmailService : IEmailService
             if (_recipients != null)
             {
                 _recipientsInitialized = true;
+            }
+
+            if (_contacts != null && _recipients != null)
+            {
+                _isInitialized = true;
             }
         }
         catch (Exception ex)
@@ -160,7 +166,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            if (!_contactsInitialized)
+            if (!_isInitialized)
             {
                 await InitializeContacts();
             }
@@ -236,6 +242,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             var contacts = await GetContactsAsync();
             var count = contacts.Count();
             return count;
@@ -256,6 +267,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             if (!_contactsInitialized)
             {
                 await InitializeContacts();
@@ -277,7 +293,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            if (!_contactsInitialized)
+            if(!_isInitialized)
             {
                 await InitializeContacts();
             }
@@ -310,7 +326,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            if (!_contactsInitialized)
+            if (!_isInitialized)
             {
                 await InitializeContacts();
             }
@@ -344,6 +360,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             var bodyText = await CreatePlainTextBodyAsync(paragraph);
             await ShareParagarphText(bodyText);
             await SendToast($"Paragraph {paragraph.Pid} shared!");
@@ -364,6 +385,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string bodyText = string.Empty;
             StringBuilder sb = new StringBuilder();
             sb.Append(_preText);
@@ -399,6 +425,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             var _body = string.Empty;
             List<string> autoSendRecipients = new();
 
@@ -466,44 +497,31 @@ public class EmailService : IEmailService
     {
         try
         {
-            var _body = string.Empty;
-            List<string> autoSendRecipients = new();
-
-            autoSendRecipients = await GetAutoSendEmailListAsync();
-
-            if (autoSendRecipients.Count == 0)
+            if (!_isInitialized)
             {
-                var contactsCount = await ContactsCount();
-                string promptMessage = string.Empty;
-                string secondAction = string.Empty;
+                await InitializeContacts();
+            }
 
-                secondAction = " add or set contact(s) to AutoSend.";
-                promptMessage = $"You have no contacts ({contactsCount}) or none are set to auto send.\r" +
-                                $"Please go to the Settigs => Contacts page and {secondAction}.";
-
-                await App.Current.MainPage.DisplayAlert("Email Paragraph", promptMessage, "Cancel");
+            var canSendEmail = await CanSendEmail();
+            if (!canSendEmail)
+            {
                 return;
             }
 
-            var text = string.Empty;
-            foreach (var pargraph in paragraphs)
+            var _bodyText = string.Empty;
+            switch (type)
             {
-
+                case IEmailService.EmailType.PlainText:
+                    _bodyText = await CreatePlainTextBodyAsync(paragraphs);
+                    break;
+                case IEmailService.EmailType.Html:
+                    //_bodyText = await CreateHtmlBodyAsync(paragraphs);
+                    break;
+                default:
+                    // Default to plain text
+                    _bodyText = await CreatePlainTextBodyAsync(paragraphs);
+                    break;
             }
-
-            //switch (type)
-            //{
-            //    case IEmailService.EmailType.PlainText:
-            //        _body = await CreatePlainTextBodyAsync(paragraph);
-            //        break;
-            //    case IEmailService.EmailType.Html:
-            //        _body = await CreateHtmlBodyAsync(paragraph);
-            //        break;
-            //    default:
-            //        // Default to plain text
-            //        _body = await CreatePlainTextBodyAsync(paragraph);
-            //        break;
-            //}
 
             // Send Email
             if (Email.Default.IsComposeSupported)
@@ -513,9 +531,9 @@ public class EmailService : IEmailService
                 var message = new EmailMessage
                 {
                     Subject = subject,
-                    Body = _body,
+                    Body = _bodyText,
                     BodyFormat = (type.Equals(IEmailService.EmailType.PlainText) ? EmailBodyFormat.PlainText : EmailBodyFormat.Html),
-                    To = autoSendRecipients
+                    To = _recipients
                 };
 
                 await Email.Default.ComposeAsync(message);
@@ -537,6 +555,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             string body = paragraph.CreatePlainTextBody();
 
@@ -562,6 +585,44 @@ public class EmailService : IEmailService
     }
 
     /// <summary>
+    /// CreatePlainTextBodyAsync
+    /// </summary>
+    /// <param name="paragraphs"></param>
+    /// <returns></returns>
+    public async Task<string> CreatePlainTextBodyAsync(List<Paragraph> paragraphs)
+    {
+        try
+        {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
+            string bodyText = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(_preText);
+            sb.AppendLine();
+            sb.AppendLine();
+            foreach (var paragraph in paragraphs)
+            {
+                var text = paragraph.CreatePlainTextBody();
+                sb.Append(text);
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+            sb.Append(_postText);
+            bodyText = sb.ToString();
+
+            return bodyText;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return null;
+        }
+    }
+
+    /// <summary>
     /// CreateHtmlBodyAsync
     /// </summary>
     /// <param name="paragraph"></param>
@@ -570,6 +631,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             string body = paragraph.CreateHtmlTextBody();
 
@@ -602,6 +668,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             return emailText;
         }
@@ -625,6 +696,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             return emailText;
         }
@@ -647,6 +723,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             return emailText;
         }
@@ -668,6 +749,11 @@ public class EmailService : IEmailService
     {
         try
         {
+            if (!_isInitialized)
+            {
+                await InitializeContacts();
+            }
+
             string emailText = string.Empty;
             return emailText;
         }
