@@ -144,7 +144,8 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout HorizontalOptions="Center">
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                   Margin="0,10,0,0">
                 
                 <Button Text="Save" 
                         Margin="0,0,1.5,0"
@@ -203,9 +204,8 @@
 
         <CollectionView x:Name="ContactsCollection" 
                         ItemsSource="{Binding Contacts}"
-                        BackgroundColor="{StaticResource Gray100}" 
                         Margin="0,10,0,0"
-                        WidthRequest="300"
+                        WidthRequest="250"
                         VerticalOptions="StartAndExpand" 
                         SelectionMode="Single"
                         VerticalScrollBarVisibility="Always"
