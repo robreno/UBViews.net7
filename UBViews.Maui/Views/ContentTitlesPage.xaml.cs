@@ -8,11 +8,5 @@ public partial class ContentTitlesPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-#if ANDROID
-		this.innerContentGrid.SetValue(StyleProperty, "AndroidPaperContentTitlesVSL");
-#endif
-#if WINDOWS
-        this.innerContentGrid.SetValue(StyleProperty, "WindowsPaperContentTitlesVSL");
-#endif
     }
 }

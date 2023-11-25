@@ -46,9 +46,6 @@
                 <Label Style="{StaticResource ContentsPaperHeading}"
                        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                          Dark={StaticResource UBDarkBackground}}">
-                    <!--<Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ContentTitlesViewModel}}, Path=TappedGestureForPaperCommand}" CommandParameter="Paper 0" />
-                    </Label.GestureRecognizers>-->
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Style="{StaticResource PaperHeadingSpan}" Text="Paper" />
@@ -61,9 +58,6 @@
                 <Label Style="{StaticResource TitleParagraph}" IsVisible="true"
                        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                          Dark={StaticResource UBDarkBackground}}">
-                    <!--<Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ContentTitlesViewModel}}, Path=TappedGestureCommand}" CommandParameter="_000_001" />
-                    </Label.GestureRecognizers>-->
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Style="{StaticResource TitleSpan}" Text="{Binding PaperTitle}" />
@@ -71,73 +65,46 @@
                     </Label.FormattedText>
                 </Label>
 
-                <!-- Inner Content Grid -->
-                <Grid x:Name="innerContentGrid"
-                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                        Dark={StaticResource DarkBackground}}"
-                      ColumnDefinitions="*,*"
-                      ColumnSpacing="5"
-                      RowDefinitions="*,Auto"
-                      RowSpacing="0">
+                <!-- Collections View -->
+                <CollectionView HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                ItemsSource="{Binding SectionTitlesDtos}"
+                                SelectionMode="Single">
 
-                    <!-- Collections View -->
-                    <CollectionView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                      Dark={StaticResource DarkBackground}}"
-                                    Grid.ColumnSpan="2"
-                                    ItemsSource="{Binding SectionTitlesDtos}"
-                                    SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
 
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:SectionTitleDto">
-                                <!-- Outer VerticalStackLayout -->
-                                <VerticalStackLayout x:Name="contentVerticalStackLayout"
-                                                     BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                       Dark={StaticResource DarkBackground}}">
-                                    <!-- Inner Content Border -->
-                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                              Dark={StaticResource UBDarkBackground}}"
-                                            StrokeShape="Rectangle"
-                                            HorizontalOptions="FillAndExpand"
-                                            VerticalOptions="FillAndExpand"
-                                            Padding="10,10,10,0">
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                    Command="{Binding Source={RelativeSource 
-                                                                      AncestorType={x:Type viewmodel:ContentTitlesViewModel}}, 
-                                                                      Path=TappedGestureCommand}"
-                                                    CommandParameter="{Binding .}">
-                                            </TapGestureRecognizer>
-                                            <ClickGestureRecognizer 
-                                                    Command="{Binding Source={RelativeSource 
-                                                                      AncestorType={x:Type viewmodel:ContentTitlesViewModel}}, 
-                                                                      Path=TappedGestureCommand}"
-                                                    CommandParameter="{Binding .}">
+                        <DataTemplate x:DataType="model:SectionTitleDto">
 
-                                            </ClickGestureRecognizer>
-                                        </Border.GestureRecognizers>
-
-                                        <Label Style="{StaticResource RegularParagraph}"
-                                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                                 Dark={StaticResource UBDarkBackground}}">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Prefix, StringFormat='{0}'}"
+                            <!-- Inner Content Border -->
+                            <Border Style="{StaticResource TitleBorderStyle}">
+                               
+                                <Label Style="{StaticResource RegularParagraph}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource 
+                                                              AncestorType={x:Type viewmodel:ContentTitlesViewModel}}, 
+                                                              Path=TappedGestureCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Prefix, StringFormat='{0}'}"
                                                           Style="{StaticResource PaperTitleNumberSpan}" />
-                                                    <Span Style="{StaticResource TitleTabsSpan}" />
-                                                    <Span Text="{Binding SectionTitle}"
+                                            <Span Style="{StaticResource TitleTabsSpan}" />
+                                            <Span Text="{Binding SectionTitle}"
                                                           Style="{StaticResource PaperTitleSpan}"/>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
 
-                                    </Border>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                            </Border>
 
-                    </CollectionView>
+                        </DataTemplate>
+                        
+                    </CollectionView.ItemTemplate>
 
-                </Grid>
+                </CollectionView>
 
             </VerticalStackLayout>
 

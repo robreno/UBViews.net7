@@ -450,12 +450,11 @@
 
             <!-- Paper Titles Border Styles -->
             <Style x:Key="TitleBorderStyle" TargetType="Border">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                           Dark={StaticResource DarkBackground}}" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
                 <Setter Property="StrokeThickness" Value="3" />
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="Margin" Value="10,0,10,0" />
+                <Setter Property="MinimumWidthRequest" Value="450" />
             </Style>
 
             <Style x:Name="PageHeadingVSL" TargetType="VerticalStackLayout">
