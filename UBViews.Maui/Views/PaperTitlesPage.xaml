@@ -12,31 +12,31 @@
              Title="{Binding Title}">
     
     <ContentPage.Behaviors>
-        <behavior:EventToCommandBehavior EventName="Loaded" Command="{Binding PaperTitlesPageAppearingCommand}" />
+        <behavior:EventToCommandBehavior 
+            EventName="Loaded" 
+            Command="{Binding PaperTitlesPageAppearingCommand}" />
     </ContentPage.Behaviors>
     
     <Grid x:Name="mainGrid" 
           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                             Dark={StaticResource DarkBackground}}">
+        
         <ScrollView x:Name="contentScrollView">
+            
             <VerticalStackLayout x:Name="outerVerticalStackLayout" 
                                  BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                    Dark={StaticResource DarkBackground}}">
                 
                 <control:CirclesHeader />
                 
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                          Dark={StaticResource DarkBackground}}" 
-                        Stroke="Transparent"
+                <Border Stroke="Transparent"
                         HorizontalOptions="Center" 
                         Padding="0,10,0,10">
                     <Label Grid.Row="1" 
-                           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                             Dark={StaticResource DarkBackground}}"
                            Style="{StaticResource ContentsPartTitle}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Binding Title}" Style="{StaticResource PartTitleSpan}" />
+                                <Span Text="Paper Titles" Style="{StaticResource PartTitleSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -48,9 +48,7 @@
                                                                        Dark={StaticResource DarkBackground}}">
 
                     <Border Style="{StaticResource TitleBorderStyle}">
-                        <Label x:Name="_000" 
-                               BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                 Dark={StaticResource DarkBackground}}" 
+                        <Label x:Name="_000"  
                                Style="{StaticResource RegularParagraph}" attached:Paper.Id="0" attached:Paper.Title="Foreword" attached:Paper.Author="Divine Counselor" attached:Paper.PartId="0" attached:Paper.PartTitle="Foreword Material" attached:Audio.TimeSpan="0:0:0.0_1:6:39.0">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PaperTitlesViewModel}}, Path=TappedGestureCommand}" CommandParameter="_000" />

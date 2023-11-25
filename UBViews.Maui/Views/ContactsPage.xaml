@@ -47,7 +47,7 @@
 
         <VerticalStackLayout x:Name="formVSL"
                              Margin="10,0,0,0"
-                             HorizontalOptions="Center">
+                             HorizontalOptions="Start">
             
             <Label x:Name="FirstNameLabel" 
                    Style="{StaticResource AppContactsLabels}"
@@ -203,11 +203,10 @@
 
         <CollectionView x:Name="ContactsCollection" 
                         ItemsSource="{Binding Contacts}"
-                        HeightRequest="270"
-                        WidthRequest="350"
+                        BackgroundColor="{StaticResource Gray100}" 
                         Margin="0,10,0,0"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start" 
+                        WidthRequest="300"
+                        VerticalOptions="StartAndExpand" 
                         SelectionMode="Single"
                         VerticalScrollBarVisibility="Always"
                         SelectionChangedCommand="{Binding SelectionChangedCommand}"
@@ -217,11 +216,13 @@
                 
                 <DataTemplate x:DataType="models:ContactDto">
 
-                    <Border Stroke="Black" 
-                            Margin="0"
+                    <Border Stroke="{StaticResource Primary}" 
+                            Margin="5"
                             Padding="5,0,0,0">
 
-                        <VerticalStackLayout Padding="0">
+                        <VerticalStackLayout Padding="0" 
+                                             BackgroundColor="Transparent"
+                                             HorizontalOptions="StartAndExpand"> 
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
