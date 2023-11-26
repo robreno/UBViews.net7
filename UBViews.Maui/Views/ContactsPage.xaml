@@ -39,7 +39,8 @@
     <VerticalStackLayout x:Name="mainVSL"
                          HorizontalOptions="Center">
 
-        <VerticalStackLayout Margin="0,20,0,20" HorizontalOptions="Center">
+        <VerticalStackLayout Margin="0,20,0,20" 
+                             HorizontalOptions="Center">
             <Label Text="Application Contacts"
                    FontSize="Title" 
                    HorizontalOptions="Center" />

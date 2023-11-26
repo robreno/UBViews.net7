@@ -97,17 +97,17 @@
                 CommandParameter="AppSettings" />
 
         <Button Text="Contacts" 
-                    FontSize="18"
-                    FontAttributes="Bold" 
-                    HorizontalOptions="Center" 
-                    SemanticProperties.HeadingLevel="None"
-                    SemanticProperties.Description="Button for navigating to Contacts page."
-                    SemanticProperties.Hint="Navigation Button."
-                    WidthRequest="{x:StaticResource ButtonWidth}"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="AppContacts" />
+                FontSize="18"
+                FontAttributes="Bold" 
+                HorizontalOptions="Center" 
+                SemanticProperties.HeadingLevel="None"
+                SemanticProperties.Description="Button for navigating to Contacts page."
+                SemanticProperties.Hint="Navigation Button."
+                WidthRequest="{x:StaticResource ButtonWidth}"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="AppContacts" />
 
-        <!--<Button Text="App Data" 
+        <Button Text="App Data" 
             FontSize="18"
             FontAttributes="Bold" 
             HorizontalOptions="Center"
@@ -116,7 +116,7 @@
             SemanticProperties.Hint="Navigation Button."
             WidthRequest="{x:StaticResource ButtonWidth}"
             Command="{Binding NavigateToCommand}"
-            CommandParameter="AppData" />-->
+            CommandParameter="AppData" />
 
         <!--<Button 
                 Text="Check Internet" 

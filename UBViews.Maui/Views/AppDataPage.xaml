@@ -23,10 +23,13 @@
 
         <VerticalStackLayout Style="{StaticResource AppDataVSL}">
             
-            <Label Style="{StaticResource PageHeadingLabel}"
-                   Text="Application Files"
-                   FontSize="Title" 
-                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Margin="0,20,0,20" 
+                                 HorizontalOptions="Center">
+                <Label Text="Application Files"
+                       FontSize="Title" 
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
 
             <CollectionView x:Name="DataFilesCollection" 
                             ItemsSource="{Binding DataFiles}"
@@ -38,8 +41,12 @@
 
                     <DataTemplate x:DataType="model:AppFileDto">
 
-                        <Border x:Name="ItemsBorder">
+                        <Border x:Name="ItemsBorder"
+                                Margin="0,0,0,0"
+                                HorizontalOptions="Start">
+                            
                             <VerticalStackLayout>
+                                
                                 <Label Style="{StaticResource AppDataLabels}">
                                     <Label.FormattedText>
                                         <FormattedString>
@@ -72,8 +79,11 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
+                                
                             </VerticalStackLayout>
+                            
                         </Border>
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
