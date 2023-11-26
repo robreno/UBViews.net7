@@ -181,10 +181,9 @@ public class FileService : IFileService
                 }
                 else
                 {
-                    var arry = text.Split('.');
-                    var prefix = arry[0].Trim();
-                    var sectionTitle = arry[1].Trim();
-                    titleDto = new SectionTitleDto() { Uid = uid, Prefix = prefix, SectionTitle = sectionTitle };
+                    var _prefix = text.Substring(0, 1);
+                    var _sectionTitle = text.Substring(2, text.Length - 2).Trim();
+                    titleDto = new SectionTitleDto() { Uid = uid, Prefix = _prefix, SectionTitle = _sectionTitle };
                 }
                 dto.SectionTitles.Add(titleDto);
             }
