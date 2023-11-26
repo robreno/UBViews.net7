@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Asterisks papers="{31, 56, 120, 134, 144, 196}">
-  <Asterisk  uid="092.031.010.21-22" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="092.056.010.22-23" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="041.120.003.11-12" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="070.134.006.13-14" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="078.196.003.36-36" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="070.144.005.10-11" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="084.144.005.23-24" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="097.144.005.35-36" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="113.144.005.50-51" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="132.144.005.68-69" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
-  <Asterisk  uid="146.144.005.81-82" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="31.92" seqId="92"  uid="092.031.010.21-22" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="56.92" seqId="92"  uid="092.056.010.22-23" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="120.41" seqId="41"  uid="041.120.003.11-12" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="134.70" seqId="70"  uid="070.134.006.13-14" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="196.78" seqId="78"  uid="078.196.003.36-36" type="SponsorAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.70" seqId="70"  uid="070.144.005.10-11" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.84" seqId="84"  uid="084.144.005.23-24" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.97" seqId="97"  uid="097.144.005.35-36" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.113" seqId="113"  uid="113.144.005.50-51" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.132" seqId="132"  uid="132.144.005.68-69" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
+  <Asterisk id="144.146" seqId="146"  uid="146.144.005.81-82" type="PoemAstrisks" timeSpan="00:00:00.00_00:00:00.00"  />
 </Asterisks>
