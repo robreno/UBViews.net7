@@ -201,7 +201,7 @@ public class EmailService : IEmailService
             bool _canSendEmail = true;
             string promptMessage = string.Empty;
             string autoSendAction = $" set \'Auto Send Email\'";
-            string emptyContactsAction = $" add contact and set to AutoSend.";
+            string emptyContactsAction = $" Contacts to add contact and set to AutoSend.";
 
             if (recipientsCount == 0)
             {
@@ -213,7 +213,7 @@ public class EmailService : IEmailService
                 if (autoSendFlag == true)
                 {
                     promptMessage = $"You have no contacts.\r" +
-                                    $"Please go to Settigs => Contacts and {emptyContactsAction}.";
+                                    $"Please go to Contacts and {emptyContactsAction}.";
                 }
                 await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
                 _canSendEmail = false;
