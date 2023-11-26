@@ -8,7 +8,7 @@ using System.Xml.Linq;
 /// </summary>
 public class AudioMarkerSequence
 {
-    #region   Private Data
+    #region  Private Data
     private readonly string _className = "AudioMarkerSequence";
 
     /// <summary>
@@ -233,5 +233,4 @@ public class AudioMarkerSequence
         }
     }
     #endregion
-}
-
+} 
