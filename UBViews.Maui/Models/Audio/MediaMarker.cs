@@ -124,7 +124,7 @@ public sealed class MediaMarker
         }
     }
 
-    public async Task<MediaMarker> Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
+    public async Task<MediaMarker> CreateAsync(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
     {
         string _methodName = "CreateAsync";
         try
