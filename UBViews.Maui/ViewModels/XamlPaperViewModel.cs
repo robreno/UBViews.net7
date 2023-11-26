@@ -506,6 +506,7 @@ namespace UBViews.ViewModels
             }
         }
 
+#if ANDROID
         [RelayCommand]
         async Task SwipeGesture(string actionId)
         {
@@ -527,7 +528,7 @@ namespace UBViews.ViewModels
                     return;
                 }
 
-                string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share", "Email");
+                string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share");
 
                 string errorMsg = string.Empty;
                 switch (action)
@@ -536,7 +537,7 @@ namespace UBViews.ViewModels
                         // Add paragraph text to clipboard
                         var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        SendToast($"Paragraph {pid} cpied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
@@ -544,11 +545,7 @@ namespace UBViews.ViewModels
                         break;
                     case "Email":
                         // Email Paragraph
-#if WINDOWS
-                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
-#elif ANDROID
                         await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
-#endif
                         break;
                     case "Cancel":
                         break;
@@ -564,7 +561,9 @@ namespace UBViews.ViewModels
                 return;
             }
         }
+#endif
 
+#if WINDOWS
         [RelayCommand]
         async Task FlyoutMenu(string actionId)
         {
@@ -594,24 +593,15 @@ namespace UBViews.ViewModels
                         // Add paragraph text to clipboard
                         var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        SendToast($"Paragraph {pid} cpied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
                         await emailService.ShareParagraphAsync(paragraph);
-#if WINDOWS
-                        await SendToast($"Paragraph {pid} shared!");
-#elif ANDROID
-                        // Do Nothing, Android raises Share functionality
-#endif
                         break;
                     case "Email":
                         // Email Paragraph
-#if WINDOWS
                         await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
-#elif ANDROID
-                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
-#endif
                         break;
                     default:
                         errorMsg = "Unkown Command!";
@@ -625,6 +615,7 @@ namespace UBViews.ViewModels
                 return;
             }
         }
+#endif
 
         [RelayCommand]
         async Task SetMediaPlaybackControls(bool value)
