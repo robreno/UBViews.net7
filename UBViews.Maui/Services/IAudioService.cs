@@ -15,28 +15,28 @@ public interface IAudioService
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
-    Task<AudioMarker> GetAt(int index);
+    Task<AudioMarker> GetAtAsync(int index);
 
     /// <summary>
     /// Removes all elements from the sequence.
     /// </summary>
-    Task Clear();
+    Task ClearAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="audioMarker"></param>
-    Task Insert(AudioMarker audioMarker);
+    Task InsertAsync(AudioMarker audioMarker);
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    Task<IList<AudioMarker>> Values();
+    Task<IList<AudioMarker>> GetAudioMarkersListAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    Task<AudioMarkerSequence> LoadAudioMarkers(int paperId);
+    Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId);
 }
