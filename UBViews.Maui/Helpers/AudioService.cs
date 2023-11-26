@@ -24,7 +24,7 @@ public partial class AudioService
 
         try
         {
-            var marker = await audioService.GetAt(index);
+            var marker = await audioService.GetAtAsync(index);
             return marker;
         }
         catch (Exception ex)
@@ -40,7 +40,7 @@ public partial class AudioService
 
         try
         {
-            await audioService.Clear();
+            await audioService.ClearAsync();
             return;
         }
         catch (Exception ex)
@@ -56,7 +56,7 @@ public partial class AudioService
 
         try
         {
-            await audioService.Insert(mediaMarker);
+            await audioService.InsertAsync(mediaMarker);
             return;
         }
         catch (Exception ex)

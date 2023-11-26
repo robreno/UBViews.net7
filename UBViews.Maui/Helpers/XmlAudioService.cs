@@ -17,6 +17,8 @@ public partial class XmlAudioService : IAudioService
     /// </summary>
     private IFileService fileService;
 
+    private readonly string _className = "XmlAudioService";
+
     internal AudioMarkerSequence audioMarkerSequence { get; set; } = new();
 
     public XmlAudioService(IFileService fileService) 
@@ -29,8 +31,10 @@ public partial class XmlAudioService : IAudioService
     /// </summary>
     /// <param name="index"></param>
     /// <returns>AudioMarker at index or null</returns>
-    public async Task<AudioMarker> GetAt(int index)
+    public async Task<AudioMarker> GetAtAsync(int index)
     {
+        string _methodName = "GetAtAsync";
+
         try
         {
             AudioMarker marker;
@@ -43,7 +47,7 @@ public partial class XmlAudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -51,8 +55,10 @@ public partial class XmlAudioService : IAudioService
     /// <summary>
     /// Removes all elements from the sequence.
     /// </summary>
-    public async Task Clear()
+    public async Task ClearAsync()
     {
+        string _methodName = "ClearAsync";
+
         try
         {
             audioMarkerSequence.Clear();
@@ -60,7 +66,8 @@ public partial class XmlAudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            return;
         }
     }
 
@@ -68,15 +75,19 @@ public partial class XmlAudioService : IAudioService
     /// 
     /// </summary>
     /// <param name="audioMarker"></param>
-    public async Task Insert(AudioMarker audioMarker)
+    public async Task InsertAsync(AudioMarker audioMarker)
     {
+        string _methodName = "InsertAsync";
+
         try
         {
             audioMarkerSequence.Insert(audioMarker);
+            return;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            return;
         }
     }
 
@@ -84,8 +95,10 @@ public partial class XmlAudioService : IAudioService
     /// 
     /// </summary>
     /// <returns></returns>
-    public async Task<IList<AudioMarker>> Values()
+    public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
     {
+        string _methodName = "GetAudioMarkersListAsync";
+
         try
         {
             List<AudioMarker> values = new();
@@ -101,7 +114,7 @@ public partial class XmlAudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -110,8 +123,10 @@ public partial class XmlAudioService : IAudioService
     /// 
     /// </summary>
     /// <returns></returns>
-    public async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
+    public async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
     {
+        string _methodName = "LoadAudioMarkersAsync";
+
         try
         {
             var fileName = paperId.ToString("000") + ".audio.xml";
@@ -128,7 +143,7 @@ public partial class XmlAudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
             return null;
         }
     }
