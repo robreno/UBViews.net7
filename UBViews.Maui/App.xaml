@@ -455,7 +455,9 @@
                 <Setter Property="StrokeThickness" Value="3" />
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="Margin" Value="10,0,10,0" />
-                <Setter Property="MinimumWidthRequest" Value="450" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="MinimumWidthRequest" Value="500" />
+                <Setter Property="MaximumWidthRequest" Value="600" />
             </Style>
 
             <Style x:Name="PageHeadingVSL" TargetType="VerticalStackLayout">
