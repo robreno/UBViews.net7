@@ -12,7 +12,7 @@ public class AudioMarker
     /// <summary>
     /// 
     /// </summary>
-    private readonly string _className = "AudioMarkerSequence";
+    private readonly string _className = "AudioMarker";
 
     /// <summary>
     /// 

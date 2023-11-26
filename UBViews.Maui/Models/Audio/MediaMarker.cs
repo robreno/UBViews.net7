@@ -1,18 +1,26 @@
-﻿using System.Xml.Linq;
-using System.Xml.XPath;
+﻿namespace UBViews.Models.Audio;
 
-namespace UBViews.Models.Audio;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 /// <summary>
 /// PlaybackMediaMarker class.
 /// </summary>
 public sealed class MediaMarker
 {
+    #region  Private Data
+    /// <summary>
+    /// 
+    /// </summary>
+    private readonly string _className = "MediaMarker";
+
     /// <summary>
     /// MarkerType enum
     /// </summary>
     enum MarkerType { Section, Paragraph }
+    #endregion
 
+    #region  Constructors
     /// <summary>
     /// PlaybackMediaMarker class Cstor
     /// </summary>
@@ -50,26 +58,9 @@ public sealed class MediaMarker
         ParagraphId = pid;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
+    #endregion
 
-    /// <summary>
-    /// Create a PlaybackMediaMarker from TimeSpan with metadata
-    /// </summary>
-    /// <param name="sequenceId"></param>
-    /// <param name="startValue"></param>
-    /// <param name="endValue"></param>
-    /// <param name="type"></param>
-    /// <param name="paragraphId"></param>
-    /// <returns></returns>
-    public MediaMarker Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
-    {
-        SequenceId = sequenceId;
-        StartTime = startValue;
-        EndTime = endValue;
-        Type = type;
-        ParagraphId = paragraphId;
-        return this;
-    }
-
+    #region  Internal Methods
     /// <summary>
     /// 
     /// </summary>
@@ -102,6 +93,58 @@ public sealed class MediaMarker
         }
         return str;
     }
+    #endregion
+
+    #region  Public Methods
+    /// <summary>
+    /// Create a PlaybackMediaMarker from TimeSpan with metadata
+    /// </summary>
+    /// <param name="sequenceId"></param>
+    /// <param name="startValue"></param>
+    /// <param name="endValue"></param>
+    /// <param name="type"></param>
+    /// <param name="paragraphId"></param>
+    /// <returns></returns>
+    public MediaMarker Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
+    {
+        string _methodName = "Create";
+        try
+        {
+            SequenceId = sequenceId;
+            StartTime = startValue;
+            EndTime = endValue;
+            Type = type;
+            ParagraphId = paragraphId;
+            return this;
+        }
+        catch (Exception ex)
+        {
+            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            throw new Exception(innerMessage);
+        }
+    }
+
+    public async Task<MediaMarker> Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
+    {
+        string _methodName = "CreateAsync";
+        try
+        {
+            SequenceId = sequenceId;
+            StartTime = startValue;
+            EndTime = endValue;
+            Type = type;
+            ParagraphId = paragraphId;
+            return this;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    #endregion
+
+    #region  Public Properties
 
     /// <summary>
     /// Gets the type of the media marker.
@@ -127,4 +170,5 @@ public sealed class MediaMarker
     /// Gets the offset in the media timeline where the marker occurs.
     /// </summary>
     public TimeSpan EndTime { get; private set; }
+    #endregion
 }
