@@ -102,6 +102,10 @@
                 <Setter Property="FontFamily" Value="OldStyle7Std" />
             </Style>
 
+            <Style x:Key="TemperatureSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
+                <Setter Property="FontFamily" Value="OldStyle7Std" />
+            </Style>
+            
             <!-- Contents Styles -->
             <Style x:Key="ContentsHeadingSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
                 <Setter Property="FontFamily" Value="ACaslonProBold" />
@@ -456,8 +460,8 @@
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="Margin" Value="10,0,10,0" />
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-                <Setter Property="MinimumWidthRequest" Value="500" />
-                <Setter Property="MaximumWidthRequest" Value="600" />
+                <Setter Property="MinimumWidthRequest" Value="410" />
+                <Setter Property="MaximumWidthRequest" Value="410" />
             </Style>
 
             <Style x:Name="PageHeadingVSL" TargetType="VerticalStackLayout">
