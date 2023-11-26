@@ -8,6 +8,7 @@ using System.Xml.Linq;
 /// </summary>
 public class AudioMarkerSequence
 {
+    #region   Private Data
     private readonly string _className = "AudioMarkerSequence";
 
     /// <summary>
@@ -19,7 +20,9 @@ public class AudioMarkerSequence
     /// Returns the number of items in the sequence.
     /// </summary>
     public int Size => markers.Count;
+    #endregion
 
+    #region  Public Methods
     /// <summary>
     /// Get MediaMarker at index position.
     /// </summary>
@@ -171,6 +174,11 @@ public class AudioMarkerSequence
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mediaMarker"></param>
+    /// <returns></returns>
     public async Task InsertAsync(AudioMarker mediaMarker)
     {
         string _methodName = "InsertAsync";
@@ -224,5 +232,6 @@ public class AudioMarkerSequence
             return null;
         }
     }
+    #endregion
 }
 
