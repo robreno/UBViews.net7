@@ -193,7 +193,8 @@ namespace UBViews.ViewModels
                     ScrollToLabelName = "_" + uid.Substring(4, 3) + "_" + uid.Substring(0, 3);
                 }
 
-                Markers = await LoadAudioMarkers(PaperDto.Id);
+                var paperId = paperDto.Id;
+                Markers = await audioService.LoadAudioMarkersAsync(paperId);
                 if (Markers.Size > 0)
                 {
                     foreach (var marker in Markers.Values().ToList())
@@ -932,7 +933,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                this.Markers = await audioService.LoadAudioMarkers(paperId);
+                this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
                 return this.Markers;
             }
             catch (Exception ex)

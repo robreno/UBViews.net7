@@ -233,6 +233,7 @@
 	  <None Remove="Resources\Raw\Query\QueryCommandList.txt" />
 	  <None Remove="Resources\Raw\Query\QueryResults.xml" />
 	  <None Remove="Resources\Raw\Settings\Settings.template.xml" />
+	  <None Remove="Resources\Raw\XmlData\Astrisks.xml" />
 	  <None Remove="Resources\Raw\XmlData\PaperTitles.xml" />
 	  <None Remove="Resources\Raw\XmlData\ParagraphStyleDictionary.xml" />
 	  <None Remove="Resources\Raw\XmlData\PartTitles.xml" />
