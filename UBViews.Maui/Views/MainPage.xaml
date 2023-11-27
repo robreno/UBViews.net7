@@ -50,9 +50,18 @@
                    Placeholder="Enter search query ..."
                    SemanticProperties.Description="SearchBar for entering search query text."
                    SemanticProperties.HeadingLevel="Level1"
-                   SemanticProperties.Hint="Text SearchBar"/>
+                   SemanticProperties.Hint="Text SearchBar"
+                   SearchCommand="{Binding SumbitQueryCommand}"
+                   SearchCommandParameter="{Binding QueryInput}">
+            <SearchBar.Behaviors>
+                <behavior:EventToCommandBehavior 
+                    EventName="SearchButtonPressed"
+                    Command="{Binding SumbitQueryCommand}"
+                    CommandParameter="{Binding QueryInput}"/>
+            </SearchBar.Behaviors>
+        </SearchBar>
 
-        <Button Text="Query" 
+        <!--<Button Text="Query" 
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -61,7 +70,7 @@
                 SemanticProperties.Hint="Query Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding SumbitQueryCommand}"
-                CommandParameter="{Binding QueryInput}" />
+                CommandParameter="{Binding QueryInput}" />-->
 
         <Button Text="Parts of Book"
                 FontSize="18"
