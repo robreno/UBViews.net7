@@ -414,6 +414,7 @@ public class EmailService : IEmailService
                 await InitializeContactsAsync();
             }
 
+            string pids = $"";
             string bodyText = string.Empty;
             StringBuilder sb = new StringBuilder();
             sb.Append(_preText);
@@ -425,11 +426,12 @@ public class EmailService : IEmailService
                 sb.Append(text);
                 sb.AppendLine();
                 sb.AppendLine();
+                pids = pids + paragraph.Pid + ", ";
             }
             sb.Append(_postText);
             bodyText = sb.ToString();
             await ShareParagarphTextAsync(bodyText);
-            await SendToastAsync($"Paragraphs shared!");
+            await SendToastAsync($"Paragraphs {pids} shared!");
         }
         catch (Exception ex)
         {
@@ -503,6 +505,7 @@ public class EmailService : IEmailService
                 };
 
                 await Email.Default.ComposeAsync(message);
+                await SendToastAsync($"Paragraph {paragraph.Pid} emailed!");
             }
         }
         catch (Exception ex)
@@ -565,6 +568,7 @@ public class EmailService : IEmailService
                 };
 
                 await Email.Default.ComposeAsync(message);
+                await SendToastAsync($"Paragraphs emailed!");
             }
         }
         catch (Exception ex)
