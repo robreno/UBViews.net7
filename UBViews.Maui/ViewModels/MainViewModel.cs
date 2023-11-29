@@ -32,16 +32,17 @@ public partial class MainViewModel : BaseViewModel
     IFileService fileService;
     IAppSettingsService appSettingsService;
     IFSRepositoryService repositoryService;
+    IQueryProcessingService queryProcessingService;
 
     ParserService parserService;
-    public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService)
+    public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService, IQueryProcessingService queryProcessingService)
     {
         this.fileService = fileService;
         this.appSettingsService = appSettingsService;
 
         this.repositoryService = repositoryService;
         this.parserService = new ParserService();
-        //this.queryService = new QueryService();
+        this.queryProcessingService = queryProcessingService;
     }
 
     [ObservableProperty]
@@ -110,7 +111,7 @@ public partial class MainViewModel : BaseViewModel
     {
         try
         {
-            //MaxQueryResults = await appSettingsService.Get("max_query_results", 50);  
+            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);  
         }
         catch (Exception ex)
         {
@@ -120,7 +121,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task SumbitQuery(string queryString)
+    async Task SubmitQuery(string queryString)
     {
         try
         {
@@ -262,6 +263,46 @@ public partial class MainViewModel : BaseViewModel
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ", 
+                ex.Message, "Cancel");
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task SubmitQueryEx(string queryString)
+    {
+        try
+        {
+            IsBusy = true;
+            string msg = string.Empty;
+
+            var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
+            if (parsingSuccessful)
+            {
+                QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
+                QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
+                TermList = await queryProcessingService.GetTermListAsync();
+
+                bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
+                if (result == true)
+                {
+                    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
+                    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
+                }
+                await NavigateTo("QueryResults");
+            }
+            else // Parsing failure
+            {
+                throw new Exception("Uknown Parsing Error!");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ",
                 ex.Message, "Cancel");
         }
         finally

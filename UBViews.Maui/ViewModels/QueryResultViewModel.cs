@@ -12,6 +12,7 @@ using Microsoft.Maui.Controls;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Graphics.Text;
 
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Platform;
@@ -21,7 +22,6 @@ using UBViews.Models.Ubml;
 using UBViews.Models.Query;
 using UBViews.Services;
 
-
 [QueryProperty(nameof(LocationsDto), "LocationsDto")]
 public partial class QueryResultViewModel : BaseViewModel
 {
@@ -30,11 +30,11 @@ public partial class QueryResultViewModel : BaseViewModel
     public ObservableCollection<QueryHit> Hits { get; set; } = new();
     public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
 
-    Dictionary<string, Span> _spans = new Dictionary<string, Span>();
-
     IFileService fileService;
     IEmailService emailService;
     IAppSettingsService appSettingsService;
+
+    readonly string _class = "QueryResultViewModel";
 
     public QueryResultViewModel(IFileService fileService, IEmailService emailService, IAppSettingsService appSettingsService)
     {
@@ -76,7 +76,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task QueryResultAppearing(QueryResultLocationsDto dto)
     {
-        string methodName = "QueryResultAppearing";
+        string _method = "QueryResultAppearing";
         try
         {
             if (dto == null)
@@ -99,7 +99,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -107,7 +107,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task QueryResultLoaded()
     {
-        string methodName = "QueryResultLoaded";
+        string _method = "QueryResultLoaded";
         try
         {
             IsBusy = true;
@@ -117,11 +117,11 @@ public partial class QueryResultViewModel : BaseViewModel
             {
                 return;
             }
-            await LoadXamlEx();
+            await LoadXaml();
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
         finally
@@ -134,6 +134,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task TappedGesture(string lableName)
     {
+        string _method = "TappedGesture";
         try
         {
             IsBusy = true;
@@ -153,7 +154,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
         finally
@@ -166,12 +167,13 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task SwipeLeftGesture(string value)
     {
+        string _method = "SwipeLeftGesture";
         try
         {
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -179,6 +181,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task SelectedCheckboxChanged(bool value)
     {
+        string _method = "SelectedCheckboxChanged";
         try
         {
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
@@ -212,7 +215,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -220,6 +223,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task ParagraphSelected(CheckBox checkbox)
     {
+        string _method = "ParagraphSelected";
         try
         {
             string id = checkbox.ClassId;
@@ -230,7 +234,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -238,6 +242,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task ShareSelected(string value)
     {
+        string _method = "ShareSelected";
         try
         {
             var selectedHits = Hits.Where(p => p.Selected == true).ToList();
@@ -247,11 +252,15 @@ public partial class QueryResultViewModel : BaseViewModel
                 var paragraph = hit.Paragraph;
                 paragraphs.Add(paragraph);
             }
+#if WINDOWS
             await emailService.EmailParagraphsAsync(paragraphs, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+#elif ANDROID
+            await emailService.ShareParagraphsAsync(paragraphs);
+#endif
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -259,6 +268,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task GoToDetails(PaperDto dto)
     {
+        string _method = "GoToDetails";
         try
         {
             IsBusy = true;
@@ -275,7 +285,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
         finally
         {
@@ -287,101 +297,7 @@ public partial class QueryResultViewModel : BaseViewModel
     #region Helper Methods
     private async Task LoadXaml()
     {
-        try
-        {
-            // See: https://learn.microsoft.com/en-us/dotnet/maui/xaml/runtime-load
-            /*
-            string navigationButtonXAML = "<Button Text=\"Navigate\" />";
-            Button navigationButton = new Button().LoadFromXaml(navigationButtonXAML);
-            stackLayout.Add(navigationButton); ...
-            */
-
-            var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
-            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
-            var locations = QueryLocations;
-            foreach (var location in locations)
-            {
-                var id = location.Id;
-                var pid = location.Pid;
-                var arry = id.Split('.');
-                var paperId = Int32.Parse(arry[0]);
-                var seqId = Int32.Parse(arry[1]);
-                var paragraph = await fileService.GetParagraphAsync(paperId, seqId);
-                var text = paragraph.Text;
-                var paraStyle = paragraph.ParaStyle;
-
-                // Study the .NET Maui ScrollView examples
-
-                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
-
-                // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
-                FormattedString fs = await CreateFormattedString(paragraph);
-
-                Label label = new Label { FormattedText = fs };
-                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
-                tapGestureRecognizer.CommandParameter = $"{labelName}";
-                tapGestureRecognizer.NumberOfTapsRequired = 1;
-                label.GestureRecognizers.Add(tapGestureRecognizer);
-
-                label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid} ...   ");
-
-                Border newBorder = new Border()
-                {
-                    Stroke = Colors.Blue,
-                    Padding = new Thickness(10),
-                    Margin = new Thickness(.5),
-                    Content = label
-                };
-                contentVSL.Add(newBorder);
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
-                ex.Message, "Ok");
-        }
-    }
-    private async Task<FormattedString> CreateFormattedString(Paragraph paragraph)
-    {
-        // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
-        try
-        {
-            FormattedString formattedString = new FormattedString();
-            await Task.Run(() =>
-            {
-                var paperId = paragraph.PaperId;
-                var seqId = paragraph.SeqId;
-                var pid = paragraph.Pid;
-                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
-
-                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
-                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
-                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
-
-                var runs = paragraph.Runs;
-                Span newSpan = null;
-
-                formattedString.Spans.Add(tabSpan);
-                formattedString.Spans.Add(pidSpan);
-                formattedString.Spans.Add(spaceSpan);
-                foreach (var run in runs)
-                {
-                    newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = run.Text };
-                    formattedString.Spans.Add(newSpan);
-                }
-            });
-            return formattedString;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
-                ex.Message, "Ok");
-            return null;
-        }
-    }
-    private async Task LoadXamlEx()
-    {
+        string _method = "LoadXaml";
         try
         {
             var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
@@ -410,78 +326,30 @@ public partial class QueryResultViewModel : BaseViewModel
                     SequenceId = seqId,
                     Pid = pid,
                     Selected = false,
-                    Paragraph = paragraph
+                    Paragraph = paragraph,
                 };
                 Hits.Add(queryHit);
 
-                string text = paragraph.Text;
-                List<string> termList = new List<string>();
-                foreach (var termOcc in location.TermOccurrences)
-                {
-                    var position = termOcc.TextPosition;
-                    var length = termOcc.TextLength;
-                    var term = paragraph.Text.Substring(position, length);
-                    var termReplacement = "_{" + term + "}_";
-                    if (termList.Contains(term))
-                        continue;
-                    var rgx = new Regex(term);
-                    text = Regex.Replace(text, "\\b" + term + "\\b", termReplacement);
-                    termList.Add(term);
-                }
-                var txtArray = text.Split('_');
-                FormattedString fs = await CreateFormattedStringEx(paragraph, txtArray, hit);
-
-                Label label = new Label { FormattedText = fs };
-                label.ClassId = pid + "_" + seqId;
-                TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
-                tapGestureRecognizer.CommandParameter = $"{labelName}";
-                tapGestureRecognizer.NumberOfTapsRequired = 1;
-                label.GestureRecognizers.Add(tapGestureRecognizer);
-
-                label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid}");
-
-                VerticalStackLayout vsl = new VerticalStackLayout();
-
-                CheckBox checkBox = new CheckBox();
-                checkBox.ClassId = paperId + "." + seqId;
-                checkBox.HorizontalOptions = LayoutOptions.End;
-
-                var binding = new Binding();
-                binding.Source = nameof(QueryResultViewModel);
-                binding.Path = "IsChecked";
-
-                var behavior = new EventToCommandBehavior
-                {
-                    EventName = "CheckedChanged",
-                    Command = ParagraphSelectedCommand,
-                    CommandParameter = checkBox
-                };
-                checkBox.Behaviors.Add(behavior);
-
-                vsl.Add(label);
-                vsl.Add(checkBox);
-
-                Border newBorder = new Border()
-                {
-                    Stroke = Colors.Blue,
-                    Padding = new Thickness(10),
-                    Margin = new Thickness(.5),
-                    Content = vsl
-                };
+                // Create Span List
+                var spansList = await CreateSpansList(location, paragraph);
+                // Create FormattedString
+                FormattedString fs = await CreateFormattedString(paragraph, spansList, hit);
+                // Create Label
+                Label label = await CreateLabel(fs, labelName, paperId, seqId, pid);
+                // Create Border
+                Border newBorder = await CreateBorder(paperId, seqId, label);
 
                 contentVSL.Add(newBorder);
             }
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<FormattedString> CreateFormattedStringEx(Paragraph paragraph, string[] textArray, int hit)
+    private async Task<FormattedString> CreateFormattedString(Paragraph paragraph, List<Span> spansList, int hit)
     {
-        // See: https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/label
+        string _method = "CreateFormattedString";
         try
         {
             FormattedString formattedString = new FormattedString();
@@ -497,46 +365,145 @@ public partial class QueryResultViewModel : BaseViewModel
                 Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
                 Span hitsSpan = new Span() { Style = (Style)App.Current.Resources["HID"], StyleId = labelName, Text = $"[hit {hit}]" };
 
-                var runs = paragraph.Runs;
-                Span newSpan = null;
-
                 formattedString.Spans.Add(hitsSpan);
                 formattedString.Spans.Add(tabSpan);
                 formattedString.Spans.Add(pidSpan);
                 formattedString.Spans.Add(spaceSpan);
 
-                foreach (var textRun in textArray)
+                foreach (var span in spansList)
                 {
-                    if (textRun.Contains('{'))
-                        newSpan = new Span() { Style = (Style)App.Current.Resources["HighlightSpan"], Text = textRun };
-                    else
-                        newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = textRun };
-                    formattedString.Spans.Add(newSpan);
+                    formattedString.Spans.Add(span);
                 }
-
-                //formattedString.Spans.Add(spaceSpan);
-                //formattedString.Spans.Add(hitsSpan);
-
             });
             return formattedString;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in QueryInputViewModel.LoadXaml => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
-    private async Task<string> CreateEmailText(string pretext, string postText, string subject, List<string> recipients, EmailBodyFormat bodyFormat = EmailBodyFormat.PlainText)
+    private async Task<Border> CreateBorder(int paperId, int seqId, Label label)
     {
+        string _method = "CreateBorder";
         try
         {
-            string emailText = string.Empty;
-            return emailText;
+            VerticalStackLayout vsl = new VerticalStackLayout();
+
+            CheckBox checkBox = await CreateCheckBox(paperId, seqId);
+
+            vsl.Add(label);
+            vsl.Add(checkBox);
+
+            Border newBorder = new Border()
+            {
+                Style = (Style)App.Current.Resources["QueryResultBorderStyle"],
+                Content = vsl
+            };
+            return newBorder;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<CheckBox> CreateCheckBox(int paperId, int seqId)
+    {
+        string _method = "CreateCheckBox";
+        try
+        {
+            CheckBox checkBox = new CheckBox();
+            checkBox.ClassId = paperId + "." + seqId;
+            checkBox.HorizontalOptions = LayoutOptions.End;
+
+            var binding = new Binding();
+            binding.Source = nameof(QueryResultViewModel);
+            binding.Path = "IsChecked";
+
+            var behavior = new EventToCommandBehavior
+            {
+                EventName = "CheckedChanged",
+                Command = ParagraphSelectedCommand,
+                CommandParameter = checkBox
+            };
+            checkBox.Behaviors.Add(behavior);
+            return checkBox;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<Label> CreateLabel(FormattedString fs, string labelName, int paperId, int seqId, string pid)
+    {
+        string _method = "CreateLabel";
+        try
+        {
+            Label label = new Label { FormattedText = fs };
+            //label.Style = (Style)App.Current.Resources["HighlightSpan"];
+            label.ClassId = paperId + "." + seqId;
+            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "TappedGestureCommand");
+            tapGestureRecognizer.CommandParameter = $"{labelName}";
+            tapGestureRecognizer.NumberOfTapsRequired = 1;
+            label.GestureRecognizers.Add(tapGestureRecognizer);
+            label.SetValue(ToolTipProperties.TextProperty, $"Tap to go to paragraph {pid} ...");
+            return label;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<List<Span>> CreateSpansList(QueryLocationDto location, Paragraph paragraph)
+    {
+        string _method = "GetSpansList";
+        try
+        {
+            string text = paragraph.Text;
+            List<string> termList = new List<string>();
+            foreach (var termOcc in location.TermOccurrences)
+            {
+                var position = termOcc.TextPosition;
+                var length = termOcc.TextLength;
+                var term = paragraph.Text.Substring(position, length);
+                var termReplacement = "_{" + term + "}_";
+                if (termList.Contains(term))
+                    continue;
+                var rgx = new Regex(term);
+                text = Regex.Replace(text, "\\b" + term + "\\b", termReplacement);
+                termList.Add(term);
+            }
+            var spanArray = text.Split('_');
+
+            var txt = string.Empty;
+            Span newSpan = null;
+            List<Span> spansList = new();
+            foreach (var item in spanArray)
+            {
+                txt = item;
+                if (item.Contains('{'))
+                {
+                    txt = txt.Replace('{', ' ');
+                    txt = txt.Replace('}', ' ');
+                    txt = txt.Trim();
+                    newSpan = new Span() { Style = (Style)App.Current.Resources["HighlightSpan"], Text = txt };
+                    spansList.Add(newSpan);
+                }
+                else
+                {
+                    newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = item };
+                    spansList.Add(newSpan);
+                }
+            }
+            return spansList;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
