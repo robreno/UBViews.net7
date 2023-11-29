@@ -50,6 +50,7 @@ namespace UBViews
             builder.Services.AddTransient<IEmailService>((e) => new EmailService(new XmlContactsService(new FileService()), 
                                                                                  new XmlAppSettingsService(new FileService())));
             builder.Services.AddTransient<IAudioService>((e) => new XmlAudioService(new FileService()));
+            builder.Services.AddTransient<IQueryProcessingService>((e) => new QueryProcessingService(new FSRepositoryService()));
 
             // Connectivity Service
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);
@@ -75,6 +76,7 @@ namespace UBViews
             builder.Services.AddTransient<QueryInputPage>();
             builder.Services.AddTransient<QueryResultViewModel>();
             builder.Services.AddTransient<QueryResultPage>();
+            builder.Services.AddTransient<QueryResultPage2>();
 
             builder.Services.AddTransient<AppDataViewModel>();
             builder.Services.AddTransient<AppDataPage>();
