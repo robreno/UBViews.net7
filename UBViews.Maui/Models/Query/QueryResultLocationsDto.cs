@@ -6,6 +6,7 @@ public class QueryResultLocationsDto
     public string Type { get; set; }
     public string Terms { get; set; }
     public string Proximity { get; set; }
+    public string BaseQuery { get; set; }
     public string QueryString { get; set; }
     public string ReverseQueryString { get; set; }
     public string DefaultQueryString { get; set; }
