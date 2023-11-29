@@ -29,94 +29,69 @@
              Command="{Binding QueryResultLoadedCommand}"/>
     </ContentPage.Behaviors>
 
-    <Grid x:Name="contentGrid"
-          Margin="15,0,15,30"
-          VerticalOptions="StartAndExpand"
-          BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                            Dark={StaticResource UBDarkBackground}}">
+    <VerticalStackLayout x:Name="mainVSL" 
+                         MinimumWidthRequest="450"
+                         MaximumWidthRequest="450">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        <Label x:Name="maxQueryResultsLable" 
+               Margin="0,20,0,0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Style="{DynamicResource RegularParagraph}"
+               ToolTipProperties.Text="To display more query results go to settings page.">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Style="{StaticResource RegularSpan}" Text="Query Entered (" />
+                    <Span Style="{StaticResource RegularSpan}" Text="max displayed " />
+                    <Span Style="{StaticResource RegularSpan}" Text="{Binding MaxQueryResults}" />
+                    <Span Style="{StaticResource RegularSpan}" Text="):" />
+                    <Span Style="{StaticResource RegularSpan}" Text="  " />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
 
-        <Grid x:Name="headerGrid" 
-              Grid.Row="0">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource QueryResultBorderStyle}">
 
-            <VerticalStackLayout Grid.Row="0"
-                                 Grid.Column="0"
-                                 VerticalOptions="Start"
-                                 HorizontalOptions="Start">
-                <Label x:Name="maxQueryResultsLable" 
-                        VerticalOptions="Center"
-                        Style="{DynamicResource RegularParagraph}"
-                        ToolTipProperties.Text="To display more query results go to settings page.">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Style="{StaticResource RegularSpan}" Text="Query Entered (" />
-                            <Span Style="{StaticResource RegularSpan}" Text="max displayed " />
-                            <Span Style="{StaticResource RegularSpan}" Text="{Binding MaxQueryResults}" />
-                            <Span Style="{StaticResource RegularSpan}" Text="):" />
-                            <Span Style="{StaticResource RegularSpan}" Text="  " />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Border Stroke="Purple" Padding="1,1,1,1">
-                    <Label x:Name="queryStringLabel" 
-                            Style="{DynamicResource RegularParagraph}">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource RegularSpan}" Text="  " />
-                                <Span Style="{StaticResource QueryResultSpan}" Text="{Binding QueryString}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-                <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
-                    <CheckBox x:Name="selectedCheckBox" 
-                              VerticalOptions="Start"
-                              IsChecked="{Binding HideUnselected, Mode=TwoWay}">
-                        <CheckBox.Behaviors>
-                            <behavior:EventToCommandBehavior 
-                                EventName="CheckedChanged" 
-                                Command="{Binding SelectedCheckboxChangedCommand}"
-                                CommandParameter="{Binding Source={x:Reference selectedCheckBox}, Path=IsChecked}"/>
-                        </CheckBox.Behaviors>
-                    </CheckBox>
-                    <Label x:Name="hideUncheckedLabel" 
-                           Text="Hide Unchecked" 
-                           Style="{StaticResource CheckBoxCaption}"  />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
+            <SearchBar Text="{Binding QueryString, Mode=TwoWay}" 
+                       ToolTipProperties.Text="Expand query based upon existing results ..."
+                       WidthRequest="{x:StaticResource SearchBarWidth}"
+                       Placeholder="Modify query here"
+                       SemanticProperties.Description="SearchBar for entering search query."
+                       SemanticProperties.HeadingLevel="Level1"
+                       SemanticProperties.Hint="Text SearchBar"
+                       IsEnabled="True" />
 
-                    <Button x:Name="shareChecked" 
-                            HorizontalOptions="Start"
-                            Margin="0,10,0,10"
-                            Text="Share Selected" 
-                            HeightRequest="40" 
-                            WidthRequest="{x:StaticResource ButtonWidth}"
-                            BorderColor="Blue"
-                            FontSize="15"
-                            Command="{Binding ShareSelectedCommand}"
-                            CommandParameter="{Binding QueryString}"/>
+        </Border>
 
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
+        <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
+            <Label x:Name="hideUncheckedLabel" 
+                   Margin="10,0,0,0"
+                   Text="Hide Unchecked" 
+                   Style="{StaticResource CheckBoxCaption}"  />
+            <CheckBox x:Name="selectedCheckBox" 
+                      VerticalOptions="Start"
+                      IsChecked="{Binding HideUnselected, Mode=TwoWay}">
+                <CheckBox.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                         EventName="CheckedChanged" 
+                         Command="{Binding SelectedCheckboxChangedCommand}"
+                         CommandParameter="{Binding Source={x:Reference selectedCheckBox}, Path=IsChecked}"/>
+                </CheckBox.Behaviors>
+            </CheckBox>
+        </HorizontalStackLayout>
 
-        </Grid>
+        <HorizontalStackLayout>
+            <Button x:Name="shareChecked" 
+                    HorizontalOptions="Start"
+                    Margin="10,0,0,0"
+                    Text="Share Selected" 
+                    HeightRequest="40" 
+                    WidthRequest="125"
+                    Command="{Binding ShareSelectedCommand}"
+                    CommandParameter="{Binding QueryString}"/>
+        </HorizontalStackLayout>
 
         <ScrollView x:Name="contentScrollView" 
-                    Grid.Row="2"
                     VerticalOptions="Center" 
                     HorizontalScrollBarVisibility="Always">
 
@@ -126,22 +101,13 @@
                                      Style="{DynamicResource QueryResultContentVSL}" 
                                      BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                                                        Dark={StaticResource DarkBackground}}">
-                    
-                </VerticalStackLayout>
 
                 </VerticalStackLayout>
+
+            </VerticalStackLayout>
 
         </ScrollView>
 
-        <ActivityIndicator
-             Color="{AppThemeBinding Light={StaticResource ActivityIndicatorLightBackground}, 
-                                     Dark={StaticResource ActivityIndicatorDarkBackground}}"
-             HorizontalOptions="CenterAndExpand"
-             VerticalOptions="CenterAndExpand"
-             IsRunning="{Binding IsBusy}"
-             IsVisible="{Binding IsBusy}" />
-
-
-    </Grid>
+    </VerticalStackLayout>
 
 </ContentPage>
