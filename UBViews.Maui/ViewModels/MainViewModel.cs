@@ -23,8 +23,6 @@ public partial class MainViewModel : BaseViewModel
 {
     public ContentPage contentPage;
 
-    QueryInputDto _queryInput = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
-
     // TODO: Add in later when AudioService is added
     //ConnectivityViewModel connectivityViewModel;
     //IConnectivity connectivityService;
@@ -35,6 +33,9 @@ public partial class MainViewModel : BaseViewModel
     IQueryProcessingService queryProcessingService;
 
     ParserService parserService;
+
+    readonly string _class = "MainViewModel";
+
     public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService, IQueryProcessingService queryProcessingService)
     {
         this.fileService = fileService;
@@ -49,6 +50,12 @@ public partial class MainViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
+    QueryResultLocationsDto queryLocations;
+
+    [ObservableProperty]
+    QueryInputDto queryInputDto = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
+
+    [ObservableProperty]
     int tokenCount;
 
     [ObservableProperty]
@@ -56,9 +63,6 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     string queryInputString;
-
-    //[ObservableProperty]
-    //string searchInput;
 
     [ObservableProperty]
     string queryExpression;
@@ -69,17 +73,8 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     bool queryResultExists;
 
-    //[ObservableProperty]
-    //int queryHits;
-
     [ObservableProperty]
     int maxQueryResults;
-
-    [ObservableProperty]
-    QueryInputDto queryInputObj;
-
-    [ObservableProperty]
-    QueryResultLocationsDto queryLocations;
 
     [ObservableProperty]
     string partId;
@@ -93,22 +88,25 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task MainPageAppearing()
     {
+        string _method = "MainPageAppearing";
         try
         {
+            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
+            await queryProcessingService.SetMaxQueryResults(MaxQueryResults);
+
             string titleMessage = $"UBViews Home";
             Title = titleMessage;
-            //MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainPageAppearing => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
     }
 
     [RelayCommand]
     async Task MainPageLoaded()
     {
+        string _method = "MainPageLoaded";
         try
         {
             MaxQueryResults = await appSettingsService.Get("max_query_results", 50);  
@@ -121,8 +119,67 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task ParseQuery(string queryString)
+    {
+        string _method = "ParseQuery";
+        try
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            var validChars = QueryFilterService.checkForValidChars(queryString);
+            var validCharsSuccess = validChars.Item1;
+            var validForm = QueryFilterService.checkForValidForm(queryString);
+            var validFormSuccess = validForm.Item1;
+
+            if (queryString == null ||
+                queryString == string.Empty ||
+                !validCharsSuccess ||
+                !validFormSuccess)
+            {
+                var errorMessage = string.Empty;
+                var msg = string.Empty;
+
+                if (!validCharsSuccess || !validFormSuccess)
+                {
+                    if (!validCharsSuccess)
+                        errorMessage = errorMessage + validChars.Item2 + ";";
+                    if (!validFormSuccess)
+                        errorMessage = errorMessage + validForm.Item2 + ";";
+
+                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                }
+
+                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
+                                                                           "Cancel", null, -1, null, queryString);
+
+                QueryInputDto.Text = "Empty Query";
+                QueryInputDto.TokenCount = 0;
+                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query empty",
+                    "Bad query, enter a valid query");
+            }
+            else
+            {
+                await NormalizeQueryString(queryString);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ",
+                ex.Message, "Cancel");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
     async Task SubmitQuery(string queryString)
     {
+        string _method = "SubmitQuery";
         try
         {
             IsBusy = true;
@@ -275,10 +332,20 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task SubmitQueryEx(string queryString)
     {
+        string _method = "SubmitQueryEx";
         try
         {
             IsBusy = true;
             string msg = string.Empty;
+
+            queryString = queryString.Trim();
+
+            if (queryString.Contains("^"))
+            {
+                var value = queryString.Substring(1, queryString.Length - 1);
+                await SetAudioStreaming(value);
+                return;
+            }
 
             var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
             if (parsingSuccessful)
@@ -339,6 +406,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task NavigateTo(string target)
     {
+        string _method = "NavigateTo";
         try
         {
             IsBusy = true;
@@ -375,7 +443,7 @@ public partial class MainViewModel : BaseViewModel
                 QueryResultLocationsDto dto = QueryLocations;
                 await Shell.Current.GoToAsync(targetName, new Dictionary<string, object>()
                 {
-                    {"LocationsDto", dto }
+                    {"QueryLocations", dto }
                 });
             }
             else
@@ -386,8 +454,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ", 
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         finally
         {
@@ -396,8 +463,10 @@ public partial class MainViewModel : BaseViewModel
         }
     }
 
+    #region  Helper Methods
     private async Task NormalizeQueryString(string queryString)
     {
+        string _method = "NormalizeQueryString";
         try
         {
             string qs = "";
@@ -409,20 +478,17 @@ public partial class MainViewModel : BaseViewModel
                 sb.Append(t + " ");
             }
             qs = sb.ToString().Trim();
-            _queryInput = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
-            TokenCount = _queryInput.TokenCount;
-            QueryInputObj = _queryInput;
-            QueryInputString = _queryInput.Text;
+            QueryInputDto = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
+            QueryInputString = QueryInputDto.Text;
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NormalizeQueryString => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
     }
-
     private async Task SetAudioStreaming(string value)
     {
+        string _method = "SetAudioStreaming";
         try
         {
             if (value == "on")
@@ -435,7 +501,7 @@ public partial class MainViewModel : BaseViewModel
             }
 
             var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
-            await MainThread.InvokeOnMainThreadAsync(() => 
+            await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 searchBar.Text = null;
             });
@@ -443,9 +509,9 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SetAudioStreaming => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
+    #endregion
 }
