@@ -65,6 +65,9 @@ public partial class MainViewModel : BaseViewModel
     string queryInputString;
 
     [ObservableProperty]
+    string previousQueryInputString;
+
+    [ObservableProperty]
     string queryExpression;
 
     [ObservableProperty]
