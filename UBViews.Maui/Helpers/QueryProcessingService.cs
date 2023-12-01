@@ -118,6 +118,7 @@ public partial class QueryProcessingService : IQueryProcessingService
                                                                            "Cancel", null, -1, null, queryString);
                 QueryInputDto.Text = "Empty Query";
                 QueryInputDto.TokenCount = 0;
+                PreviousQueryInputString = QueryInputString;
                 QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query empty", "Bad query, enter a valid query");
                 isSuccess = false;
             }
