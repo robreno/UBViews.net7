@@ -65,6 +65,9 @@ public partial class QueryResultViewModel : BaseViewModel
     string queryInputString;
 
     [ObservableProperty]
+    string previousQueryInputString;
+
+    [ObservableProperty]
     string queryExpression;
 
     [ObservableProperty]
@@ -104,11 +107,11 @@ public partial class QueryResultViewModel : BaseViewModel
 
             if (dto.DefaultQueryString != null)
             {
-                QueryInputString = dto.DefaultQueryString;
+                QueryInputString = PreviousQueryInputString = dto.DefaultQueryString;
             }
             else
             {
-                QueryInputString = dto.QueryString;
+                QueryInputString = PreviousQueryInputString = dto.QueryString;
             }
 
             QueryString = QueryInputString;
