@@ -29,9 +29,10 @@ public partial class QueryProcessingService : IQueryProcessingService
     #region  Private Data Members
     public ContentPage contentPage;
 
-    QueryInputDto _queryInput = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
+    public ObservableCollection<QueryLocationDto> QueryLocationsDto { get; } = new();
 
     bool _queryParsingSuccessful = false;
+    bool _queryLocationsDtoInitiaized = false;
 
     IFSRepositoryService repositoryService;
 
@@ -71,8 +72,9 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
 
     #region  Public Properties
+    public QueryInputDto QueryInputDto { get; set; }
     public string QueryInputString { get; set; }
-    public string QueryExpressionString { get; set; }
+    public string QueryExpression { get; set; }
     public bool QueryResultExists { get; set; }
     public List<QueryResultDto> QueryResults { get; set; }
     public QueryResultLocationsDto QueryLocations { get; set; }
@@ -113,8 +115,8 @@ public partial class QueryProcessingService : IQueryProcessingService
 
                 var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
                                                                            "Cancel", null, -1, null, queryString);
-                _queryInput.Text = "Empty Query";
-                _queryInput.TokenCount = 0;
+                QueryInputDto.Text = "Empty Query";
+                QueryInputDto.TokenCount = 0;
                 QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query empty", "Bad query, enter a valid query");
                 isSuccess = false;
             }
@@ -122,11 +124,8 @@ public partial class QueryProcessingService : IQueryProcessingService
             {
                 // Normalize Query and set QueryInputString property
                 await NormalizeQueryString(queryString);
-                string qryString = _queryInput.Text;
-                QueryInputString = qryString;
-
                 // Parse queryString with QueryEngine methods
-                QueryExpressionString = parserService.ParseQuery(_queryInput.Text).ToString();
+                QueryExpression = parserService.ParseQuery(QueryInputDto.Text).ToString();
                 TermList = parserService.ParseQueryStringToTermList(queryString).ToList();
                 // At this point have enough data to submit query and to get postinglist for each term
                 isSuccess = _queryParsingSuccessful = true;
@@ -161,25 +160,14 @@ public partial class QueryProcessingService : IQueryProcessingService
                 queryResultId = queryResultDto.Id;
                 queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryResultId);
 
-                string queryType = string.Empty;
-                var m = rgxAnd.Match(queryString);
-                var qryType = m.Value.Trim();
-                //qryType = (qryType.Substring(0, 1).ToUpper()) + (qryType.Substring(1, qryType.Length - 1));
-                if (qryType.Equals("and"))
-                {
-                    queryType = "And";
-                }
-                else if (queryType.Equals("or"))
-                {
-                    queryType = "Or";
-                }
-                var baseQuery = BaseQueryString(queryString, queryType);
+                var queryType = await GetQueryType(queryString);
+                queryResultLocationsDto.BaseQuery = queryType.BaseQuery;
 
                 if (queryString != queryResultLocationsDto.QueryString)
                 {
                     queryResultLocationsDto.DefaultQueryString = queryString;
                 }
-                QueryExpressionString = queryResultLocationsDto.QueryExpression;
+                QueryExpression = queryResultLocationsDto.QueryExpression;
                 QueryLocations = queryResultLocationsDto;
                 isSuccess = true;
             }
@@ -187,7 +175,7 @@ public partial class QueryProcessingService : IQueryProcessingService
             {
                 var astQuery = await parserService.ParseQueryAsync(QueryInputString);
                 var query = astQuery.Head;
-                QueryExpressionString = await parserService.QueryToStringAsync(query);
+                QueryExpression = await parserService.QueryToStringAsync(query);
 
                 var tpl = await repositoryService.RunQueryAsync(QueryInputString);
 
@@ -222,6 +210,7 @@ public partial class QueryProcessingService : IQueryProcessingService
                     await Shell.Current.GoToAsync("..");
                 }
             }
+            var lst = await InitializeQueryLocationsDto(QueryLocations);
             return isSuccess;
         }
         catch (Exception ex)
@@ -309,6 +298,18 @@ public partial class QueryProcessingService : IQueryProcessingService
             return null;
         }
     }
+    public async Task SetMaxQueryResults(int max)
+    {
+        string _method = "GetQueryInputString";
+        try
+        {
+            MaxQueryResults = max;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
     public async Task<string> GetQueryInputStringAsync()
     {
         string _method = "GetQueryInputString";
@@ -327,7 +328,7 @@ public partial class QueryProcessingService : IQueryProcessingService
         string _method = "GetQueryExpressionString";
         try
         {
-            return this.QueryExpressionString;
+            return this.QueryExpression;
         }
         catch (Exception ex)
         {
@@ -396,44 +397,23 @@ public partial class QueryProcessingService : IQueryProcessingService
                 sb.Append(t + " ");
             }
             qs = sb.ToString().Trim();
-            _queryInput = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
-            QueryInputString = _queryInput.Text;
+            QueryInputDto = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
+            QueryInputString = QueryInputDto.Text;
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<string> ReverseQueryString(string queryString, string queryType)
+    private async Task<string> ReverseQueryString(string queryString)
     {
         string _method = "ReverseQueryString";
         {
-            Regex rgxFilterBy = new Regex("filterby");
-            Regex rgxAnd = new Regex(@"\sand\s");
-            Regex rgxOr = new Regex(@"\sor\s");
-            var reverseQueryString = string.Empty;
-            var filterByOp = string.Empty;
-            var baseQuery = string.Empty;
-            var len = queryString.Length;
             try
             {
-                if (queryType == "And")
-                {
-                    var m = rgxAnd.Match(queryString);
-                    var terms = queryString.Split(" and ");
-                    reverseQueryString = terms[1] + " and " + terms[0];
-                }
-                else if (queryType == "FilterBy+And")
-                {
-                    var m = rgxFilterBy.Match(queryString);
-                    if (m.Success)
-                    {
-                        filterByOp = queryString.Substring(m.Index, queryString.Length - m.Index);
-                        baseQuery = queryString.Substring(0, m.Index - 1);
-                        var terms = baseQuery.Split(" and ");
-                        reverseQueryString = terms[1] + " and " + terms[0] + " " + filterByOp;
-                    }
-                }
+                string reverseQueryString = string.Empty;
+                var queryType = await GetQueryType(queryString);
+                reverseQueryString = queryType.ReverseQuery;
                 return reverseQueryString;
             }
             catch (Exception ex)
@@ -443,48 +423,108 @@ public partial class QueryProcessingService : IQueryProcessingService
             }
         }
     }
-    public async Task<string> BaseQueryString(string queryString, string queryType)
+    private async Task<string> BaseQueryString(string queryString)
     {
         string _method = "BaseQueryString";
         try
         {
-            Regex rgxFilterBy = new Regex("filterby");
-            Regex rgxAnd = new Regex(@"\sand\s");
-            Regex rgxOr = new Regex(@"\sor\s");
-            var baseQueryString = string.Empty;
-            var reverseQueryString = string.Empty;
-            var filterByOp = string.Empty;
             var baseQuery = string.Empty;
+            var queryType = await GetQueryType(queryString);
+            baseQuery = queryType.BaseQuery;
+            return baseQuery;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<QueryType> GetQueryType(string queryString)
+    {
+        string _method = "GetQueryType";
+        try
+        {
+            var queryType = new QueryType();
+
+            var baseQuery = string.Empty;
+            var reverseQuery = string.Empty;
+            var filterByOp = string.Empty;
+            var filterByPostOp = string.Empty;
+            var phraseOp = string.Empty;
             var len = queryString.Length;
 
-            Match mAnd = rgxAnd.Match(queryString);
-            bool maSuccess = mAnd.Success;
-            Match fb = rgxFilterBy.Match(queryString);
-            bool fbSuccess = fb.Success;
+            var _and = rgxAnd.Match(queryString);
+            var _andSuccess = _and.Success;
 
-            if (fbSuccess)
-            {
+            var _or = rgxOr.Match(queryString);
+            var _orSuccess = _or.Success;
 
-            }
-
-            if (queryType == "And")
+            var _filterby = rgxFilterBy.Match(queryString);
+            var _filterbySuccess = _filterby.Success;
+   
+            queryType.QueryString = queryString;
+            queryType.Length = queryString.Length;
+            string[] terms;
+            if (_filterbySuccess)
             {
-                var v1 = mAnd.Value.Trim();
-                var terms = queryString.Split(" and ");
-                baseQueryString = terms[0] + " and " + terms[1];
-                reverseQueryString = terms[1] + " and " + terms[0];
-            }
-            else if (queryType == "FilterBy+And")
-            {
-                if (maSuccess)
+                if (_andSuccess)
                 {
-                    filterByOp = queryString.Substring(mAnd.Index, queryString.Length - mAnd.Index);
-                    baseQuery = queryString.Substring(0, mAnd.Index - 1);
-                    var terms = baseQuery.Split(" and ");
-                    reverseQueryString = terms[1] + " and " + terms[0] + " " + filterByOp;
+                    queryType.Type = "FilterBy+And";
+                    queryType.FilterByOp = filterByOp = _filterby.Value;
+                    queryType.FilterByPostfixOp = filterByPostOp = filterByOp.Replace("filterby", "").Trim();
+                    queryType.BaseQuery = baseQuery = queryString.Replace(filterByOp, "").Trim();
+                    terms = baseQuery.Split(" and ");
+                    queryType.ReverseQuery = reverseQuery = terms[1] + " and " + terms[0] + " " + filterByOp;
+
+                }
+                else if (_orSuccess)
+                {
+                    queryType.Type = "FilterBy+Or";
+                    queryType.FilterByOp = filterByOp = _filterby.Value;
+                    queryType.FilterByPostfixOp = filterByPostOp = filterByOp.Replace("filterby", "").Trim();
+                    queryType.BaseQuery = baseQuery = queryString.Replace(filterByOp, "").Trim();
+                    terms = baseQuery.Split(" or ");
+                    queryType.ReverseQuery = reverseQuery = terms[1] + " or " + terms[0] + " " + filterByOp;
                 }
             }
-            return baseQueryString;
+            else if (_andSuccess)
+            {
+                queryType.Type = "And";
+                queryType.BaseQuery = baseQuery = queryString;
+                terms = baseQuery.Split(_and.Value);
+                queryType.ReverseQuery = reverseQuery = terms[1] + _and.Value + terms[0];
+            }
+            else if (_orSuccess)
+            {
+                queryType.Type = "Or";
+                queryType.BaseQuery = baseQuery = queryString;
+                terms = baseQuery.Split(_or.Value);
+                queryType.ReverseQuery = reverseQuery = terms[1] + _or.Value + terms[0];
+            }
+
+            return queryType;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<List<QueryLocationDto>> InitializeQueryLocationsDto(QueryResultLocationsDto dto)
+    {
+        string _method = "InitializeQueryLocationsDto";
+        try
+        {
+            List<QueryLocationDto> locations = new();
+
+            var qlr = dto.QueryLocations.Take(MaxQueryResults).ToList();
+            foreach (var location in qlr)
+            {
+                QueryLocationsDto.Add(location);
+                locations.Add(location);
+            }
+
+            return locations;
         }
         catch (Exception ex)
         {
