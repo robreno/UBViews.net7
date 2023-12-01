@@ -314,7 +314,25 @@ public partial class QueryResultViewModel : BaseViewModel
             IsBusy = true;
             string msg = string.Empty;
 
-            QueryString = queryString;
+            QueryString = queryString.Trim();
+            if (QueryInputString == PreviousQueryInputString)
+            {
+                msg = $"The query \"{QueryInputString}\" was same. Try another query?";
+                await App.Current.MainPage.DisplayAlert("Query Results", msg, "Cancel");
+                return;
+            }
+            else
+            {
+                PreviousQueryInputString = queryString;
+            }
+
+            // TODO: Should use AudioService to set on or off with secret query
+            //if (queryString.Contains("^"))
+            //{
+            //    var value = queryString.Substring(1, queryString.Length - 1);
+            //    await SetAudioStreaming(value);
+            //    return;
+            //}
 
             var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
             if (parsingSuccessful)
@@ -323,17 +341,38 @@ public partial class QueryResultViewModel : BaseViewModel
                 QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
                 TermList = await queryProcessingService.GetTermListAsync();
 
-                bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
-                if (result == true)
+                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
+                if (isSuccess)
                 {
-                    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
-                    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
+                    QueryLocationsDto.Clear();
+                    foreach (var location in QueryLocations.QueryLocations)
+                    {
+                        QueryLocationsDto.Add(location);
+                    }
+
+                    if (QueryResultExists)
+                    {
+                        // Query result from history successfully
+                        // Navigate to results page
+                    }
+                    else
+                    {
+                        // New query run successfully
+                        // Navigate to results page
+                    }
                 }
-                else
-                {
-                    throw new Exception("queryProcessingService.RunQueryAsync returned false results.");
-                }
-                await NavigateTo("QueryResults");
+
+                //bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
+                //if (result == true)
+                //{
+                //    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
+                //    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
+                //}
+                //else
+                //{
+                //    throw new Exception("queryProcessingService.RunQueryAsync returned false results.");
+                //}
+                //await NavigateTo("QueryResults");
             }
             else // Parsing failure
             {
@@ -411,15 +450,24 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     #region Helper Methods
-    private async Task LoadXaml(List<QueryLocationDto> dtos)
+    private async Task LoadXaml(List<QueryLocationDto> dtos, bool clear = false)
     {
         string _method = "LoadXaml";
         try
         {
-            var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
+            var contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
             var locations = dtos;
             int hit = 0;
+
+            if (clear)
+            {
+                contentScrollView.Content = null;
+                contentVSL = new VerticalStackLayout()
+                {
+                    HorizontalOptions = LayoutOptions.Center
+                };
+            }
 
             foreach (var location in locations)
             {
@@ -459,7 +507,10 @@ public partial class QueryResultViewModel : BaseViewModel
 
                 Borders.Add(newBorder);
                 contentVSL.Add(newBorder);
+                contentScrollView.Content = contentVSL;
             }
+            string titleMessage = $"Query Result {hit} hits ...";
+            Title = titleMessage;
         }
         catch (Exception ex)
         {
