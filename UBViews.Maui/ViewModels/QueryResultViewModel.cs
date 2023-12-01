@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -21,25 +22,30 @@ using UBViews.Models;
 using UBViews.Models.Ubml;
 using UBViews.Models.Query;
 using UBViews.Services;
+using UBViews.Views;
 
-[QueryProperty(nameof(LocationsDto), "LocationsDto")]
+[QueryProperty(nameof(QueryLocations), nameof(QueryLocations))]
 public partial class QueryResultViewModel : BaseViewModel
 {
     public ContentPage contentPage;
-    public ObservableCollection<QueryLocationDto> QueryLocations { get; } = new();
+
+    public ObservableCollection<QueryLocationDto> QueryLocationsDto { get; } = new();
     public ObservableCollection<QueryHit> Hits { get; set; } = new();
     public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
+    public ObservableCollection<Border> Borders { get; set; } = new();
 
     IFileService fileService;
     IEmailService emailService;
+    IQueryProcessingService queryProcessingService;
     IAppSettingsService appSettingsService;
 
     readonly string _class = "QueryResultViewModel";
 
-    public QueryResultViewModel(IFileService fileService, IEmailService emailService, IAppSettingsService appSettingsService)
+    public QueryResultViewModel(IFileService fileService, IQueryProcessingService queryProcessingService, IEmailService emailService, IAppSettingsService appSettingsService)
     {
         this.fileService = fileService;
         this.emailService = emailService;
+        this.queryProcessingService = queryProcessingService;
         this.appSettingsService = appSettingsService;
     }
 
@@ -50,10 +56,22 @@ public partial class QueryResultViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    QueryResultLocationsDto locationsDto;
+    QueryResultLocationsDto queryLocations;
 
     [ObservableProperty]
     string queryString;
+
+    [ObservableProperty]
+    string queryInputString;
+
+    [ObservableProperty]
+    string queryExpression;
+
+    [ObservableProperty]
+    List<string> termList;
+
+    [ObservableProperty]
+    bool queryResultExists;
 
     [ObservableProperty]
     int queryHits;
@@ -84,6 +102,17 @@ public partial class QueryResultViewModel : BaseViewModel
                 return;
             }
 
+            if (dto.DefaultQueryString != null)
+            {
+                QueryInputString = dto.DefaultQueryString;
+            }
+            else
+            {
+                QueryInputString = dto.QueryString;
+            }
+
+            QueryString = QueryInputString;
+
             QueryString = dto.QueryString;
             QueryHits = dto.Hits;
             MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
@@ -94,7 +123,7 @@ public partial class QueryResultViewModel : BaseViewModel
             var qlr = dto.QueryLocations.Take(MaxQueryResults).ToList();
             foreach (var location in qlr)
             {
-                QueryLocations.Add(location);
+                QueryLocationsDto.Add(location);
             }
         }
         catch (Exception ex)
@@ -112,12 +141,20 @@ public partial class QueryResultViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            var locations = QueryLocations;
+            var locations = QueryLocationsDto;
             if (locations == null)
             {
                 return;
             }
-            await LoadXaml();
+            else
+            {
+                List<QueryLocationDto> dtos = new List<QueryLocationDto>();
+                foreach (var location in QueryLocationsDto)
+                {
+                    dtos.Add(location);
+                }
+                await LoadXaml(dtos);
+            }
         }
         catch (Exception ex)
         {
@@ -266,6 +303,82 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task SubmitQueryEx(string queryString)
+    {
+        string _method = "SubmitQueryEx";
+        try
+        {
+            IsBusy = true;
+            string msg = string.Empty;
+
+            QueryString = queryString;
+
+            var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
+            if (parsingSuccessful)
+            {
+                QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
+                QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
+                TermList = await queryProcessingService.GetTermListAsync();
+
+                bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
+                if (result == true)
+                {
+                    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
+                    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
+                }
+                else
+                {
+                    throw new Exception("queryProcessingService.RunQueryAsync returned false results.");
+                }
+                await NavigateTo("QueryResults");
+            }
+            else // Parsing failure
+            {
+                throw new Exception("Uknown Parsing Error!");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task NavigateTo(string target)
+    {
+        try
+        {
+            IsBusy = true;
+
+            string targetName = string.Empty;
+            if (target == "QueryResults")
+            {
+                targetName = nameof(QueryResultPage);
+                QueryResultLocationsDto dto = QueryLocations;
+                await Shell.Current.GoToAsync(targetName, new Dictionary<string, object>()
+                {
+                    {"QueryLocations", dto }
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
+                ex.Message, "Cancel");
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
     async Task GoToDetails(PaperDto dto)
     {
         string _method = "GoToDetails";
@@ -295,14 +408,14 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     #region Helper Methods
-    private async Task LoadXaml()
+    private async Task LoadXaml(List<QueryLocationDto> dtos)
     {
         string _method = "LoadXaml";
         try
         {
             var contentScrollView = contentPage.FindByName("queryResultScrollView") as ScrollView;
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
-            var locations = QueryLocations;
+            var locations = dtos;
             int hit = 0;
 
             foreach (var location in locations)
@@ -316,6 +429,8 @@ public partial class QueryResultViewModel : BaseViewModel
                 var paragraph = await fileService.GetParagraphAsync(paperId, seqId);
                 var paraStyle = paragraph.ParaStyle;
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+                Paragraphs.Add(paragraph);
 
                 QueryHit queryHit = new QueryHit
                 {
@@ -339,6 +454,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 // Create Border
                 Border newBorder = await CreateBorder(paperId, seqId, label);
 
+                Borders.Add(newBorder);
                 contentVSL.Add(newBorder);
             }
         }
