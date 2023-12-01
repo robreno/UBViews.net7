@@ -11,6 +11,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:String x:Key="ButtonWidth">160</x:String>
+            <x:String x:Key="SearchBarWidth">300</x:String>
         </ResourceDictionary>
         <Style x:Key="basePidStyle" TargetType="Label">
             <Setter Property="Margin" Value="0,20,5,0" />
@@ -23,15 +24,14 @@
         <behavior:EventToCommandBehavior
             EventName="Loaded"
             Command="{Binding QueryResultAppearingCommand}"
-            CommandParameter="{Binding LocationsDto}"/>
+            CommandParameter="{Binding QueryLocations}"/>
         <behavior:EventToCommandBehavior
              EventName="Loaded"
              Command="{Binding QueryResultLoadedCommand}"/>
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL" 
-                         MinimumWidthRequest="450"
-                         MaximumWidthRequest="450">
+                         HorizontalOptions="CenterAndExpand">
 
         <Label x:Name="maxQueryResultsLable" 
                Margin="0,20,0,0"
@@ -52,14 +52,22 @@
 
         <Border Style="{StaticResource QueryResultBorderStyle}">
 
-            <SearchBar Text="{Binding QueryString, Mode=TwoWay}" 
+            <SearchBar x:Name="searchBar" 
+                       Text="{Binding QueryString, Mode=TwoWay}" 
                        ToolTipProperties.Text="Expand query based upon existing results ..."
                        WidthRequest="{x:StaticResource SearchBarWidth}"
                        Placeholder="Modify query here"
                        SemanticProperties.Description="SearchBar for entering search query."
                        SemanticProperties.HeadingLevel="Level1"
                        SemanticProperties.Hint="Text SearchBar"
-                       IsEnabled="True" />
+                       IsEnabled="True">
+                <SearchBar.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                        EventName="SearchButtonPressed"
+                        Command="{Binding SubmitQueryExCommand}"
+                        CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+                </SearchBar.Behaviors>
+            </SearchBar>
 
         </Border>
 
@@ -83,7 +91,7 @@
         <HorizontalStackLayout>
             <Button x:Name="shareChecked" 
                     HorizontalOptions="Start"
-                    Margin="10,0,0,0"
+                    Margin="10,0,0,10"
                     Text="Share Selected" 
                     HeightRequest="40" 
                     WidthRequest="125"
@@ -92,19 +100,19 @@
         </HorizontalStackLayout>
 
         <ScrollView x:Name="contentScrollView" 
-                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    MaximumHeightRequest="450"
+                    MaximumWidthRequest="450"
                     HorizontalScrollBarVisibility="Always">
 
-            <VerticalStackLayout x:Name="outerVerticalStackLayout">
+            <!--<VerticalStackLayout x:Name="outerVerticalStackLayout">-->
 
                 <VerticalStackLayout x:Name="contentVerticalStackLayout" 
-                                     Style="{DynamicResource QueryResultContentVSL}" 
-                                     BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
-                                                                       Dark={StaticResource DarkBackground}}">
+                                     Style="{DynamicResource QueryResultContentVSL}">
 
                 </VerticalStackLayout>
 
-            </VerticalStackLayout>
+            <!--</VerticalStackLayout>-->
 
         </ScrollView>
 
