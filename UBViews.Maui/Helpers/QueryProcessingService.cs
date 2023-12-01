@@ -74,6 +74,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     #region  Public Properties
     public QueryInputDto QueryInputDto { get; set; }
     public string QueryInputString { get; set; }
+    public string PreviousQueryInputString { get; set; }
     public string QueryExpression { get; set; }
     public bool QueryResultExists { get; set; }
     public List<QueryResultDto> QueryResults { get; set; }
