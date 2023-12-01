@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:model="clr-namespace:UBViews.Models"
+             x:Class="UBViews.Views.QueryResultPage2"
+             Title="{Binding Title}"
+             x:DataType="viewmodel:QueryResultViewModel">
+
+    <ContentPage.Behaviors>
+        <behavior:EventToCommandBehavior
+            EventName="Loaded"
+            Command="{Binding QueryResultAppearingCommand}"
+            CommandParameter="{Binding LocationsDto}"/>
+        <behavior:EventToCommandBehavior
+             EventName="Loaded"
+             Command="{Binding QueryResultLoadedCommand}"/>
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout x:Name="mainVSL">
+
+        <Label x:Name="maxQueryResultsLable" 
+               VerticalOptions="Center"
+               Style="{DynamicResource RegularParagraph}"
+               ToolTipProperties.Text="To display more query results go to settings page.">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Style="{StaticResource RegularSpan}" Text="Query Entered (" />
+                    <Span Style="{StaticResource RegularSpan}" Text="max displayed " />
+                    <Span Style="{StaticResource RegularSpan}" Text="{Binding MaxQueryResults}" />
+                    <Span Style="{StaticResource RegularSpan}" Text="):" />
+                    <Span Style="{StaticResource RegularSpan}" Text="  " />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Border Stroke="Purple" 
+                Padding="1,1,1,1">
+            
+            <Label x:Name="queryStringLabel" 
+                   Style="{DynamicResource RegularParagraph}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Style="{StaticResource RegularSpan}" Text="  " />
+                        <Span Style="{StaticResource QueryResultSpan}" Text="{Binding QueryString}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            
+        </Border>
+
+    </VerticalStackLayout>
+    
+</ContentPage>

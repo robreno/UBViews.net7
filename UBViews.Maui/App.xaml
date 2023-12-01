@@ -433,7 +433,8 @@
 
             <!-- QueryResult Styles -->
             <Style x:Key="QueryResultContentVSL" TargetType="VerticalStackLayout">
-                <Setter Property="Margin" Value="10,0,10,30" />
+                <Setter Property="Margin" Value="10,0,10,10" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
             </Style>
 
             <!-- Button Styles -->

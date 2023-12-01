@@ -5,6 +5,7 @@
 
 # Ignore for now, add in later
 src2/
+Views/Papers/
 
 # User-specific files
 *.rsuser

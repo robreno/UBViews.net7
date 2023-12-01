@@ -61,7 +61,7 @@
             </SearchBar.Behaviors>
         </SearchBar>
 
-        <!--<Button Text="Query" 
+        <Button Text="Query" 
                 FontSize="18"
                 FontAttributes="Bold" 
                 HorizontalOptions="Center" 
@@ -70,7 +70,7 @@
                 SemanticProperties.Hint="Query Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding SubmitQueryCommand}"
-                CommandParameter="{Binding QueryInput}" />-->
+                CommandParameter="{Binding QueryInput}" />
 
         <Button Text="Parts of Book"
                 FontSize="18"
