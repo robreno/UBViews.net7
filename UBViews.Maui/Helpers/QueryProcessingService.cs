@@ -209,7 +209,6 @@ public partial class QueryProcessingService : IQueryProcessingService
                     // Query Returned Empty TokenPostingList
                     msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
                     await App.Current.MainPage.DisplayAlert("Query Results => ", msg, "Cancel");
-                    await Shell.Current.GoToAsync("..");
                 }
             }
             var lst = await InitializeQueryLocationsDto(QueryLocations);
