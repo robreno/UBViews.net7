@@ -220,6 +220,106 @@ public partial class QueryProcessingService : IQueryProcessingService
             return false;
         }
     }
+    public async Task<(bool, bool, QueryResultLocationsDto)> RunQueryExAsync(string queryString)
+    {
+        string _method = "RunQuery";
+        bool isSuccess = false;
+        bool isFromQueryHistory = false;
+        try
+        {
+            var errorMessage = string.Empty;
+            var msg = string.Empty;
+            if (!_queryParsingSuccessful)
+            {
+                return (false, false, null);
+            }
+
+            bool isSameQueryInput = QueryInputString == PreviousQueryInputString;
+            if (isSameQueryInput)
+            {
+                // Same query and returned no results
+                if (QueryLocations == null)
+                {
+                    // Query Returned Empty TokenPostingList
+                    msg = $"The query \"{QueryInputString}\" returned no results. Please try another query.";
+                    await App.Current.MainPage.DisplayAlert("Query Results", msg, "Cancel");
+                    return (false, false, QueryLocations);
+                }
+                // Same query with results
+                else
+                {
+                    return (true, true, QueryLocations);
+                }
+            }
+
+            QueryLocations = null;
+
+            (bool queryExists, QueryResultDto queryResultDto) = await QueryResultExistsAsync(queryString);
+            QueryResultExists = isFromQueryHistory = queryExists;
+            QueryResultLocationsDto queryResultLocationsDto = null;
+            int queryResultId = 0;
+            if (queryExists)
+            {
+                queryResultId = queryResultDto.Id;
+                queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryResultId);
+
+                if (queryString != queryResultLocationsDto.QueryString)
+                {
+                    queryResultLocationsDto.DefaultQueryString = queryString;
+                }
+                QueryExpression = queryResultLocationsDto.QueryExpression;
+                QueryLocations = queryResultLocationsDto;
+                isSuccess = true;
+            }
+            else
+            {
+                var astQuery = await parserService.ParseQueryAsync(QueryInputString);
+                var query = astQuery.Head;
+                QueryExpression = await parserService.QueryToStringAsync(query);
+
+                var tpl = await repositoryService.RunQueryAsync(QueryInputString);
+
+                bool isAtEnd = tpl.AtEnd;
+                if (!isAtEnd)
+                {
+                    (QueryResultLocationsDto qrl, XElement qre) = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, query, tpl);
+                    var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
+                    //qrl.QueryLocations = maxQryLocs;
+
+                    QueryResult = qre;
+                    QueryLocations = qrl;
+
+                    //await NavigateTo("QueryResults");
+
+                    //var queryRowId = await _repositoryService.SaveQueryResultAsync(qre);
+                    //qre.SetAttributeValue("id", queryRowId);
+
+                    // Create object model
+                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
+
+                    // Add queryResultEml to QueryHistory AppData file here
+                    //await _appDataService.AddQueryResult(qre);
+
+                    // Navigate to QueryResultPage here
+                    //await NavigateTo("QueryResults");
+                    isSuccess = true;
+                }
+                else
+                {
+                    // Query Returned Empty TokenPostingList
+                    msg = $"The query \"{QueryInputString}\" returned no results. Please try another query.";
+                    await App.Current.MainPage.DisplayAlert("Query Results", msg, "Cancel");
+                }
+            }
+            PreviousQueryInputString = queryString;
+            return (isSuccess, isFromQueryHistory, QueryLocations);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return (false, false, null);
+        }
+    }
     public async Task<(bool, QueryResultDto)> QueryResultExistsAsync(string queryString)
     {
         string _method = "QueryResultExistsAsync";
