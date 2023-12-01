@@ -13,6 +13,7 @@ public interface IQueryProcessingService
 {
     Task<bool> ParseQueryAsync(string queryString);
     Task<bool> RunQueryAsync(string queryString);
+    Task<(bool, bool, QueryResultLocationsDto)> RunQueryExAsync(string queryString);
     Task<(bool, QueryResultDto)> QueryResultExistsAsync(string queryString);
     Task<SimpleEnumeratorsEx.TokenPostingList> CreateTokenPostingListAsync(string trm, List<TokenOccurrenceDto> toks);
     Task SetMaxQueryResults(int max);
