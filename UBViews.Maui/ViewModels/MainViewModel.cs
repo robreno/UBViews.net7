@@ -116,8 +116,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainPageLoaded => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
     }
 
@@ -170,8 +169,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         finally
         {
@@ -322,8 +320,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ", 
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         finally
         {
@@ -335,6 +332,10 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task SubmitQueryEx(string queryString)
     {
+        // temple and prostitutes
+        // prostitutes and temple
+        // foreword and orvonton
+
         string _method = "SubmitQueryEx";
         try
         {
@@ -343,12 +344,14 @@ public partial class MainViewModel : BaseViewModel
 
             queryString = queryString.Trim();
 
+            // Should use AudioService to set
             if (queryString.Contains("^"))
             {
                 var value = queryString.Substring(1, queryString.Length - 1);
                 await SetAudioStreaming(value);
                 return;
             }
+            // End sercret command handling
 
             var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
             if (parsingSuccessful)
@@ -357,23 +360,35 @@ public partial class MainViewModel : BaseViewModel
                 QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
                 TermList = await queryProcessingService.GetTermListAsync();
 
-                bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
-                if (result == true)
+                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
+
+                if (isSuccess)
                 {
-                    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
-                    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
+                    if (QueryResultExists)
+                    {
+                        // Query result from history successfully
+                        // Navigate to results page
+                    }
+                    else
+                    {
+                        // New query run successfully
+                        // Navigate to results page
+                    }
+                    await NavigateTo("QueryResults");
                 }
-                await NavigateTo("QueryResults");
+                else // Parsing failure
+                {
+                    throw new Exception("Uknown Parsing Error!");
+                }
             }
             else // Parsing failure
             {
-                throw new Exception("Uknown Parsing Error!");
+                throw new Exception("Unknown Parsing Error!");
             }
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.SumbitQuery => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         finally
         {
