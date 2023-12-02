@@ -360,7 +360,9 @@ public partial class MainViewModel : BaseViewModel
                 QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
                 TermList = await queryProcessingService.GetTermListAsync();
 
-                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
+                (bool isSuccess, 
+                 QueryResultExists, 
+                 QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
 
                 if (isSuccess)
                 {
