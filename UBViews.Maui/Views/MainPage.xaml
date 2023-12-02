@@ -51,12 +51,12 @@
                    SemanticProperties.Description="SearchBar for entering search query text."
                    SemanticProperties.HeadingLevel="Level1"
                    SemanticProperties.Hint="Text SearchBar"
-                   SearchCommand="{Binding SubmitQueryExCommand}"
+                   SearchCommand="{Binding SubmitQueryCommand}"
                    SearchCommandParameter="{Binding QueryInput}">
             <SearchBar.Behaviors>
                 <behavior:EventToCommandBehavior 
                     EventName="SearchButtonPressed"
-                    Command="{Binding SubmitQueryExCommand}"
+                    Command="{Binding SubmitQueryCommand}"
                     CommandParameter="{Binding QueryInput}"/>
             </SearchBar.Behaviors>
         </SearchBar>

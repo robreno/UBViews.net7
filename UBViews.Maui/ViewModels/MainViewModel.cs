@@ -17,6 +17,7 @@ using UBViews.Models;
 
 using QueryEngine;
 using QueryFilter;
+using static DataTypesEx;
 
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class MainViewModel : BaseViewModel
@@ -178,7 +179,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task SubmitQuery(string queryString)
+    async Task SubmitQuery_Depreciated(string queryString)
     {
         string _method = "SubmitQuery";
         try
@@ -330,7 +331,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task SubmitQueryEx(string queryString)
+    async Task SubmitQuery(string queryString)
     {
         // temple and prostitutes
         // prostitutes and temple
