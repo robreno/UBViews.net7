@@ -50,10 +50,10 @@
             </Label.FormattedText>
         </Label>
 
-        <Border Style="{StaticResource QueryResultBorderStyle}">
+        <Border Style="{StaticResource QuerySearchBarBorderStyle}">
 
             <SearchBar x:Name="searchBar" 
-                       Text="{Binding QueryString, Mode=TwoWay}" 
+                       Text="{Binding QueryInputString, Mode=TwoWay}" 
                        ToolTipProperties.Text="Expand query based upon existing results ..."
                        WidthRequest="{x:StaticResource SearchBarWidth}"
                        Placeholder="Modify query here"
@@ -64,7 +64,7 @@
                 <SearchBar.Behaviors>
                     <behavior:EventToCommandBehavior 
                         EventName="SearchButtonPressed"
-                        Command="{Binding SubmitQueryExCommand}"
+                        Command="{Binding SubmitQueryCommand}"
                         CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
                 </SearchBar.Behaviors>
             </SearchBar>
@@ -101,8 +101,8 @@
 
         <ScrollView x:Name="contentScrollView" 
                     HorizontalOptions="Center"
-                    MaximumHeightRequest="450"
-                    MaximumWidthRequest="450"
+                    MaximumWidthRequest="750"
+                    MaximumHeightRequest="550"
                     HorizontalScrollBarVisibility="Always">
 
             <!--<VerticalStackLayout x:Name="outerVerticalStackLayout">-->

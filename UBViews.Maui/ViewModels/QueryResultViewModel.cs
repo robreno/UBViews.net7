@@ -306,9 +306,9 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task SubmitQueryEx(string queryString)
+    async Task SubmitQuery(string queryString)
     {
-        string _method = "SubmitQueryEx";
+        string _method = "SubmitQuery";
         try
         {
             IsBusy = true;
@@ -360,19 +360,16 @@ public partial class QueryResultViewModel : BaseViewModel
                         // New query run successfully
                         // Navigate to results page
                     }
+                    //await NavigateTo("QueryResults");
+                    await LoadXaml(QueryLocationsDto.ToList(), true);
                 }
-
-                //bool result = await queryProcessingService.RunQueryAsync(QueryInputString);
-                //if (result == true)
-                //{
-                //    QueryResultExists = await queryProcessingService.GetQueryResultExistsAsync();
-                //    QueryLocations = await queryProcessingService.GetQueryResultLocationsAsync();
-                //}
-                //else
-                //{
-                //    throw new Exception("queryProcessingService.RunQueryAsync returned false results.");
-                //}
-                //await NavigateTo("QueryResults");
+                else
+                {
+                    // Handle unsuccessful query result returned
+                    // Return to existing query page and try again
+                    //await Shell.Current.GoToAsync("..");
+                    msg = $"Query unsuccessful.";
+                }
             }
             else // Parsing failure
             {

@@ -10,7 +10,13 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
+
+            <!--<x:String x:Key="ButtonWidth">165</x:String>-->
+            <x:String x:Key="MinW">300</x:String>
+            <x:String x:Key="MaxW">600</x:String>
+            <x:String x:Key="MinH">300</x:String>
+            <x:String x:Key="MaxH">600</x:String>
+
             <!-- Main Grid and VerticalStackLayout Styles -->
             <!-- Color Styles -->
             <!--<Color x:Key="Primary">#007fff</Color>-->
@@ -466,23 +472,27 @@
             </Style>
 
             <!-- QueryResult SearchBar Border Styles -->
-            <Style x:Key="QuerySearchBarStyle" TargetType="Border">
+            <Style x:Key="QuerySearchBarBorderStyle" TargetType="Border">
                 <Setter Property="Stroke" Value="Blue" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
                 <Setter Property="StrokeThickness" Value="3" />
-                <Setter Property="Padding" Value="10" />
+                <Setter Property="Padding" Value="0, 10, 0, 10" />
                 <Setter Property="Margin" Value="10,0,10,0" />
                 <Setter Property="MinimumWidthRequest" Value="400" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="IsEnabled" Value="False" />
             </Style>
+
             <Style x:Key="QueryResultBorderStyle" TargetType="Border">
                 <Setter Property="Stroke" Value="Blue" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
                 <Setter Property="StrokeThickness" Value="3" />
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="Margin" Value="10,0,10,0" />
-                <Setter Property="MinimumWidthRequest" Value="400" />
+                <Setter Property="MinimumWidthRequest" Value="600" />
+                <Setter Property="MaximumWidthRequest" Value="800" />
+                <Setter Property="MinimumHeightRequest" Value="200" />
+                <Setter Property="MaximumHeightRequest" Value="600" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
 
