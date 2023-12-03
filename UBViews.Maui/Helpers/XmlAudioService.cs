@@ -10,7 +10,7 @@ using UBViews.Services;
 
 using UBViews.Models.Audio;
 
-public partial class XmlAudioService : IAudioService
+public partial class XmlAudioService : IXmlAudioService
 {
     #region  Private Data
     /// <summary>
@@ -29,11 +29,6 @@ public partial class XmlAudioService : IAudioService
     };
 
     private readonly string _className = "XmlAudioService";
-
-    //Dictionary<string, string> _tildes = new Dictionary<string, string>(
-    //    {
-    //        { "", ""},
-    //    });
 
     internal AudioMarkerSequence audioMarkerSequence { get; set; } = new();
     #endregion
