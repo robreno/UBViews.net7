@@ -85,6 +85,70 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region  Public Methods
+    public async Task SetContentPageAsync(ContentPage contentPage)
+    {
+        try
+        {
+            this.contentPage = contentPage;
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+    public async Task<bool> PreCheckQueryAsync(string queryString)
+    {
+        string _method = "PrecheckQuery";
+        try
+        {
+            bool isValidSecretCommand = false;
+            queryString = queryString.Trim();
+            if (queryString.Contains("^"))
+            {
+                var value = queryString.Substring(1, queryString.Length - 1);
+                await SetAudioStreamingAsync(value, true);
+                isValidSecretCommand = true;
+            }
+            return isValidSecretCommand;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
+        }
+    }
+    public async Task SetAudioStreamingAsync(string value, bool clearSearchBar)
+    {
+        string _method = "SetAudioStreaming";
+        try
+        {
+            if (value == "on")
+            {
+                Preferences.Default.Set("audio_status", true);
+            }
+            if (value == "off")
+            {
+                Preferences.Default.Set("audio_status", false);
+            }
+
+            if (clearSearchBar)
+            {
+                var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    searchBar.Text = null;
+                });
+            }
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
+        }
+    }
     public async Task<bool> ParseQueryAsync(string queryString)
     {
         string _method = "ParseQuery";
