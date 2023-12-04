@@ -82,6 +82,7 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Public Propoerty Methods
+    public bool Initialized { get; set; }
     public MediaStatePair MediaState { get; set; } = new();
     public MediaStatePair MediaElementMediaState { get; set; } = new();
     public AudioFlag AudioStatus { get; set; } = new();
@@ -104,6 +105,24 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Interface Implementations
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> IsInitializedAsync()
+    {
+        string _method = "SetContentPageAsync";
+        try
+        {
+            return Initialized;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -333,8 +352,45 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="value"></param>
+    /// <param name="clearSearchBar"></param>
     /// <returns></returns>
-    public async Task<bool> GetAudioStatus()
+    public async Task SetAudioStreamingAsync(string value, bool clearSearchBar)
+    {
+        string _method = "SetAudioStreaming";
+        try
+        {
+            if (value == "on")
+            {
+                Preferences.Default.Set("audio_status", true);
+            }
+            if (value == "off")
+            {
+                Preferences.Default.Set("audio_status", false);
+            }
+
+            if (clearSearchBar)
+            {
+                var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    searchBar.Text = null;
+                });
+            }
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> GetAudioStatusAsync()
     {
         try
         {
@@ -363,7 +419,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public async Task SetMediaPlaybackControls(bool value)
+    public async Task SetMediaPlaybackControlsAsync(bool value)
     {
         try
         {
@@ -386,7 +442,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="audioMarker"></param>
     /// <returns></returns>
-    public async Task SetPlaybackControlsStartTime(AudioMarker audioMarker)
+    public async Task SetPlaybackControlsStartTimeAsync(AudioMarker audioMarker)
     {
         try
         {
@@ -408,7 +464,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public async Task SetShowMediaPlaybackControls(bool value)
+    public async Task SetShowMediaPlaybackControlsAsync(bool value)
     {
         try
         {
@@ -425,9 +481,28 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="mediaStatePair"></param>
+    /// <returns></returns>
+    public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
+    {
+        try
+        {
+            this.MediaState = mediaStatePair;
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="duration"></param>
     /// <returns></returns>
-    public async Task SetDuration(TimeSpan duration)
+    public async Task SetDurationAsync(TimeSpan duration)
     {
         try
         {
@@ -446,7 +521,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="platformName"></param>
     /// <returns></returns>
-    public async Task SetPlatform(string platformName)
+    public async Task SetPlatformAsync(string platformName)
     {
         try
         {
@@ -465,7 +540,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="paperDto"></param>
     /// <returns></returns>
-    public async Task SetPaperDto(PaperDto paperDto)
+    public async Task SetPaperDtoAsync(PaperDto paperDto)
     {
         try
         {
@@ -488,7 +563,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="paragraphs"></param>
     /// <returns></returns>
-    public async Task SetParagraphs(List<Paragraph> paragraphs)
+    public async Task SetParagraphsAsync(List<Paragraph> paragraphs)
     {
         try
         {
@@ -510,7 +585,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public async Task SetSendToast(bool value)
+    public async Task SetSendToastAsync(bool value)
     {
         try
         {
@@ -526,7 +601,7 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Audio Gestures
-    public async Task TappedGestureForPaper(string value)
+    public async Task TappedGestureForPaperAsync(string value)
     {
         try
         {
@@ -579,7 +654,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task DoubleTappedGestureForPaper(string value)
+    public async Task DoubleTappedGestureForPaperAsync(string value)
     {
         try
         {
@@ -622,7 +697,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task TappedGesture(string id)
+    public async Task TappedGestureAsync(string id)
     {
         try
         {
@@ -661,40 +736,40 @@ public partial class AudioService : IAudioService
             {
                 PreviousState = "Paused";
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudioRangeEx(audioMarker);
+                await StateChangedAsync("Playing");
+                await PlayAudioRangeExAsync(audioMarker);
             }
-            //// Play State -> Tappeed Event -> 
-            ///* || PreviousState = "Paused" */
+            // Play State -> Tappeed Event -> 
+            // || PreviousState = "Paused"
             else if (CurrentState == "Playing" &&
                      PreviousState == "Paused" ||
                      PreviousState == "None")
             {
                 PreviousState = CurrentState;
                 CurrentState = "Paused";
-                await StateChanged("Paused");
-                await PauseAudio();
+                await StateChangedAsync("Paused");
+                await PauseAudioAsync();
                 message = $"Pausing {pid} Timespan {timeRange}";
             }
-            //// Playing State -> Play Trigger
+            // Playing State -> Play Trigger
             else if (CurrentState == "Paused" &&
                      PreviousState == "Playing")
             {
                 PreviousState = CurrentState;
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudio();
+                await StateChangedAsync("Playing");
+                await PlayAudioAsync();
                 message = $"Resuming {pid} Timespan {timeRange}";
             }
-            //// Play State -> Reach Marker Event -> 
-            ///* || PreviousState = "Playing" */
+            // Play State -> Reach Marker Event -> 
+            // || PreviousState = "Playing" 
             else if (CurrentState == "Stopped" &&
                      PreviousState == "Playing")
             {
                 PreviousState = "Paused";
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudioRangeEx(audioMarker);
+                await StateChangedAsync("Playing");
+                await PlayAudioRangeExAsync(audioMarker);
                 message = $"Playing {pid} Timespan {timeRange}";
             }
             else
@@ -705,7 +780,7 @@ public partial class AudioService : IAudioService
 
             if (SendToastState)
             {
-                await SendToast(message);
+                await SendToastAsync(message);
             }
         }
         catch (Exception ex)
@@ -714,7 +789,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task TappedGesture(string id, bool value)
+    public async Task TappedGestureAsync(string id, bool value)
     {
         try
         {
@@ -754,8 +829,8 @@ public partial class AudioService : IAudioService
             {
                 PreviousState = CurrentState;
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudioRangeEx(audioMarker);
+                await StateChangedAsync("Playing");
+                await PlayAudioRangeExAsync(audioMarker);
             }
             //// Play State -> Tappeed Event -> 
             ///* || PreviousState = "Paused" */
@@ -765,8 +840,8 @@ public partial class AudioService : IAudioService
             {
                 PreviousState = CurrentState;
                 CurrentState = "Paused";
-                await StateChanged("Paused");
-                await PauseAudio();
+                await StateChangedAsync("Paused");
+                await PauseAudioAsync();
                 message = $"Pausing {pid} Timespan {timeRange}";
             }
             //// Playing State -> Play Trigger
@@ -775,8 +850,8 @@ public partial class AudioService : IAudioService
             {
                 PreviousState = CurrentState;
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudio();
+                await StateChangedAsync("Playing");
+                await PlayAudioAsync();
                 message = $"Resuming {pid} Timespan {timeRange}";
             }
             //// Play State -> Reach Marker Event -> 
@@ -786,8 +861,8 @@ public partial class AudioService : IAudioService
             {
                 PreviousState = CurrentState;
                 CurrentState = "Playing";
-                await StateChanged("Playing");
-                await PlayAudioRangeEx(audioMarker);
+                await StateChangedAsync("Playing");
+                await PlayAudioRangeExAsync(audioMarker);
                 message = $"Playing {pid} Timespan {timeRange}";
             }
             else
@@ -798,7 +873,7 @@ public partial class AudioService : IAudioService
 
             if (SendToastState)
             {
-                await SendToast(message);
+                await SendToastAsync(message);
             }
         }
         catch (Exception ex)
@@ -807,7 +882,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task DoubleTappedGesture(string id)
+    public async Task DoubleTappedGestureAsync(string id)
     {
         try
         {
@@ -842,11 +917,11 @@ public partial class AudioService : IAudioService
 
             string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
-            await StopAudio();
-            await StateChanged("Stopped");
+            await StopAudioAsync();
+            await StateChangedAsync("Stopped");
             if (SendToastState)
             {
-                await SendToast(message);
+                await SendToastAsync(message);
             }
         }
         catch (Exception ex)
@@ -855,7 +930,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task DoubleTappedGesture(string id, bool value)
+    public async Task DoubleTappedGestureAsync(string id, bool value)
     {
         try
         {
@@ -891,11 +966,11 @@ public partial class AudioService : IAudioService
 
             string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
 
-            await StopAudio();
+            await StopAudioAsync();
 
             if (SendToastState)
             {
-                await SendToast(message);
+                await SendToastAsync(message);
             }
         }
         catch (Exception ex)
@@ -934,7 +1009,7 @@ public partial class AudioService : IAudioService
             return false;
         }
     }
-    public async Task PlayAudio()
+    public async Task PlayAudioAsync()
     {
         try
         {
@@ -962,7 +1037,7 @@ public partial class AudioService : IAudioService
             string message = $"Playing Audio";
             if (SendToastState)
             {
-                await SendToast(message);
+                await SendToastAsync(message);
             }
         }
         catch (Exception ex)
@@ -971,7 +1046,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task PauseAudio()
+    public async Task PauseAudioAsync()
     {
         try
         {
@@ -995,7 +1070,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task StopAudio()
+    public async Task StopAudioAsync()
     {
         try
         {
@@ -1020,7 +1095,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task PlayAudioRange(string timeSpanRange)
+    public async Task PlayAudioRangeAsync(string timeSpanRange)
     {
         try
         {
@@ -1052,7 +1127,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task PlayAudioRangeEx(AudioMarker audioMarker)
+    public async Task PlayAudioRangeExAsync(AudioMarker audioMarker)
     {
         try
         {
@@ -1080,7 +1155,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task PositionChanged(TimeSpan timeSpan)
+    public async Task PositionChangedAsync(TimeSpan timeSpan)
     {
         try
         {
@@ -1108,7 +1183,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task StateChanged(string state)
+    public async Task StateChangedAsync(string state)
     {
         try
         {
@@ -1121,7 +1196,7 @@ public partial class AudioService : IAudioService
             return;
         }
     }
-    public async Task SendToast(string message)
+    public async Task SendToastAsync(string message)
     {
         try
         {

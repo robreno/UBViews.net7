@@ -15,6 +15,12 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <returns></returns>
+    Task<bool> IsInitializedAsync();
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="contentPage"></param>
     /// <returns></returns>
     Task SetContentPage(ContentPage contentPage);
@@ -72,85 +78,100 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="value"></param>
+    /// <param name="clearSearchBar"></param>
     /// <returns></returns>
-    Task<bool> GetAudioStatus();
+    Task SetAudioStreamingAsync(string value, bool clearSearchBar);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Task<bool> GetAudioStatusAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task SetMediaPlaybackControls(bool value);
+    Task SetMediaPlaybackControlsAsync(bool value);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="audioMarker"></param>
     /// <returns></returns>
-    Task SetPlaybackControlsStartTime(AudioMarker audioMarker);
+    Task SetPlaybackControlsStartTimeAsync(AudioMarker audioMarker);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task SetShowMediaPlaybackControls(bool value);
+    Task SetShowMediaPlaybackControlsAsync(bool value);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mediaStatePair"></param>
+    /// <returns></returns>
+    Task SetMediaStateAsync(MediaStatePair mediaStatePair);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="duration"></param>
     /// <returns></returns>
-    Task SetDuration(TimeSpan duration);
+    Task SetDurationAsync(TimeSpan duration);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="platformName"></param>
     /// <returns></returns>
-    Task SetPlatform(string platformName);
+    Task SetPlatformAsync(string platformName);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="paperDto"></param>
     /// <returns></returns>
-    Task SetPaperDto(PaperDto paperDto);
+    Task SetPaperDtoAsync(PaperDto paperDto);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="paragraphs"></param>
     /// <returns></returns>
-    Task SetParagraphs(List<Paragraph> paragraphs);
+    Task SetParagraphsAsync(List<Paragraph> paragraphs);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task SetSendToast(bool value);
+    Task SetSendToastAsync(bool value);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task TappedGestureForPaper(string value);
+    Task TappedGestureForPaperAsync(string value);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task DoubleTappedGestureForPaper(string value);
+    Task DoubleTappedGestureForPaperAsync(string value);
     
     /// <summary>
     /// 
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    Task TappedGesture(string value);
+    Task TappedGestureAsync(string value);
 
     /// <summary>
     /// 
@@ -158,14 +179,14 @@ public interface IAudioService
     /// <param name="value"></param>
     /// <param name="sendToast"></param>
     /// <returns></returns>
-    Task TappedGesture(string value, bool sendToast);
+    Task TappedGestureAsync(string value, bool sendToast);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task DoubleTappedGesture(string id);
+    Task DoubleTappedGestureAsync(string id);
 
     /// <summary>
     /// 
@@ -178,52 +199,52 @@ public interface IAudioService
     /// 
     /// </summary>
     /// <returns></returns>
-    Task PlayAudio();
+    Task PlayAudioAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    Task PauseAudio();
+    Task PauseAudioAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    Task StopAudio();
+    Task StopAudioAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="timeSpanRange"></param>
     /// <returns></returns>
-    Task PlayAudioRange(string timeSpanRange);
+    Task PlayAudioRangeAsync(string timeSpanRange);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="audioMarker"></param>
     /// <returns></returns>
-    Task PlayAudioRangeEx(AudioMarker audioMarker);
+    Task PlayAudioRangeExAsync(AudioMarker audioMarker);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="timeSpan"></param>
     /// <returns></returns>
-    Task PositionChanged(TimeSpan timeSpan);
+    Task PositionChangedAsync(TimeSpan timeSpan);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    Task StateChanged(string state);
+    Task StateChangedAsync(string state);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    Task SendToast(string message);
+    Task SendToastAsync(string message);
 }
