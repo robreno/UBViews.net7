@@ -51,6 +51,9 @@ public partial class MainViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
+    bool isInitialized;
+
+    [ObservableProperty]
     QueryResultLocationsDto queryLocations;
 
     [ObservableProperty]
@@ -95,6 +98,13 @@ public partial class MainViewModel : BaseViewModel
         string _method = "MainPageAppearing";
         try
         {
+            if (contentPage != null && !IsInitialized)
+            {
+                await queryProcessingService.SetContentPageAsync(contentPage);
+                await queryProcessingService.SetAudioStreamingAsync("off", false);
+                isInitialized = true;
+            }
+
             MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
             await queryProcessingService.SetMaxQueryResults(MaxQueryResults);
 
@@ -122,7 +132,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task ParseQuery(string queryString)
+    async Task ParseQuery_Depreciated(string queryString)
     {
         string _method = "ParseQuery";
         try
@@ -343,16 +353,11 @@ public partial class MainViewModel : BaseViewModel
             IsBusy = true;
             string msg = string.Empty;
 
-            queryString = queryString.Trim();
-
-            // Should use AudioService to set
-            if (queryString.Contains("^"))
-            {
-                var value = queryString.Substring(1, queryString.Length - 1);
-                await SetAudioStreaming(value);
-                return;
-            }
-            // End sercret command handling
+            //bool isSecretCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
+            //if (isSecretCommand)
+            //{
+            //    return;
+            //}
 
             var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
             if (parsingSuccessful)
@@ -399,30 +404,6 @@ public partial class MainViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
-
-    //[RelayCommand]
-    //async Task CheckInternet()
-    //{
-    //    if (IsBusy)
-    //        return;
-
-    //    try
-    //    {
-    //        IsBusy = true;
-
-    //        var hasInternet = await connectivityViewModel.CheckInternet();
-    //        await App.Current.MainPage.DisplayAlert("Has Internet", hasInternet ? "YES!" : "NO!", "OK");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.CheckInternet => ",
-    //            ex.Message, "Cancel");
-    //    }
-    //    finally
-    //    {
-    //        IsBusy = false;
-    //    }
-    //}
 
     [RelayCommand]
     async Task NavigateTo(string target)
