@@ -124,10 +124,16 @@ public partial class QueryProcessingService : IQueryProcessingService
             if (queryString.Contains("^"))
             {
                 var value = queryString.Substring(1, queryString.Length - 1);
-                await SetAudioStreamingAsync(value, true);
+                await SetAudioStreamingAsync(value);
+                await ClearQuerySearchBar(contentPage);
                 isValidSecretCommand = true;
             }
             return isValidSecretCommand;
+        }
+        catch (NullReferenceException ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"NullReference in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
         }
         catch (Exception ex)
         {
@@ -135,7 +141,7 @@ public partial class QueryProcessingService : IQueryProcessingService
             return false;
         }
     }
-    public async Task SetAudioStreamingAsync(string value, bool clearSearchBar)
+    public async Task SetAudioStreamingAsync(string value)
     {
         string _method = "SetAudioStreaming";
         try
@@ -148,15 +154,6 @@ public partial class QueryProcessingService : IQueryProcessingService
             {
                 Preferences.Default.Set("audio_status", false);
             }
-
-            if (clearSearchBar)
-            {
-                var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    searchBar.Text = null;
-                });
-            }
             return;
         }
         catch (Exception ex)
@@ -165,12 +162,27 @@ public partial class QueryProcessingService : IQueryProcessingService
             return;
         }
     }
-    public async Task<bool> ParseQueryAsync(string queryString)
+    public async Task SetMaxQueryResultsAsync(int max)
+    {
+        string _method = "SetMaxQueryResultsAsync";
+        try
+        {
+            MaxQueryResults = max;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+    public async Task<(bool, string)> ParseQueryAsync(string queryString)
     {
         string _method = "ParseQuery";
         var isSuccess = false;
+        var errorMessage = string.Empty;
+        var message = string.Empty;
         try
         {
+            //var isSecretCommand = await PreCheckQuery(queryString);
             var validChars = QueryFilterService.checkForValidChars(queryString);
             var validCharsSuccess = validChars.Item1;
             var validForm = QueryFilterService.checkForValidForm(queryString);
@@ -181,9 +193,6 @@ public partial class QueryProcessingService : IQueryProcessingService
                 !validCharsSuccess ||
                 !validFormSuccess)
             {
-                var errorMessage = string.Empty;
-                var msg = string.Empty;
-
                 if (!validCharsSuccess || !validFormSuccess)
                 {
                     if (!validCharsSuccess)
@@ -191,15 +200,19 @@ public partial class QueryProcessingService : IQueryProcessingService
                     if (!validFormSuccess)
                         errorMessage = errorMessage + validForm.Item2 + ";";
 
-                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
+                    message = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
                 }
 
-                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
-                                                                           "Cancel", null, -1, null, queryString);
+                if (string.IsNullOrEmpty(queryString))
+                {
+                    errorMessage = "Query empty, please enter a valid query.";
+                }
+
                 QueryInputDto.Text = "Empty Query";
                 QueryInputDto.TokenCount = 0;
                 PreviousQueryInputString = QueryInputString;
-                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query empty", "Bad query, enter a valid query");
+
+                message = errorMessage;
                 isSuccess = false;
             }
             else
@@ -210,97 +223,23 @@ public partial class QueryProcessingService : IQueryProcessingService
                 QueryExpression = parserService.ParseQuery(QueryInputDto.Text).ToString();
                 TermList = parserService.ParseQueryStringToTermList(queryString).ToList();
                 // At this point have enough data to submit query and to get postinglist for each term
+                message = "Query_Success";
                 isSuccess = _queryParsingSuccessful = true;
             }
-            return isSuccess;
+            return (isSuccess, message);
+        }
+        catch (NullReferenceException ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Null reference raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return (false, null);
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return false;
+            return (false, null);
         }
     }
-    public async Task<bool> RunQueryAsync(string queryString)
-    {
-        string _method = "RunQuery";
-        bool isSuccess = false;
-        try
-        {
-            var errorMessage = string.Empty;
-            var msg = string.Empty;
-            if (!_queryParsingSuccessful)
-            {
-                return false;
-            }
-
-            (bool queryExists, QueryResultDto queryResultDto) = await QueryResultExistsAsync(queryString);
-            QueryResultExists = queryExists;
-            QueryResultLocationsDto queryResultLocationsDto = null;
-            int queryResultId = 0;
-            if (queryExists)
-            {
-                queryResultId = queryResultDto.Id;
-                queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryResultId);
-
-                var queryType = await GetQueryType(queryString);
-                queryResultLocationsDto.BaseQuery = queryType.BaseQuery;
-
-                if (queryString != queryResultLocationsDto.QueryString)
-                {
-                    queryResultLocationsDto.DefaultQueryString = queryString;
-                }
-                QueryExpression = queryResultLocationsDto.QueryExpression;
-                QueryLocations = queryResultLocationsDto;
-                isSuccess = true;
-            }
-            else
-            {
-                var astQuery = await parserService.ParseQueryAsync(QueryInputString);
-                var query = astQuery.Head;
-                QueryExpression = await parserService.QueryToStringAsync(query);
-
-                var tpl = await repositoryService.RunQueryAsync(QueryInputString);
-
-                bool isAtEnd = tpl.AtEnd;
-                if (!isAtEnd)
-                {
-                    (QueryResultLocationsDto qrl, XElement qre) = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, query, tpl);
-                    var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
-                    //qrl.QueryLocations = maxQryLocs;
-
-                    QueryResult = qre;
-                    QueryLocations = qrl;
-
-                    //var queryRowId = await _repositoryService.SaveQueryResultAsync(qre);
-                    //qre.SetAttributeValue("id", queryRowId);
-
-                    // Create object model
-                    //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
-
-                    // Add queryResultEml to QueryHistory AppData file here
-                    //await _appDataService.AddQueryResult(qre);
-
-                    // Navigate to QueryResultPage here
-                    //await NavigateTo("QueryResults");
-                    isSuccess = true;
-                }
-                else
-                {
-                    // Query Returned Empty TokenPostingList
-                    msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
-                    await App.Current.MainPage.DisplayAlert("Query Results => ", msg, "Cancel");
-                }
-            }
-            var lst = await InitializeQueryLocationsDto(QueryLocations);
-            return isSuccess;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-            return false;
-        }
-    }
-    public async Task<(bool, bool, QueryResultLocationsDto)> RunQueryExAsync(string queryString)
+    public async Task<(bool, bool, QueryResultLocationsDto)> RunQueryAsync(string queryString)
     {
         string _method = "RunQuery";
         bool isSuccess = false;
@@ -445,18 +384,6 @@ public partial class QueryProcessingService : IQueryProcessingService
             return (false, null);
         }
     }
-    public async Task SetMaxQueryResults(int max)
-    {
-        string _method = "GetQueryInputString";
-        try
-        {
-            MaxQueryResults = max;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-    }
     public async Task<string> GetQueryInputStringAsync()
     {
         string _method = "GetQueryInputString";
@@ -559,11 +486,6 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region Helper Methods
-    /// <summary>
-    /// NormalizeQueryString
-    /// </summary>
-    /// <param name="queryString"></param>
-    /// <returns></returns>
     private async Task NormalizeQueryString(string queryString)
     {
         string _method = "NormalizeQueryString";
@@ -689,6 +611,31 @@ public partial class QueryProcessingService : IQueryProcessingService
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
+        }
+    }
+    private async Task<bool> ClearQuerySearchBar(ContentPage contentPage)
+    {
+        string _method = "ClearQuerySearchBar";
+        try
+        {
+            if (contentPage != null)
+            {
+                var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    searchBar.Text = null;
+                });
+            }
+            else
+            {
+                throw new NullReferenceException("ContentPage parameter null.");
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
         }
     }
     private async Task<List<QueryLocationDto>> InitializeQueryLocationsDto(QueryResultLocationsDto dto)

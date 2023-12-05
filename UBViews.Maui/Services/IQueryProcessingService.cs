@@ -14,12 +14,11 @@ public interface IQueryProcessingService
     Task<bool> IsInitializedAsync();
     Task SetContentPageAsync(ContentPage contentPage);
     Task<bool> PreCheckQueryAsync(string queryString);
-    Task SetAudioStreamingAsync(string value, bool clearSearchBar);
-    Task<bool> ParseQueryAsync(string queryString);
-    Task<bool> RunQueryAsync(string queryString);
-    Task<(bool, bool, QueryResultLocationsDto)> RunQueryExAsync(string queryString);
+    Task SetAudioStreamingAsync(string value);
+    Task SetMaxQueryResultsAsync(int max);
+    Task<(bool, string)> ParseQueryAsync(string queryString);
+    Task<(bool, bool, QueryResultLocationsDto)> RunQueryAsync(string queryString);
     Task<(bool, QueryResultDto)> QueryResultExistsAsync(string queryString);
-    Task SetMaxQueryResults(int max);
     Task<bool> GetQueryResultExistsAsync();
     Task<string> GetQueryInputStringAsync();
     Task<string> GetQueryExpressionAsync();
