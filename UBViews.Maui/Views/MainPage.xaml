@@ -45,19 +45,19 @@
                SemanticProperties.Hint="Title"/>
 
         <SearchBar x:Name="searchBarControl" 
-                   Text="{Binding QueryInput, Mode=TwoWay}" 
+                   Text="{Binding QueryInputString, Mode=TwoWay}" 
                    WidthRequest="{x:StaticResource SearchBarWidth}"
                    Placeholder="Enter search query ..."
                    SemanticProperties.Description="SearchBar for entering search query text."
                    SemanticProperties.HeadingLevel="Level1"
                    SemanticProperties.Hint="Text SearchBar"
                    SearchCommand="{Binding SubmitQueryCommand}"
-                   SearchCommandParameter="{Binding QueryInput}">
+                   SearchCommandParameter="{Binding QueryInputString}">
             <SearchBar.Behaviors>
                 <behavior:EventToCommandBehavior 
                     EventName="SearchButtonPressed"
                     Command="{Binding SubmitQueryCommand}"
-                    CommandParameter="{Binding QueryInput}"/>
+                    CommandParameter="{Binding QueryInputString}"/>
             </SearchBar.Behaviors>
         </SearchBar>
 
@@ -70,7 +70,7 @@
                 SemanticProperties.Hint="Query Button."
                 WidthRequest="{x:StaticResource ButtonWidth}"
                 Command="{Binding SubmitQueryCommand}"
-                CommandParameter="{Binding QueryInput}" />
+                CommandParameter="{Binding QueryInputString}" />
 
         <Button Text="Parts of Book"
                 FontSize="18"
