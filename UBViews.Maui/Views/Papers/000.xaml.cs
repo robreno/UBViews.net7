@@ -38,6 +38,7 @@ public partial class _000 : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 		vm.contentPage = this;
+        vm.mediaElement = this.mediaElement;
 		vm.Title = partTitle;
         vm.PaperTitle = paperTitle;
         vm.PaperAuthor = paperAuthor;
