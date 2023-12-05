@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
+
 using UBViews.Models;
 using UBViews.Models.Ubml;
 using UBViews.Models.Audio;
@@ -24,6 +27,13 @@ public interface IAudioService
     /// <param name="contentPage"></param>
     /// <returns></returns>
     Task SetContentPageAsync(ContentPage contentPage);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mediaElement"></param>
+    /// <returns></returns>
+    Task SetMediaElementAsync(IMediaElement mediaElement);
 
     /// <summary>
     /// Get MediaMarker at index position.

@@ -14,6 +14,8 @@ using Microsoft.FSharp.Core;
 
 using System.Globalization;
 using System.Collections.ObjectModel;
+
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Primitives;
@@ -45,12 +47,17 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// CultureInfo
     /// </summary>
-    public CultureInfo cultureInfo;
+    private CultureInfo cultureInfo;
 
     /// <summary>
     /// ContentPage
     /// </summary>
-    public ContentPage contentPage;
+    private ContentPage contentPage;
+
+    /// <summary>
+    /// MediaElement
+    /// </summary>
+    private IMediaElement mediaElement;
 
     /// <summary>
     /// ObservableCollection
@@ -82,20 +89,21 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Public Propoerty Methods
-    public bool Initialized { get; set; }
+    public bool ContentPageInitialized { get; set; } = false;
+    public bool MediaElementInitialized { get; set; } = false;
+    public bool ShowPlaybackControls { get; set; } = false;
+    public bool SendToastState { get; set; } = false;
     public MediaStatePair MediaState { get; set; } = new();
     public MediaStatePair MediaElementMediaState { get; set; } = new();
     public AudioFlag AudioStatus { get; set; } = new();
     public AudioMarkerSequence Markers { get; set; } = new();
-    public bool SendToastState { get; set; }
+    public PaperDto PaperDto { get; set; } = null;
     public int PaperId { get; set; }
     public string Plattform { get; set; }
-    public PaperDto PaperDto { get; set; }
     public string PaperTitle { get; set; }
     public string PaperAuthor { get; set; }
     public string PaperNumber { get; set; }
     public string TimeSpanString { get; set; }
-    public bool ShowPlaybackControls { get; set; }
     public TimeSpan Position { get; set; }
     public TimeSpan Duration { get; set; }
     public TimeSpan StartTime { get; set; }
@@ -114,7 +122,12 @@ public partial class AudioService : IAudioService
         string _method = "SetContentPageAsync";
         try
         {
-            return Initialized;
+            bool isInitialized = false;
+            if (ContentPageInitialized && MediaElementInitialized)
+            {
+                isInitialized = true;
+            }
+            return isInitialized;
         }
         catch (Exception ex)
         {
@@ -138,6 +151,27 @@ public partial class AudioService : IAudioService
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mediaElement"></param>
+    /// <returns></returns>
+    public async Task SetMediaElementAsync(IMediaElement mediaElement)
+    {
+        string _method = "SetMediaElementAsync";
+        try
+        {
+            this.mediaElement = mediaElement;
+            MediaElementInitialized = true;
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -282,11 +316,12 @@ public partial class AudioService : IAudioService
         string _method = "DisconnectMediaElementAsync";
         try
         {
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 // Stop and cleanup MediaElement when we navigate away
-                me.Handler?.DisconnectHandler();
+                mediaElement.Stop();
+                mediaElement.Handler?.DisconnectHandler();
             });
             return;
         }
@@ -423,12 +458,13 @@ public partial class AudioService : IAudioService
     {
         try
         {
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 // Stop and cleanup MediaElement when we navigate away
-                me.ShouldShowPlaybackControls = value;
+                mediaElement.ShouldShowPlaybackControls = value;
             });
+            this.ShowPlaybackControls = value;
         }
         catch (Exception ex)
         {
@@ -446,10 +482,10 @@ public partial class AudioService : IAudioService
     {
         try
         {
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                me.SeekTo(audioMarker.StartTime);
+                mediaElement.SeekTo(audioMarker.StartTime);
             });
         }
         catch (Exception ex)
@@ -1024,12 +1060,12 @@ public partial class AudioService : IAudioService
             var pid = PaperDto.Pid;
             var timeSpan = PaperDto.TimeSpan;
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                if (me != null)
+                if (mediaElement != null)
                 {
-                    me.Play();
+                    mediaElement.Play();
                 }
             });
 
@@ -1055,12 +1091,12 @@ public partial class AudioService : IAudioService
             CurrentState = _state;
             MediaState.SetState(_state);
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                if (me != null)
+                if (mediaElement != null)
                 {
-                    me.Pause();
+                    mediaElement.Pause();
                 }
             });
         }
@@ -1079,13 +1115,13 @@ public partial class AudioService : IAudioService
             CurrentState = _state;
             MediaState.SetState(_state);
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                if (me != null)
+                if (mediaElement != null)
                 {
-                    me.Stop();
-                    me.MediaEnded();
+                    mediaElement.Stop();
+                    mediaElement.MediaEnded();
                 }
             });
         }
@@ -1114,11 +1150,11 @@ public partial class AudioService : IAudioService
             StartTime = start;
             EndTime = end;
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                me.SeekTo(start);
-                me.Play();
+                mediaElement.SeekTo(start);
+                mediaElement.Play();
             });
         }
         catch (Exception ex)
@@ -1142,11 +1178,11 @@ public partial class AudioService : IAudioService
             StartTime = start;
             EndTime = end;
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                me.SeekTo(start);
-                me.Play();
+                mediaElement.SeekTo(start);
+                mediaElement.Play();
             });
         }
         catch (Exception ex)
@@ -1161,19 +1197,19 @@ public partial class AudioService : IAudioService
         {
             Position = timeSpan;
 
-            var me = contentPage.FindByName("mediaElement") as IMediaElement;
+            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
             {
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    if (me != null)
+                    if (mediaElement != null)
                     {
-                        me.Stop();
-                        me.MediaEnded();
+                        mediaElement.Stop();
+                        mediaElement.MediaEnded();
                     }
                 });
-                var currentState = me.CurrentState.ToString();
-                MediaElementMediaState.SetState(me.CurrentState.ToString());
+                var currentState = mediaElement.CurrentState.ToString();
+                MediaElementMediaState.SetState(currentState);
                 MediaState.SetState("Stopped");
             }
         }
