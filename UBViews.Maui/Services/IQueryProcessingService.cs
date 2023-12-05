@@ -19,11 +19,11 @@ public interface IQueryProcessingService
     Task<bool> RunQueryAsync(string queryString);
     Task<(bool, bool, QueryResultLocationsDto)> RunQueryExAsync(string queryString);
     Task<(bool, QueryResultDto)> QueryResultExistsAsync(string queryString);
-    Task<SimpleEnumeratorsEx.TokenPostingList> CreateTokenPostingListAsync(string trm, List<TokenOccurrenceDto> toks);
     Task SetMaxQueryResults(int max);
     Task<bool> GetQueryResultExistsAsync();
     Task<string> GetQueryInputStringAsync();
     Task<string> GetQueryExpressionAsync();
     Task<List<string>> GetTermListAsync();
     Task<QueryResultLocationsDto> GetQueryResultLocationsAsync();
+    Task<SimpleEnumeratorsEx.TokenPostingList> CreateTokenPostingListAsync(string trm, List<TokenOccurrenceDto> toks);
 }

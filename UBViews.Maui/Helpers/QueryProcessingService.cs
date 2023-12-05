@@ -74,6 +74,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region  Public Properties
+    public bool Initialized { get; set; }
     public QueryInputDto QueryInputDto { get; set; }
     public string QueryInputString { get; set; }
     public string PreviousQueryInputString { get; set; }
@@ -87,6 +88,19 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region  Public Methods
+    public async Task<bool> IsInitializedAsync()
+    {
+        string _method = "SetContentPageAsync";
+        try
+        {
+            return Initialized;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
+        }
+    }
     public async Task SetContentPageAsync(ContentPage contentPage)
     {
         try
@@ -431,40 +445,6 @@ public partial class QueryProcessingService : IQueryProcessingService
             return (false, null);
         }
     }
-    public async Task<SimpleEnumeratorsEx.TokenPostingList> CreateTokenPostingListAsync(string trm, List<TokenOccurrenceDto> toks)
-    {
-        string _method = "CreateTokenPostingListAsync";
-        try
-        {
-            QueryResultLocationsDto dto = new QueryResultLocationsDto();
-            List<TokenPositionEx> tokenPositionLst = new List<TokenPositionEx>();
-            TokenPositionEx tok;
-            await Task.Run(() =>
-            {
-                foreach (var occ in toks)
-                {
-
-                    tok = makeTokenPositionEx(trm,
-                                              occ.PostingId,
-                                              occ.ParagaphId,
-                                              occ.DocumentId,
-                                              occ.SequenceId,
-                                              occ.SectionId,
-                                              occ.DocumentPosition,
-                                              occ.TextPosition);
-                    tokenPositionLst.Add(tok);
-                }
-            });
-            var FS_list = ListModule.OfSeq(tokenPositionLst); // Microsoft.FSharp.Collections.ListModule
-            var tpl = makeTokenPostingList(FS_list);
-            return tpl;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return null;
-        }
-    }
     public async Task SetMaxQueryResults(int max)
     {
         string _method = "GetQueryInputString";
@@ -535,6 +515,40 @@ public partial class QueryProcessingService : IQueryProcessingService
         try
         {
             return this.QueryLocations;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    public async Task<SimpleEnumeratorsEx.TokenPostingList> CreateTokenPostingListAsync(string trm, List<TokenOccurrenceDto> toks)
+    {
+        string _method = "CreateTokenPostingListAsync";
+        try
+        {
+            QueryResultLocationsDto dto = new QueryResultLocationsDto();
+            List<TokenPositionEx> tokenPositionLst = new List<TokenPositionEx>();
+            TokenPositionEx tok;
+            await Task.Run(() =>
+            {
+                foreach (var occ in toks)
+                {
+
+                    tok = makeTokenPositionEx(trm,
+                                              occ.PostingId,
+                                              occ.ParagaphId,
+                                              occ.DocumentId,
+                                              occ.SequenceId,
+                                              occ.SectionId,
+                                              occ.DocumentPosition,
+                                              occ.TextPosition);
+                    tokenPositionLst.Add(tok);
+                }
+            });
+            var FS_list = ListModule.OfSeq(tokenPositionLst); // Microsoft.FSharp.Collections.ListModule
+            var tpl = makeTokenPostingList(FS_list);
+            return tpl;
         }
         catch (Exception ex)
         {
