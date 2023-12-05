@@ -832,8 +832,8 @@ public partial class AudioService : IAudioService
                 await StateChangedAsync("Playing");
                 await PlayAudioRangeExAsync(audioMarker);
             }
-            //// Play State -> Tappeed Event -> 
-            ///* || PreviousState = "Paused" */
+            // Play State -> Tappeed Event -> 
+            // || PreviousState = "Paused" */
             else if (CurrentState == "Playing" &&
                      PreviousState == "None" ||
                      PreviousState == "Paused")
@@ -844,7 +844,7 @@ public partial class AudioService : IAudioService
                 await PauseAudioAsync();
                 message = $"Pausing {pid} Timespan {timeRange}";
             }
-            //// Playing State -> Play Trigger
+            // Playing State -> Play Trigger
             else if (CurrentState == "Paused" &&
                      PreviousState == "Playing")
             {
@@ -854,8 +854,8 @@ public partial class AudioService : IAudioService
                 await PlayAudioAsync();
                 message = $"Resuming {pid} Timespan {timeRange}";
             }
-            //// Play State -> Reach Marker Event -> 
-            ///* || PreviousState = "Playing" */
+            // Play State -> Reach Marker Event -> 
+            // || PreviousState = "Playing" */
             else if (CurrentState == "Stopped" &&
                      PreviousState == "Playing")
             {
