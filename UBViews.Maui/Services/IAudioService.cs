@@ -91,7 +91,7 @@ public interface IAudioService
     /// <param name="value"></param>
     /// <param name="clearSearchBar"></param>
     /// <returns></returns>
-    Task SetAudioStreamingAsync(string value, bool clearSearchBar);
+    Task SetAudioStreamingAsync(string value);
 
     /// <summary>
     /// 

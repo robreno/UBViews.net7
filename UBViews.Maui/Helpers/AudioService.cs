@@ -370,10 +370,12 @@ public partial class AudioService : IAudioService
             if (value)
             {
                 AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.On);
+                await SetAudioStreamingAsync("on");
             }
             else
             {
                 AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
+                await SetAudioStreamingAsync("off");
             }
             return;
         }
@@ -390,7 +392,7 @@ public partial class AudioService : IAudioService
     /// <param name="value"></param>
     /// <param name="clearSearchBar"></param>
     /// <returns></returns>
-    public async Task SetAudioStreamingAsync(string value, bool clearSearchBar)
+    public async Task SetAudioStreamingAsync(string value)
     {
         string _method = "SetAudioStreaming";
         try
@@ -402,15 +404,6 @@ public partial class AudioService : IAudioService
             if (value == "off")
             {
                 Preferences.Default.Set("audio_status", false);
-            }
-
-            if (clearSearchBar)
-            {
-                var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    searchBar.Text = null;
-                });
             }
             return;
         }
