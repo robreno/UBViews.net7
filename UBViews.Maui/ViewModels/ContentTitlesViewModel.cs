@@ -48,21 +48,21 @@ public partial class ContentTitlesViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            if (SectionTitlesDtos.Count != 0)
-                return;
-
-            PaperTitle = dto.Title;
-            PaperAuthor = dto.Author;
-            PaperNumber = dto.Id.ToString("0");
-            int partId = dto.PartId;
-            string partTitle = dto.PartTitle;
-            this.Title = partTitle;
-
-            ContentTitles = await fileService.GetContentDtoAsync(dto.Id);
-
-            foreach (var section in ContentTitles.SectionTitles)
+            if (SectionTitlesDtos.Count == 0 && dto != null)
             {
-                SectionTitlesDtos.Add(section);
+                PaperTitle = dto.Title;
+                PaperAuthor = dto.Author;
+                PaperNumber = dto.Id.ToString("0");
+                int partId = dto.PartId;
+                string partTitle = dto.PartTitle;
+                this.Title = partTitle;
+
+                ContentTitles = await fileService.GetContentDtoAsync(dto.Id);
+
+                foreach (var section in ContentTitles.SectionTitles)
+                {
+                    SectionTitlesDtos.Add(section);
+                }
             }
         }
         catch (Exception ex)
