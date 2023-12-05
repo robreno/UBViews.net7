@@ -58,6 +58,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     #endregion
 
+    #region  Initialize Query Results
     private async Task InitializeQueryResults()
     {
         string _method = "nitializeQueryResults";
@@ -70,6 +71,7 @@ public partial class QueryProcessingService : IQueryProcessingService
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
+    #endregion
 
     #region  Public Properties
     public QueryInputDto QueryInputDto { get; set; }

@@ -11,6 +11,7 @@ using UBViews.Models.Query;
 
 public interface IQueryProcessingService
 {
+    Task<bool> IsInitializedAsync();
     Task SetContentPageAsync(ContentPage contentPage);
     Task<bool> PreCheckQueryAsync(string queryString);
     Task SetAudioStreamingAsync(string value, bool clearSearchBar);
