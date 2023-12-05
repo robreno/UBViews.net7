@@ -73,11 +73,11 @@ public partial class AudioService : IAudioService
     public AudioService(IFileService fileService)
     {
         this.fileService = fileService;
-        //AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
-        //CurrentState = "None";
-        //PreviousState = "None";
-        //MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
-        //SendToastState = false;
+        AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
+        CurrentState = "None";
+        PreviousState = "None";
+        MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
+        SendToastState = false;
     }
     #endregion
 
@@ -128,7 +128,7 @@ public partial class AudioService : IAudioService
     /// </summary>
     /// <param name="contentPage"></param>
     /// <returns></returns>
-    public async Task SetContentPage(ContentPage contentPage)
+    public async Task SetContentPageAsync(ContentPage contentPage)
     {
         try
         {

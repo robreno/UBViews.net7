@@ -23,7 +23,7 @@ public interface IAudioService
     /// </summary>
     /// <param name="contentPage"></param>
     /// <returns></returns>
-    Task SetContentPage(ContentPage contentPage);
+    Task SetContentPageAsync(ContentPage contentPage);
 
     /// <summary>
     /// Get MediaMarker at index position.
