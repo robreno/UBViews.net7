@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Primitives;
@@ -27,6 +28,11 @@ namespace UBViews.ViewModels
         /// 
         /// </summary>
         public ContentPage contentPage;
+
+        /// <summary>
+        /// MediaElement
+        /// </summary>
+        public IMediaElement mediaElement;
 
         /// <summary>
         /// 
@@ -79,12 +85,7 @@ namespace UBViews.ViewModels
             this.audioService = audioService;
             this.settingsService = settingsService;
             this.cultureInfo = new CultureInfo("en-US");
-            PreviousState = "None";
-            CurrentState = "None";
         }
-
-        [ObservableProperty]
-        private bool streamAudio;
 
         [ObservableProperty]
         bool isRefreshing;
@@ -127,12 +128,6 @@ namespace UBViews.ViewModels
 
         [ObservableProperty]
         string currentState;
-
-        //[ObservableProperty]
-        //string mediaElementPreviousState;
-
-        //[ObservableProperty]
-        //string mediaElementCurrentState;
 
         [ObservableProperty]
         bool isScrollToLabel;
@@ -177,14 +172,35 @@ namespace UBViews.ViewModels
         {
             try
             {
-                StreamAudio = Preferences.Default.Get("stream_audio", false);
+                if (contentPage == null)
+                {
+                    // TODO: Warning Dialog
+                    return;
+                }
+                else
+                {
+                    //await audioService.SetContentPageAsync(contentPage);
+                    //await audioService.SetMediaElementAsync(mediaElement);
+                    //await audioService.SetPaperDtoAsync(dto);
+                    //var audioStatus = Preferences.Default.Get("audio_status", false);
+                    //await audioService.SetAudioStatusAsync(audioStatus);
+                    //await audioService.SetMediaStateAsync(MediaState);
+#if WINDOWS
+                    //await audioService.SetPlatformAsync("WINDOWS");
+#elif ANDROID        
+                    //await audioService.SetPlatformAsync("ANDROID");
+#endif
+                }
 
-                CurrentState = "None";
                 PreviousState = "None";
+                CurrentState = "None";
+                MediaState.CurrentState = "None";
+                MediaState.PreviousState = "None";
 
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_reference_pids", false);
                 ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
+                //await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
 
                 string uid = dto.Uid;
                 IsScrollToLabel = dto.ScrollTo;
@@ -215,7 +231,9 @@ namespace UBViews.ViewModels
             try
             {
                 if (Paragraphs.Count != 0)
+                {
                     return;
+                }
 
                 int paperId = dto.Id;
                 var paragraphs = await fileService.GetParagraphsAsync(paperId);
@@ -224,6 +242,7 @@ namespace UBViews.ViewModels
                 {
                     Paragraphs.Add(paragraph);
                 }
+                //await audioService.SetParagraphsAsync(Paragraphs.ToList());
 
                 if (ShowReferencePids)
                 {
@@ -232,7 +251,7 @@ namespace UBViews.ViewModels
 
                 if (ShowPlaybackControls)
                 {
-                    await SetMediaPlaybackControls(ShowPlaybackControls);
+                    //await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
                 }
 
                 if (IsScrollToLabel)
@@ -251,7 +270,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                await StopAudio();
+                // Do Nothing
             }
             catch (Exception ex)
             {
@@ -264,12 +283,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    // Stop and cleanup MediaElement when we navigate away
-                    me.Handler?.DisconnectHandler();
-                });
+                //await audioService.DisconnectMediaElementAsync();
             }
             catch (Exception ex)
             {
@@ -282,45 +296,13 @@ namespace UBViews.ViewModels
         {
             try
             {
-                if (contentPage == null)
+                if (contentPage == null) 
+                { 
                     return;
-
-                if (!StreamAudio)
-                    return;
+                }
 
                 string paperTitle = PaperTitle;
-
                 string message = $"Playing {paperTitle}";
-
-                if (CurrentState == "None" ||
-                    CurrentState == "Paused" ||
-                    CurrentState == "Stopped")
-                {
-                    await PlayAudio();
-                }
-                else if (CurrentState == "Playing")
-                {
-                    await PauseAudio();
-                    message = $"Pausing {paperTitle} Timespan {value}";
-                }
-                else if (CurrentState == "Paused" && PreviousState == "Playing")
-                {
-                    await PlayAudio();
-                    message = $"Resume Playing {paperTitle} Timespan {value}";
-                }
-                else
-                {
-                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                    throw new Exception("Uknown State: " + msg);
-                }
-
-                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
-                {
-                    ToastDuration duration = ToastDuration.Short;
-                    double fontSize = 14;
-                    var toast = Toast.Make(message, duration, fontSize);
-                    await toast.Show(cancellationTokenSource.Token);
-                }
             }
             catch (Exception ex)
             {
@@ -335,23 +317,14 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
-                    return;
-
-                if (!StreamAudio)
-                    return;
-
-                string paperTitle = PaperTitle;
-                string message = $"Stopping {paperTitle}";
-
-                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
-                    ToastDuration duration = ToastDuration.Short;
-                    double fontSize = 14;
-                    var toast = Toast.Make(message, duration, fontSize);
-                    await toast.Show(cancellationTokenSource.Token);
+                    return;
                 }
 
-                await StopAudio();
+                string paperTitle = PaperTitle;
+                string message = $"Playing {paperTitle}";
+
+                //await audioService.DoubleTappedGestureForPaperAsync(value);
             }
             catch (Exception ex)
             {
@@ -366,85 +339,19 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
+                {
                     return;
-
-                if (!StreamAudio)
-                    return;
-
-                int paperId = Int32.Parse(id.Substring(1, 3));
-                int sequenceId = Int32.Parse(id.Substring(5,3));
-                var audioMarker = AudioMarkers.Where(m => m.SequenceId == sequenceId).FirstOrDefault();
-
-                var startTimeStr = audioMarker.StartTime.ToLongTimeString();
-                var endTimeStr = audioMarker.EndTime.ToLongTimeString();
-                string timeRange = startTimeStr + " - " + endTimeStr;
-
-                Label currentLabel = (Label)contentPage.FindByName(id);
-                string timeSpanRange = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
-                string timeSpanRangeMsg = timeSpanRange.Replace("_", " - ");
-                string uid = currentLabel.GetValue(AttachedProperties.Ubml.UniqueIdProperty) as string;
-                // 001.000.000.000
-                string[] arr = uid.Split('.');
-                string pid = Int32.Parse(arr[1]).ToString("0")
-                             + ":" +
-                             Int32.Parse(arr[2]).ToString("0")
-                             + "." +
-                             Int32.Parse(arr[3]).ToString("0");
-
-                string message = $"Playing {pid} Timespan {timeRange}";
-
-                // Initial State -> Trigger Play
-                if (CurrentState == "None" ||
-                    PreviousState == "None")
-                {
-                    await PlayAudioRangeEx(audioMarker);
-                }
-                // Play State -> Tappeed Event -> 
-                /* || PreviousState = "Paused" */
-                else if (CurrentState == "Playing" ||
-                         PreviousState == "None") 
-                {
-                    await PauseAudio();
-                    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
-                }
-                // Playing State -> Play Trigger
-                else if (CurrentState == "Paused" ||
-                         PreviousState == "Playing")
-                {
-                    await PlayAudio();
-                    message = $"Resuming {pid} Timespan {timeSpanRangeMsg}";
-                }
-                else
-                {
-                    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                    throw new Exception("Uknown State: " + msg);
                 }
 
-                // Opening State for Windows
-                //if (CurrentState == "Paused" && PreviousState == "Opening" ||
-                //    CurrentState == "Paused" && PreviousState == "Stopped")
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                //var audioStatus = await audioService.GetAudioStatusAsync();
+                //if (audioStatus)
                 //{
-                //    await PlayAudioRange(timeSpanRange);
+                //    await audioService.TappedGestureAsync(id);
                 //}
-                //else if (CurrentState == "Playing" && PreviousState == "Paused" ||
-                //         CurrentState == "Playing" && PreviousState == "Buffering")
-                //{
-                //    await PauseAudio();
-                //    message = $"Pausing {pid} Timespan {timeSpanRangeMsg}";
-                //}
-                //else
-                //{
-                //    string msg = $"Current State = {CurrentState} Previous State = {PreviousState}";
-                //    throw new Exception("Uknown State: " + msg);
-                //}
-
-                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
-                {
-                    ToastDuration duration = ToastDuration.Short;
-                    double fontSize = 14;
-                    var toast = Toast.Make(message, duration, fontSize);
-                    await toast.Show(cancellationTokenSource.Token);
-                }
+                //var _currState = MediaState.CurrentState;
+                //var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -459,45 +366,19 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
-                    return;
-
-                if (!StreamAudio)
-                    return;
-
-                Label currentLabel = (Label)contentPage.FindByName(id);
-                string timeSpanRange = currentLabel.GetValue(AttachedProperties.Audio.TimeSpanProperty) as string;
-                string timeSpanRangeMsg = timeSpanRange.Replace("_", " - ");
-                string uid = currentLabel.GetValue(AttachedProperties.Ubml.UniqueIdProperty) as string;
-                // 001.000.000.000
-                string[] arr = uid.Split('.');
-                string pid = Int32.Parse(arr[1]).ToString("0")
-                             + ":" +
-                             Int32.Parse(arr[2]).ToString("0")
-                             + "." +
-                             Int32.Parse(arr[3]).ToString("0");
-
-                //string format = @"dd\:hh\:mm\:ss\.fffffff";
-                // Console.WriteLine("The time difference is: {0}", ts.ToString(format));
-                //string format = @"dd\:hh\:mm\:ss\.fffffff";
-
-                //string format = @"hh\:mm\:ss\.ff";
-                //var hrs = timeSpan.TotalHours;
-                //var min = timeSpan.TotalMinutes;
-                //var sec = timeSpan.TotalSeconds;
-                //var str1 = timeSpan.ToShortTimeString();
-                //var str2 = timeSpan.ToString(format);
-
-                string message = $"Stopping {pid} Timespan {timeSpanRangeMsg}";
-
-                using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
                 {
-                    ToastDuration duration = ToastDuration.Short;
-                    double fontSize = 14;
-                    var toast = Toast.Make(message, duration, fontSize);
-                    await toast.Show(cancellationTokenSource.Token);
+                    return;
                 }
 
-                await StopAudio();
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                var audioStatus = await audioService.GetAudioStatusAsync();
+                if (audioStatus)
+                {
+                    await audioService.DoubleTappedGestureAsync(id);
+                }
+                var _currState = MediaState.CurrentState;
+                var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -513,7 +394,9 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
+                {
                     return;
+                }
 
                 var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 var paperId = Int32.Parse(actionArray[0]).ToString("0");
@@ -522,22 +405,33 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var canSendEmail = await emailService.CanSendEmailAsync();
-                if (!canSendEmail)
-                {
-                    return;
-                }
+                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
+                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
 
                 string action = await App.Current.MainPage.DisplayActionSheet("Action?", "Cancel", null, "Copy", "Share");
+
+                if (autoSendRecipients.Count == 0)
+                {
+                    var contactsCount = await emailService.ContactsCountAsync();
+                    string promptMessage = string.Empty;
+                    string secondAction = string.Empty;
+
+                    secondAction = " add or set contact(s) to AutoSend.";
+                    promptMessage = $"You have no contacts or none are set to auto send.\r" +
+                                    $"Please go to the Settigs => Contacts page and {secondAction}.";
+
+                    await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                    return;
+                }
 
                 string errorMsg = string.Empty;
                 switch (action)
                 {
                     case "Copy":
                         // Add paragraph text to clipboard
-                        var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
-                        SendToast($"Paragraph {pid} cpied to clipboard!");
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
@@ -545,7 +439,8 @@ namespace UBViews.ViewModels
                         break;
                     case "Email":
                         // Email Paragraph
-                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.Html, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, 
+                                                                          IEmailService.SendMode.AutoSend);
                         break;
                     case "Cancel":
                         break;
@@ -570,7 +465,9 @@ namespace UBViews.ViewModels
             try
             {
                 if (contentPage == null)
+                { 
                     return;
+                }
 
                 var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 var action = actionArray[0];
@@ -580,10 +477,26 @@ namespace UBViews.ViewModels
                 var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
-                var canSendEmail = await emailService.CanSendEmailAsync();
-                if (!canSendEmail)
+                var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
+                var htmlText = await emailService.CreateHtmlBodyAsync(paragraph);
+
+                var autoSendRecipients = await emailService.GetAutoSendEmailListAsync();
+
+                if (action == "Share" || action == "Email")
                 {
-                    return;
+                    if (autoSendRecipients.Count == 0)
+                    {
+                        var contactsCount = await emailService.ContactsCountAsync();
+                        string promptMessage = string.Empty;
+                        string secondAction = string.Empty;
+
+                        secondAction = " add or set contact(s) to AutoSend.";
+                        promptMessage = $"You have no contacts or none are set to auto send.\r" +
+                                        $"Please go to the Settigs => Contacts page and {secondAction}.";
+
+                        await App.Current.MainPage.DisplayAlert("Share Email", promptMessage, "Cancel");
+                        return;
+                    }
                 }
 
                 string errorMsg = string.Empty;
@@ -591,17 +504,27 @@ namespace UBViews.ViewModels
                 {
                     case "Copy":
                         // Add paragraph text to clipboard
-                        var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
                         await Clipboard.Default.SetTextAsync(plainText);
-                        SendToast($"Paragraph {pid} cpied to clipboard!");
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
                         await emailService.ShareParagraphAsync(paragraph);
+                        await SendToast($"Paragraph {pid} shared!");
                         break;
                     case "Email":
                         // Email Paragraph
-                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, IEmailService.SendMode.AutoSend);
+                        await emailService.EmailParagraphAsync(paragraph, IEmailService.EmailType.PlainText, 
+                                                                          IEmailService.SendMode.AutoSend);
+                        break;
+                    case "Play":
+                        //await audioService.PlayAudioAsync();
+                        break;
+                    case "Pause":
+                        //await audioService.PauseAudioAsync();
+                        break;
+                    case "Stop":
+                        //await audioService.StopAudioAsync();
                         break;
                     default:
                         errorMsg = "Unkown Command!";
@@ -622,11 +545,11 @@ namespace UBViews.ViewModels
         {
             try
             {
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                //var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     // Stop and cleanup MediaElement when we navigate away
-                    me.ShouldShowPlaybackControls = value;
+                    mediaElement.ShouldShowPlaybackControls = value;
                 });
             }
             catch (Exception ex)
@@ -641,10 +564,10 @@ namespace UBViews.ViewModels
         {
             try
             {
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                //var me = contentPage.FindByName("mediaElement") as IMediaElement;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    me.SeekTo(audioMarker.StartTime);
+                    mediaElement.SeekTo(audioMarker.StartTime);
                 });
             }
             catch (Exception ex)
@@ -711,11 +634,13 @@ namespace UBViews.ViewModels
                 var lblArry = labelName.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 int paperId = Int32.Parse(lblArry[0]);
                 int seqId = Int32.Parse(lblArry[1]);
+
                 //var audioMarker = Markers.GetBySeqId(seqId);
                 //await SetPlaybackControlsStartTime(audioMarker);
 
                 // See Workaround for Maui bug #7295
                 // https://github.com/dotnet/maui/issues/7295
+
                 await Task.Delay(1000);
 
                 var _x = currentLabel.X;
@@ -741,17 +666,15 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = "Playing";
-
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    if (me != null)
-                    {
-                        me.Play();
-                    }
-                });
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                //var audioStatus = await audioService.GetAudioStatusAsync();
+                //if (audioStatus)
+                //{
+                //    await audioService.PlayAudioAsync();
+                //}
+                //var _currState = MediaState.CurrentState;
+                //var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -765,17 +688,15 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = "Paused";
-
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    if (me != null)
-                    {
-                        me.Pause();
-                    }
-                });
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                //var audioStatus = await audioService.GetAudioStatusAsync();
+                //if (audioStatus)
+                //{
+                //    await audioService.PauseAudioAsync();
+                //}
+                //var _currState = MediaState.CurrentState;
+                //var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -789,18 +710,16 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = "Stopped";
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                var audioStatus = await audioService.GetAudioStatusAsync();
 
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
+                if (audioStatus)
                 {
-                    if (me != null)
-                    {
-                        me.Stop();
-                        me.MediaEnded();
-                    }
-                });
+                    await audioService.StopAudioAsync();
+                }
+                var _currState = MediaState.CurrentState;
+                var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -814,25 +733,15 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = "Playing";
-
-                char[] separators = { ':', '.' };
-                string[] arry = timeSpanRange.Split('_');
-                string[] sa = arry[0].Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                string[] ea = arry[1].Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                TimeSpan start = new TimeSpan(0, Int32.Parse(sa[0]), Int32.Parse(sa[1]), Int32.Parse(sa[2]), Int32.Parse(sa[3]));
-                TimeSpan end = new TimeSpan(0, Int32.Parse(ea[0]), Int32.Parse(ea[1]), Int32.Parse(ea[2]), Int32.Parse(ea[3]));
-
-                StartTime = start;
-                EndTime = end;
-
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    me.SeekTo(start);
-                    me.Play();
-                });
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                //var audioStatus = await audioService.GetAudioStatusAsync();
+                //if (audioStatus)
+                //{
+                //    await PlayAudioRange(timeSpanRange);
+                //}
+                //var _currState = MediaState.CurrentState;
+                //var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -846,21 +755,15 @@ namespace UBViews.ViewModels
         {
             try
             {
-                PreviousState = CurrentState;
-                CurrentState = "Playing";
-
-                TimeSpan start = audioMarker.StartTime;
-                TimeSpan end = audioMarker.EndTime;
-
-                StartTime = start;
-                EndTime = end;
-
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    me.SeekTo(start);
-                    me.Play();
-                });
+                CurrentState = MediaState.CurrentState;
+                PreviousState = MediaState.PreviousState;
+                //var audioStatus = await audioService.GetAudioStatusAsync();
+                //if (audioStatus)
+                //{
+                //    await audioService.PlayAudioRangeExAsync(audioMarker);
+                //}
+                //var _currState = MediaState.CurrentState;
+                //var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -874,21 +777,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                Position = timeSpan;
-
-                var me = contentPage.FindByName("mediaElement") as IMediaElement;
-                if (EndTime.ToShortTimeString() == timeSpan.ToShortTimeString())
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() =>
-                    {
-                        if (me != null)
-                        {
-                            me.Stop();
-                            me.MediaEnded();
-                        }
-                    });
-                    MediaState.SetState(me.CurrentState.ToString());
-                }
+                //await audioService.PositionChangedAsync(timeSpan);
             }
             catch (Exception ex)
             {
@@ -902,11 +791,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                var currentState = state;
-                MediaState.SetState(state);
-                // TODO: Remove Above
-                //MediaElementPreviousState = MediaElementCurrentState;
-                //MediaElementCurrentState = state;
+                // await audioService.StateChangedAsync(state);
             }
             catch (Exception ex)
             {
