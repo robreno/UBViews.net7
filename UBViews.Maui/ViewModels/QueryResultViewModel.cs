@@ -312,36 +312,35 @@ public partial class QueryResultViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            string msg = string.Empty;
+            string message = string.Empty;
+            bool parsingSuccessful = false;
 
-            QueryString = queryString.Trim();
+            bool isCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
+            if (isCommand)
+            {
+                return;
+            }
+
+            QueryInputString = queryString.Trim();
             if (QueryInputString == PreviousQueryInputString)
             {
-                msg = $"The query \"{QueryInputString}\" was same. Try another query?";
-                await App.Current.MainPage.DisplayAlert("Query Results", msg, "Cancel");
+                message = $"The query \"{QueryInputString}\" was same. Try another query?";
+                await App.Current.MainPage.DisplayAlert("Query Results", message, "Cancel");
                 return;
             }
             else
             {
-                PreviousQueryInputString = queryString;
+                PreviousQueryInputString = QueryInputString;
             }
 
-            // TODO: Should use AudioService to set on or off with secret query
-            //if (queryString.Contains("^"))
-            //{
-            //    var value = queryString.Substring(1, queryString.Length - 1);
-            //    await SetAudioStreaming(value);
-            //    return;
-            //}
-
-            var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
+            (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
             if (parsingSuccessful)
             {
                 QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
                 QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
                 TermList = await queryProcessingService.GetTermListAsync();
 
-                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
+                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
                 if (isSuccess)
                 {
                     QueryLocationsDto.Clear();
@@ -368,12 +367,15 @@ public partial class QueryResultViewModel : BaseViewModel
                     // Handle unsuccessful query result returned
                     // Return to existing query page and try again
                     //await Shell.Current.GoToAsync("..");
-                    msg = $"Query unsuccessful.";
+                    message = $"Query unsuccessful for unknown reason.";
+                    await App.Current.MainPage.DisplayAlert($"Query in {_method}.{_class} => ", message, "Ok");
                 }
             }
             else // Parsing failure
             {
-                throw new Exception("Uknown Parsing Error!");
+                message = "Unknown Erro, try again?";
+                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
+                    message, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
             }
         }
         catch (Exception ex)
