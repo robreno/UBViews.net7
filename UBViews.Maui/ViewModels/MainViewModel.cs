@@ -48,10 +48,10 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    bool isRefreshing;
+    bool isInitialized;
 
     [ObservableProperty]
-    bool isInitialized;
+    bool isRefreshing;
 
     [ObservableProperty]
     QueryResultLocationsDto queryLocations;
@@ -98,18 +98,28 @@ public partial class MainViewModel : BaseViewModel
         string _method = "MainPageAppearing";
         try
         {
-            if (contentPage != null && !IsInitialized)
+            if (contentPage == null)
+            {
+                throw new NullReferenceException("ContentPage null.");
+            }
+
+            if (!IsInitialized)
             {
                 await queryProcessingService.SetContentPageAsync(contentPage);
-                await queryProcessingService.SetAudioStreamingAsync("off", false);
+                await queryProcessingService.SetAudioStreamingAsync("off");
+
+                MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
+                await queryProcessingService.SetMaxQueryResultsAsync(MaxQueryResults);
+
                 isInitialized = true;
             }
 
-            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
-            await queryProcessingService.SetMaxQueryResults(MaxQueryResults);
-
             string titleMessage = $"UBViews Home";
             Title = titleMessage;
+        }
+        catch (NullReferenceException ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Null reference raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         catch (Exception ex)
         {
@@ -132,244 +142,34 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task ParseQuery_Depreciated(string queryString)
-    {
-        string _method = "ParseQuery";
-        try
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            var validChars = QueryFilterService.checkForValidChars(queryString);
-            var validCharsSuccess = validChars.Item1;
-            var validForm = QueryFilterService.checkForValidForm(queryString);
-            var validFormSuccess = validForm.Item1;
-
-            if (queryString == null ||
-                queryString == string.Empty ||
-                !validCharsSuccess ||
-                !validFormSuccess)
-            {
-                var errorMessage = string.Empty;
-                var msg = string.Empty;
-
-                if (!validCharsSuccess || !validFormSuccess)
-                {
-                    if (!validCharsSuccess)
-                        errorMessage = errorMessage + validChars.Item2 + ";";
-                    if (!validFormSuccess)
-                        errorMessage = errorMessage + validForm.Item2 + ";";
-
-                    msg = $"Bad query at {errorMessage}. Edit and click Ok or cancel query.";
-                }
-
-                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
-                                                                           "Cancel", null, -1, null, queryString);
-
-                QueryInputDto.Text = "Empty Query";
-                QueryInputDto.TokenCount = 0;
-                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query empty",
-                    "Bad query, enter a valid query");
-            }
-            else
-            {
-                await NormalizeQueryString(queryString);
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    [RelayCommand]
-    async Task SubmitQuery_Depreciated(string queryString)
-    {
-        string _method = "SubmitQuery";
-        try
-        {
-            IsBusy = true;
-
-            queryString = queryString.Trim();
-
-            if (queryString.Contains("^"))
-            {
-                var value = queryString.Substring(1, queryString.Length-1);
-                await SetAudioStreaming(value);
-                return;
-            }
-
-            var isNullOrEmpty = string.IsNullOrEmpty(queryString);
-            if (!isNullOrEmpty)
-            {
-                var isMinusHyphenated = queryString.Contains("-");
-                if (isMinusHyphenated)
-                {
-                    queryString = queryString.Replace("-", "‑");
-                }
-            }
-            
-            var validChars = QueryFilterService.checkForValidChars(queryString);
-            var validCharsSuccess = validChars.Item1;
-            var validForm = QueryFilterService.checkForValidForm(queryString);
-            var validFormSuccess = validForm.Item1;
-
-            var errorMessage = string.Empty;
-            var msg = string.Empty;
-            if (isNullOrEmpty || !validCharsSuccess || !validFormSuccess)
-            {
-                if (isNullOrEmpty)
-                {
-                    errorMessage = "[Empty Query String]";
-                }
-                else if (!validCharsSuccess || !validFormSuccess)
-                {
-                    if (!validCharsSuccess)
-                        errorMessage = errorMessage + "at " + validChars.Item2 + "; ";
-                    if (!validFormSuccess)
-                        errorMessage = errorMessage + "at " + validForm.Item2 + "; ";
-                }
-                else
-                {
-                    errorMessage = "Unknown Query Error";
-                }
-
-                msg = $"Bad query {errorMessage}. \r\nEdit and click Ok or cancel query.";
-
-                var result = await App.Current.MainPage.DisplayPromptAsync("Query Error", msg, "OK",
-                                                                           "Cancel", null, -1, null, queryString);
-
-                if (result != null)
-                {
-                    await Shell.Current.GoToAsync($"..?QueryInput={result}");
-                }
-                else
-                {
-                    await Shell.Current.GoToAsync("..");
-                }
-            }
-            else
-            {
-                await NormalizeQueryString(queryString);
-
-                // Check if query exists
-                (bool queryExists, QueryResultDto dto) = await repositoryService.QueryResultExistsAsync(QueryInputString);
-                QueryResultExists = queryExists;
-                QueryResultLocationsDto queryResultLocationsDto = null;
-                int queryResultId = 0;
-                
-                if (queryExists)
-                {
-                    queryResultId = dto.Id;
-                    queryResultLocationsDto = await repositoryService.GetQueryResultByIdAsync(queryResultId);
-                    QueryExpression = queryResultLocationsDto.QueryExpression;
-                    QueryLocations = queryResultLocationsDto;
-                    // Navigate to QueryResultPage here
-                    await NavigateTo("QueryResults");
-                }
-                else
-                {
-                    // Run New Query
-                    // interregnum and wisdom filterby parid
-                    // jesus and courtesans filterby parid
-                    // resurrection and halls
-                    // premind and capacity filterby parid
-
-                    var astQuery = await parserService.ParseQueryAsync(QueryInputString);
-                    var query = astQuery.Head;
-                    QueryExpression = await parserService.QueryToStringAsync(query);
-
-                    // ~caucasoid
-                    // ~rejuvenated
-                    // crime or punishment
-                    // "name of your world"
-                    // "be of good cheer"
-
-                    // Bug here: SimpleParse.getIteratorEx return types wrong
-                    // never-ending  and "infinite perfection"  => "And+Phrase"
-                    // "infinite perfection" and never-ending   => "And+Phrase"
-                    // [energy transmitter]
-
-                    var tpl = await repositoryService.RunQueryAsync(QueryInputString);
-
-                    bool isAtEnd = tpl.AtEnd;
-                    if (!isAtEnd)
-                    {
-                        (QueryResultLocationsDto qrl, XElement qre) = await repositoryService.GetQueryResultLocationsAsync(QueryInputString, query, tpl);
-                        var maxQryLocs = qrl.QueryLocations.Take(MaxQueryResults).ToList();
-                        //qrl.QueryLocations = maxQryLocs;
-
-                        QueryLocations = qrl;
-                        await NavigateTo("QueryResults");
-
-                        //var queryRowId = await _repositoryService.SaveQueryResultAsync(queryResultElm);
-                        //queryResultElm.SetAttributeValue("id", queryRowId);
-
-                        // Create object model
-                        //queryResultLocationsDto = await _repositoryService.GetQueryResultByIdAsync(queryRowId);
-
-                        // Add queryResultEml to QueryHistory AppData file here
-                        //await _appDataService.AddQueryResult(queryResultElm);
-
-                        // Navigate to QueryResultPage here
-                        //await NavigateTo("QueryResults");
-                    }
-                    else
-                    {
-                        msg = $"The query \"{QueryInputString}\" returned no results. Try another query.";
-                        await App.Current.MainPage.DisplayAlert("SumbitQuery => ", msg, "Cancel");
-                        await Shell.Current.GoToAsync("..");
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-        }
-        finally
-        {
-            IsBusy = false;
-            IsRefreshing = false;
-        }
-    }
-
-    [RelayCommand]
     async Task SubmitQuery(string queryString)
     {
         // temple and prostitutes
         // prostitutes and temple
         // foreword and orvonton
 
-        string _method = "SubmitQueryEx";
+        string _method = "SubmitQuery";
         try
         {
             IsBusy = true;
-            string msg = string.Empty;
+            string message = string.Empty;
+            bool parsingSuccessful = false;
 
-            //bool isSecretCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
-            //if (isSecretCommand)
-            //{
-            //    return;
-            //}
+            bool isCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
+            if (isCommand)
+            {
+                return;
+            }
 
-            var parsingSuccessful = await queryProcessingService.ParseQueryAsync(queryString);
+            QueryInputString = queryString.Trim();
+            (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
             if (parsingSuccessful)
             {
                 QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
                 QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
                 TermList = await queryProcessingService.GetTermListAsync();
 
-                (bool isSuccess, 
-                 QueryResultExists, 
-                 QueryLocations) = await queryProcessingService.RunQueryExAsync(queryString);
-
+                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
                 if (isSuccess)
                 {
                     if (QueryResultExists)
@@ -466,54 +266,5 @@ public partial class MainViewModel : BaseViewModel
     }
 
     #region  Helper Methods
-    private async Task NormalizeQueryString(string queryString)
-    {
-        string _method = "NormalizeQueryString";
-        try
-        {
-            string qs = "";
-            qs = queryString.ToLower();
-            string[] tokens = Regex.Split(qs, "\\s+");
-            StringBuilder sb = new StringBuilder();
-            foreach (var t in tokens)
-            {
-                sb.Append(t + " ");
-            }
-            qs = sb.ToString().Trim();
-            QueryInputDto = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
-            QueryInputString = QueryInputDto.Text;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-        }
-    }
-    private async Task SetAudioStreaming(string value)
-    {
-        string _method = "SetAudioStreaming";
-        try
-        {
-            if (value == "on")
-            {
-                Preferences.Default.Set("stream_audio", true);
-            }
-            if (value == "off")
-            {
-                Preferences.Default.Set("stream_audio", false);
-            }
-
-            var searchBar = contentPage.FindByName("searchBarControl") as SearchBar;
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                searchBar.Text = null;
-            });
-            return;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-            return;
-        }
-    }
     #endregion
 }
