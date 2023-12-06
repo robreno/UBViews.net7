@@ -106,7 +106,7 @@ public partial class MainViewModel : BaseViewModel
             if (!IsInitialized)
             {
                 await queryProcessingService.SetContentPageAsync(contentPage);
-                await queryProcessingService.SetAudioStreamingAsync("off");
+                await queryProcessingService.SetAudioStreamingAsync("on");
 
                 MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
                 await queryProcessingService.SetMaxQueryResultsAsync(MaxQueryResults);
