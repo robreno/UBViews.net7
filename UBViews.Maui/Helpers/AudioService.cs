@@ -297,6 +297,7 @@ public partial class AudioService : IAudioService
                 }
                 var newMarker = new AudioMarker(marker);
                 Markers.Insert(newMarker);
+                AudioMarkers.Add(newMarker);
             }
             return Markers;
         }
