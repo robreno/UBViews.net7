@@ -135,6 +135,11 @@ namespace UBViews.ViewModels
         [ObservableProperty]
         string scrollToLabelName;
 
+        [ObservableProperty]
+        bool validAudioPath = false;
+
+        // RelayCommands
+
         [RelayCommand]
         async Task RefeshingView(PaperDto dto)
         {
@@ -179,16 +184,29 @@ namespace UBViews.ViewModels
                 }
                 else
                 {
-                    //await audioService.SetContentPageAsync(contentPage);
-                    //await audioService.SetMediaElementAsync(mediaElement);
-                    //await audioService.SetPaperDtoAsync(dto);
-                    //var audioStatus = Preferences.Default.Get("audio_status", false);
-                    //await audioService.SetAudioStatusAsync(audioStatus);
-                    //await audioService.SetMediaStateAsync(MediaState);
+                    string path = await settingsService.Get("audio_folder_path", "");
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        string id = dto.Id.ToString("0");
+                        string fullPathName = path + @"\U" + id + ".mp3";
+                        if (File.Exists(fullPathName))
+                        {
+                            var mediaSource = MediaSource.FromFile(fullPathName);
+                            mediaElement.Source = mediaSource;
+                            ValidAudioPath = true;
+                        }
+                    }
+
+                    await audioService.SetContentPageAsync(contentPage);
+                    await audioService.SetMediaElementAsync(mediaElement);
+                    await audioService.SetPaperDtoAsync(dto);
+                    var audioStatus = Preferences.Default.Get("audio_status", false);
+                    await audioService.SetAudioStatusAsync(audioStatus);
+                    await audioService.SetMediaStateAsync(MediaState);
 #if WINDOWS
-                    //await audioService.SetPlatformAsync("WINDOWS");
+                    await audioService.SetPlatformAsync("WINDOWS");
 #elif ANDROID        
-                    //await audioService.SetPlatformAsync("ANDROID");
+                    await audioService.SetPlatformAsync("ANDROID");
 #endif
                 }
 
@@ -200,7 +218,7 @@ namespace UBViews.ViewModels
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_reference_pids", false);
                 ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
-                //await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
+                await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
 
                 string uid = dto.Uid;
                 IsScrollToLabel = dto.ScrollTo;
@@ -230,8 +248,9 @@ namespace UBViews.ViewModels
         {
             try
             {
-                if (Paragraphs.Count != 0)
+                if (dto == null)
                 {
+                    // raise error.
                     return;
                 }
 
@@ -242,7 +261,7 @@ namespace UBViews.ViewModels
                 {
                     Paragraphs.Add(paragraph);
                 }
-                //await audioService.SetParagraphsAsync(Paragraphs.ToList());
+                await audioService.SetParagraphsAsync(Paragraphs.ToList());
 
                 if (ShowReferencePids)
                 {
@@ -251,7 +270,7 @@ namespace UBViews.ViewModels
 
                 if (ShowPlaybackControls)
                 {
-                    //await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
+                    await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
                 }
 
                 if (IsScrollToLabel)
@@ -283,7 +302,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                //await audioService.DisconnectMediaElementAsync();
+                await audioService.DisconnectMediaElementAsync();
             }
             catch (Exception ex)
             {
@@ -345,13 +364,13 @@ namespace UBViews.ViewModels
 
                 CurrentState = MediaState.CurrentState;
                 PreviousState = MediaState.PreviousState;
-                //var audioStatus = await audioService.GetAudioStatusAsync();
-                //if (audioStatus)
-                //{
-                //    await audioService.TappedGestureAsync(id);
-                //}
-                //var _currState = MediaState.CurrentState;
-                //var _prevState = MediaState.PreviousState;
+                var audioStatus = await audioService.GetAudioStatusAsync();
+                if (audioStatus)
+                {
+                    await audioService.TappedGestureAsync(id);
+                }
+                var _currState = MediaState.CurrentState;
+                var _prevState = MediaState.PreviousState;
             }
             catch (Exception ex)
             {
@@ -545,7 +564,8 @@ namespace UBViews.ViewModels
         {
             try
             {
-                //var me = contentPage.FindByName("mediaElement") as IMediaElement;
+                //await audioService.SetMediaPlaybackControlsAsync(value);
+
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     // Stop and cleanup MediaElement when we navigate away
@@ -777,7 +797,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                //await audioService.PositionChangedAsync(timeSpan);
+                await audioService.PositionChangedAsync(timeSpan);
             }
             catch (Exception ex)
             {
@@ -791,7 +811,7 @@ namespace UBViews.ViewModels
         {
             try
             {
-                // await audioService.StateChangedAsync(state);
+                await audioService.StateChangedAsync(state);
             }
             catch (Exception ex)
             {
