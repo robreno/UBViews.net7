@@ -1,7 +1,12 @@
 ﻿namespace UBViews.ViewModels;
 
+    using CommunityToolkit.Maui.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 using UBViews.Services;
 using UBViews.Views;
+
 public partial class XmlAppSettingsViewModel : BaseViewModel
 {
     const int SMALL = 0;
@@ -27,6 +32,8 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
     bool previousAutoSendEmail;
+    string previousAudioFolderName;
+    string previousAudioFolderPath;
     int previousWindowSize;
     bool settingsDirty;
 
@@ -66,6 +73,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     int windowSize;
+
+    [ObservableProperty]
+    string audioFolderName = string.Empty;
+
+    [ObservableProperty]
+    string audioFolderPath = string.Empty;
+
+    // RelayCommands
 
     [RelayCommand]
     async Task AppSettingPageAppearing()
@@ -275,7 +290,36 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
             AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
+            AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
+            AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
             settingsDirty = false;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
+    async Task PickAudioFolder()
+    {
+        try
+        {
+            CancellationToken cancellationToken = new CancellationToken();
+            (bool isSuccess, string value) = await PickFolderAsync(cancellationToken);
+            if (isSuccess)
+            {
+                var arry = value.Split("_", StringSplitOptions.RemoveEmptyEntries);
+                previousAudioFolderName = AudioFolderName;
+                previousAudioFolderPath = AudioFolderPath;
+                AudioFolderName = arry[0];
+                AudioFolderPath = arry[1];
+            }
+            else
+            {
+                string errorMessage = value;
+            }
         }
         catch (Exception ex)
         {
@@ -327,6 +371,12 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);
+                settingsDirty = true;
+            }
+            if (previousAudioFolderPath != AudioFolderPath)
+            {
+                await settingsService.SetCache("audio_folder_name", AudioFolderName);
+                await settingsService.SetCache("audio_folder_path", AudioFolderPath);
                 settingsDirty = true;
             }
             if (settingsDirty && !UseCaching)
@@ -389,6 +439,36 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+        }
+    }
+    async Task<(bool, string)> PickFolderAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await FolderPicker.Default.PickAsync(cancellationToken);
+            string _name = string.Empty;
+            string _path = string.Empty;
+            string _value = string.Empty;
+            bool _isSuccess = false;
+            if (result.IsSuccessful)
+            {
+                _name = result.Folder.Name;
+                _path = result.Folder.Path;
+                _value = _name + "_" + _path;
+                _isSuccess = true;
+            }
+            else
+            {
+                _value = result.Exception.Message;
+                _isSuccess = false;
+            }
+            return (_isSuccess, _value);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.SaveSettings => ",
+                ex.Message, "Ok");
+            return (false, null);
         }
     }
 }

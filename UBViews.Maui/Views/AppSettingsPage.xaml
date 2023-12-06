@@ -195,6 +195,22 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
+            <Border Stroke="Blue"
+                    Padding="10">
+                <VerticalStackLayout x:Name="audioPathVSL">
+                    <Button x:Name="audioPathLabel"
+                            Text="Audio Folder Picker:"
+                            HeightRequest="20"
+                            WidthRequest="160"
+                            HorizontalOptions="Start"
+                            Margin="0,0,10,10"
+                            Command="{Binding PickAudioFolderCommand}" />
+                    <Entry x:Name="audioPathEntry"
+                           Style="{StaticResource AudioPathEntry}"
+                           Text="{Binding AudioFolderPath, Mode=TwoWay}"/>
+                </VerticalStackLayout>
+            </Border>
+
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
