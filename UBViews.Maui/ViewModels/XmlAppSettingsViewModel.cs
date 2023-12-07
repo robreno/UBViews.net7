@@ -88,17 +88,20 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         try
         {
             await LoadSettings();
-            var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
+            var audioPathBorder = contentPage.FindByName("audioPathBorder") as Border;
             var playbackControlsHSL = contentPage.FindByName("PlaybackControlsHSL") as HorizontalStackLayout;
             var lineHeightHSL = contentPage.FindByName("LineHeightHSL") as HorizontalStackLayout;
+            var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
             //var autoSendEmailHSL = contentPage.FindByName("AutoSendEmailHSL") as HorizontalStackLayout;
 #if WINDOWS
-            windowSizeHSL.IsVisible = false;
+            audioPathBorder.IsVisible = false;
             playbackControlsHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
+            windowSizeHSL.IsVisible = false;
             //autoSendEmailHSL.IsVisible = false;
 #elif ANDROID
             playbackControlsHSL.IsVisible = false;
+            audioPathBorder.IsVisible = false;
             windowSizeHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
             //autoSendEmailHSL.IsVisible = false;

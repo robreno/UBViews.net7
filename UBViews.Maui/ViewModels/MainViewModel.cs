@@ -5,6 +5,8 @@ using System.Xml.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Alerts;
 using Microsoft.Maui.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -106,11 +108,8 @@ public partial class MainViewModel : BaseViewModel
             if (!IsInitialized)
             {
                 await queryProcessingService.SetContentPageAsync(contentPage);
-                await queryProcessingService.SetAudioStreamingAsync("on");
-
                 MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
                 await queryProcessingService.SetMaxQueryResultsAsync(MaxQueryResults);
-
                 isInitialized = true;
             }
 
@@ -144,24 +143,26 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task SubmitQuery(string queryString)
     {
-        // temple and prostitutes
-        // prostitutes and temple
-        // foreword and orvonton
-
         string _method = "SubmitQuery";
         try
         {
+            // temple and prostitutes
+            // prostitutes and temple
+            // foreword and orvonton
+
             IsBusy = true;
             string message = string.Empty;
             bool parsingSuccessful = false;
+            bool runPreCheckSilent = true;
 
-            bool isCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
-            if (isCommand)
+            QueryInputString = queryString.Trim();
+            (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
+                                                                                     runPreCheckSilent);
+            if (message.Contains("="))
             {
                 return;
             }
 
-            QueryInputString = queryString.Trim();
             (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
             if (parsingSuccessful)
             {
@@ -266,5 +267,23 @@ public partial class MainViewModel : BaseViewModel
     }
 
     #region  Helper Methods
+    private async Task SendToast(string message)
+    {
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            return;
+        }
+    }
     #endregion
 }

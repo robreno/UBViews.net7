@@ -10,6 +10,8 @@ using System.Xml.Linq;
 using System.Linq;
 using Microsoft.FSharp.Core;
 
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -35,6 +37,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     bool _queryLocationsDtoInitiaized = false;
 
     IFSRepositoryService repositoryService;
+    IAppSettingsService settingsService;
 
     ParserService parserService;
 
@@ -47,9 +50,10 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region  Constructors
-    public QueryProcessingService(IFSRepositoryService repositoryService)
+    public QueryProcessingService(IFSRepositoryService repositoryService, IAppSettingsService settingsService)
     {
         this.repositoryService = repositoryService;
+        this.settingsService = settingsService;
         parserService = new ParserService();
         Task.Run(async () =>
         {
@@ -114,45 +118,99 @@ public partial class QueryProcessingService : IQueryProcessingService
             return;
         }
     }
-    public async Task<bool> PreCheckQueryAsync(string queryString)
+    public async Task<(bool, string)> PreCheckQueryAsync(string queryString, bool silent)
     {
-        string _method = "PrecheckQuery";
+        string _method = "PrecheckQueryAsync";
         try
         {
-            bool isValidSecretCommand = false;
+            bool isValidCommand = true;
+            string message = queryString;
             queryString = queryString.Trim();
-            if (queryString.Contains("^"))
+            if (queryString.Contains("="))
             {
-                var value = queryString.Substring(1, queryString.Length - 1);
-                await SetAudioStreamingAsync(value);
+                var arry = queryString.Split("=");
+                var command = arry[0];
+                var value = arry[1];
+                if (command == "audio_streaming")
+                {
+                    await SetAudioStreamingAsync(value);
+                    message = $"Audio streaming = {value.ToUpper()}.";
+                    if (!silent)
+                    {
+                        await SendToast(message);
+                    }
+
+                }
+                else if (command == "audio_status")
+                {
+                    await SetAudioStatusAsync(value);
+                    message = $"Audio status = {value.ToUpper()}.";
+                    if (!silent)
+                    {
+                        await SendToast(message);
+                    }
+                }
+                else
+                {
+                    isValidCommand = false;
+                    message = $"Invalid command = [{command}], please try again.";
+                    if (!silent)
+                    {
+                        await SendToast(message);
+                    }
+                }
                 await ClearQuerySearchBar(contentPage);
-                isValidSecretCommand = true;
             }
-            return isValidSecretCommand;
+            return (isValidCommand, message);
         }
         catch (NullReferenceException ex)
         {
             await App.Current.MainPage.DisplayAlert($"NullReference in {_class}.{_method} => ", ex.Message, "Ok");
-            return false;
+            return (false, "NULLREFERENCE_COMMAND_FAILED");
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return false;
+            return (false, "COMMAND_FAILED");
         }
     }
     public async Task SetAudioStreamingAsync(string value)
     {
-        string _method = "SetAudioStreaming";
+        string _method = "SetAudioStreamingAsync";
         try
         {
             if (value == "on")
             {
-                Preferences.Default.Set("audio_status", true);
+                Preferences.Default.Set("stream_audio", true);
+                await settingsService.Set("stream_audio", true);
             }
             if (value == "off")
             {
-                Preferences.Default.Set("audio_status", false);
+                Preferences.Default.Set("stream_audio", false);
+                await settingsService.Set("stream_audio", false);
+            }
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
+        }
+    }
+    public async Task SetAudioStatusAsync(string value)
+    {
+        string _method = "SetAudioStatusAsync";
+        try
+        {
+            if (value == "on")
+            {
+                Preferences.Default.Set("audio_status", "on");
+                await settingsService.Set("audio_status", "on");
+            }
+            if (value == "off")
+            {
+                Preferences.Default.Set("audio_status", "off");
+                await settingsService.Set("audio_status", "off");
             }
             return;
         }
@@ -636,6 +694,24 @@ public partial class QueryProcessingService : IQueryProcessingService
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
+        }
+    }
+    private async Task SendToast(string message)
+    {
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            return;
         }
     }
     private async Task<List<QueryLocationDto>> InitializeQueryLocationsDto(QueryResultLocationsDto dto)

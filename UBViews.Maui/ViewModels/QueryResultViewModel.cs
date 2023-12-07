@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Alerts;
 using Microsoft.Maui.Controls;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -314,14 +316,16 @@ public partial class QueryResultViewModel : BaseViewModel
             IsBusy = true;
             string message = string.Empty;
             bool parsingSuccessful = false;
+            bool runPreCheckSilent = true;
 
-            bool isCommand = await queryProcessingService.PreCheckQueryAsync(queryString);
-            if (isCommand)
+            QueryInputString = queryString.Trim();
+            (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
+                                                                                     runPreCheckSilent);
+            if (message.Contains("="))
             {
                 return;
             }
 
-            QueryInputString = queryString.Trim();
             if (QueryInputString == PreviousQueryInputString)
             {
                 message = $"The query \"{QueryInputString}\" was same. Try another query?";
@@ -677,4 +681,22 @@ public partial class QueryResultViewModel : BaseViewModel
         }
     }
     #endregion
+    private async Task SendToast(string message)
+    {
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            return;
+        }
+    }
 }
