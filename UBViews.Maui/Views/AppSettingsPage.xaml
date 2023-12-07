@@ -195,7 +195,7 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <Border Stroke="Blue"
+            <Border x:Name="audioPathBorder"  Stroke="Blue"
                     Padding="10">
                 <VerticalStackLayout x:Name="audioPathVSL">
                     <Button x:Name="audioPathLabel"

@@ -38,6 +38,7 @@ public partial class _174 : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 		vm.contentPage = this;
+        vm.mediaElement = this.mediaElement;
 		vm.Title = partTitle;
         vm.PaperTitle = paperTitle;
         vm.PaperAuthor = paperAuthor;
@@ -334,7 +335,9 @@ public partial class _174 : ContentPage
     /// <param name="e"></param>
     private void OnDisappearing(object sender, EventArgs e)
     {
+        // Stop and cleanup MediaElement when we navigate away
         mediaElement.Stop();
+        mediaElement.Handler?.DisconnectHandler();
     }
 }
 

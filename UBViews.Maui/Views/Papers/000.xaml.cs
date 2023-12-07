@@ -327,5 +327,17 @@ public partial class _000 : ContentPage
     {
         Resources["IsVisiblePidStyle"] = Resources["IsNotVisiblePidStyle"];
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OnDisappearing(object sender, EventArgs e)
+    {
+        // Stop and cleanup MediaElement when we navigate away
+        mediaElement.Stop();
+        mediaElement.Handler?.DisconnectHandler();
+    }
 }
 
