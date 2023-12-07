@@ -316,7 +316,7 @@ public partial class QueryResultViewModel : BaseViewModel
             IsBusy = true;
             string message = string.Empty;
             bool parsingSuccessful = false;
-            bool runPreCheckSilent = true;
+            bool runPreCheckSilent = await appSettingsService.Get("run_precheck_silent", true);
 
             QueryInputString = queryString.Trim();
             (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,

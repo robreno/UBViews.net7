@@ -32,6 +32,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool previousShowPaperContents;
     bool previousShowPlaybackControls;
     bool previousAutoSendEmail;
+    bool previousRunPreCheckSilent;
     string previousAudioFolderName;
     string previousAudioFolderPath;
     int previousWindowSize;
@@ -58,6 +59,9 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     bool useCaching;
+
+    [ObservableProperty]
+    bool runPreCheckSilent;
 
     [ObservableProperty]
     bool showPaperContents;
@@ -295,6 +299,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
             AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
             AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
+            RunPreCheckSilent = previousRunPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
             settingsDirty = false;
         }
         catch (Exception ex)
@@ -380,6 +385,11 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             {
                 await settingsService.SetCache("audio_folder_name", AudioFolderName);
                 await settingsService.SetCache("audio_folder_path", AudioFolderPath);
+                settingsDirty = true;
+            }
+            if (previousRunPreCheckSilent != RunPreCheckSilent)
+            {
+                await settingsService.SetCache("run_precheck_silent", RunPreCheckSilent);
                 settingsDirty = true;
             }
             if (settingsDirty && !UseCaching)
