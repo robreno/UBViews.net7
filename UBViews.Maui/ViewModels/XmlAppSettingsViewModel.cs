@@ -98,7 +98,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
             //var autoSendEmailHSL = contentPage.FindByName("AutoSendEmailHSL") as HorizontalStackLayout;
 #if WINDOWS
-            audioPathBorder.IsVisible = false;
+            //audioPathBorder.IsVisible = false;
             playbackControlsHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
             windowSizeHSL.IsVisible = false;

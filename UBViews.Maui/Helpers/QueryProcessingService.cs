@@ -55,6 +55,8 @@ public partial class QueryProcessingService : IQueryProcessingService
         this.repositoryService = repositoryService;
         this.settingsService = settingsService;
         parserService = new ParserService();
+
+        // TODO: Move this code out of Constructor
         Task.Run(async () =>
         {
             await InitializeQueryResults();

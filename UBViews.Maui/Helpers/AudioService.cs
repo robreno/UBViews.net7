@@ -83,6 +83,7 @@ public partial class AudioService : IAudioService
         this.fileService = fileService;
         this.settingsService = settingsService;
 
+        // TODO: Move this code out of Constructor
         Task.Run(async () =>
         {
             await InitializeData();

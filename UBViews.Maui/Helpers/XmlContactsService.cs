@@ -36,6 +36,8 @@ public class XmlContactsService : IContactsService
     public XmlContactsService(IFileService fileService)
     {
         this.fileService = fileService;
+
+        // TODO: Move this code out of Constructor
         Task.Run( async () => await InitializeData());
     }
 
