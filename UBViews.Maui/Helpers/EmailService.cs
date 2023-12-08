@@ -41,7 +41,7 @@ public class EmailService : IEmailService
     //private static string validEmailPattern3 = @"^[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_+])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$";
     private Regex _rgxEmail1 = new Regex(validEmailPattern1);
 
-    private readonly string _className = "EmailService";
+    private readonly string _class = "EmailService";
 
     #endregion
 
@@ -65,7 +65,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     private async Task InitializeContactsAsync()
     {
-        string _methodName = "InitializeContactsAsync";
+        string _method = "InitializeContactsAsync";
 
         try
         {
@@ -88,7 +88,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -104,7 +104,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     private async Task ShareParagarphTextAsync(string text, string title = _shareTitle, string subject = _shareSubject)
     {
-        string _methodName = "ShareParagarphTextAsync";
+        string _method = "ShareParagarphTextAsync";
 
         try
         {
@@ -117,7 +117,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -131,7 +131,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     private async Task ShareUriAsync(string title, string uri, IShare share)
     {
-        string _methodName = "ShareUriAsync";
+        string _method = "ShareUriAsync";
 
         try
         {
@@ -143,7 +143,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -155,7 +155,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     private async Task SendToastAsync(string message)
     {
-        string _methodName = "SendToastAsync";
+        string _method = "SendToastAsync";
 
         try
         {
@@ -169,7 +169,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -183,7 +183,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<bool> CanSendEmailAsync()
     {
-        string _methodName = "CanSendEmailAsync";
+        string _method = "CanSendEmailAsync";
 
         try
         {
@@ -230,7 +230,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
         }
     }
@@ -242,7 +242,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<bool> IsValidEmailAsync(string emailAddress)
     {
-        string _methodName = "IsValidEmailAsync";
+        string _method = "IsValidEmailAsync";
 
         try
         {
@@ -252,7 +252,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
         }
     }
@@ -263,7 +263,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<int> ContactsCountAsync()
     {
-        string _methodName = "ContactsCountAsync";
+        string _method = "ContactsCountAsync";
 
         try
         {
@@ -278,7 +278,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
 
@@ -290,7 +290,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<ContactDto>> GetContactsAsync()
     {
-        string _methodName = "ContactsCountAsync";
+        string _method = "ContactsCountAsync";
 
         try
         {
@@ -302,7 +302,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -313,7 +313,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<ContactDto>> GetAutoSendContactsAsync()
     {
-        string _methodName = "GetAutoSendContactsAsync";
+        string _method = "GetAutoSendContactsAsync";
 
         try
         {
@@ -334,7 +334,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -345,7 +345,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<List<string>> GetAutoSendEmailListAsync()
     {
-        string _methodName = "GetAutoSendEmailListAsync";
+        string _method = "GetAutoSendEmailListAsync";
 
         try
         {
@@ -366,7 +366,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -378,7 +378,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task ShareParagraphAsync(Paragraph paragraph)
     {
-        string _methodName = "GetAutoSendContactsAsync";
+        string _method = "GetAutoSendContactsAsync";
 
         try
         {
@@ -393,7 +393,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -405,7 +405,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task ShareParagraphsAsync(List<Paragraph> paragraphs)
     { 
-        string _methodName = "ShareParagraphsAsync";
+        string _method = "ShareParagraphsAsync";
 
         try
         {
@@ -435,7 +435,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -449,7 +449,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task EmailParagraphAsync(Paragraph paragraph, IEmailService.EmailType type, IEmailService.SendMode mode)
     {
-        string _methodName = "EmailParagraphAsync";
+        string _method = "EmailParagraphAsync";
 
         try
         {
@@ -510,7 +510,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -524,7 +524,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task EmailParagraphsAsync(List<Paragraph> paragraphs, IEmailService.EmailType type, IEmailService.SendMode mode)
     {
-        string _methodName = "EmailParagraphsAsync";
+        string _method = "EmailParagraphsAsync";
 
         try
         {
@@ -573,7 +573,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -585,7 +585,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextBodyAsync(Paragraph paragraph)
     {
-        string _methodName = "CreatePlainTextBodyAsync";
+        string _method = "CreatePlainTextBodyAsync";
 
         try
         {
@@ -613,7 +613,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -625,7 +625,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextBodyAsync(List<Paragraph> paragraphs)
     {
-        string _methodName = "CreatePlainTextBodyAsync";
+        string _method = "CreatePlainTextBodyAsync";
 
         try
         {
@@ -653,7 +653,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -665,7 +665,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateHtmlBodyAsync(Paragraph paragraph)
     {
-        string _methodName = "CreateHtmlBodyAsync";
+        string _method = "CreateHtmlBodyAsync";
 
         try
         {
@@ -692,7 +692,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -704,7 +704,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateEmailTextAsync(Paragraph paragraph)
     {
-        string _methodName = "CreateEmailTextAsync";
+        string _method = "CreateEmailTextAsync";
 
         try
         {
@@ -718,7 +718,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -734,7 +734,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateEmailTextAsync(string pretext, string postText, string subject, List<string> recipients, EmailBodyFormat bodyFormat = EmailBodyFormat.PlainText)
     {
-        string _methodName = "CreateEmailTextAsync";
+        string _method = "CreateEmailTextAsync";
 
         try
         {
@@ -748,7 +748,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -763,7 +763,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreateHtmlTextEmailAsync(string pretext, string postText, string subject, List<string> recipients)
     {
-        string _methodName = "CreateHtmlTextEmailAsync";
+        string _method = "CreateHtmlTextEmailAsync";
 
         try
         {
@@ -777,7 +777,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -791,7 +791,7 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<string> CreatePlainTextEmailAsync(Paragraph paragraph, string pretext = _preText, string postText = _postText)
     {
-        string _methodName = "CreatePlainTextEmailAsync";
+        string _method = "CreatePlainTextEmailAsync";
 
         try
         {
@@ -805,7 +805,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }

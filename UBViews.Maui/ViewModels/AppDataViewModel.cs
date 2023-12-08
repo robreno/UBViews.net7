@@ -22,7 +22,7 @@ public partial class AppDataViewModel : BaseViewModel
             "QueryCommands.xml"
     };
 
-    readonly string _className = "AppDataViewModel";
+    readonly string _class = "AppDataViewModel";
 
     public ObservableCollection<AppFileDto> DataFiles { get; } = new();
     private IAppDataService appDataService;
@@ -104,7 +104,7 @@ public partial class AppDataViewModel : BaseViewModel
     [RelayCommand]
     async Task SelectionChanged(object selectedItem)
     {
-        string _methodName = "SelectionChanged";
+        string _method = "SelectionChanged";
 
         try
         {
@@ -125,7 +125,7 @@ public partial class AppDataViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 

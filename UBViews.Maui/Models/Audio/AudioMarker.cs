@@ -12,7 +12,7 @@ public class AudioMarker
     /// <summary>
     /// 
     /// </summary>
-    private readonly string _className = "AudioMarker";
+    private readonly string _class = "AudioMarker";
 
     /// <summary>
     /// 
@@ -74,7 +74,7 @@ public class AudioMarker
     /// <returns></returns>
     internal TimeSpan TimespanFromArray(string[] sa)
     {
-        string _methodName = "TimespanFromArray";
+        string _method = "TimespanFromArray";
         try
         {
             TimeSpan newTimeSpan = new TimeSpan(0,
@@ -83,7 +83,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -94,7 +94,7 @@ public class AudioMarker
     /// <param name="pid"></param>
     internal string TypeFromPID(string pid)
     {
-        string _methodName = "TimespanFromArray";
+        string _method = "TimespanFromArray";
         try
         {
             string[] arry = pid.Split(new char[] { ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
@@ -132,7 +132,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -150,7 +150,7 @@ public class AudioMarker
     /// <returns></returns>
     public AudioMarker Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
     {
-        string _methodName = "Create";
+        string _method = "Create";
         try
         {
             SequenceId = sequenceId;
@@ -162,7 +162,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -178,7 +178,7 @@ public class AudioMarker
     /// <returns></returns>
     public async Task<AudioMarker> CreateAsync(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
     {
-        string _methodName = "CreateAsync";
+        string _method = "CreateAsync";
         try
         {
             SequenceId = sequenceId;
@@ -190,7 +190,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -204,7 +204,7 @@ public class AudioMarker
     /// <exception cref="Exception"></exception>
     public AudioMarker GetNewAudioMarker(TimeSpan start, TimeSpan end)
     {
-        string _methodName = "GetNewAudioMarker";
+        string _method = "GetNewAudioMarker";
         try
         {
             AudioMarker newMarker = new AudioMarker()
@@ -219,7 +219,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -232,7 +232,7 @@ public class AudioMarker
     /// <returns></returns>
     public async Task<AudioMarker> GetNewAudioMarkerAsync(TimeSpan start, TimeSpan end)
     {
-        string _methodName = "GetNewAudioMarkerAsync";
+        string _method = "GetNewAudioMarkerAsync";
         try
         {
             AudioMarker newMarker = new AudioMarker()
@@ -247,7 +247,7 @@ public class AudioMarker
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }

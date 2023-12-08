@@ -21,7 +21,7 @@ public class XmlContactsService : IContactsService
     private bool _cacheDirty;
     private int _cacheCount;
 
-    private readonly string _className = "XmlContactsService";
+    private readonly string _class = "XmlContactsService";
 
     /// <summary>
     /// 
@@ -46,7 +46,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     private async Task InitializeData()
     {
-        string _methodName = "Initialize";
+        string _method = "Initialize";
 
         try
         {
@@ -61,7 +61,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -69,7 +69,7 @@ public class XmlContactsService : IContactsService
     // Count Methods
     private async Task<int> GetCurrentCount()
     {
-        string _methodName = "GetCurrentCount";
+        string _method = "GetCurrentCount";
 
         try
         {
@@ -78,13 +78,13 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
     private async Task<int> IncrementCount()
     {
-        string _methodName = "IncrementCount";
+        string _method = "IncrementCount";
 
         try
         {
@@ -95,13 +95,13 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
     private async Task<int> DecrementCount()
     {
-        string _methodName = "DecrementCount";
+        string _method = "DecrementCount";
 
         try
         {
@@ -112,7 +112,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
@@ -120,7 +120,7 @@ public class XmlContactsService : IContactsService
     // ContactId Methods
     private async Task<int> GetLastContactId()
     {
-        string _methodName = "GetLastContactId";
+        string _method = "GetLastContactId";
 
         try
         {
@@ -129,13 +129,13 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
     private async Task<int> ResetLastContactId()
     {
-        string _methodName = "ResetContactId";
+        string _method = "ResetContactId";
 
         try
         {
@@ -145,13 +145,13 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
     private async Task<int> IncrementContactId()
     {
-        string _methodName = "GetLastContactId";
+        string _method = "GetLastContactId";
 
         try
         {
@@ -162,7 +162,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
@@ -175,7 +175,7 @@ public class XmlContactsService : IContactsService
     /// <returns>Contacts Xml content as string</returns>
     private async Task<string> LoadContactsAsync(string fileName)
     {
-        string _methodName = "LoadContactsAsync";
+        string _method = "LoadContactsAsync";
 
         try
         {
@@ -187,7 +187,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -223,7 +223,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<int> SaveContactAsync(ContactDto contact)
     {
-        string _methodName = "SaveContactAsync";
+        string _method = "SaveContactAsync";
 
         try
         {
@@ -259,7 +259,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
@@ -270,7 +270,7 @@ public class XmlContactsService : IContactsService
     /// <returns>List of ContactDto</returns>
     public async Task<List<ContactDto>> GetContactsAsync()
     {
-        string _methodName = "GetContactsAsync";
+        string _method = "GetContactsAsync";
 
         try
         {
@@ -299,7 +299,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -310,7 +310,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<List<ContactDto>> GetAutoSendContactsAsync()
     {
-        string _methodName = "GetAutoSendContactsAsync";
+        string _method = "GetAutoSendContactsAsync";
 
         try
         {
@@ -342,7 +342,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -353,7 +353,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<List<string>> GetAutoSendEmailListAsync()
     {
-        string _methodName = "GetAutoSendEmailList";
+        string _method = "GetAutoSendEmailList";
 
         try
         {
@@ -374,7 +374,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -386,7 +386,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<ContactDto> GetContactByIdAsync(string id)
     {
-        string _methodName = "GetContactByIdAsync";
+        string _method = "GetContactByIdAsync";
 
         try
         {
@@ -419,7 +419,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -431,7 +431,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<ContactDto> GetContactByDisplayNameAsync(string displayName)
     {
-        string _methodName = "GetContactByIdAsync";
+        string _method = "GetContactByIdAsync";
 
         try
         {
@@ -452,7 +452,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -464,7 +464,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<XElement> GetContactElementByIdAsync(string id)
     {
-        string _methodName = "GetContactElmByIdAsync";
+        string _method = "GetContactElmByIdAsync";
 
         try
         {
@@ -475,7 +475,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -488,7 +488,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<bool> EqualToAsync(XElement oldContact, ContactDto newContact)
     {
-        string _methodName = "EqualToAsync";
+        string _method = "EqualToAsync";
 
         try
         {
@@ -519,7 +519,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
         }
     }
@@ -531,7 +531,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<int> UpdateContactAsync(ContactDto newContact)
     {
-        string _methodName = "UpdateContactAsync";
+        string _method = "UpdateContactAsync";
 
         try
         {
@@ -565,7 +565,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
@@ -577,7 +577,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<int> DeleteContactAsync(ContactDto contact)
     {
-        string _methodName = "DeleteContactAsync";
+        string _method = "DeleteContactAsync";
 
         try
         {
@@ -610,7 +610,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
     }
@@ -622,7 +622,7 @@ public class XmlContactsService : IContactsService
     /// <returns></returns>
     public async Task<bool> DisplayNameExistsAsync(string displayName)
     {
-        string _methodName = "DisplayNameExistsAsync";
+        string _method = "DisplayNameExistsAsync";
 
         try
         {
@@ -638,7 +638,7 @@ public class XmlContactsService : IContactsService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
         }
     }

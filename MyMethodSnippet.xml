@@ -10,7 +10,7 @@
       }
       catch (Exception ex)
       {
-          await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+          await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
           return;
       }
   }

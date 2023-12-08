@@ -12,7 +12,7 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <summary>
     /// 
     /// </summary>
-    private readonly string _className = "MediaMarkerSequence";
+    private readonly string _class = "MediaMarkerSequence";
 
     /// <summary>
     /// SortedList of MedidaMarkers
@@ -31,14 +31,14 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// </summary>
     public void Clear()
     {
-        string _methodName = "Clear";
+        string _method = "Clear";
         try
         {
             markers.Clear();
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -49,7 +49,7 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <returns></returns>
     public async Task ClearAsync()
     {
-        string _methodName = "ClearAsync";
+        string _method = "ClearAsync";
         try
         {
             markers.Clear();
@@ -57,7 +57,7 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -68,14 +68,14 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <param name="mediaMarker"></param>
     public void Insert(MediaMarker mediaMarker)
     {
-        string _methodName = "Insert";
+        string _method = "Insert";
         try
         {
             markers.Add(mediaMarker.SequenceId, mediaMarker);
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -87,14 +87,14 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <returns></returns>
     public async Task InsertAsync(MediaMarker mediaMarker)
     {
-        string _methodName = "InsertAsync";
+        string _method = "InsertAsync";
         try
         {
             markers.Add(mediaMarker.SequenceId, mediaMarker);
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -105,14 +105,14 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <returns></returns>
     public IEnumerable<KeyValuePair<TimeSpan, MediaMarker>> First()
     {
-        string _methodName = "First";
+        string _method = "First";
         try
         {
             return (IEnumerable<KeyValuePair<TimeSpan, MediaMarker>>)markers.GetEnumerator();
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -123,14 +123,14 @@ sealed class MediaMarkerSequence //: IEnumerable<PlaybackMediaMarker>, IEnumerab
     /// <returns></returns>
     public async Task<IEnumerable<KeyValuePair<TimeSpan, MediaMarker>>> FirstAsync()
     {
-        string _methodName = "FirstAsync";
+        string _method = "FirstAsync";
         try
         {
             return (IEnumerable<KeyValuePair<TimeSpan, MediaMarker>>)markers.GetEnumerator();
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }

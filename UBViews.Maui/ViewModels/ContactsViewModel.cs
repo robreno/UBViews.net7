@@ -48,7 +48,7 @@ public partial class ContactsViewModel : ObservableValidator
 
     private readonly Regex _rgxEmail = new(@"^[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z_+])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$");
 
-    private readonly string _className = "ContactsViewModel";
+    private readonly string _class = "ContactsViewModel";
 
     private bool _firstNameValidString = false;
     private bool _lastNameValidString = false;
@@ -111,7 +111,7 @@ public partial class ContactsViewModel : ObservableValidator
     [RelayCommand]
     async Task ContactsPageAppearing()
     {
-        string _methodName = "ContactsPageAppearing";
+        string _method = "ContactsPageAppearing";
 
         try
         {
@@ -123,14 +123,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ContactsPageLoaded()
     {
-        string _methodName = "ContactsPageLoaded";
+        string _method = "ContactsPageLoaded";
 
         try
         {
@@ -138,14 +138,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ContactsPageDisappearing()
     {
-        string _methodName = "ContactsPageDisappearing";
+        string _method = "ContactsPageDisappearing";
 
         try
         {
@@ -153,14 +153,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ContactsPageUnloaded()
     {
-        string _methodName = "ContactsPageUnloaded";
+        string _method = "ContactsPageUnloaded";
 
         try
         {
@@ -168,14 +168,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task GetContactList()
     {
-        string _methodName = "GetContactList";
+        string _method = "GetContactList";
 
         try
         {
@@ -191,14 +191,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task SaveContact(ContactDto selectedContact)
     {
-        string _methodName = "ContactsViewModel.SaveContact";
+        string _method = "ContactsViewModel.SaveContact";
         string message = string.Empty;
 
         try
@@ -252,14 +252,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task UpdateContact(ContactDto selectedContact)
     {
-        string _methodName = "UpdateContact";
+        string _method = "UpdateContact";
         string message = string.Empty;
 
         try
@@ -322,14 +322,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task DeleteContact(ContactDto selectedContact)
     {
-        string _methodName = "DeleteContact";
+        string _method = "DeleteContact";
         string message = string.Empty;
 
         try
@@ -345,7 +345,7 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -353,7 +353,7 @@ public partial class ContactsViewModel : ObservableValidator
     [RelayCommand]
     async Task ClearContactForm()
     {
-        string _methodName = "ClearContactFornm";
+        string _method = "ClearContactFornm";
 
         try
         {
@@ -385,14 +385,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task SelectionChanged(object selectedItem)
     {
-        string _methodName = "SelectionChanged";
+        string _method = "SelectionChanged";
 
         try
         {
@@ -421,14 +421,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task EmailTextChanged(string email)
     {
-        string _methodName = "EmailTextChanged";
+        string _method = "EmailTextChanged";
 
         // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/displayNameEntry
         // TODO: bug, OnCompleted event doesn't fire on tab, only on return, not sure why?
@@ -442,14 +442,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task EmailEntryCompleted(string email)
     {
-        string _methodName = "EmailEntryCompleted";
+        string _method = "EmailEntryCompleted";
 
         // https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/displayNameEntry
         // TODO: bug, OnCompleted event doesn't fire on tab, only on return, not sure why?
@@ -463,14 +463,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task AutoSendCheckedChanged(bool value)
     {
-        string _methodName = "EmailEntryCompleted";
+        string _method = "EmailEntryCompleted";
 
         try
         {
@@ -478,14 +478,14 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task<bool> ValidateDisplayName(string value)
     {
-        string _methodName = "ValidDateOnValueChanged";
+        string _method = "ValidDateOnValueChanged";
 
         try
         {
@@ -531,7 +531,7 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return false;
         }
     }
@@ -539,7 +539,7 @@ public partial class ContactsViewModel : ObservableValidator
     [RelayCommand]
     async Task ValidateForm()
     {
-        string _methodName = "ValidateForm";
+        string _method = "ValidateForm";
 
         try
         {
@@ -562,7 +562,7 @@ public partial class ContactsViewModel : ObservableValidator
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 }

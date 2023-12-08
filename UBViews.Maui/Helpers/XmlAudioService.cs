@@ -28,7 +28,7 @@ public partial class XmlAudioService : IXmlAudioService
         { 144, new List<int> { 70, 84, 97, 113, 132, 146 } }
     };
 
-    private readonly string _className = "XmlAudioService";
+    private readonly string _class = "XmlAudioService";
 
     internal AudioMarkerSequence audioMarkerSequence { get; set; } = new();
     #endregion
@@ -48,7 +48,7 @@ public partial class XmlAudioService : IXmlAudioService
     /// <returns>AudioMarker at index or null</returns>
     public async Task<AudioMarker> GetAtAsync(int index)
     {
-        string _methodName = "GetAtAsync";
+        string _method = "GetAtAsync";
 
         try
         {
@@ -62,7 +62,7 @@ public partial class XmlAudioService : IXmlAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -72,7 +72,7 @@ public partial class XmlAudioService : IXmlAudioService
     /// </summary>
     public async Task ClearAsync()
     {
-        string _methodName = "ClearAsync";
+        string _method = "ClearAsync";
 
         try
         {
@@ -81,7 +81,7 @@ public partial class XmlAudioService : IXmlAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -92,7 +92,7 @@ public partial class XmlAudioService : IXmlAudioService
     /// <param name="audioMarker"></param>
     public async Task InsertAsync(AudioMarker audioMarker)
     {
-        string _methodName = "InsertAsync";
+        string _method = "InsertAsync";
 
         try
         {
@@ -101,7 +101,7 @@ public partial class XmlAudioService : IXmlAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -112,7 +112,7 @@ public partial class XmlAudioService : IXmlAudioService
     /// <returns></returns>
     public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
     {
-        string _methodName = "GetAudioMarkersListAsync";
+        string _method = "GetAudioMarkersListAsync";
 
         try
         {
@@ -129,7 +129,7 @@ public partial class XmlAudioService : IXmlAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -140,7 +140,7 @@ public partial class XmlAudioService : IXmlAudioService
     /// <returns></returns>
     public async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
     {
-        string _methodName = "LoadAudioMarkersAsync";
+        string _method = "LoadAudioMarkersAsync";
 
         try
         {
@@ -168,7 +168,7 @@ public partial class XmlAudioService : IXmlAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }

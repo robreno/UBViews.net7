@@ -12,7 +12,7 @@ public sealed class MediaMarker
     /// <summary>
     /// 
     /// </summary>
-    private readonly string _className = "MediaMarker";
+    private readonly string _class = "MediaMarker";
 
     /// <summary>
     /// MarkerType enum
@@ -107,7 +107,7 @@ public sealed class MediaMarker
     /// <returns></returns>
     public MediaMarker Create(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
     {
-        string _methodName = "Create";
+        string _method = "Create";
         try
         {
             SequenceId = sequenceId;
@@ -119,14 +119,14 @@ public sealed class MediaMarker
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
 
     public async Task<MediaMarker> CreateAsync(int sequenceId, TimeSpan startValue, TimeSpan endValue, string type, string paragraphId)
     {
-        string _methodName = "CreateAsync";
+        string _method = "CreateAsync";
         try
         {
             SequenceId = sequenceId;
@@ -138,7 +138,7 @@ public sealed class MediaMarker
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }

@@ -9,7 +9,7 @@ using System.Xml.Linq;
 public class AudioMarkerSequence
 {
     #region  Private Data
-    private readonly string _className = "AudioMarkerSequence";
+    private readonly string _class = "AudioMarkerSequence";
 
     /// <summary>
     /// SortedList of MedidaMarkers
@@ -30,7 +30,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public AudioMarker GetAt(int index)
     {
-        string _methodName = "GetAt";
+        string _method = "GetAt";
 
         try
         {
@@ -38,7 +38,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -50,7 +50,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public async Task<AudioMarker> GetAtAsync(int index)
     {
-        string _methodName = "GetAtAsync";
+        string _method = "GetAtAsync";
 
         try
         {
@@ -58,7 +58,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public AudioMarker GetBySeqId(int seqId)
     {
-        string _methodName = "GetBySeqId";
+        string _method = "GetBySeqId";
 
         try
         {
@@ -84,7 +84,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -97,7 +97,7 @@ public class AudioMarkerSequence
     /// <exception cref="Exception"></exception>
     public async Task<AudioMarker> GetBySeqIdAsync(int seqId)
     {
-        string _methodName = "GetBySeqIdAsync";
+        string _method = "GetBySeqIdAsync";
 
         try
         {
@@ -111,7 +111,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
@@ -121,7 +121,7 @@ public class AudioMarkerSequence
     /// </summary>
     public void Clear()
     {
-        string _methodName = "Clear";
+        string _method = "Clear";
 
         try
         {
@@ -129,7 +129,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -141,7 +141,7 @@ public class AudioMarkerSequence
     /// <exception cref="Exception"></exception>
     public async Task ClearAsync()
     {
-        string _methodName = "ClearAsync";
+        string _method = "ClearAsync";
 
         try
         {
@@ -150,7 +150,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -161,7 +161,7 @@ public class AudioMarkerSequence
     /// <param name="mediaMarker"></param>
     public void Insert(AudioMarker mediaMarker)
     {
-        string _methodName = "Insert";
+        string _method = "Insert";
 
         try
         {
@@ -169,7 +169,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -181,7 +181,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public async Task InsertAsync(AudioMarker mediaMarker)
     {
-        string _methodName = "InsertAsync";
+        string _method = "InsertAsync";
 
         try
         {
@@ -190,7 +190,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -201,7 +201,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public IList<AudioMarker> Values()
     {
-        string _methodName = "Values";
+        string _method = "Values";
 
         try
         {
@@ -209,7 +209,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            string innerMessage = $"Exception raised in {_className}.{_methodName} => {ex.Message}";
+            string innerMessage = $"Exception raised in {_class}.{_method} => {ex.Message}";
             throw new Exception(innerMessage);
         }
     }
@@ -220,7 +220,7 @@ public class AudioMarkerSequence
     /// <returns></returns>
     public async Task<IList<AudioMarker>> ValuesAsync()
     {
-        string _methodName = "ValuesAsync";
+        string _method = "ValuesAsync";
 
         try
         {
@@ -228,7 +228,7 @@ public class AudioMarkerSequence
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_className}.{_methodName} => ", ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
