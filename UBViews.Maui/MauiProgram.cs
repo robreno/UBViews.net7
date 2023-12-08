@@ -49,7 +49,8 @@ namespace UBViews
             builder.Services.AddTransient<IContactsService>((e) => new XmlContactsService(new FileService()));
             builder.Services.AddTransient<IEmailService>((e) => new EmailService(new XmlContactsService(new FileService()), 
                                                                                  new XmlAppSettingsService(new FileService())));
-            builder.Services.AddTransient<IAudioService>((e) => new AudioService(new FileService()));
+            builder.Services.AddTransient<IAudioService>((e) => new AudioService(new FileService(),
+                                                                                 new XmlAppSettingsService(new FileService())));
             builder.Services.AddTransient<IQueryProcessingService>((e) => new QueryProcessingService(new FSRepositoryService(), 
                                                                                                      new XmlAppSettingsService(new FileService())));
 

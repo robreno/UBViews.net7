@@ -200,9 +200,7 @@ namespace UBViews.ViewModels
                     await audioService.SetContentPageAsync(contentPage);
                     await audioService.SetMediaElementAsync(mediaElement);
                     await audioService.SetPaperDtoAsync(dto);
-                    var audioStatus = Preferences.Default.Get("audio_status", false);
-                    await audioService.SetAudioStatusAsync(audioStatus);
-                    await audioService.SetMediaStateAsync(MediaState);
+                    await audioService.SetSendToastAsync(true);
 #if WINDOWS
                     await audioService.SetPlatformAsync("WINDOWS");
 #elif ANDROID        

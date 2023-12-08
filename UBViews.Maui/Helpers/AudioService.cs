@@ -74,17 +74,45 @@ public partial class AudioService : IAudioService
 
     #region  Services
     IFileService fileService;
+    IAppSettingsService settingsService;
     #endregion
 
     #region  Constructors
-    public AudioService(IFileService fileService)
+    public AudioService(IFileService fileService, IAppSettingsService settingsService)
     {
         this.fileService = fileService;
-        AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
-        CurrentState = "None";
-        PreviousState = "None";
-        MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
-        SendToastState = false;
+        this.settingsService = settingsService;
+
+        Task.Run(async () =>
+        {
+            await InitializeData();
+        });
+    }
+
+    private async Task InitializeData()
+    {
+        string _method = "Initialize";
+        try
+        {
+            var audioStatus = await settingsService.Get("audio_status", "off");
+            if (audioStatus.Equals("on"))
+            {
+                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.On);
+            }
+            else
+            {
+                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
+            }
+            CurrentState = "None";
+            PreviousState = "None";
+            MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
+            SendToastState = false;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
     }
     #endregion
 
