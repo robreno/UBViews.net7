@@ -138,6 +138,12 @@ namespace UBViews.ViewModels
         [ObservableProperty]
         bool validAudioPath = false;
 
+        [ObservableProperty]
+        string audioUriString;
+
+        [ObservableProperty]
+        Uri audioUri;
+
         // RelayCommands
 
         [RelayCommand]
@@ -184,22 +190,28 @@ namespace UBViews.ViewModels
                 }
                 else
                 {
-                    string path = await settingsService.Get("audio_folder_path", "");
-                    if (!string.IsNullOrEmpty(path))
+                    //string path = await settingsService.Get("audio_folder_path", "");
+                    //if (!string.IsNullOrEmpty(path))
+                    //{
+                    //    string id = dto.Id.ToString("0");
+                    //    string fullPathName = path + @"\U" + id + ".mp3";
+                    //    if (File.Exists(fullPathName))
+                    //    {
+                    //        var mediaSource = MediaSource.FromFile(fullPathName);
+                    //        mediaElement.Source = mediaSource;
+                    //        ValidAudioPath = true;
+                    //    }
+                    //}
+
+                    var hasValue = contentPage.Resources.TryGetValue("audioUri", out object uri);
+                    if (hasValue)
                     {
-                        string id = dto.Id.ToString("0");
-                        string fullPathName = path + @"\U" + id + ".mp3";
-                        if (File.Exists(fullPathName))
-                        {
-                            var mediaSource = MediaSource.FromFile(fullPathName);
-                            mediaElement.Source = mediaSource;
-                            ValidAudioPath = true;
-                        }
+                        AudioUriString = (string)uri;
+                        AudioUri = new Uri(AudioUriString);
+                        ValidAudioPath = true;
                     }
 
-                    await audioService.SetContentPageAsync(contentPage);
-                    await audioService.SetMediaElementAsync(mediaElement);
-                    await audioService.SetPaperDtoAsync(dto);
+                    await audioService.InitializeDataAsync(contentPage, mediaElement, dto);
                     await audioService.SetSendToastAsync(true);
 #if WINDOWS
                     await audioService.SetPlatformAsync("WINDOWS");

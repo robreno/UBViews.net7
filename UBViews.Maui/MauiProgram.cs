@@ -41,6 +41,7 @@ namespace UBViews
                 });
 
             // Services
+            builder.Services.AddSingleton<HttpClient>((e) => new HttpClient());
             builder.Services.AddTransient<IFileService>((e) => new FileService());
             builder.Services.AddTransient<IFSRepositoryService>((e) => new FSRepositoryService());
 
