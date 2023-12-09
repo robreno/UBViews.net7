@@ -60,6 +60,11 @@ public partial class AudioService : IAudioService
     private IMediaElement mediaElement;
 
     /// <summary>
+    /// 
+    /// </summary>
+    public HttpClient httpClient;
+
+    /// <summary>
     /// ObservableCollection
     /// </summary>
     public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
@@ -82,38 +87,6 @@ public partial class AudioService : IAudioService
     {
         this.fileService = fileService;
         this.settingsService = settingsService;
-
-        // TODO: Move this code out of Constructor
-        Task.Run(async () =>
-        {
-            await InitializeData();
-        });
-    }
-
-    private async Task InitializeData()
-    {
-        string _method = "Initialize";
-        try
-        {
-            var audioStatus = await settingsService.Get("audio_status", "off");
-            if (audioStatus.Equals("on"))
-            {
-                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.On);
-            }
-            else
-            {
-                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
-            }
-            CurrentState = "None";
-            PreviousState = "None";
-            MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
-            SendToastState = false;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
     }
     #endregion
 
@@ -145,10 +118,49 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="contentPage"></param>
+    /// <param name="mediaElement"></param>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    public async Task InitializeDataAsync(ContentPage contentPage, IMediaElement mediaElement, PaperDto dto)
+    {
+        string _method = nameof(InitializeDataAsync);
+        try
+        {
+            this.httpClient = ServiceHelper.Current.GetService<HttpClient>();
+            this.contentPage = contentPage;
+            this.mediaElement = mediaElement;
+            await SetPaperDtoAsync(dto);
+
+            var audioStatus = await settingsService.Get("audio_status", "off");
+            if (audioStatus.Equals("on"))
+            {
+                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.On);
+            }
+            else
+            {
+                AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
+            }
+
+            CurrentState = "None";
+            PreviousState = "None";
+            MediaState = new MediaStatePair() { CurrentState = "None", PreviousState = "None" };
+            SendToastState = false;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <returns></returns>
     public async Task<bool> IsInitializedAsync()
     {
-        string _method = "SetContentPageAsync";
+        string _method = nameof(IsInitializedAsync);
         try
         {
             bool isInitialized = false;
@@ -172,6 +184,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetContentPageAsync(ContentPage contentPage)
     {
+        string _method = nameof(SetContentPageAsync);
         try
         {
             this.contentPage = contentPage;
@@ -179,7 +192,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -191,7 +204,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaElementAsync(IMediaElement mediaElement)
     {
-        string _method = "SetMediaElementAsync";
+        string _method = nameof(SetMediaElementAsync);
         try
         {
             this.mediaElement = mediaElement;
@@ -212,7 +225,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<AudioMarker> GetAtAsync(int index)
     {
-        string _method = "GetAtAsync";
+        string _method = nameof(GetAtAsync);
 
         try
         {
@@ -232,7 +245,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task ClearAsync()
     {
-        string _method = "ClearAsync";
+        string _method = nameof(ClearAsync);
 
         try
         {
@@ -253,7 +266,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task InsertAsync(AudioMarker mediaMarker)
     {
-        string _method = "InsertAsync";
+        string _method = nameof(InsertAsync);
 
         try
         {
@@ -273,7 +286,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
     {
-        string _method = "GetAudioMarkersListAsync";
+        string _method = nameof(GetAudioMarkersListAsync);
 
         try
         {
@@ -302,7 +315,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
     {
-        string _method = "LoadAudioMarkersAsync";
+        string _method = nameof(LoadAudioMarkersAsync);
 
         try
         {
@@ -343,10 +356,9 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task DisconnectMediaElementAsync()
     {
-        string _method = "DisconnectMediaElementAsync";
+        string _method = nameof(DisconnectMediaElementAsync);
         try
         {
-            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 // Stop and cleanup MediaElement when we navigate away
@@ -369,7 +381,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMarkersAsync(AudioMarkerSequence markers)
     {
-        string _method = "SetMarkersAsync";
+        string _method = nameof(SetMediaElementAsync);
         try
         {
             this.Markers = markers;
@@ -394,7 +406,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetAudioStatusAsync(bool value)
     {
-        string _method = "SetAudioStatusAsync";
+        string _method = nameof(SetAudioStatusAsync);
         try
         {
             if (value)
@@ -424,7 +436,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetAudioStreamingAsync(string value)
     {
-        string _method = "SetAudioStreaming";
+        string _method = nameof(SetAudioStreamingAsync);
         try
         {
             if (value == "on")
@@ -450,6 +462,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<bool> GetAudioStatusAsync()
     {
+        string _method = nameof(GetAudioStatusAsync);
         try
         {
             bool _state = false;
@@ -467,7 +480,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return false;
         }
     }
@@ -479,9 +492,9 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaPlaybackControlsAsync(bool value)
     {
+        string _method = nameof(SetMediaPlaybackControlsAsync);
         try
         {
-            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 // Stop and cleanup MediaElement when we navigate away
@@ -491,7 +504,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -503,9 +516,9 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPlaybackControlsStartTimeAsync(AudioMarker audioMarker)
     {
+        string _method = nameof(SetPlaybackControlsStartTimeAsync);
         try
         {
-            //var me = contentPage.FindByName("mediaElement") as IMediaElement;
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 mediaElement.SeekTo(audioMarker.StartTime);
@@ -513,7 +526,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -525,6 +538,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetShowMediaPlaybackControlsAsync(bool value)
     {
+        string _method = nameof(SetShowMediaPlaybackControlsAsync);
         try
         {
             this.ShowPlaybackControls = value;
@@ -532,7 +546,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -544,6 +558,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
     {
+        string _method = nameof(SetMediaStateAsync);
         try
         {
             this.MediaState = mediaStatePair;
@@ -551,7 +566,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -563,6 +578,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetDurationAsync(TimeSpan duration)
     {
+        string _method = nameof(SetDurationAsync);
         try
         {
             this.Duration = duration;
@@ -570,7 +586,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -582,6 +598,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPlatformAsync(string platformName)
     {
+        string _method = nameof(SetPlatformAsync);
         try
         {
             this.Plattform = platformName;
@@ -589,7 +606,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -601,6 +618,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPaperDtoAsync(PaperDto paperDto)
     {
+        string _method = nameof(SetPaperDtoAsync);
         try
         {
             this.PaperDto = paperDto;
@@ -612,7 +630,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -624,6 +642,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetParagraphsAsync(List<Paragraph> paragraphs)
     {
+        string _method = nameof(SetParagraphsAsync);
         try
         {
             foreach (var paragraph in paragraphs)
@@ -634,7 +653,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -646,6 +665,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetSendToastAsync(bool value)
     {
+        string _method = nameof(SetSendToastAsync);
         try
         {
             this.SendToastState = value;
@@ -653,7 +673,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -662,6 +682,7 @@ public partial class AudioService : IAudioService
     #region  Audio Gestures
     public async Task TappedGestureForPaperAsync(string value)
     {
+        string _method = nameof(TappedGestureForPaperAsync);
         try
         {
             if (contentPage == null)
@@ -709,12 +730,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task DoubleTappedGestureForPaperAsync(string value)
     {
+        string _method = nameof(DoubleTappedGestureForPaperAsync);
         try
         {
             if (contentPage == null)
@@ -752,12 +774,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task TappedGestureAsync(string id)
     {
+        string _method = nameof(TappedGestureAsync);
         try
         {
             if (contentPage == null)
@@ -844,12 +867,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task TappedGestureAsync(string id, bool value)
     {
+        string _method = nameof(TappedGestureAsync);
         try
         {
             if (contentPage == null)
@@ -937,12 +961,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task DoubleTappedGestureAsync(string id)
     {
+        string _method = nameof(DoubleTappedGestureAsync);
         try
         {
             if (contentPage == null)
@@ -985,12 +1010,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task DoubleTappedGestureAsync(string id, bool value)
     {
+        string _method = nameof(DoubleTappedGestureAsync);
         try
         {
             if (contentPage == null)
@@ -1034,7 +1060,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
@@ -1043,7 +1069,7 @@ public partial class AudioService : IAudioService
     #region   MediaElement Audio Methods
     public async Task<bool> PlayPauseAsync(string value)
     {
-        string _method = "PlayPauseAsync";
+        string _method = nameof(PlayPauseAsync);
         try
         {
             bool retval = false;
@@ -1070,6 +1096,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PlayAudioAsync()
     {
+        string _method = nameof(PlayAudioAsync);
         try
         {
             string _state = "Playing";
@@ -1101,12 +1128,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task PauseAudioAsync()
     {
+        string _method = nameof(PauseAudioAsync);
         try
         {
             string _state = "Paused";
@@ -1125,12 +1153,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task StopAudioAsync()
     {
+        string _method = nameof(StopAudioAsync);
         try
         {
             string _state = "Stopped";
@@ -1150,12 +1179,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task PlayAudioRangeAsync(string timeSpanRange)
     {
+        string _method = nameof(PlayAudioRangeAsync);
         try
         {
             string _state = "Playing";
@@ -1182,12 +1212,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task PlayAudioRangeExAsync(AudioMarker audioMarker)
     {
+        string _method = nameof(PlayAudioRangeExAsync);
         try
         {
             string _state = "Playing";
@@ -1210,12 +1241,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task PositionChangedAsync(TimeSpan timeSpan)
     {
+        string _method = nameof(PositionChangedAsync);
         try
         {
             Position = timeSpan;
@@ -1238,12 +1270,13 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }
     public async Task StateChangedAsync(string state)
     {
+        string _method = nameof(StateChangedAsync);
         try
         {
             var currentState = state;
@@ -1251,12 +1284,50 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
+        }
+    }
+    public async Task DownloadAudioFileAsync(string fileName, string audioDir)
+    {
+        string _method = nameof(DownloadAudioFileAsync);
+        try
+        {
+            // C:\Users\robre\AppData\Local\Packages\879ca98e-d45e-44b3-9be6-e6d900695058_9zz4h110yvjzm\LocalState
+
+            // Setup Uri and File Path
+            string uriBasePath = "https://s3.amazonaws.com/urantia/media/en/";
+            string uriFullPath = uriBasePath + fileName;
+            Uri uri = new Uri(uriFullPath);
+            string fileNamePath = Path.Combine(audioDir, "000.mp3");
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(uri);
+                var result = response.EnsureSuccessStatusCode();
+                if (result.IsSuccessStatusCode)
+                {
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    var fileInfo = new FileInfo(fileNamePath);
+                    using (var fileStream = fileInfo.OpenWrite())
+                    {
+                        await stream.CopyToAsync(fileStream);
+                    }
+                }
+                else
+                {
+                    throw new Exception("File not found");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
     }
     public async Task SendToastAsync(string message)
     {
+        string _method = nameof(SendToastAsync);
         try
         {
             using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -1269,7 +1340,7 @@ public partial class AudioService : IAudioService
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
             return;
         }
     }

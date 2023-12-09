@@ -18,6 +18,15 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="contentPage"></param>
+    /// <param name="mediaElement"></param>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    Task InitializeDataAsync(ContentPage contentPage, IMediaElement mediaElement, PaperDto dto);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <returns></returns>
     Task<bool> IsInitializedAsync();
 
@@ -250,6 +259,13 @@ public interface IAudioService
     /// <param name="state"></param>
     /// <returns></returns>
     Task StateChangedAsync(string state);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    Task DownloadAudioFileAsync(string fileName, string audioDir);
 
     /// <summary>
     /// 
