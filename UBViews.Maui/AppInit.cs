@@ -94,18 +94,6 @@ namespace UBViews
                 int size = srcNames.Length;
                 for (int i = 0; i < size; i++)
                     SetupDefaultData(srcNames[i], trgNames[i]);
-
-                string audioDir = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "AudioMarkers");
-                System.IO.Directory.CreateDirectory(audioDir);
-
-                int start = 189;
-                int end = 189;
-                for (int i = start; i <= end; i++)
-                {
-                    var srcName = i.ToString("000") + ".audio.xml";
-                    var srcFullName = @"AudioMarkers/" + srcName;
-                    SetupDefaultData(srcFullName, srcFullName);
-                }
                 // End
             }
         }
