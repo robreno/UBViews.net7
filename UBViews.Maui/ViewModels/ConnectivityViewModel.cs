@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using UBViews.Helpers;
+﻿namespace UBViews.ViewModels;
 
-namespace UBViews.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+using UBViews.Helpers;
 
 public partial class ConnectivityViewModel : ObservableObject
 {
