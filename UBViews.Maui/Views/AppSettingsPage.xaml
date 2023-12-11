@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
              xmlns:converter="clr-namespace:UBViews.Converters"
@@ -11,6 +12,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:String x:Key="ButtonWidth">160</x:String>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -195,18 +197,39 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <Border x:Name="audioPathBorder"  Stroke="Blue"
+            <Border Stroke="Blue"
                     Padding="10">
                 <VerticalStackLayout x:Name="audioPathVSL">
-                    <Button x:Name="audioPathLabel"
+                    <HorizontalStackLayout>
+                        <Label Text="Use Default: "
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Start"
+                               WidthRequest="80"
+                               Style="{StaticResource  AppSettingsLabels}"/>
+                        <CheckBox x:Name="useLocatState"
+                                  Color="Blue"
+                                  IsChecked="{Binding UseDefaultAudoPath, Mode=OneWay}">
+                            <CheckBox.Behaviors>
+                                <behavior:EventToCommandBehavior 
+                                     EventName="CheckedChanged" 
+                                     Command="{Binding UseDefaultAudioPathChangedCommand}"
+                                     CommandParameter="{Binding Source={x:Reference useLocatState}, Path=IsChecked}"/>
+                            </CheckBox.Behaviors>
+                        </CheckBox>
+                    </HorizontalStackLayout>
+
+                    <Button x:Name="audioPathButton"
                             Text="Audio Folder Picker:"
                             HeightRequest="20"
                             WidthRequest="160"
                             HorizontalOptions="Start"
                             Margin="0,0,10,10"
+                            IsEnabled="{Binding Source={x:Reference useLocatState}, 
+                                                Path=IsChecked, 
+                                                Converter={toolkit:InvertedBoolConverter}}"
                             Command="{Binding PickAudioFolderCommand}" />
-                    <Entry x:Name="audioPathEntry"
-                           Style="{StaticResource AudioPathEntry}"
+                    <Label x:Name="audioPathLabel"
+                           HorizontalOptions="StartAndExpand"
                            Text="{Binding AudioFolderPath, Mode=TwoWay}"/>
                 </VerticalStackLayout>
             </Border>

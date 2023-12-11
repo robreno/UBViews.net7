@@ -1,6 +1,6 @@
 ﻿namespace UBViews.ViewModels;
 
-    using CommunityToolkit.Maui.Storage;
+using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -9,6 +9,7 @@ using UBViews.Views;
 
 public partial class XmlAppSettingsViewModel : BaseViewModel
 {
+    #region  Private Data Members
     const int SMALL = 0;
     const int MEDIUM = 1;
     const int LARGE = 2;
@@ -33,12 +34,15 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool previousShowPlaybackControls;
     bool previousAutoSendEmail;
     bool previousRunPreCheckSilent;
+    bool previousUseDefaultAudioPath;
     string previousAudioFolderName;
     string previousAudioFolderPath;
     int previousWindowSize;
-    bool settingsDirty;
 
     private IAppSettingsService settingsService;
+
+    readonly string _class = nameof(XmlAppSettingsViewModel);
+    #endregion
 
     public XmlAppSettingsViewModel(IAppSettingsService settingsService)
     {
@@ -47,6 +51,9 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     bool isRefreshing;
+
+    [ObservableProperty]
+    bool settingsDirty;
 
     [ObservableProperty]
     double lineHeight;
@@ -68,6 +75,9 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     bool showPlaybackControls;
+
+    [ObservableProperty]
+    bool useDefaultAudoPath;
 
     [ObservableProperty]
     bool autoSendEmail;
@@ -137,7 +147,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     {
         try
         {
-            if (settingsDirty == true)
+            if (SettingsDirty == true)
             {
                 await SaveCacheSettings();
             }
@@ -255,6 +265,39 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task UseDefaultAudioPathChanged(bool value)
+    {
+        try
+        {
+            previousUseDefaultAudioPath = UseDefaultAudoPath;
+            UseDefaultAudoPath = value;
+
+            if (previousUseDefaultAudioPath != UseDefaultAudoPath)
+            {
+                if (UseDefaultAudoPath)
+                {
+                    if (AudioFolderPath != "LocalState\\AudioFiles")
+                    {
+                        previousAudioFolderName = AudioFolderName;
+                        AudioFolderName = "AudioFiles";
+                        previousAudioFolderPath = AudioFolderPath;
+                        AudioFolderPath = "LocalState\\AudioFiles";
+
+                        var lbl = contentPage.FindByName("audioPathLabel") as Label;
+                        lbl.Text = "LocalState\\AudioFiles";
+                        SettingsDirty = true;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.AutoSendEmail => ",
+                ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
     async Task WindowSizeSelectedIndexChanged(int value)
     {
         try
@@ -299,8 +342,9 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
             AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
             AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
+            UseDefaultAudoPath = previousUseDefaultAudioPath = await settingsService.Get("use_default_audio_path", true);
             RunPreCheckSilent = previousRunPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
-            settingsDirty = false;
+            SettingsDirty = false;
         }
         catch (Exception ex)
         {
@@ -344,55 +388,72 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             if (previousUseCaching != UseCaching)
             {
                 await settingsService.SetCache("use_caching", UseCaching);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousMaxQuery != MaxQueryResults)
             {
                 await settingsService.SetCache("max_query_results", MaxQueryResults);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousShowPids != ShowReferencePids)
             {
                 await settingsService.SetCache("show_reference_pids", ShowReferencePids);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousLineHeight != LineHeight)
             {
                 await settingsService.SetCache("line_height", LineHeight);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousShowPaperContents != ShowPaperContents)
             {
                 await settingsService.SetCache("show_paper_contents", ShowPaperContents);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousShowPlaybackControls != ShowPlaybackControls)
             {
                 await settingsService.SetCache("show_playback_controls", ShowPlaybackControls);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousAutoSendEmail != AutoSendEmail)
             {
                 await settingsService.SetCache("auto_send_email", AutoSendEmail);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);
-                settingsDirty = true;
+                SettingsDirty = true;
+            }
+            if (previousUseDefaultAudioPath != UseDefaultAudoPath)
+            {
+                if (UseDefaultAudoPath)
+                {
+                    await settingsService.SetCache("use_default_audio_path", true);
+                    await settingsService.SetCache("audio_folder_name", "AudioFiles");
+                    await settingsService.SetCache("audio_folder_path", "LocalState\\AudioFiles");
+                }
+                else
+                {
+
+                    await settingsService.SetCache("use_default_audio_path", false);
+                }
+                SettingsDirty = true;
             }
             if (previousAudioFolderPath != AudioFolderPath)
             {
+                string[] arr = AudioFolderPath.Split(@"\");
+                AudioFolderName = arr[arr.Length - 1];
                 await settingsService.SetCache("audio_folder_name", AudioFolderName);
                 await settingsService.SetCache("audio_folder_path", AudioFolderPath);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
             if (previousRunPreCheckSilent != RunPreCheckSilent)
             {
                 await settingsService.SetCache("run_precheck_silent", RunPreCheckSilent);
-                settingsDirty = true;
+                SettingsDirty = true;
             }
-            if (settingsDirty && !UseCaching)
+            if (SettingsDirty && !UseCaching)
             {
                 await SaveCacheSettings();
             }
@@ -411,7 +472,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         try
         {
             await settingsService.SaveCache();
-            settingsDirty = false;
+            SettingsDirty = false;
         }
         catch (Exception ex)
         {
