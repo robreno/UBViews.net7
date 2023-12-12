@@ -74,22 +74,31 @@ public class DownloadService : IDownloadService
             string audioFolderName = await settingsService.Get("audio_folder_name", "");
             if (!string.IsNullOrEmpty(audioFolderPath) && !string.IsNullOrEmpty(audioFolderName))
             {
-                if (audioFolderPath == "LocalState\\AudioFiles")
+                if (audioFolderName.Equals("[Empty]"))
+                {
+                    ValidAudioDownloadPath = false;
+                }
+                else if (audioFolderPath == "LocalState\\AudioFiles")
                 {
                     AudioDownloadPath = Path.Combine(LocalStatePath, audioFolderName);
                     AudioFolderExists = Directory.Exists(AudioDownloadPath);
-                    if (!AudioFolderExists) 
+                    if (!AudioFolderExists)
                     {
                         System.IO.Directory.CreateDirectory(AudioDownloadPath);
                     }
+                    ValidAudioDownloadPath = true;
                 }
                 else
                 {
                     AudioDownloadPath = audioFolderPath;
+                    ValidAudioDownloadPath = true;
                 }
-                AudioDownloadFullPathName = Path.Combine(AudioDownloadPath, PaperName);
-                AudioFileExists = File.Exists(AudioDownloadFullPathName);
-                ValidAudioDownloadPath = true;
+
+                if (ValidAudioDownloadPath)
+                {
+                    AudioDownloadFullPathName = Path.Combine(AudioDownloadPath, PaperName);
+                    AudioFileExists = File.Exists(AudioDownloadFullPathName);
+                }
             }
             Initialized = (ValidAudioUriPath && ValidAudioDownloadPath);
         }
