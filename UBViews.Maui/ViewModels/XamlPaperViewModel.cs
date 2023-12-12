@@ -155,6 +155,9 @@ namespace UBViews.ViewModels
         [ObservableProperty]
         Uri audioUri;
 
+        [ObservableProperty]
+        string downloadAudioStatus;
+
         // RelayCommands
 
         [RelayCommand]
@@ -210,7 +213,11 @@ namespace UBViews.ViewModels
                     }
 
                     await downloadService.InitializeDataAsync(contentPage, dto);
-                    await downloadService.DownloadAudioFileAsync();
+                    DownloadAudioStatus = await settingsService.Get("audio_download_status", "off");
+                    if (DownloadAudioStatus.Equals("on"))
+                    {
+                        await downloadService.DownloadAudioFileAsync();
+                    }
 
                     await audioService.InitializeDataAsync(contentPage, mediaElement, dto);
                     await audioService.SetSendToastAsync(true);
@@ -257,6 +264,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewLoaded(PaperDto dto)
         {
+            string _method = nameof(PaperViewLoaded);
             try
             {
                 if (dto == null)
@@ -291,39 +299,42 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
         }
 
         [RelayCommand]
         async Task PaperViewDisappearing(PaperDto dto)
         {
+            string _method = nameof(PaperViewDisappearing);
             try
             {
                 // Do Nothing
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
         }
 
         [RelayCommand]
         async Task PaperViewUnloaded(PaperDto dto)
         {
+            string _method = nameof(PaperViewUnloaded);
             try
             {
                 await audioService.DisconnectMediaElementAsync();
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
         }
 
         [RelayCommand]
         async Task TappedGestureForPaper(string value)
         {
+            string _method = nameof(TappedGestureForPaper);
             try
             {
                 if (contentPage == null) 
@@ -336,7 +347,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -344,6 +355,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task DoubleTappedGestureForPaper(string value)
         {
+            string _method = nameof(DoubleTappedGestureForPaper);
             try
             {
                 if (contentPage == null)
@@ -358,7 +370,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -366,6 +378,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task TappedGesture(string id)
         {
+            string _method = nameof(TappedGesture);
             try
             {
                 if (contentPage == null)
@@ -385,7 +398,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -393,6 +406,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task DoubleTappedGesture(string id)
         {
+            string _method = nameof(DoubleTappedGesture);
             try
             {
                 if (contentPage == null)
@@ -412,7 +426,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -421,6 +435,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SwipeGesture(string actionId)
         {
+            string _method = nameof(SwipeGesture);
             try
             {
                 if (contentPage == null)
@@ -482,7 +497,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Gesture Regognizer => ", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -492,6 +507,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task FlyoutMenu(string actionId)
         {
+            string _method = nameof(FlyoutMenu);
             try
             {
                 if (contentPage == null)
@@ -564,7 +580,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -573,6 +589,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetMediaPlaybackControls(bool value)
         {
+            string _method = nameof(SetMediaPlaybackControls);
             try
             {
                 //await audioService.SetMediaPlaybackControlsAsync(value);
@@ -585,7 +602,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -593,6 +610,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetPlaybackControlsStartTime(AudioMarker audioMarker)
         {
+            string _method = nameof(SetPlaybackControlsStartTime);
             try
             {
                 //var me = contentPage.FindByName("mediaElement") as IMediaElement;
@@ -603,7 +621,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -611,6 +629,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetReferencePids()
         {
+            string _method = nameof(SetReferencePids);
             try
             {
                 await MainThread.InvokeOnMainThreadAsync(() =>
@@ -649,7 +668,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -657,6 +676,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task ScrollTo(string labelName)
         {
+            string _method = nameof(ScrollTo);
             try
             {
                 var scrollView = contentPage.FindByName("contentScrollView") as ScrollView;
@@ -687,7 +707,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -695,6 +715,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudio()
         {
+            string _method = nameof(PlayAudio);
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -709,7 +730,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -717,6 +738,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PauseAudio()
         {
+            string _method = nameof(PauseAudio);
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -731,7 +753,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -739,6 +761,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task StopAudio()
         {
+            string _method = nameof(StopAudio);
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -754,7 +777,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -762,6 +785,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudioRange(string timeSpanRange)
         {
+            string _method = nameof(PlayAudioRange);
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -776,7 +800,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -784,6 +808,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudioRangeEx(AudioMarker audioMarker)
         {
+            string _method = nameof(PlayAudioRangeEx);
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -798,7 +823,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -806,13 +831,14 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PositionChanged(TimeSpan timeSpan)
         {
+            string _method = nameof(PositionChanged);
             try
             {
                 await audioService.PositionChangedAsync(timeSpan);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -820,13 +846,14 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task StateChanged(string state)
         {
+            string _method = nameof(StateChanged);
             try
             {
                 await audioService.StateChangedAsync(state);
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
@@ -838,6 +865,7 @@ namespace UBViews.ViewModels
         /// <returns></returns>
         async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
+            string _method = nameof(LoadAudioMarkers);
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
@@ -845,7 +873,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -857,6 +885,7 @@ namespace UBViews.ViewModels
         /// <returns></returns>
         async Task SendToast(string message)
         {
+            string _method = nameof(SendToast);
             try
             {
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -869,7 +898,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
         }
