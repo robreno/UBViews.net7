@@ -19,6 +19,7 @@ namespace UBViews.ViewModels
     [QueryProperty(nameof(PaperDto), "PaperDto")]
     public partial class XamlPaperViewModel : BaseViewModel
     {
+        #region  Private Data Members
         /// <summary>
         /// 
         /// </summary>
@@ -77,13 +78,26 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        IDownloadService downloadService;
+
+        readonly string _class = nameof(XamlPaperViewModel);
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="fileService"></param>
-        public XamlPaperViewModel(IFileService fileService, IEmailService emailService, IAppSettingsService settingsService, IAudioService audioService)
+        public XamlPaperViewModel(IFileService fileService, 
+                                  IEmailService emailService, 
+                                  IAppSettingsService settingsService, 
+                                  IAudioService audioService,
+                                  IDownloadService downloadService)
         {
             this.fileService = fileService;
             this.emailService = emailService;
             this.audioService = audioService;
             this.settingsService = settingsService;
+            this.downloadService = downloadService;
             this.cultureInfo = new CultureInfo("en-US");
         }
 
@@ -136,9 +150,6 @@ namespace UBViews.ViewModels
         string scrollToLabelName;
 
         [ObservableProperty]
-        bool validAudioPath = false;
-
-        [ObservableProperty]
         string audioUriString;
 
         [ObservableProperty]
@@ -181,6 +192,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewAppearing(PaperDto dto)
         {
+            string _method = nameof(PaperViewAppearing);
             try
             {
                 if (contentPage == null)
@@ -190,26 +202,15 @@ namespace UBViews.ViewModels
                 }
                 else
                 {
-                    //string path = await settingsService.Get("audio_folder_path", "");
-                    //if (!string.IsNullOrEmpty(path))
-                    //{
-                    //    string id = dto.Id.ToString("0");
-                    //    string fullPathName = path + @"\U" + id + ".mp3";
-                    //    if (File.Exists(fullPathName))
-                    //    {
-                    //        var mediaSource = MediaSource.FromFile(fullPathName);
-                    //        mediaElement.Source = mediaSource;
-                    //        ValidAudioPath = true;
-                    //    }
-                    //}
-
                     var hasValue = contentPage.Resources.TryGetValue("audioUri", out object uri);
                     if (hasValue)
                     {
                         AudioUriString = (string)uri;
                         AudioUri = new Uri(AudioUriString);
-                        ValidAudioPath = true;
                     }
+
+                    await downloadService.InitializeDataAsync(contentPage, dto);
+                    await downloadService.DownloadAudioFileAsync();
 
                     await audioService.InitializeDataAsync(contentPage, mediaElement, dto);
                     await audioService.SetSendToastAsync(true);
@@ -249,7 +250,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
         }
 
