@@ -34,6 +34,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool previousShowPlaybackControls;
     bool previousAutoSendEmail;
     bool previousRunPreCheckSilent;
+    string previousAudioDownlandStatus;
     bool previousUseDefaultAudioPath;
     string previousAudioFolderName;
     string previousAudioFolderPath;
@@ -77,9 +78,6 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     bool showPlaybackControls;
 
     [ObservableProperty]
-    bool useDefaultAudoPath;
-
-    [ObservableProperty]
     bool autoSendEmail;
 
     [ObservableProperty]
@@ -87,6 +85,12 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     int windowSize;
+
+    [ObservableProperty]
+    string audioDownloadStatus;
+
+    [ObservableProperty]
+    bool useDefaultAudoPath;
 
     [ObservableProperty]
     string audioFolderName = string.Empty;
@@ -340,6 +344,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
             AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
             WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
+            AudioDownloadStatus = previousAudioDownlandStatus = await settingsService.Get("audio_download_status", "");
             AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
             AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
             UseDefaultAudoPath = previousUseDefaultAudioPath = await settingsService.Get("use_default_audio_path", true);
@@ -423,6 +428,11 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
             if (previousWindowSize != WindowSize)
             {
                 await settingsService.SetCache("window_size", WindowSize);
+                SettingsDirty = true;
+            }
+            if (previousAudioDownlandStatus != AudioDownloadStatus)
+            {
+                await settingsService.SetCache("audio_download_status", AudioDownloadStatus);
                 SettingsDirty = true;
             }
             if (previousUseDefaultAudioPath != UseDefaultAudoPath)

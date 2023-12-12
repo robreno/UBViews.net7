@@ -199,8 +199,12 @@
 
             <Border Stroke="Blue"
                     Padding="10">
+                
                 <VerticalStackLayout x:Name="audioPathVSL">
-                    <HorizontalStackLayout>
+
+                    <HorizontalStackLayout x:Name="audioUseDefaultHSL" 
+                                           IsVisible="False">
+                        
                         <Label Text="Use Default: "
                                HorizontalOptions="Start"
                                HorizontalTextAlignment="Start"
