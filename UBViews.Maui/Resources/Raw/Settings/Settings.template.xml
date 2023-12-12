@@ -15,9 +15,9 @@
   <Setting id="13" name="auto_send_email" type="bool" value="false" />
   <Setting id="14" name="stream_audio" type="bool" value="false" />
   <Setting id="15" name="audio_status" type="string" value="off" />
-  <Setting id="16" name="use_default_audio_path" type="bool" value="true" />
-  <Setting id="17" name="audio_folder_name" type="string" value="AudioFiles" />
-  <Setting id="18" name="audio_folder_path" type="string" value="LocalState\AudioFiles" />
-  <Setting id="19" name="audio_download_status" type="string" value="off" />
+  <Setting id="16" name="audio_download_status" type="string" value="off" />
+  <Setting id="17" name="use_default_audio_path" type="bool" value="false" />
+  <Setting id="18" name="audio_folder_name" type="string" value="[Empty]" />
+  <Setting id="19" name="audio_folder_path" type="string" value="Please pick audio folder ..." />
   <Setting id="20" name="run_precheck_silent" type="bool" value="true" />
 </Settings>
