@@ -221,9 +221,8 @@
 	  <None Remove="Resources\Raw\Audio.Metadata.fr.xml" />
 	  <None Remove="Resources\Raw\AudioMarkers\000.audio.xml" />
 	  <None Remove="Resources\Raw\AudioMarkers\UFAWS\189.audio.xml" />
-	  <None Remove="Resources\Raw\Audio\UB.000.0.mp3" />
+	  <None Remove="Resources\Raw\Audio\BookIntro.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.000.mp3" />
-	  <None Remove="Resources\Raw\Audio\UB.001.0.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.mp3" />
 	  <None Remove="Resources\Raw\Email\Contacts.template.xml" />
 	  <None Remove="Resources\Raw\Email\Contacts.test.xml" />
