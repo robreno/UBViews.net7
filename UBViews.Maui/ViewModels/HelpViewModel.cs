@@ -55,39 +55,26 @@ public partial class HelpViewModel : BaseViewModel
         try
         {
             Popup popup = null;
-            string targetName = string.Empty;
             if (target == "SettingsOverviewPopup")
             {
                 popup = new SettingsOverviewPopup(new PopupViewModel());
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    Shell.Current.CurrentPage.ShowPopup(popup);
-                });
             }
             else if (target == "ContactsOverviewPopup")
             {
                 popup = new ContactsOverviewPopup(new PopupViewModel());
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    Shell.Current.CurrentPage.ShowPopup(popup);
-                });
             }
             else if (target == "SharingOverviewPopup")
             {
                 popup = new SharingOverviewPopup(new PopupViewModel());
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    Shell.Current.CurrentPage.ShowPopup(popup);
-                });
             }
             else if (target == "AudioOverviewPopup")
             {
                 popup = new AudioOverviewPopup(new PopupViewModel());
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    Shell.Current.CurrentPage.ShowPopup(popup);
-                });
             }
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                Shell.Current.CurrentPage.ShowPopup(popup);
+            });
         }
         catch (Exception ex)
         {
