@@ -11,14 +11,10 @@
             Stroke="Blue"
             VerticalOptions="StartAndExpand">
         
-        <VerticalStackLayout BackgroundColor="WhiteSmoke"
-                             VerticalOptions="StartAndExpand">
+        <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
             <Label Text="Audio Overview"
-                   VerticalOptions="Center" 
-                   HorizontalTextAlignment="Center"
-                   FontFamily="ACaslonProRegular"
-                   FontSize="18.5" />
+                   Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
                         VerticalOptions="StartAndExpand"
@@ -26,9 +22,7 @@
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
+                    <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}"> 
                         <Label.FormattedText>
                             <FormattedString>
@@ -44,10 +38,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}" >
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="This popup describes how to setup an audio download folder for the Urantia book audio files." 
@@ -62,9 +54,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Download by Listening:"
@@ -88,9 +79,8 @@
 
                     <Image Source="download_two.png" Aspect="AspectFit" />
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">    
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">    
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Select Download:"
@@ -111,9 +101,8 @@
 
                     <Image Source="audio_path_setting.png" Aspect="AspectFit"/>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="After Selecting Audio folder:"
@@ -134,9 +123,8 @@
 
                     <Image Source="audio_path_after.png" Aspect="AspectFit"/>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                            HorizontalOptions="StartAndExpand"
-                            Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text=""

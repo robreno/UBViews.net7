@@ -15,9 +15,7 @@
         <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
             <Label Text="Sharing Overview"
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource TitleParagraph}" />
+                   Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
                         Style="{StaticResource PopupScrollViewStyle}">
@@ -43,9 +41,8 @@
                     </Label>
 
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Context Menus:"
@@ -70,11 +67,10 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="context_menu_two.png" />
+                    <Image Source="context_menu_two.png" Aspect="AspectFit" />
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">    
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">    
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Query Results Page:"

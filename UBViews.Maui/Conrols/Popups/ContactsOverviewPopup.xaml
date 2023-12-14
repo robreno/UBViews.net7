@@ -15,19 +15,15 @@
         <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
             <Label Text="Contacts Overview"
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource TitleParagraph}" />
+                   Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
                         Style="{StaticResource PopupScrollViewStyle}">
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}" >
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="This popup describes how to add contacts so you can share Urantia quotes with friends, family, or study group members." 
@@ -43,9 +39,8 @@
                     </Label>
 
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Add New Contact:"

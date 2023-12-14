@@ -88,10 +88,7 @@
             <Style x:Key="TitleTabsSpan" TargetType="Span">
                 <Setter Property="Text" Value=". " />
             </Style>
-            <Style x:Key="PopupTabsSpan" TargetType="Span">
-                <Setter Property="Text" Value=" " />
-            </Style>
-
+            
             <!-- Paper Span Styles -->
             <Style x:Key="PID" TargetType="Span">
                 <Setter Property="TextColor" Value="Gray"/>
@@ -320,7 +317,6 @@
             <Style x:Key="PaperTitleSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
                 <Setter Property="FontSize" Value="17.5" />
             </Style>
-            <Style x:Key="PopupTitleSpan" TargetType="Span" BasedOn="{StaticResource PaperTitleSpan}" />
 
             <!-- CheckBox Caption -->
             <Style x:Key="CheckBoxCaption" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
@@ -363,7 +359,6 @@
             <Style x:Key="PaperTitlesStaticVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Padding" Value="10,0,0,0" />
             </Style>
-            <Style x:Key="PopupTitlesStaticVSL" TargetType="VerticalStackLayout" BasedOn="{StaticResource PaperTitlesStaticVSL}" />
 
             <!-- Paper Contents Style -->
             <Style x:Key="BasePaperContentTitlesVSL" TargetType="VerticalStackLayout">
@@ -514,13 +509,30 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
 
-            <!-- Audio ScrollView -->
+            <!-- Popup Styles -->
+            <Style x:Key="PopupTabsSpan" TargetType="Span">
+                <Setter Property="Text" Value=" " />
+            </Style>
+            <Style x:Key="PopupTitleSpan" TargetType="Span" 
+                   BasedOn="{StaticResource PaperTitleSpan}" />
+
+            <Style x:Key="PopupTitleLabel" TargetType="Label">
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="ACaslonProRegular" />
+                <Setter Property="FontSize" Value="18.5" />
+            </Style>
+
             <Style x:Key="PopupScrollViewStyle" TargetType="ScrollView">
                 <Setter Property="MinimumHeightRequest" Value="350" />
                 <Setter Property="MaximumHeightRequest" Value="550" />
                 <Setter Property="MinimumWidthRequest" Value="350" />
                 <Setter Property="MaximumWidthRequest" Value="550" />
             </Style>
+
+            <Style x:Key="PopupTitlesStaticVSL" TargetType="VerticalStackLayout" 
+                   BasedOn="{StaticResource PaperTitlesStaticVSL}" />
 
             <!-- End UB Specific Styles -->
 

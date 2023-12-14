@@ -7,27 +7,21 @@
                x:Class="UBViews.Controls.Help.SettingsOverviewPopup"
                x:DataType="viewmodels:PopupViewModel">
 
-    <!-- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup -->
-
     <Border x:Name="popuBorder" 
             Stroke="Blue">
         
         <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
             <Label Text="Settings Overview"
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource TitleParagraph}" />
+                   Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
                         Style="{StaticResource PopupScrollViewStyle}">
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}" >
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="This popup describes how to use the Settings Page to configure various settings to one's user preferences." 
@@ -43,9 +37,8 @@
                     </Label>
 
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Configure Settings:"
@@ -66,9 +59,8 @@
 
                     <Image Source="application_settings_two.png" Aspect="AspectFit"  />
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">    
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">    
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Maximum Query Results:"
@@ -86,9 +78,8 @@
 
                     <Image Source="max_query_results.png" Aspect="AspectFit"  />
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Show References:"
@@ -111,9 +102,8 @@
                            HorizontalOptions="Center"
                            Aspect="AspectFit"/>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Query Caching:"
@@ -134,13 +124,10 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="query_caching.png"
-                           HorizontalOptions="Center"
-                           Aspect="AspectFit"/>
+                    <Image Source="query_caching.png" Aspect="AspectFit"/>
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10">
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Audio Folder Picker:"
@@ -162,8 +149,6 @@
                     </Label>
 
                     <Image Source="audio_path_setting.png" Aspect="AspectFit" />
-
-                    <Label Text="~ ~ ~ ~" Margin="0,20,0,0" HorizontalOptions="Center" />
 
                 </VerticalStackLayout>
                 
