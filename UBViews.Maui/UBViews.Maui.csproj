@@ -211,6 +211,21 @@
 	  <None Remove="Resources\Fonts\SabonLTStd-BoldItalic.otf" />
 	  <None Remove="Resources\Fonts\SabonLTStd-Italic.otf" />
 	  <None Remove="Resources\Fonts\SabonLTStd-Roman.otf" />
+	  <None Remove="Resources\Images\Help\application_settings.png" />
+	  <None Remove="Resources\Images\Help\application_settings_two.png" />
+	  <None Remove="Resources\Images\Help\audio_path_after.png" />
+	  <None Remove="Resources\Images\Help\audio_path_setting.png" />
+	  <None Remove="Resources\Images\Help\context_menu.png" />
+	  <None Remove="Resources\Images\Help\context_menu_two.png" />
+	  <None Remove="Resources\Images\Help\download_one_options.png" />
+	  <None Remove="Resources\Images\Help\download_two.png" />
+	  <None Remove="Resources\Images\Help\empty_contact.png" />
+	  <None Remove="Resources\Images\Help\max_query_results.png" />
+	  <None Remove="Resources\Images\Help\new_contact.png" />
+	  <None Remove="Resources\Images\Help\query_caching.png" />
+	  <None Remove="Resources\Images\Help\share_selected.png" />
+	  <None Remove="Resources\Images\Help\show_contents.png" />
+	  <None Remove="Resources\Images\Help\show_references.png" />
 	  <None Remove="Resources\Images\ub606_100x100.png" />
 	  <None Remove="Resources\Images\ub606_558x558.png" />
 	  <None Remove="Resources\Images\ub_viewer.png" />
@@ -271,11 +286,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Help\application_settings.png" />
+	  <MauiImage Include="Resources\Images\Help\application_settings_two.png" />
+	  <MauiImage Include="Resources\Images\Help\audio_path_after.png" />
+	  <MauiImage Include="Resources\Images\Help\audio_path_setting.png" />
+	  <MauiImage Include="Resources\Images\Help\context_menu.png" />
+	  <MauiImage Include="Resources\Images\Help\context_menu_two.png" />
+	  <MauiImage Include="Resources\Images\Help\download_one_options.png" />
+	  <MauiImage Include="Resources\Images\Help\download_two.png" />
+	  <MauiImage Include="Resources\Images\Help\empty_contact.png" />
+	  <MauiImage Include="Resources\Images\Help\max_query_results.png" />
+	  <MauiImage Include="Resources\Images\Help\new_contact.png" />
+	  <MauiImage Include="Resources\Images\Help\query_caching.png" />
+	  <MauiImage Include="Resources\Images\Help\share_selected.png" />
+	  <MauiImage Include="Resources\Images\Help\show_contents.png" />
+	  <MauiImage Include="Resources\Images\Help\show_references.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\QueryEngine\QueryEngine.fsproj" />
 	  <ProjectReference Include="..\QueryFilter\QueryFilter.fsproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Conrols\Popups\AudioOverviewPopup.xaml.cs">
+	    <DependentUpon>AudioOverviewPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Resources\Themes\UBLightTheme.xaml.cs">
 	    <DependentUpon>UBLightTheme.xaml</DependentUpon>
 	  </Compile>
@@ -309,6 +345,18 @@
 	  <MauiXaml Update="Conrols\CirclesHeader.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Conrols\Popups\AudioOverviewPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Conrols\Popups\ContactsOverviewPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Conrols\Popups\SettingsOverviewPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Conrols\Popups\SharingOverviewPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Themes\UBDarkTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -322,6 +370,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContentTitlesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\HelpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PartsPage.xaml">

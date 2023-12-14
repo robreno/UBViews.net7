@@ -4,7 +4,7 @@
                xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
                xmlns:bahaviors="clr-namespace:UBViews.Behaviors"
                xmlns:viewmodels="clr-namespace:UBViews.ViewModels"            
-               x:Class="UBViews.Controls.Help.AudioOverviewPopup"
+               x:Class="UBViews.Controls.Help.SettingsOverviewPopup"
                x:DataType="viewmodels:PopupViewModel">
 
     <!-- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup -->
@@ -14,7 +14,7 @@
         
         <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
-            <Label Text="Audio Overview"
+            <Label Text="Settings Overview"
                    VerticalOptions="Center" 
                    HorizontalOptions="Center"
                    Style="{StaticResource TitleParagraph}" />
@@ -30,34 +30,16 @@
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}" > 
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="The Urantia Foundation allows readers to download the audio files of the Urantia papers." 
-                                      Style="{StaticResource RegularSpan}" />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="UBViews allows users to listen to those files if they are located in a folder accessible to UBViews."  
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="This allows users to tap-n-play and listen to a paper being viewed."  
-                                      Style="{StaticResource RegularSpan}"  />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to setup an audio download folder for the Urantia book audio files." 
+                                <Span Text="This popup describes how to use the Settings Page to configure various settings to one's user preferences." 
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Users can download the Urantia book's audio files from Urantia Foundation's website."  
+                                <Span Text="Users can set various settings to, for example, turn on or off the standard paragraph identifier method of citing Paper:Section:Pargraph traditioanlly used by the Foundation."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The process of how to download the audio files which will be explained below."  
+                                <Span Text="In addition, one can control the number of query results returned and much more. The process of how to configure the settings will be explained below."  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
@@ -69,76 +51,122 @@
                            Margin="10,10,10,10">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Download by Listening:"
+                                <Span Text="Configure Settings:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Go to the urnatia.org and select Listen to the papers."  
+                                <Span Text="Go to the Settings Page from the Main Page using the Settings Button."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="From the contents select the paper you want to download and select to listen to it."
+                                <Span Text="From the Settings Page one can select from various settings to configure."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select the vertical ... to expand."  
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="To see image:"  
+                                <Span Text="The settigs can be seen in the following image:"  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="download_two.png" />
+                    <Image Source="application_settings_two.png" Aspect="AspectFit"  />
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10">    
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Select Download:"
+                                <Span Text="Maximum Query Results:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select Download and save to an archive location for Urantia book audio files."  
+                                <Span Text="The Max Query Reult control allows one to increment/decrement the number of maximum query results returned on any single query."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="In UBViews Settings page you can pick and set the Urantia audio files for the App."
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Settings Page:"  
+                                <Span Text="The current default range is anywhere from 50 to 200:"
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="audio_path_setting.png"
-                           HorizontalOptions="Center"
-                           Aspect="Center"/>
+                    <Image Source="max_query_results.png" Aspect="AspectFit"  />
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="After Selecting Audio folder:"
+                                <Span Text="Show References:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select a folder and then the path will change to the new folder selected."  
+                                <Span Text="The Show References control allows you to set on or off the paragraph references."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="This folder should be the folder that you downloaded the Urantia book audio files into."
+                                <Span Text="Paragraph references appear to the left of a paragraph's opening sentence."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Now UBViews can play the audio files of the Urantia book. See Help for how."  
+                                <Span Text="References appear in the form 196:0.1 refering to the paper, section, and paragraph."  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="audio_path_after.png"
+                    <Image Source="show_references.png"
                            HorizontalOptions="Center"
-                           Aspect="Center"/>
+                           Aspect="AspectFit"/>
+
+                    <Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Query Caching:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The Query Caching control causes queries to be cached."                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Cached queries provide a efficient way of returning query results that have already been run."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Over time query caching can result in larger disk space usage. An alternative is to use query caching only for long running queries or important queries of note, but otherwise turn it off."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Consider this setting like keeping a query history."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="query_caching.png"
+                           HorizontalOptions="Center"
+                           Aspect="AspectFit"/>
+
+                    <Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Audio Folder Picker:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Text="This control allows the user to pick a folder where the Urantia audio files are achived."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="UBViews will determine if the audio files are present and allow the Audio Service to play the audio files so users can listen to the papers."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The Audio Folder Picker control is covered in detail in the Help Popup "                                      
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Audio Overview"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="audio_path_setting.png" Aspect="AspectFit" />
+
+                    <Label Text="~ ~ ~ ~" Margin="0,20,0,0" HorizontalOptions="Center" />
 
                 </VerticalStackLayout>
                 

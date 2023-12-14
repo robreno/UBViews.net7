@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+               xmlns:bahaviors="clr-namespace:UBViews.Behaviors"
+               xmlns:viewmodels="clr-namespace:UBViews.ViewModels"            
+               x:Class="UBViews.Controls.Help.SharingOverviewPopup"
+               x:DataType="viewmodels:PopupViewModel">
+
+    <!-- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup -->
+
+    <Border x:Name="popuBorder" 
+            Stroke="Blue">
+        
+        <VerticalStackLayout BackgroundColor="WhiteSmoke">
+
+            <Label Text="Sharing Overview"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TitleParagraph}" />
+
+            <ScrollView x:Name="mainScrollView"
+                        MinimumHeightRequest="350"
+                        MinimumWidthRequest="350"
+                        MaximumHeightRequest="400"
+                        MaximumWidthRequest="600">
+
+                <VerticalStackLayout x:Name="mainSCVSL">
+
+                    <Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="This popup describes how to share Urantia quotes with friends, family, or study group members." 
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Users can add contacts and then share Urantia book quotes via email or other applications depending on the platform used."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The process of how to add share content will be explained below."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+
+                    <Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Context Menus:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="When viewing a paper if you rigt-click a Context Menu will appear with commands."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="From the context menu select the command you desire. In this case, we are sharing content, so you have Copy, Share, and Email commands to choose from."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Copy will copy the paragragph's text to the clipboard where the user can paste the content into another application."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Share, depending on your platform, will share the content with other applications."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Email will open up the default email client with the paragraph's text therein using the Auto Send list for email recipients."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="context_menu_two.png" />
+
+                    <Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">    
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Query Results Page:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="After entering a query the Query Results Page shows the results of the query."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Select the checkbox for the query results you want to share and click Share Selected button."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=""  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Share Selected will open up the default email client with the paragraph's text therein using the Auto Send list for email recipients."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="share_selected.png" Aspect="AspectFit" />
+
+                    <!--<Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="After Selecting Audio folder:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Select a folder and then the path will change to the new folder selected."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="This folder should be the folder that you downloaded the Urantia book audio files into."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Now UBViews can play the audio files of the Urantia book. See Help for how."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>-->
+
+                    <!--<Image Source="audio_path_after.png"
+                           HorizontalOptions="Center"
+                           Aspect="Center"/>-->
+
+                </VerticalStackLayout>
+                
+            </ScrollView>
+
+            <Button x:Name="closePopup" 
+                    Text="Close"
+                    Margin="20"
+                    WidthRequest="165"
+                    VerticalOptions="End">
+                <Button.Behaviors>  
+                    <bahaviors:EventToCommandBehavior 
+                        EventName="Clicked"
+                        Command="{Binding ClosePopupCommand}"
+                        CommandParameter="{Binding .}"/>
+                </Button.Behaviors>
+            </Button>
+            
+        </VerticalStackLayout>
+    </Border>
+    
+</toolkit:Popup>

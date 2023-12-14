@@ -317,10 +317,10 @@
                 <Setter Property="FontSize" Value="17.5" />
                 <!--<Setter Property="TextTransform" Value="Uppercase" />-->
             </Style>
-            <Style x:Key="PopupTitleSpan" TargetType="Span" BasedOn="{StaticResource PaperTitleSpan}" />
             <Style x:Key="PaperTitleSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
                 <Setter Property="FontSize" Value="17.5" />
             </Style>
+            <Style x:Key="PopupTitleSpan" TargetType="Span" BasedOn="{StaticResource PaperTitleSpan}" />
 
             <!-- CheckBox Caption -->
             <Style x:Key="CheckBoxCaption" TargetType="Label" BasedOn="{StaticResource BaseParagraph}">
