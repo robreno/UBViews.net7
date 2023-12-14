@@ -37,7 +37,7 @@
 
             <VerticalStackLayout x:Name="contentVerticalStackLayout" 
                                  Style="{StaticResource PopupTitlesStaticVSL}">
-                
+
                 <Border Style="{StaticResource TitleBorderStyle}" 
                         Margin="0,0,0,10" 
                         Stroke="Blue" 
@@ -54,7 +54,6 @@
                         </Label.GestureRecognizers>
                         <Label.FormattedText>
                             <FormattedString>
-                                <!--<Span Text="1" Style="{StaticResource TitleNumberSpan}" />-->
                                 <Span Style="{StaticResource PopupTabsSpan}" />
                                 <Span Text="Settings Overview" Style="{StaticResource PopupTitleSpan}" />
                             </FormattedString>
@@ -78,7 +77,6 @@
                         </Label.GestureRecognizers>
                         <Label.FormattedText>
                             <FormattedString>
-                                <!--<Span Text="1" Style="{StaticResource TitleNumberSpan}" />-->
                                 <Span Style="{StaticResource PopupTabsSpan}" />
                                 <Span Text="Contacts Overview" Style="{StaticResource PopupTitleSpan}" />
                             </FormattedString>
@@ -102,7 +100,6 @@
                         </Label.GestureRecognizers>
                         <Label.FormattedText>
                             <FormattedString>
-                                <!--<Span Text="2" Style="{StaticResource TitleNumberSpan}" />-->
                                 <Span Style="{StaticResource PopupTabsSpan}" />
                                 <Span Text="Sharing Overview" Style="{StaticResource PopupTitleSpan}" />
                             </FormattedString>
@@ -126,7 +123,6 @@
                         </Label.GestureRecognizers>
                         <Label.FormattedText>
                             <FormattedString>
-                                <!--<Span Text="3" Style="{StaticResource TitleNumberSpan}" />-->
                                 <Span Style="{StaticResource PopupTabsSpan}" />
                                 <Span Text="Audio Overview" Style="{StaticResource PopupTitleSpan}" />
                             </FormattedString>
@@ -135,11 +131,6 @@
                 </Border>
 
             </VerticalStackLayout>
-
-            <!--<Label Text="~ ~ ~ ~ ~" 
-                       Margin="0,30, 0, 30"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center" />-->
 
         </VerticalStackLayout>
 
