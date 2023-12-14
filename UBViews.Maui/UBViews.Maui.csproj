@@ -215,13 +215,16 @@
 	  <None Remove="Resources\Images\Help\application_settings_two.png" />
 	  <None Remove="Resources\Images\Help\audio_path_after.png" />
 	  <None Remove="Resources\Images\Help\audio_path_setting.png" />
+	  <None Remove="Resources\Images\Help\audo_share_email.png" />
 	  <None Remove="Resources\Images\Help\context_menu.png" />
 	  <None Remove="Resources\Images\Help\context_menu_two.png" />
+	  <None Remove="Resources\Images\Help\default_mail_client.png" />
 	  <None Remove="Resources\Images\Help\download_one_options.png" />
 	  <None Remove="Resources\Images\Help\download_two.png" />
 	  <None Remove="Resources\Images\Help\empty_contact.png" />
 	  <None Remove="Resources\Images\Help\max_query_results.png" />
 	  <None Remove="Resources\Images\Help\new_contact.png" />
+	  <None Remove="Resources\Images\Help\paper_contents.png" />
 	  <None Remove="Resources\Images\Help\query_caching.png" />
 	  <None Remove="Resources\Images\Help\share_selected.png" />
 	  <None Remove="Resources\Images\Help\show_contents.png" />
@@ -288,16 +291,18 @@
 
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\Help\application_settings.png" />
-	  <MauiImage Include="Resources\Images\Help\application_settings_two.png" />
 	  <MauiImage Include="Resources\Images\Help\audio_path_after.png" />
 	  <MauiImage Include="Resources\Images\Help\audio_path_setting.png" />
+	  <MauiImage Include="Resources\Images\Help\audo_share_email.png" />
 	  <MauiImage Include="Resources\Images\Help\context_menu.png" />
 	  <MauiImage Include="Resources\Images\Help\context_menu_two.png" />
+	  <MauiImage Include="Resources\Images\Help\default_mail_client.png" />
 	  <MauiImage Include="Resources\Images\Help\download_one_options.png" />
 	  <MauiImage Include="Resources\Images\Help\download_two.png" />
 	  <MauiImage Include="Resources\Images\Help\empty_contact.png" />
 	  <MauiImage Include="Resources\Images\Help\max_query_results.png" />
 	  <MauiImage Include="Resources\Images\Help\new_contact.png" />
+	  <MauiImage Include="Resources\Images\Help\paper_contents.png" />
 	  <MauiImage Include="Resources\Images\Help\query_caching.png" />
 	  <MauiImage Include="Resources\Images\Help\share_selected.png" />
 	  <MauiImage Include="Resources\Images\Help\show_contents.png" />
