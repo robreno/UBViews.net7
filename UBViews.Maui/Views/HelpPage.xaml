@@ -16,11 +16,10 @@
             EventName="Loaded" Command="{Binding HelpPageAppearingCommand}" />
     </ContentPage.Behaviors>
 
-    <ScrollView x:Name="contentScrollView" 
-                BackgroundColor="WhiteSmoke">
+    <!--<ScrollView x:Name="contentScrollView" 
+                BackgroundColor="WhiteSmoke">-->
 
-        <VerticalStackLayout x:Name="outerVerticalStackLayout"
-                             VerticalOptions="StartAndExpand">
+        <VerticalStackLayout x:Name="outerVerticalStackLayout">
 
             <Border Stroke="Transparent" 
                     HorizontalOptions="Center" 
@@ -134,6 +133,6 @@
 
         </VerticalStackLayout>
 
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </ContentPage>
