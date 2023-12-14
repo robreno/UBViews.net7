@@ -514,6 +514,14 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
 
+            <!-- Audio ScrollView -->
+            <Style x:Key="PopupScrollViewStyle" TargetType="ScrollView">
+                <Setter Property="MinimumHeightRequest" Value="350" />
+                <Setter Property="MaximumHeightRequest" Value="550" />
+                <Setter Property="MinimumWidthRequest" Value="350" />
+                <Setter Property="MaximumWidthRequest" Value="550" />
+            </Style>
+
             <!-- End UB Specific Styles -->
 
         </ResourceDictionary>
