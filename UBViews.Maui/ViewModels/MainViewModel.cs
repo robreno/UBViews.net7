@@ -240,6 +240,11 @@ public partial class MainViewModel : BaseViewModel
                 targetName = nameof(ContactsPage);
                 await Shell.Current.GoToAsync(targetName);
             }
+            else if (target == "PopupHelp")
+            {
+                targetName = nameof(HelpPage);
+                await Shell.Current.GoToAsync(targetName);
+            }
             else if (target == "QueryResults")
             {
                 targetName = nameof(QueryResultPage);

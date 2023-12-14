@@ -116,7 +116,7 @@
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="AppContacts" />
 
-        <Button Text="App Data" 
+        <!--<Button Text="App Data" 
             FontSize="18"
             FontAttributes="Bold" 
             HorizontalOptions="Center"
@@ -125,7 +125,18 @@
             SemanticProperties.Hint="Navigation Button."
             WidthRequest="{x:StaticResource ButtonWidth}"
             Command="{Binding NavigateToCommand}"
-            CommandParameter="AppData" />
+            CommandParameter="AppData" />-->
+
+        <Button Text="Help" 
+            FontSize="18"
+            FontAttributes="Bold" 
+            HorizontalOptions="Center" 
+            SemanticProperties.HeadingLevel="None"
+            SemanticProperties.Description="Button for showing popup."
+            SemanticProperties.Hint="Show Popup Button."
+            WidthRequest="{x:StaticResource ButtonWidth}"
+            Command="{Binding NavigateToCommand}"
+            CommandParameter="PopupHelp"/>
 
         <!--<Button 
                 Text="Check Internet" 
