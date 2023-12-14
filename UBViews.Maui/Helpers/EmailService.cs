@@ -42,7 +42,6 @@ public class EmailService : IEmailService
     private Regex _rgxEmail1 = new Regex(validEmailPattern1);
 
     private readonly string _class = "EmailService";
-
     #endregion
 
     #region  Services
@@ -94,88 +93,6 @@ public class EmailService : IEmailService
     }
     #endregion
 
-    #region Private Email Methods
-    /// <summary>
-    /// ShareParagarphTextAsync
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="title"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
-    private async Task ShareParagarphTextAsync(string text, string title = _shareTitle, string subject = _shareSubject)
-    {
-        string _method = "ShareParagarphTextAsync";
-
-        try
-        {
-            await Share.Default.RequestAsync(new ShareTextRequest
-            {
-                Title = title,
-                Subject = subject,
-                Text = text
-            });
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-
-    /// <summary>
-    /// ShareUriAsync
-    /// </summary>
-    /// <param name="title"></param>
-    /// <param name="uri"></param>
-    /// <param name="share"></param>
-    /// <returns></returns>
-    private async Task ShareUriAsync(string title, string uri, IShare share)
-    {
-        string _method = "ShareUriAsync";
-
-        try
-        {
-            await share.RequestAsync(new ShareTextRequest
-            {
-                Title = title,
-                Uri = uri
-            });
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-
-    /// <summary>
-    /// SendToastAsync
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    private async Task SendToastAsync(string message)
-    {
-        string _method = "SendToastAsync";
-
-        try
-        {
-            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
-            {
-                ToastDuration duration = ToastDuration.Short;
-                double fontSize = 14;
-                var toast = Toast.Make(message, duration, fontSize);
-                await toast.Show(cancellationTokenSource.Token);
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-    //private Task<string> CreateHtmlBodyAsync(string pretext, string postText, string subject, List<string> recipients)
-    #endregion
-
     #region  Interface Implementations
     /// <summary>
     /// GetAutoRecipientsAsync
@@ -184,7 +101,6 @@ public class EmailService : IEmailService
     public async Task<bool> CanSendEmailAsync()
     {
         string _method = "CanSendEmailAsync";
-
         try
         {
             if (!_isInitialized)
@@ -243,7 +159,6 @@ public class EmailService : IEmailService
     public async Task<bool> IsValidEmailAsync(string emailAddress)
     {
         string _method = "IsValidEmailAsync";
-
         try
         {
             bool isValidEmail = false;
@@ -264,7 +179,6 @@ public class EmailService : IEmailService
     public async Task<int> ContactsCountAsync()
     {
         string _method = "ContactsCountAsync";
-
         try
         {
             if (!_isInitialized)
@@ -281,7 +195,6 @@ public class EmailService : IEmailService
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return 0;
         }
-
     }
 
     /// <summary>
@@ -291,7 +204,6 @@ public class EmailService : IEmailService
     public async Task<List<ContactDto>> GetContactsAsync()
     {
         string _method = "ContactsCountAsync";
-
         try
         {
             if (!_isInitialized)
@@ -314,7 +226,6 @@ public class EmailService : IEmailService
     public async Task<List<ContactDto>> GetAutoSendContactsAsync()
     {
         string _method = "GetAutoSendContactsAsync";
-
         try
         {
             if(!_isInitialized)
@@ -346,7 +257,6 @@ public class EmailService : IEmailService
     public async Task<List<string>> GetAutoSendEmailListAsync()
     {
         string _method = "GetAutoSendEmailListAsync";
-
         try
         {
             if (!_isInitialized)
@@ -379,7 +289,6 @@ public class EmailService : IEmailService
     public async Task ShareParagraphAsync(Paragraph paragraph)
     {
         string _method = "GetAutoSendContactsAsync";
-
         try
         {
             if (!_isInitialized)
@@ -406,7 +315,6 @@ public class EmailService : IEmailService
     public async Task ShareParagraphsAsync(List<Paragraph> paragraphs)
     { 
         string _method = "ShareParagraphsAsync";
-
         try
         {
             if (!_isInitialized)
@@ -450,7 +358,6 @@ public class EmailService : IEmailService
     public async Task EmailParagraphAsync(Paragraph paragraph, IEmailService.EmailType type, IEmailService.SendMode mode)
     {
         string _method = "EmailParagraphAsync";
-
         try
         {
             if (!_isInitialized)
@@ -586,7 +493,6 @@ public class EmailService : IEmailService
     public async Task<string> CreatePlainTextBodyAsync(Paragraph paragraph)
     {
         string _method = "CreatePlainTextBodyAsync";
-
         try
         {
             if (!_isInitialized)
@@ -626,7 +532,6 @@ public class EmailService : IEmailService
     public async Task<string> CreatePlainTextBodyAsync(List<Paragraph> paragraphs)
     {
         string _method = "CreatePlainTextBodyAsync";
-
         try
         {
             if (!_isInitialized)
@@ -666,7 +571,6 @@ public class EmailService : IEmailService
     public async Task<string> CreateHtmlBodyAsync(Paragraph paragraph)
     {
         string _method = "CreateHtmlBodyAsync";
-
         try
         {
             if (!_isInitialized)
@@ -705,7 +609,6 @@ public class EmailService : IEmailService
     public async Task<string> CreateEmailTextAsync(Paragraph paragraph)
     {
         string _method = "CreateEmailTextAsync";
-
         try
         {
             if (!_isInitialized)
@@ -735,7 +638,6 @@ public class EmailService : IEmailService
     public async Task<string> CreateEmailTextAsync(string pretext, string postText, string subject, List<string> recipients, EmailBodyFormat bodyFormat = EmailBodyFormat.PlainText)
     {
         string _method = "CreateEmailTextAsync";
-
         try
         {
             if (!_isInitialized)
@@ -764,7 +666,6 @@ public class EmailService : IEmailService
     public async Task<string> CreateHtmlTextEmailAsync(string pretext, string postText, string subject, List<string> recipients)
     {
         string _method = "CreateHtmlTextEmailAsync";
-
         try
         {
             if (!_isInitialized)
@@ -792,7 +693,6 @@ public class EmailService : IEmailService
     public async Task<string> CreatePlainTextEmailAsync(Paragraph paragraph, string pretext = _preText, string postText = _postText)
     {
         string _method = "CreatePlainTextEmailAsync";
-
         try
         {
             if (!_isInitialized)
@@ -807,6 +707,85 @@ public class EmailService : IEmailService
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
+        }
+    }
+    #endregion
+
+    #region Private Email Methods
+    /// <summary>
+    /// ShareParagarphTextAsync
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="title"></param>
+    /// <param name="subject"></param>
+    /// <returns></returns>
+    private async Task ShareParagarphTextAsync(string text, string title = _shareTitle, string subject = _shareSubject)
+    {
+        string _method = "ShareParagarphTextAsync";
+        try
+        {
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Title = title,
+                Subject = subject,
+                Text = text
+            });
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// ShareUriAsync
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="uri"></param>
+    /// <param name="share"></param>
+    /// <returns></returns>
+    private async Task ShareUriAsync(string title, string uri, IShare share)
+    {
+        string _method = "ShareUriAsync";
+        try
+        {
+            await share.RequestAsync(new ShareTextRequest
+            {
+                Title = title,
+                Uri = uri
+            });
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// SendToastAsync
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    private async Task SendToastAsync(string message)
+    {
+        string _method = "SendToastAsync";
+
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
         }
     }
     #endregion
