@@ -16,8 +16,6 @@
             EventName="Loaded" Command="{Binding HelpPageAppearingCommand}" />
     </ContentPage.Behaviors>
 
-
-
     <ScrollView x:Name="contentScrollView" 
                 BackgroundColor="WhiteSmoke">
 
