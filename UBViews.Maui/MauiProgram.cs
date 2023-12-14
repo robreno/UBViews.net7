@@ -71,6 +71,8 @@ namespace UBViews
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);
             builder.Services.AddTransient<ConnectivityViewModel>();
 
+            // Help Popups
+            builder.Services.AddTransient<PopupViewModel>();
             builder.Services.AddTransient<HelpViewModel>();
             builder.Services.AddTransient<HelpPage>();
 
