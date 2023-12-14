@@ -7,30 +7,29 @@
                x:Class="UBViews.Controls.Help.AudioOverviewPopup"
                x:DataType="viewmodels:PopupViewModel">
 
-    <!-- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup -->
-
     <Border x:Name="popuBorder" 
-            Stroke="Blue">
+            Stroke="Blue"
+            VerticalOptions="StartAndExpand">
         
-        <VerticalStackLayout BackgroundColor="WhiteSmoke">
+        <VerticalStackLayout BackgroundColor="WhiteSmoke"
+                             VerticalOptions="StartAndExpand">
 
             <Label Text="Audio Overview"
                    VerticalOptions="Center" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource TitleParagraph}" />
+                   HorizontalTextAlignment="Center"
+                   FontFamily="ACaslonProRegular"
+                   FontSize="18.5" />
 
             <ScrollView x:Name="mainScrollView"
-                        MinimumHeightRequest="650"
-                        MinimumWidthRequest="650"
-                        MaximumHeightRequest="650"
-                        MaximumWidthRequest="650">
+                        VerticalOptions="StartAndExpand"
+                        Style="{StaticResource PopupScrollViewStyle}">
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}" > 
+                           Style="{StaticResource RegularParagraph}"> 
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="The Urantia Foundation allows readers to download the audio files of the Urantia papers." 
@@ -62,7 +61,6 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
@@ -111,9 +109,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="audio_path_setting.png"
-                           HorizontalOptions="Center"
-                           Aspect="AspectFit"/>
+                    <Image Source="audio_path_setting.png" Aspect="AspectFit"/>
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
@@ -136,9 +132,28 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="audio_path_after.png"
-                           HorizontalOptions="Center"
-                           Aspect="AspectFill"/>
+                    <Image Source="audio_path_after.png" Aspect="AspectFit"/>
+
+                    <Label VerticalOptions="StartAndExpand" 
+                            HorizontalOptions="StartAndExpand"
+                            Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text=""
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=""  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=""
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="~ ~ ~ ~"  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
                 </VerticalStackLayout>
                 
@@ -158,6 +173,7 @@
             </Button>
             
         </VerticalStackLayout>
+        
     </Border>
     
 </toolkit:Popup>

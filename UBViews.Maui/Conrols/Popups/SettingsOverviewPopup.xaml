@@ -20,10 +20,7 @@
                    Style="{StaticResource TitleParagraph}" />
 
             <ScrollView x:Name="mainScrollView"
-                        MinimumHeightRequest="350"
-                        MinimumWidthRequest="350"
-                        MaximumHeightRequest="400"
-                        MaximumWidthRequest="600">
+                        Style="{StaticResource PopupScrollViewStyle}">
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
