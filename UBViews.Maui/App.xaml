@@ -88,6 +88,9 @@
             <Style x:Key="TitleTabsSpan" TargetType="Span">
                 <Setter Property="Text" Value=". " />
             </Style>
+            <Style x:Key="PopupTabsSpan" TargetType="Span">
+                <Setter Property="Text" Value=" " />
+            </Style>
 
             <!-- Paper Span Styles -->
             <Style x:Key="PID" TargetType="Span">
@@ -314,6 +317,7 @@
                 <Setter Property="FontSize" Value="17.5" />
                 <!--<Setter Property="TextTransform" Value="Uppercase" />-->
             </Style>
+            <Style x:Key="PopupTitleSpan" TargetType="Span" BasedOn="{StaticResource PaperTitleSpan}" />
             <Style x:Key="PaperTitleSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
                 <Setter Property="FontSize" Value="17.5" />
             </Style>
@@ -359,6 +363,7 @@
             <Style x:Key="PaperTitlesStaticVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Padding" Value="10,0,0,0" />
             </Style>
+            <Style x:Key="PopupTitlesStaticVSL" TargetType="VerticalStackLayout" BasedOn="{StaticResource PaperTitlesStaticVSL}" />
 
             <!-- Paper Contents Style -->
             <Style x:Key="BasePaperContentTitlesVSL" TargetType="VerticalStackLayout">
