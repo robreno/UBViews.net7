@@ -119,7 +119,7 @@
                                 <Span Text="Take the SubQuery(And) and add an Or query like so: '(ship and mind) or steamed'."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Now we have a compound query that returns the results (2 hits)."
+                                <Span Text="Now we have a compound query that returns the results (2 hits):"
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
@@ -128,21 +128,25 @@
 
                     <Image Source="search_subquery_and.png" Aspect="AspectFit" />
 
-                    <!--<Label VerticalOptions="StartAndExpand" 
+                    <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Share Selected will open up the default email client with the paragraph's"
+                                <Span Text="Phrase operator:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="You an also search for exact phrases by entering a phrase in quotation marks,"
                                       Style="{StaticResource RegularSpan}"  />
-                                <Span Text=" text in the body and fill the recipients list using the Auto Send recipients."
+                                <Span Text=" such as for example: &quot;your world&quot;."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The exact Phrase query &quot;your world&quot; returns the following results:"
+                                      Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
-                    <Image Source="default_mail_client.png" Aspect="AspectFit"/>-->
 
                 </VerticalStackLayout>
                 
