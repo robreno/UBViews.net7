@@ -52,6 +52,9 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [ObservableProperty]
+    bool isInitialized;
+
+    [ObservableProperty]
     string pageTitle;
 
     [ObservableProperty]
@@ -70,13 +73,13 @@ public partial class QueryResultViewModel : BaseViewModel
     string previousQueryInputString;
 
     [ObservableProperty]
-    string queryExpression;
+    bool queryResultExists = false;
 
     [ObservableProperty]
-    List<string> termList;
+    string queryExpression = string.Empty;
 
     [ObservableProperty]
-    bool queryResultExists;
+    List<string> termList = new();
 
     [ObservableProperty]
     int queryHits;
@@ -99,13 +102,20 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task QueryResultAppearing(QueryResultLocationsDto dto)
     {
-        string _method = "QueryResultAppearing";
+        string _method = nameof(QueryResultAppearing);
         try
         {
+            if (contentPage == null)
+            {
+                throw new NullReferenceException("ContentPage null.");
+            }
+
             if (dto == null)
             {
-                return;
+                throw new NullReferenceException("QueryResultLocationsDto null.");
             }
+
+            await queryProcessingService.SetContentPageAsync(contentPage);
 
             if (dto.DefaultQueryString != null)
             {
@@ -116,20 +126,21 @@ public partial class QueryResultViewModel : BaseViewModel
                 QueryInputString = PreviousQueryInputString = dto.QueryString;
             }
 
-            QueryString = QueryInputString;
-
-            QueryString = dto.QueryString;
             QueryHits = dto.Hits;
             MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
 
             string titleMessage = $"Query Result {queryHits} hits ...";
             Title = titleMessage;
 
-            var qlr = dto.QueryLocations.Take(MaxQueryResults).ToList();
-            foreach (var location in qlr)
+            var locations = dto.QueryLocations.Take(MaxQueryResults).ToList();
+            foreach (var location in locations)
             {
                 QueryLocationsDto.Add(location);
             }
+        }
+        catch (NullReferenceException ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Null reference raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         catch (Exception ex)
         {
@@ -153,7 +164,7 @@ public partial class QueryResultViewModel : BaseViewModel
             }
             else
             {
-                List<QueryLocationDto> dtos = new List<QueryLocationDto>();
+                List<QueryLocationDto> dtos = new();
                 foreach (var location in QueryLocationsDto)
                 {
                     dtos.Add(location);
@@ -174,13 +185,97 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task SubmitQuery(string queryString)
+    {
+        string _method = "SubmitQuery";
+        try
+        {
+            IsBusy = true;
+            string message = string.Empty;
+            bool parsingSuccessful = false;
+            bool runPreCheckSilent = await appSettingsService.Get("run_precheck_silent", true);
+
+            QueryInputString = queryString.Trim();
+            (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
+                                                                                     runPreCheckSilent);
+            if (message.Contains("="))
+            {
+                return;
+            }
+
+            if (QueryInputString == PreviousQueryInputString)
+            {
+                message = $"The query \"{QueryInputString}\" was same. Try another query?";
+                await App.Current.MainPage.DisplayAlert("Query Results", message, "Cancel");
+                return;
+            }
+            else
+            {
+                PreviousQueryInputString = QueryInputString;
+            }
+
+            (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
+            if (parsingSuccessful)
+            {
+                QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
+                QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
+                TermList = await queryProcessingService.GetTermListAsync();
+
+                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
+                if (isSuccess)
+                {
+                    QueryLocationsDto.Clear();
+                    foreach (var location in QueryLocations.QueryLocations)
+                    {
+                        QueryLocationsDto.Add(location);
+                    }
+
+                    if (QueryResultExists)
+                    {
+                        // Query result from history successfully
+                        // Navigate to results page
+                    }
+                    else
+                    {
+                        // New query run successfully
+                        // Navigate to results page
+                    }
+                    //await NavigateTo("QueryResults");
+                    await LoadXaml(QueryLocationsDto.ToList(), true);
+                }
+                else
+                {
+                    // Handle unsuccessful query result returned
+                    message = $"Query unsuccessful for unknown reason.";
+                    await App.Current.MainPage.DisplayAlert($"Query in {_method}.{_class} => ", message, "Ok");
+                }
+            }
+            else // Parsing failure
+            {
+                // TODO: bug here double alert sent 
+                // Handle unsuccessful query result returned
+                message = "Unknown Erro, try again?";
+                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
+                    message, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
     async Task TappedGesture(string lableName)
     {
         string _method = "TappedGesture";
         try
         {
-            IsBusy = true;
-
             var arry = lableName.Split('_', StringSplitOptions.RemoveEmptyEntries);
             var paperId = Int32.Parse(arry[0]);
             var seqId = Int32.Parse(arry[1]);
@@ -188,21 +283,18 @@ public partial class QueryResultViewModel : BaseViewModel
             PaperDto paperDto = await fileService.GetPaperDtoAsync(paperId);
             var uid = paragraph.Uid;
             var pid = paragraph.Pid;
+
             paperDto.ScrollTo = true;
             paperDto.SeqId = seqId;
             paperDto.Pid = pid;
             paperDto.Uid = uid;
+
             await GoToDetails(paperDto);
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
-        }
-        finally
-        {
-            IsBusy = false;
-            IsRefreshing = false;
         }
     }
 
@@ -300,6 +392,11 @@ public partial class QueryResultViewModel : BaseViewModel
             await emailService.ShareParagraphsAsync(paragraphs);
 #endif
         }
+        catch (FormatException ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
@@ -308,94 +405,9 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task SubmitQuery(string queryString)
-    {
-        string _method = "SubmitQuery";
-        try
-        {
-            IsBusy = true;
-            string message = string.Empty;
-            bool parsingSuccessful = false;
-            bool runPreCheckSilent = await appSettingsService.Get("run_precheck_silent", true);
-
-            QueryInputString = queryString.Trim();
-            (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
-                                                                                     runPreCheckSilent);
-            if (message.Contains("="))
-            {
-                return;
-            }
-
-            if (QueryInputString == PreviousQueryInputString)
-            {
-                message = $"The query \"{QueryInputString}\" was same. Try another query?";
-                await App.Current.MainPage.DisplayAlert("Query Results", message, "Cancel");
-                return;
-            }
-            else
-            {
-                PreviousQueryInputString = QueryInputString;
-            }
-
-            (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
-            if (parsingSuccessful)
-            {
-                QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
-                QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
-                TermList = await queryProcessingService.GetTermListAsync();
-
-                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
-                if (isSuccess)
-                {
-                    QueryLocationsDto.Clear();
-                    foreach (var location in QueryLocations.QueryLocations)
-                    {
-                        QueryLocationsDto.Add(location);
-                    }
-
-                    if (QueryResultExists)
-                    {
-                        // Query result from history successfully
-                        // Navigate to results page
-                    }
-                    else
-                    {
-                        // New query run successfully
-                        // Navigate to results page
-                    }
-                    //await NavigateTo("QueryResults");
-                    await LoadXaml(QueryLocationsDto.ToList(), true);
-                }
-                else
-                {
-                    // Handle unsuccessful query result returned
-                    // Return to existing query page and try again
-                    //await Shell.Current.GoToAsync("..");
-                    message = $"Query unsuccessful for unknown reason.";
-                    await App.Current.MainPage.DisplayAlert($"Query in {_method}.{_class} => ", message, "Ok");
-                }
-            }
-            else // Parsing failure
-            {
-                message = "Unknown Erro, try again?";
-                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
-                    message, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-        finally
-        {
-            IsBusy = false;
-            IsRefreshing = false;
-        }
-    }
-
-    [RelayCommand]
     async Task NavigateTo(string target)
     {
+        string _method = nameof(NavigateTo);
         try
         {
             IsBusy = true;
@@ -413,8 +425,7 @@ public partial class QueryResultViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
         finally
         {
