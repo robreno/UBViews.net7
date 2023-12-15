@@ -7,8 +7,6 @@
                x:Class="UBViews.Controls.Help.SharingOverviewPopup"
                x:DataType="viewmodels:PopupViewModel">
 
-    <!-- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup -->
-
     <Border x:Name="popuBorder" 
             Stroke="Blue">
         
@@ -22,9 +20,7 @@
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
-                    <Label VerticalOptions="StartAndExpand" 
-                           HorizontalOptions="StartAndExpand"
-                           Margin="10,10,10,10"
+                    <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
@@ -39,7 +35,6 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
@@ -83,41 +78,27 @@
                                 <Span Text="Select the checkbox for the query results you want to share and click Share Selected button."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text=""  
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Text="Share Selected will open up the default email client with the paragraph's text therein using the Auto Send list for email recipients."
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
                     <Image Source="share_selected.png" Aspect="AspectFit" />
 
-                    <!--<Label VerticalOptions="StartAndExpand" 
+                    <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
                            Margin="10,10,10,10">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="After Selecting Audio folder:"
-                                      FontAttributes="Bold"
-                                      Style="{StaticResource RegularSpan}" />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select a folder and then the path will change to the new folder selected."  
+                                <Span Text="Share Selected will open up the default email client with the paragraph's"
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text=" text in the body and fill the recipients list using the Auto Send recipients."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="This folder should be the folder that you downloaded the Urantia book audio files into."
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Now UBViews can play the audio files of the Urantia book. See Help for how."  
-                                      Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
-                    </Label>-->
+                    </Label>
 
-                    <!--<Image Source="audio_path_after.png"
-                           HorizontalOptions="Center"
-                           Aspect="Center"/>-->
+                    <Image Source="default_mail_client.png" Aspect="AspectFit"/>
 
                 </VerticalStackLayout>
                 

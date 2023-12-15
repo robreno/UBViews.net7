@@ -127,18 +127,20 @@
                            Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text=""
+                                <Span Text="Help the Foundation:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text=""  
+                                <Span Text="Hosting the audio files of "  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="The Urantia Book"  
+                                      Style="{StaticResource ItalicSpan}"  />
+                                <Span Text=" online is a significant expense for Urantia Foundation. Your support helps keep them available."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text=""
+                                <Span Text="Please consider making a donation. Any amount is appreciated. Thank you!"
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="~ ~ ~ ~"  
-                                      Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
