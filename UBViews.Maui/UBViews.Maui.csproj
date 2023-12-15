@@ -226,6 +226,9 @@
 	  <None Remove="Resources\Images\Help\new_contact.png" />
 	  <None Remove="Resources\Images\Help\paper_contents.png" />
 	  <None Remove="Resources\Images\Help\query_caching.png" />
+	  <None Remove="Resources\Images\Help\search_and_query.png" />
+	  <None Remove="Resources\Images\Help\search_single_term.png" />
+	  <None Remove="Resources\Images\Help\search_subquery_and.png" />
 	  <None Remove="Resources\Images\Help\share_selected.png" />
 	  <None Remove="Resources\Images\Help\show_references.png" />
 	  <None Remove="Resources\Images\ub606_100x100.png" />
@@ -303,6 +306,9 @@
 	  <MauiImage Include="Resources\Images\Help\new_contact.png" />
 	  <MauiImage Include="Resources\Images\Help\paper_contents.png" />
 	  <MauiImage Include="Resources\Images\Help\query_caching.png" />
+	  <MauiImage Include="Resources\Images\Help\search_and_query.png" />
+	  <MauiImage Include="Resources\Images\Help\search_single_term.png" />
+	  <MauiImage Include="Resources\Images\Help\search_subquery_and.png" />
 	  <MauiImage Include="Resources\Images\Help\share_selected.png" />
 	  <MauiImage Include="Resources\Images\Help\show_references.png" />
 	</ItemGroup>
@@ -353,6 +359,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Conrols\Popups\ContactsOverviewPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Conrols\Popups\SearchOverviewPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Conrols\Popups\SettingsOverviewPopup.xaml">

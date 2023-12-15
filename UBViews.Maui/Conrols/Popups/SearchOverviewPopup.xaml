@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+               xmlns:bahaviors="clr-namespace:UBViews.Behaviors"
+               xmlns:viewmodels="clr-namespace:UBViews.ViewModels"            
+               x:Class="UBViews.Controls.Help.SearchOverviewPopup"
+               x:DataType="viewmodels:PopupViewModel">
+
+    <Border x:Name="popuBorder" 
+            Stroke="Blue">
+        
+        <VerticalStackLayout BackgroundColor="WhiteSmoke">
+
+            <Label Text="Searching Overview"
+                   Style="{StaticResource PopupTitleLabel}" />
+
+            <ScrollView x:Name="mainScrollView"
+                        Style="{StaticResource PopupScrollViewStyle}">
+
+                <VerticalStackLayout x:Name="mainSCVSL">
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="This popup describes how to Search the Urantia book using the Query Engine." 
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="UBViews Search Engine (UBViewsSE) uses a custom query language for searching the Urantia book."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Besides the standard boolean operators Or/And there are custom opertors like FilterBy."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="For example, the FilterBy operator allows you to set the search level to entire book or just a paper, section, or paragraph."  
+                                       Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Other types of searches, such a Phrase search, Compound Term search, Stem search, and SubQuery will covered below."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="You can search on a single term or mulitiple terms." 
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=" For example if you enter the term 'ship' from the Main Page Search entry 11 query results are returned."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="When a query is entered fromt he Main Page it navigates to the Query Results Page showing the original query and its query results.."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="From the Query Results page you can select and share quotes or modify the query and keep refining the search."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="search_single_term.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="AND operator:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=""  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="After querying on the term 'ship' in the Query Results page"
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text=" you can modify the search to refine your results."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="For example, modify the query to 'ship and mind' and the new query"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text=" returns the following result (1 hit):"  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="search_and_query.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">    
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="OR operator:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="If you enter 'ship or mind' you will get over a thousand hits!"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Not very useful. You want a more targeted search."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Or is best used as a SubQuery on the results of a And query."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Modify the query to be '(ship and mind) or steamed'."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Parentheses '(' and ')' are together a SubQuery operator encapsulating a query."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The And query inside the parentheses is now a SubQuery ready to operated on."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Take the SubQuery(And) and add an Or query like so: '(ship and mind) or steamed'."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Now we have a compound query that returns the results (2 hits)."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="search_subquery_and.png" Aspect="AspectFit" />
+
+                    <!--<Label VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Share Selected will open up the default email client with the paragraph's"
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text=" text in the body and fill the recipients list using the Auto Send recipients."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="default_mail_client.png" Aspect="AspectFit"/>-->
+
+                </VerticalStackLayout>
+                
+            </ScrollView>
+
+            <Button x:Name="closePopup" 
+                    Text="Close"
+                    Margin="20"
+                    WidthRequest="165"
+                    VerticalOptions="End">
+                <Button.Behaviors>  
+                    <bahaviors:EventToCommandBehavior 
+                        EventName="Clicked"
+                        Command="{Binding ClosePopupCommand}"
+                        CommandParameter="{Binding .}"/>
+                </Button.Behaviors>
+            </Button>
+            
+        </VerticalStackLayout>
+    </Border>
+    
+</toolkit:Popup>

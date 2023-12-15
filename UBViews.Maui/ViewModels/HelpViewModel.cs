@@ -71,6 +71,10 @@ public partial class HelpViewModel : BaseViewModel
             {
                 popup = new AudioOverviewPopup(new PopupViewModel());
             }
+            else if (target == "SearchingOverviewPopup")
+            {
+                popup = new SearchOverviewPopup(new PopupViewModel());
+            }
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 Shell.Current.CurrentPage.ShowPopup(popup);

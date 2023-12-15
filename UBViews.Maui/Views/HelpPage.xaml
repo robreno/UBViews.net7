@@ -129,7 +129,30 @@
                     </Label>
                 </Border>
 
-            </VerticalStackLayout>
+            <Border Style="{StaticResource TitleBorderStyle}" 
+                    Margin="0,10,0,0"
+                    Stroke="Blue" 
+                    StrokeThickness="5">
+                <Label x:Name="searchingLabel" 
+                       Text="Searching Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding Source={RelativeSource 
+                                              AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                              Path=ShowPopupCommand}" 
+                            CommandParameter="SearchingOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Searching Overview" Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+        </VerticalStackLayout>
 
         </VerticalStackLayout>
 
