@@ -16,12 +16,12 @@
                    Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
-                        Style="{StaticResource PopupScrollViewStyle}">
+                        Style="{StaticResource PopupScrollViewStyle}">  
 
                 <VerticalStackLayout x:Name="mainSCVSL">
 
                     <Label Margin="10,10,10,10"
-                           Style="{StaticResource RegularParagraph}">
+                           Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="This popup describes how to use the Settings Page to configure various settings to one's user preferences." 
@@ -57,7 +57,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="application_settings_two.png" Aspect="AspectFit"  />
+                    <Image Source="application_settings.png" Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">    
@@ -76,7 +76,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="max_query_results.png" Aspect="AspectFit"  />
+                    <Image Source="max_query_results.png" Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
@@ -98,15 +98,59 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="show_references.png"
-                           HorizontalOptions="Center"
-                           Aspect="AspectFit"/>
+                    <Image Source="show_references.png" Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Query Caching:"
+                                <Span Text="Paper Contents:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="To display each paper's content titles check Paper Contents."                                      
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="By default the paper content titles are not displayed for quicker navigation."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="If the paper contet titles are showing they can be used for navigating to a specific section within a paper."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="paper_contents.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Auto Share Email:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Auto Share Email allows automatic sharing of content wtih selected recipients."                                      
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="When a contact is added you can check the Auto Send checkbox to create an auto send list."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Audo Send recipients will be automatically included in th recipients list when sharing Urantia content."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="auto_share_email.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Use Query Caching:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
@@ -124,7 +168,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="query_caching.png" Aspect="AspectFit"/>
+                    <Image Source="use_query_caching.png" Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
@@ -143,6 +187,8 @@
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Text="Audio Overview"
                                       FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="."                                      
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
@@ -168,6 +214,7 @@
             </Button>
             
         </VerticalStackLayout>
+        
     </Border>
     
 </toolkit:Popup>
