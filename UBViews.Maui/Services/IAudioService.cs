@@ -270,6 +270,21 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    Task ChangeSourceAsync(string uri);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="action"></param>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    Task ChangeSourceAsync(string action, string uri);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
     Task SendToastAsync(string message);
