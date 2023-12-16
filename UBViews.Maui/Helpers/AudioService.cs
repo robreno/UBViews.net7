@@ -554,6 +554,68 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    public async Task SetMediaSourceAsync(string uri)
+    {
+        string _method = "ChangeSourceAsync";
+        try
+        {
+            mediaElement.Source = MediaSource.FromUri(uri);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="action"></param>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    public async Task SetMediaSourceAsync(string action, string uri)
+    {
+        string _method = "ChangeSourceAsync";
+        try
+        {
+            switch (action)
+            {
+                case "loadOnlineMp3":
+                    mediaElement.Source = MediaSource.FromUri(uri);
+                    return;
+
+                case "resetSource":
+                    mediaElement.Source = null;
+                    return;
+
+                case "loadLocalResource":
+                    if (DeviceInfo.Platform == DevicePlatform.MacCatalyst
+                        || DeviceInfo.Platform == DevicePlatform.iOS)
+                    {
+                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                    }
+                    else if (DeviceInfo.Platform == DevicePlatform.Android)
+                    {
+                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                    }
+                    else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+                    {
+                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                    }
+                    return;
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="mediaStatePair"></param>
     /// <returns></returns>
     public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
@@ -1323,55 +1385,6 @@ public partial class AudioService : IAudioService
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-        }
-    }
-    public async Task ChangeSourceAsync(string uri)
-    {
-        string _method = "ChangeSourceAsync";
-        try
-        {
-            mediaElement.Source = MediaSource.FromUri(uri);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-    }
-    public async Task ChangeSourceAsync(string action, string uri)
-    {
-        string _method = "ChangeSourceAsync";
-        try
-        {
-            switch (action)
-            {
-                case "loadOnlineMp3":
-                    mediaElement.Source = MediaSource.FromUri(uri);
-                    return;
-
-                case "resetSource":
-                    mediaElement.Source = null;
-                    return;
-
-                case "loadLocalResource":
-                    if (DeviceInfo.Platform == DevicePlatform.MacCatalyst
-                        || DeviceInfo.Platform == DevicePlatform.iOS)
-                    {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
-                    }
-                    else if (DeviceInfo.Platform == DevicePlatform.Android)
-                    {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
-                    }
-                    else if (DeviceInfo.Platform == DevicePlatform.WinUI)
-                    {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
-                    }
-                    return;
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
     public async Task SendToastAsync(string message)

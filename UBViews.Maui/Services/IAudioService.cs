@@ -132,6 +132,21 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    Task SetMediaSourceAsync(string uri);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="action"></param>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    Task SetMediaSourceAsync(string action, string uri);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="mediaStatePair"></param>
     /// <returns></returns>
     Task SetMediaStateAsync(MediaStatePair mediaStatePair);
@@ -266,21 +281,6 @@ public interface IAudioService
     /// <param name="fileName"></param>
     /// <returns></returns>
     Task DownloadAudioFileAsync(string fileName, string audioDir);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="uri"></param>
-    /// <returns></returns>
-    Task ChangeSourceAsync(string uri);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="action"></param>
-    /// <param name="uri"></param>
-    /// <returns></returns>
-    Task ChangeSourceAsync(string action, string uri);
 
     /// <summary>
     /// 
