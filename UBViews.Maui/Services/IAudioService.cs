@@ -66,13 +66,19 @@ public interface IAudioService
     /// 
     /// </summary>
     /// <returns></returns>
-    Task<IList<AudioMarker>> GetAudioMarkersListAsync();
+    Task<IList<AudioMarker>> ValuesAsync();
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
     Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Task<IList<AudioMarker>> GetAudioMarkersListAsync();
 
     /// <summary>
     /// 
@@ -132,6 +138,19 @@ public interface IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="mediaStatePair"></param>
+    /// <returns></returns>
+    Task SetMediaStateAsync(MediaStatePair mediaStatePair);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Task<MediaStatePair> GetMediaStateAsync();
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="uri"></param>
     /// <returns></returns>
     Task SetMediaSourceAsync(string uri);
@@ -143,13 +162,6 @@ public interface IAudioService
     /// <param name="uri"></param>
     /// <returns></returns>
     Task SetMediaSourceAsync(string action, string uri);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="mediaStatePair"></param>
-    /// <returns></returns>
-    Task SetMediaStateAsync(MediaStatePair mediaStatePair);
 
     /// <summary>
     /// 

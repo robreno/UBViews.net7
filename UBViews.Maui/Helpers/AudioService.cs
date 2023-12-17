@@ -284,22 +284,14 @@ public partial class AudioService : IAudioService
     /// 
     /// </summary>
     /// <returns></returns>
-    public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
+    public async Task<IList<AudioMarker>> ValuesAsync()
     {
-        string _method = nameof(GetAudioMarkersListAsync);
-
+        string _method = "ValuesAsync";
         try
         {
-            List<AudioMarker> values = new();
-            if (Markers.Size != 0)
-            {
-                List<AudioMarker> markers = Markers.Values().ToList();
-                foreach (var value in markers)
-                {
-                    values.Add(value);
-                }
-            }
-            return values;
+            List<AudioMarker> markers = new List<AudioMarker>();
+            await Task.Run(() => markers = AudioMarkers.ToList());
+            return markers;
         }
         catch (Exception ex)
         {
@@ -307,6 +299,7 @@ public partial class AudioService : IAudioService
             return null;
         }
     }
+
 
     /// <summary>
     /// 
@@ -342,6 +335,34 @@ public partial class AudioService : IAudioService
                 AudioMarkers.Add(newMarker);
             }
             return Markers;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
+    {
+        string _method = nameof(GetAudioMarkersListAsync);
+
+        try
+        {
+            List<AudioMarker> values = new();
+            if (Markers.Size != 0)
+            {
+                List<AudioMarker> markers = Markers.Values().ToList();
+                foreach (var value in markers)
+                {
+                    values.Add(value);
+                }
+            }
+            return values;
         }
         catch (Exception ex)
         {
@@ -554,6 +575,45 @@ public partial class AudioService : IAudioService
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="mediaStatePair"></param>
+    /// <returns></returns>
+    public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
+    {
+        string _method = nameof(SetMediaStateAsync);
+        try
+        {
+            this.MediaState = mediaStatePair;
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<MediaStatePair> GetMediaStateAsync()
+    {
+        string _method = "GetMediaStateAsync";
+        try
+        {
+            MediaStatePair value = this.MediaState;
+            return value;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="uri"></param>
     /// <returns></returns>
     public async Task SetMediaSourceAsync(string uri)
@@ -610,26 +670,6 @@ public partial class AudioService : IAudioService
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="mediaStatePair"></param>
-    /// <returns></returns>
-    public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
-    {
-        string _method = nameof(SetMediaStateAsync);
-        try
-        {
-            this.MediaState = mediaStatePair;
-            return;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
-            return;
         }
     }
 
