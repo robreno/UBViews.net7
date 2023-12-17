@@ -64,11 +64,12 @@ namespace UBViews.ViewModels
         public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
 
         readonly string _class = "PaperTitlesViewModel";
-        public PaperTitlesViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService)
+        public PaperTitlesViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService, IDownloadService downloadService)
         {
             this.fileService = fileService;
             this.settingsService = settingsService;
             this.audioService = audioService;
+            this.downloadService = downloadService;
         }
 
         [ObservableProperty]
@@ -245,7 +246,8 @@ namespace UBViews.ViewModels
                 switch (action)
                 {
                     case "Play":
-                        if (MediaState.CurrentState == "None" || MediaState.CurrentState == "Stopped")
+                        if (MediaState.CurrentState == "None" || 
+                            MediaState.CurrentState == "Stopped")
                         {
                             MediaState.SetState("Playing");
                             _mediaStateDirty = true;
@@ -269,7 +271,8 @@ namespace UBViews.ViewModels
                         }
                         break;
                     case "Stop":
-                        if (MediaState.CurrentState == "Playing")
+                        if (MediaState.CurrentState == "Playing" ||
+                            MediaState.CurrentState == "Paused")
                         {
                             MediaState.SetState("Stopped");
                             _state.SetState("Stopped");

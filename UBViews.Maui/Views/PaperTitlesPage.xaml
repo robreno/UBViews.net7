@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"         
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:UBViews.Converters" 
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels" 
              xmlns:model="clr-namespace:UBViews.Models" 
              xmlns:local="clr-namespace:UBViews.Views" 
@@ -10,7 +12,16 @@
              x:Class="UBViews.Views.PaperTitlesPage" 
              x:DataType="viewmodel:PaperTitlesViewModel" 
              Title="{Binding Title}">
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="audioBaseUri">https://s3.amazonaws.com/urantia/media/en/</x:String>
+        </ResourceDictionary>
+        <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
+        <converter:SecondsToStringConverter x:Key="SecondsToStringConverter" />
+        <converter:MediaStateChangedEventArgsConverter x:Key="MediaStateChangedEventArgsConverter" />
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
             EventName="Loaded" 
@@ -20,7 +31,16 @@
     <Grid x:Name="mainGrid" 
           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                             Dark={StaticResource DarkBackground}}">
-        
+
+        <VerticalStackLayout x:Name="mediaElementVSL" VerticalOptions="End">
+            <toolkit:MediaElement x:Name="mediaElement" ShouldShowPlaybackControls="false">
+                <toolkit:MediaElement.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="PositionChanged" Command="{Binding PositionChangedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
+                    <toolkit:EventToCommandBehavior EventName="StateChanged" Command="{Binding StateChangedCommand}" EventArgsConverter="{StaticResource MediaStateChangedEventArgsConverter}" />
+                </toolkit:MediaElement.Behaviors>
+            </toolkit:MediaElement>
+        </VerticalStackLayout>
+
         <ScrollView x:Name="contentScrollView">
             
             <VerticalStackLayout x:Name="outerVerticalStackLayout" 
@@ -60,6 +80,24 @@
                                     <Span Text="Foreword" Style="{StaticResource PaperTitleSpan}" />
                                 </FormattedString>
                             </Label.FormattedText>
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem 
+                                        Text="Play"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PaperTitlesViewModel}}, Path=FlyoutMenuCommand}" CommandParameter="Play_000">
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem 
+                                        Text="Pause"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PaperTitlesViewModel}}, Path=FlyoutMenuCommand}" CommandParameter="Pause_000">
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem 
+                                        Text="Stop"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PaperTitlesViewModel}}, Path=FlyoutMenuCommand}" CommandParameter="Stop_000">
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+ 
                         </Label>
                     </Border>
                     <Border Style="{StaticResource TitleBorderStyle}">

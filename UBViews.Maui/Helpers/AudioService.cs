@@ -645,11 +645,12 @@ public partial class AudioService : IAudioService
                 case "loadOnlineMp3":
                     mediaElement.Source = MediaSource.FromUri(uri);
                     return;
-
                 case "resetSource":
                     mediaElement.Source = null;
                     return;
-
+                case "loadFromLocalFile":
+                    mediaElement.Source = MediaSource.FromFile(uri);
+                    break;
                 case "loadLocalResource":
                     if (DeviceInfo.Platform == DevicePlatform.MacCatalyst
                         || DeviceInfo.Platform == DevicePlatform.iOS)
@@ -1220,7 +1221,6 @@ public partial class AudioService : IAudioService
                     mediaElement.Play();
                 }
             });
-
 
             string message = $"Playing Audio";
             if (SendToastState)
