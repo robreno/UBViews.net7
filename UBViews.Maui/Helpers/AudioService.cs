@@ -83,10 +83,10 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Constructors
-    public AudioService(IFileService fileService, IAppSettingsService settingsService)
+    public AudioService(IFileService fileService)
     {
         this.fileService = fileService;
-        this.settingsService = settingsService;
+        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
     }
     #endregion
 
@@ -95,6 +95,8 @@ public partial class AudioService : IAudioService
     public bool MediaElementInitialized { get; set; } = false;
     public bool ShowPlaybackControls { get; set; } = false;
     public bool SendToastState { get; set; } = false;
+    public bool AudioDownloadStatus { get; set; } = false;
+    public bool AudioStreamingStatus { get; set; } = false;
     public MediaStatePair MediaState { get; set; } = new();
     public MediaStatePair MediaElementMediaState { get; set; } = new();
     public AudioFlag AudioStatus { get; set; } = new();
@@ -433,12 +435,45 @@ public partial class AudioService : IAudioService
             if (value)
             {
                 AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.On);
-                await SetAudioStreamingAsync("on");
+                Preferences.Default.Set("audio-status", "on");
+                await settingsService.Set("audio_status", "on");
             }
             else
             {
                 AudioStatus.SetAudioStatus(AudioFlag.AudioStatus.Off);
-                await SetAudioStreamingAsync("off");
+                Preferences.Default.Set("audio_status", "off");
+                await settingsService.Set("audio_status", "off");
+            }
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public async Task SetAudioDownloadStatusAsync(bool value)
+    {
+        string _method = "SetAudioDownloadStatusAsync";
+        try
+        {
+            if (value)
+            {
+                AudioDownloadStatus = true;
+                Preferences.Default.Set("audio_download_status", "on");
+                await settingsService.Set("audio_download_status", "on");
+            }
+            else
+            {
+                AudioDownloadStatus = false;
+                Preferences.Default.Set("audio_download_status", "off");
+                await settingsService.Set("audio_download_status", "off");
             }
             return;
         }
@@ -455,18 +490,22 @@ public partial class AudioService : IAudioService
     /// <param name="value"></param>
     /// <param name="clearSearchBar"></param>
     /// <returns></returns>
-    public async Task SetAudioStreamingAsync(string value)
+    public async Task SetAudioStreamingStatusAsync(bool value)
     {
-        string _method = nameof(SetAudioStreamingAsync);
+        string _method = nameof(SetAudioStreamingStatusAsync);
         try
         {
-            if (value == "on")
+            if (value)
             {
-                Preferences.Default.Set("audio_status", true);
+                AudioStreamingStatus = true;
+                Preferences.Default.Set("stream_audio", true);
+                await settingsService.Set("stream_audio", true);
             }
-            if (value == "off")
+            else
             {
-                Preferences.Default.Set("audio_status", false);
+                AudioStreamingStatus = false;
+                Preferences.Default.Set("stream_audio", false);
+                await settingsService.Set("stream_audio", false);
             }
             return;
         }
@@ -618,7 +657,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaSourceAsync(string uri)
     {
-        string _method = "ChangeSourceAsync";
+        string _method = "SetMediaSourceAsync";
         try
         {
             mediaElement.Source = MediaSource.FromUri(uri);
@@ -637,7 +676,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaSourceAsync(string action, string uri)
     {
-        string _method = "ChangeSourceAsync";
+        string _method = "SetMediaSourceAsync";
         try
         {
             switch (action)
@@ -655,15 +694,15 @@ public partial class AudioService : IAudioService
                     if (DeviceInfo.Platform == DevicePlatform.MacCatalyst
                         || DeviceInfo.Platform == DevicePlatform.iOS)
                     {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                        mediaElement.Source = MediaSource.FromResource(uri);
                     }
                     else if (DeviceInfo.Platform == DevicePlatform.Android)
                     {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                        mediaElement.Source = MediaSource.FromResource(uri);
                     }
                     else if (DeviceInfo.Platform == DevicePlatform.WinUI)
                     {
-                        mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+                        mediaElement.Source = MediaSource.FromResource(uri);
                     }
                     return;
             }
