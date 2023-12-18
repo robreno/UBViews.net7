@@ -50,10 +50,10 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region  Constructors
-    public QueryProcessingService(IFSRepositoryService repositoryService, IAppSettingsService settingsService)
+    public QueryProcessingService(IFSRepositoryService repositoryService)
     {
         this.repositoryService = repositoryService;
-        this.settingsService = settingsService;
+        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
         parserService = new ParserService();
 
         // TODO: Move this code out of Constructor
