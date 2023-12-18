@@ -45,9 +45,15 @@ namespace UBViews
             builder.Services.AddSingleton<IAppSettingsService>((e) => new XmlAppSettingsService(
                                                                           new FileService()));
 
-            // Uses IAppSettingsService as singleton via ServiceHelper internally
+            // Uses Singleton IAppSettingsService via ServiceHelper Internally
             builder.Services.AddTransient<IQueryProcessingService>((e) => new QueryProcessingService(
                                                                               new FSRepositoryService()));
+            builder.Services.AddTransient<IAudioService>((e) => new AudioService(
+                                                                    new FileService()));
+            builder.Services.AddTransient<IEmailService>((e) => new EmailService(
+                                                                    new XmlContactsService(
+                                                                        new FileService())));
+            builder.Services.AddTransient<IDownloadService>((e) => new DownloadService());
 
             // Transient Services
             builder.Services.AddTransient<IFileService>((e) => new FileService());
@@ -57,17 +63,6 @@ namespace UBViews
             builder.Services.AddTransient<IAppDataService>((e) => new XmlAppDataService(new FileService()));
             
             builder.Services.AddTransient<IContactsService>((e) => new XmlContactsService(new FileService()));
-            
-            builder.Services.AddTransient<IEmailService>((e) => 
-                new EmailService(new XmlContactsService(new FileService()), 
-                                                        new XmlAppSettingsService(new FileService())));
-            
-            builder.Services.AddTransient<IAudioService>((e) => 
-                new AudioService(new FileService(),
-                                 new XmlAppSettingsService(new FileService())));
-
-            builder.Services.AddTransient<IDownloadService>((e) => 
-                new DownloadService(new XmlAppSettingsService(new FileService())));
 
             // Connectivity Service
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);
