@@ -40,14 +40,21 @@ namespace UBViews
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Services
+            // Singleton Services
+            builder.Services.AddSingleton<HttpClient>((e) => new HttpClient());
+            builder.Services.AddSingleton<IAppSettingsService>((e) => new XmlAppSettingsService(
+                                                                          new FileService()));
+
+            // Uses IAppSettingsService as singleton via ServiceHelper internally
+            builder.Services.AddTransient<IQueryProcessingService>((e) => new QueryProcessingService(
+                                                                              new FSRepositoryService()));
+
+            // Transient Services
             builder.Services.AddTransient<IFileService>((e) => new FileService());
             
             builder.Services.AddTransient<IFSRepositoryService>((e) => new FSRepositoryService());
 
             builder.Services.AddTransient<IAppDataService>((e) => new XmlAppDataService(new FileService()));
-            
-            builder.Services.AddTransient<IAppSettingsService>((e) => new XmlAppSettingsService(new FileService()));
             
             builder.Services.AddTransient<IContactsService>((e) => new XmlContactsService(new FileService()));
             
@@ -58,12 +65,7 @@ namespace UBViews
             builder.Services.AddTransient<IAudioService>((e) => 
                 new AudioService(new FileService(),
                                  new XmlAppSettingsService(new FileService())));
-            
-            builder.Services.AddTransient<IQueryProcessingService>((e) => 
-                new QueryProcessingService(new FSRepositoryService(), 
-                                           new XmlAppSettingsService(new FileService())));
 
-            builder.Services.AddSingleton<HttpClient>((e) => new HttpClient());
             builder.Services.AddTransient<IDownloadService>((e) => 
                 new DownloadService(new XmlAppSettingsService(new FileService())));
 
