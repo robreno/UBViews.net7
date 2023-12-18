@@ -28,9 +28,9 @@ public class DownloadService : IDownloadService
     IAppSettingsService settingsService;
     #endregion
 
-    public DownloadService(IAppSettingsService settingsService)
+    public DownloadService()
     {
-        this.settingsService = settingsService;
+        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
     }
 
     #region  Public Properties
