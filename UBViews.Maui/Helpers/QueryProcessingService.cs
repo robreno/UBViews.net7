@@ -152,6 +152,16 @@ public partial class QueryProcessingService : IQueryProcessingService
                         await SendToast(message);
                     }
                 }
+                else if (command == "audio_download_status")
+                {
+                    //audio__download_status := [on | off]
+                    await SetAudioDownloadStatusAsync(value);
+                    message = $"Audio download status = {value.ToUpper()}.";
+                    if (!silent)
+                    {
+                        await SendToast(message);
+                    }
+                }
                 else
                 {
                     isValidCommand = false;
@@ -213,6 +223,29 @@ public partial class QueryProcessingService : IQueryProcessingService
             {
                 Preferences.Default.Set("audio_status", "off");
                 await settingsService.Set("audio_status", "off");
+            }
+            return;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
+        }
+    }
+    public async Task SetAudioDownloadStatusAsync(string value)
+    {
+        string _method = "SetAudioDownloadStatusAsync";
+        try
+        {
+            if (value == "on")
+            {
+                Preferences.Default.Set("audio_download_status", "on");
+                await settingsService.Set("audio_download_status", "on");
+            }
+            if (value == "off")
+            {
+                Preferences.Default.Set("audio_download_status", "off");
+                await settingsService.Set("audio_download_status", "off");
             }
             return;
         }

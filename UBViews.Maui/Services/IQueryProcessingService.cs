@@ -16,6 +16,7 @@ public interface IQueryProcessingService
     Task<(bool, string)> PreCheckQueryAsync(string queryString, bool silent);
     Task SetAudioStreamingAsync(string value);
     Task SetAudioStatusAsync(string value);
+    Task SetAudioDownloadStatusAsync(string value);
     Task SetMaxQueryResultsAsync(int max);
     Task<(bool, string)> ParseQueryAsync(string queryString);
     Task<(bool, bool, QueryResultLocationsDto)> RunQueryAsync(string queryString);
