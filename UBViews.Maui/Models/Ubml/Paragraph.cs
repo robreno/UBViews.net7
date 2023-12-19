@@ -1,6 +1,9 @@
 ﻿namespace UBViews.Models.Ubml;
 
 using System.Text;
+
+using UBViews.Models.Notes;
+
 public class Paragraph
 {
     private string endTime;
@@ -15,6 +18,7 @@ public class Paragraph
     public string EndTime { get => endTime; set => endTime = value; }
     public string Text { get; set; }
     public List<Run> Runs { get; set; } = new List<Run>();
+    public ParagraphNote Note { get; set; } = null;
     public string CreatePlainTextBody()
     {
         string _body = string.Empty;
