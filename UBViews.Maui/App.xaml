@@ -504,6 +504,20 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
 
+            <!-- Note Border Style-->
+            <Style x:Key="NoteBorderStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="Blue" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
+                <Setter Property="StrokeThickness" Value="3" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="10,0,10,0" />
+                <Setter Property="MinimumWidthRequest" Value="600" />
+                <Setter Property="MaximumWidthRequest" Value="800" />
+                <Setter Property="MinimumHeightRequest" Value="200" />
+                <Setter Property="MaximumHeightRequest" Value="600" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+
             <Style x:Name="PageHeadingVSL" TargetType="VerticalStackLayout">
                 <Setter Property="Margin" Value="0, 20, 0, 20" />
                 <Setter Property="HorizontalOptions" Value="Center" />
