@@ -18,5 +18,6 @@ public class NoteEntry
     public DateTime DateEdited { get; set; }
     public string Author { get; set; }
     public string Subject { get; set; }
+    public string Text { get; set; }
     public List<NoteText> NoteEntries { get; set; } = new();
 }
