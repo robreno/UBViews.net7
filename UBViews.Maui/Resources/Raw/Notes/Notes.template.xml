@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Notes count="3">
+  <Note id="1" type="paragraph" paperId="0" seqId="2" locationId="0.2" pid="0:0.1" created="2023-12-18" edited="2023-12-18">
+    <Author>Rob Reno</Author>
+    <Subject>Name of our world</Subject>
+    <Text>Urantia is the name of our world. We are Urantians!</Text>
+    <Runs count="3">
+      <Run style="RegularSpan" textColor="red">Urantia is the </Run>
+      <Run style="RegularItalicSpan" textColor="blue">name of our world</Run>
+      <Run style="RegularSpan"> . We are Urantians!</Run>
+    </Runs>
+  </Note>
+  <Note id="2" type="paragraph" paperId="50" seqId="53" locationId="50.53" pid="50:6.3" created="2023-12-18" edited="2023-12-18">
+    <Author>Rob Reno</Author>
+    <Subject>Normal Worlds</Subject>
+    <Text>We live on a sin stricken world! We can know little of what it is like on normal worlds.</Text>
+    <Runs count="4">
+      <Run style="RegularSpan" textColor="pink">We live on a </Run>
+      <Run style="RegularItalicSpan" textColor="red">sin stricken</Run>
+      <Run style="RegularSpan" textSize="24"> world! </Run>
+      <Run style="RegularSpan" textTransform="toupper">We can know little of what it is like on normal worlds.</Run>
+    </Runs>
+  </Note>
+  <Note id="3" type="paragraph" paperId="0" seqId="3" locationId="0.3" pid="0:0.2" created="2023-12-18" edited="2023-12-18">
+    <Author>Rob Reno</Author>
+    <Subject>Enlarged Concepts</Subject>
+    <Text>Enlarged concepts hard to teach to Urantians!</Text>
+    <Runs count="3">
+      <Run style="RegularSpan" textColor="red">Enlarged </Run>
+      <Run style="RegularItalicSpan" textColor="blue">concepts hard to teach to</Run>
+      <Run style="RegularSpan"> Urantians!</Run>
+    </Runs>
+  </Note>
+</Notes>
