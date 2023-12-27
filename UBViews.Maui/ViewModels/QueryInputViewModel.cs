@@ -472,7 +472,7 @@ public partial class QueryInputViewModel : BaseViewModel
             {
                 var paperId = paragraph.PaperId;
                 var seqId = paragraph.SeqId;
-                var paperIdSeqId = paragraph.PaperIdSeqId;
+                var paperSeqId = paragraph.PaperSeqId;
                 var pid = paragraph.Pid;
                 var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
 

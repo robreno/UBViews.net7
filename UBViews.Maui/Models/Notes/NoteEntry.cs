@@ -19,5 +19,6 @@ public class NoteEntry
     public string Author { get; set; }
     public string Subject { get; set; }
     public string Text { get; set; }
+    public string Style { get; set; }
     public List<NoteText> NoteEntries { get; set; } = new();
 }

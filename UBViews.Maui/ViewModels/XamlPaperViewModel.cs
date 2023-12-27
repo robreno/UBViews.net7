@@ -446,8 +446,8 @@ namespace UBViews.ViewModels
                 var actionArray = actionId.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 var paperId = Int32.Parse(actionArray[0]).ToString("0");
                 var seqId = Int32.Parse(actionArray[1]).ToString("0");
-                var paperIdSeqId = paperId + "." + seqId;
-                var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
+                var paperSeqId = paperId + "." + seqId;
+                var paragraph = Paragraphs.Where(p => p.PaperSeqId == paperSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
                 var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);
@@ -519,8 +519,8 @@ namespace UBViews.ViewModels
                 var action = actionArray[0];
                 var paperId = Int32.Parse(actionArray[1]).ToString("0");
                 var seqId = Int32.Parse(actionArray[2]).ToString("0");
-                var paperIdSeqId = paperId + "." + seqId;
-                var paragraph = Paragraphs.Where(p => p.PaperIdSeqId == paperIdSeqId).FirstOrDefault();
+                var paperSeqId = paperId + "." + seqId;
+                var paragraph = Paragraphs.Where(p => p.PaperSeqId == paperSeqId).FirstOrDefault();
                 var pid = paragraph.Pid;
 
                 var plainText = await emailService.CreatePlainTextBodyAsync(paragraph);

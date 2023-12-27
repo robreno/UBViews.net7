@@ -251,13 +251,13 @@ public class FileService : IFileService
                           "." +
                           Int32.Parse(uidArr[3]);
 
-                var paperIdSeqId = paperId + "." + seqId;
+                var paperSeqId = paperId + "." + seqId;
 
                 Paragraph newParagraph = new()
                 {
                     PaperId = paperId,
                     SeqId = seqId,
-                    PaperIdSeqId = paperIdSeqId,
+                    PaperSeqId = paperSeqId,
                     Uid = uid,
                     Pid = pid,
                     Type = paraType,
@@ -327,13 +327,13 @@ public class FileService : IFileService
                       "." +
                       Int32.Parse(uidArr[3]);
 
-            var paperIdSeqId = paperId + "." + seqId;
+            var paperSeqId = paperId + "." + seqId;
 
             Paragraph newParagraph = new()
             {
                 PaperId = paperId,
                 SeqId = seqId,
-                PaperIdSeqId = paperIdSeqId,
+                PaperSeqId = paperSeqId,
                 Uid = uid,
                 Pid = pid,
                 Type = paraType,
