@@ -26,14 +26,8 @@
             EventName="Appearing"
             Command="{Binding ContactsPageAppearingCommand}" />
         <behaviors:EventToCommandBehavior
-            EventName="Loaded"
-            Command="{Binding ContactsPageLoadedCommand}" />
-        <behaviors:EventToCommandBehavior
             EventName="Disappearing"
             Command="{Binding ContactsPageDisappearingCommand}" />
-        <behaviors:EventToCommandBehavior
-            EventName="Unloaded"
-            Command="{Binding ContactsPageUnloadedCommand}" />
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL"

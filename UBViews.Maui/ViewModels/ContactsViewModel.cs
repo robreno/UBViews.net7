@@ -116,25 +116,11 @@ public partial class ContactsViewModel : ObservableValidator
         try
         {
             await GetContactList();
+            FormIsValid = false;
             ContactSelected = false;
             SelectedContact = null;
             ContactsCount = Contacts.Count;
             Title = $"Contacts ({ContactsCount})";
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-    }
-
-    [RelayCommand]
-    async Task ContactsPageLoaded()
-    {
-        string _method = "ContactsPageLoaded";
-
-        try
-        {
-            FormIsValid = false;
         }
         catch (Exception ex)
         {
@@ -150,21 +136,6 @@ public partial class ContactsViewModel : ObservableValidator
         try
         {
             await contactsService.SaveContactsAsync();
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-        }
-    }
-
-    [RelayCommand]
-    async Task ContactsPageUnloaded()
-    {
-        string _method = "ContactsPageUnloaded";
-
-        try
-        {
-
         }
         catch (Exception ex)
         {
