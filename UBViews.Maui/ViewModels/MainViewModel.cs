@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Alerts;
@@ -14,6 +15,7 @@ using CommunityToolkit.Mvvm.Input;
 using UBViews.Services;
 using UBViews.Helpers;
 using UBViews.Models.Query;
+using UBViews.Models.Audio;
 using UBViews.Views;
 using UBViews.Models;
 
@@ -24,30 +26,92 @@ using static DataTypesEx;
 [QueryProperty(nameof(QueryInput), nameof(QueryInput))]
 public partial class MainViewModel : BaseViewModel
 {
+    #region   Private Data Members
+    /// <summary>
+    /// CultureInfo
+    /// </summary>
+    public CultureInfo cultureInfo;
+
+    /// <summary>
+    /// ContentPage 
+    /// </summary>
     public ContentPage contentPage;
 
-    // TODO: Add in later when AudioService is added
-    //ConnectivityViewModel connectivityViewModel;
-    //IConnectivity connectivityService;
+    /// <summary>
+    /// MediaStatePair
+    /// </summary>
+    public MediaStatePair MediaState = new();
 
+    /// <summary>
+    /// IMediaElement
+    /// </summary>
+    public IMediaElement mediaElement;
+
+    /// <summary>
+    /// Services
+    /// </summary>
     IFileService fileService;
-    IAppSettingsService appSettingsService;
+    IAppSettingsService settingsService;
     IFSRepositoryService repositoryService;
     IQueryProcessingService queryProcessingService;
+    IAudioService audioService;
+    IConnectivity connectivityService;
 
     ParserService parserService;
+    ConnectivityViewModel connectivityViewModel;
 
     readonly string _class = "MainViewModel";
+    #endregion
 
-    public MainViewModel(IFileService fileService, IAppSettingsService appSettingsService, IFSRepositoryService repositoryService, IQueryProcessingService queryProcessingService)
+    #region   Constructor
+    public MainViewModel(IFileService fileService, 
+                         IFSRepositoryService repositoryService,
+                         IAppSettingsService settingsService,
+                         IQueryProcessingService queryProcessingService, 
+                         IAudioService audioService,
+                         IConnectivity connectivityService)
     {
         this.fileService = fileService;
-        this.appSettingsService = appSettingsService;
+        this.settingsService = settingsService;
 
         this.repositoryService = repositoryService;
-        this.parserService = new ParserService();
+       
         this.queryProcessingService = queryProcessingService;
+        this.audioService = audioService;
+        this.connectivityService = connectivityService;
+
+        this.parserService = new ParserService();
+        connectivityViewModel = new ConnectivityViewModel(connectivityService);
     }
+    #endregion
+
+    #region  Observable Properties
+    [ObservableProperty]
+    string audioStatus = "off";
+
+    [ObservableProperty]
+    string audioDownloadStatus = "off";
+
+    [ObservableProperty]
+    bool audioStreaming = false;
+
+    [ObservableProperty]
+    string currentState = "None";
+
+    [ObservableProperty]
+    string previousState = "None";
+
+    [ObservableProperty]
+    string audioFolderName = null;
+
+    [ObservableProperty]
+    string audioFolderPath = null;
+
+    [ObservableProperty]
+    string localAudioFilePathName;
+
+    [ObservableProperty]
+    string localResourceAudioFilePathName = "Audio/BookIntro.mp3";
 
     [ObservableProperty]
     bool isInitialized;
@@ -93,7 +157,9 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     string stem;
+    #endregion
 
+    #region  Relay Commands
     [RelayCommand]
     async Task MainPageAppearing()
     {
@@ -102,23 +168,36 @@ public partial class MainViewModel : BaseViewModel
         {
             if (contentPage == null)
             {
-                throw new NullReferenceException("ContentPage null.");
+                return;
             }
+
+            if (mediaElement == null)
+            {
+                return;
+            }
+
+            AudioStatus = await settingsService.Get("audio_status", "off");
+            AudioStreaming = await settingsService.Get("stream_audio", false);
+            AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
+
+            await audioService.SetContentPageAsync(contentPage);
+            await audioService.SetMediaElementAsync(mediaElement);
+            await audioService.SetMediaSourceAsync("loadLocalResource",
+                                                   LocalResourceAudioFilePathName);
+
+            bool hasInternet = await CheckInternetAsync();
+            Preferences.Default.Set("has_internet", hasInternet);
 
             if (!IsInitialized)
             {
                 await queryProcessingService.SetContentPageAsync(contentPage);
-                MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
+                MaxQueryResults = await settingsService.Get("max_query_results", 50);
                 await queryProcessingService.SetMaxQueryResultsAsync(MaxQueryResults);
                 isInitialized = true;
             }
 
             string titleMessage = $"UBViews Home";
             Title = titleMessage;
-        }
-        catch (NullReferenceException ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Null reference raised in {_class}.{_method} => ", ex.Message, "Cancel");
         }
         catch (Exception ex)
         {
@@ -127,16 +206,105 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task MainPageLoaded()
+    async Task MainPageDisappearing()
     {
-        string _method = "MainPageLoaded";
+        string _method = "MainPageDisappearing";
         try
         {
-            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);  
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                mediaElement.Stop();
+            });
         }
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
+    async Task MainPageUnloaded()
+    {
+        string _method = "MainPageUnloaded";
+        try
+        {
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                // Stop and cleanup MediaElement when we navigate away
+                mediaElement.Stop();
+                mediaElement.Handler?.DisconnectHandler();
+            });
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
+    async Task TappedGesture(string action)
+    {
+        string _method = nameof(TappedGesture);
+        try
+        {
+            IsBusy = true;
+
+            if (contentPage == null)
+            {
+                return;
+            }
+
+            if (mediaElement == null)
+            {
+                return;
+            }
+
+            if (AudioStatus.Equals("off"))
+            {
+                return;
+            }
+
+            string errorMsg = string.Empty;
+            bool _mediaStateDirty = false;
+            MediaStatePair _statePair = await audioService.GetMediaStateAsync();
+            //await audioService.TappedGestureAsync(action, _mediaStateDirty);
+
+            var _state = mediaElement.CurrentState;
+            var _stateStr = _state.ToString();
+            PreviousState = CurrentState;
+            CurrentState = _stateStr;
+            _statePair.SetState(_stateStr);
+
+            switch (_stateStr)
+            {
+                case "Paused":
+                case "Stopped":
+                    await MainThread.InvokeOnMainThreadAsync(() =>
+                    {
+                        mediaElement.Play();
+                    });
+                    break;
+                case "Playing":
+                    await MainThread.InvokeOnMainThreadAsync(() =>
+                    {
+                        mediaElement.Pause();
+                    });
+                    break;
+                case "Failed":
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
         }
     }
 
@@ -153,13 +321,25 @@ public partial class MainViewModel : BaseViewModel
             IsBusy = true;
             string message = string.Empty;
             bool parsingSuccessful = false;
-            bool runPreCheckSilent = await appSettingsService.Get("run_precheck_silent", true);
+            bool runPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
 
             QueryInputString = queryString.Trim();
             (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
                                                                                      runPreCheckSilent);
             if (message.Contains("="))
             {
+                if (message.Contains("Audio status"))
+                {
+                    AudioStatus = await settingsService.Get("audio_status", "off");
+                }
+                else if (message.Contains("Audio streaming"))
+                {
+                    AudioStreaming = await settingsService.Get("stream_audio", false);
+                }
+                else if (message.Contains("Audio download"))
+                {
+                    AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
+                }
                 return;
             }
 
@@ -203,6 +383,67 @@ public partial class MainViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task MediaOpened(TimeSpan timeSpan)
+    {
+        string _method = nameof(MediaOpened);
+        try
+        {
+            //
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task PositionChanged(TimeSpan timeSpan)
+    {
+        string _method = nameof(PositionChanged);
+        try
+        {
+            await audioService.PositionChangedAsync(timeSpan);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task StateChanged(string state)
+    {
+        string _method = nameof(StateChanged);
+        try
+        {
+            // Opening, Paused
+            await audioService.StateChangedAsync(state);
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+
+    [RelayCommand]
+    async Task MediaEnded(TimeSpan timeSpan)
+    {
+        string _method = nameof(MediaEnded);
+        try
+        {
+            //
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
         }
     }
 
@@ -270,8 +511,29 @@ public partial class MainViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
+    #endregion
 
     #region  Helper Methods
+    private async Task<bool> CheckInternetAsync()
+    {
+        string _method = nameof(CheckInternetAsync);
+        try
+        {
+            bool isInternet = false;
+            NetworkAccess accessType = connectivityService.NetworkAccess;
+            if (accessType == NetworkAccess.Internet)
+            {
+                isInternet = true;
+            }
+            return isInternet;
+
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+            return false;
+        }
+    }
     private async Task SendToast(string message)
     {
         try

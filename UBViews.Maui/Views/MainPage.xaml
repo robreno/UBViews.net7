@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:UBViews.Converters" 
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              x:Class="UBViews.MainPage"
@@ -9,9 +11,15 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <x:String x:Key="ButtonWidth">160</x:String>
+            <x:String x:Key="audioBaseUri">https://s3.amazonaws.com/urantia/media/en/</x:String>
+            <x:String x:Key="audioFilePath">[Empty]</x:String>
+            <x:String x:Key="audioFileName">BookIntro.mp3</x:String>
+            <x:String x:Key="ButtonWidth">165</x:String>
             <x:String x:Key="SearchBarWidth">300</x:String>
         </ResourceDictionary>
+        <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
+        <converter:SecondsToStringConverter x:Key="SecondsToStringConverter" />
+        <converter:MediaStateChangedEventArgsConverter x:Key="MediaStateChangedEventArgsConverter" />
     </ContentPage.Resources>
 
     <ContentPage.Behaviors>
@@ -19,13 +27,26 @@
             EventName="Appearing"
             Command="{Binding MainPageAppearingCommand}" />
         <behavior:EventToCommandBehavior
-            EventName="Loaded"
-            Command="{Binding MainPageLoadedCommand}" />
+             EventName="Disappearing"
+             Command="{Binding MainPageDisappearingCommand}" />
+        <behavior:EventToCommandBehavior
+             EventName="Unloaded"
+             Command="{Binding MainPageUnloadedCommand}" />
     </ContentPage.Behaviors>
 
     <VerticalStackLayout Spacing="20"
                          Padding="10,10,10,10"
                          VerticalOptions="Center">
+
+        <VerticalStackLayout x:Name="mediaElementVSL" VerticalOptions="End">
+            <toolkit:MediaElement x:Name="mediaElement" ShouldShowPlaybackControls="false">
+                <toolkit:MediaElement.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="PositionChanged" Command="{Binding PositionChangedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
+                    <toolkit:EventToCommandBehavior EventName="StateChanged" Command="{Binding StateChangedCommand}" EventArgsConverter="{StaticResource MediaStateChangedEventArgsConverter}" />
+                    <toolkit:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
+                </toolkit:MediaElement.Behaviors>
+            </toolkit:MediaElement>
+        </VerticalStackLayout>
 
         <Border HeightRequest="70"
                 WidthRequest="70"
@@ -42,7 +63,14 @@
                HorizontalOptions="Center" 
                SemanticProperties.HeadingLevel="Level1"
                SemanticProperties.Description="Opening Title"
-               SemanticProperties.Hint="Title"/>
+               SemanticProperties.Hint="Title">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer 
+                    NumberOfTapsRequired="1"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TappedGestureCommand}" 
+                    CommandParameter="Intro" />
+            </Label.GestureRecognizers>
+        </Label>
 
         <SearchBar x:Name="searchBarControl" 
                    Text="{Binding QueryInputString, Mode=TwoWay}" 

@@ -9,6 +9,7 @@ namespace UBViews
             InitializeComponent();
             BindingContext = vm;
             vm.contentPage = this;
+            vm.mediaElement = this.mediaElement;
         }
     }
 }
