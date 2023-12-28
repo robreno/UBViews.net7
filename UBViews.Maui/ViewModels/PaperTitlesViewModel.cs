@@ -20,9 +20,6 @@ namespace UBViews.ViewModels
 {
     public partial class PaperTitlesViewModel : BaseViewModel
     {
-        IFileService fileService;
-        IAppSettingsService settingsService;
-        IAudioService audioService;
         /// <summary>
         /// CultureInfo
         /// </summary>
@@ -42,6 +39,10 @@ namespace UBViews.ViewModels
         /// 
         /// </summary>
         IDownloadService downloadService;
+
+        IFileService fileService;
+        IAppSettingsService settingsService;
+        IAudioService audioService;
 
         /// <summary>
         /// MediaStatePair
@@ -64,7 +65,10 @@ namespace UBViews.ViewModels
         public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
 
         readonly string _class = "PaperTitlesViewModel";
-        public PaperTitlesViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService, IDownloadService downloadService)
+        public PaperTitlesViewModel(IFileService fileService, 
+                                    IAppSettingsService settingsService, 
+                                    IAudioService audioService, 
+                                    IDownloadService downloadService)
         {
             this.fileService = fileService;
             this.settingsService = settingsService;

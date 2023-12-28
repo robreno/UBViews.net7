@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Platform;
 
 using UBViews.Models;
+using UBViews.Helpers;
 using UBViews.Models.Ubml;
 using UBViews.Models.Query;
 using UBViews.Services;
@@ -29,6 +30,7 @@ using UBViews.Views;
 [QueryProperty(nameof(QueryLocations), nameof(QueryLocations))]
 public partial class QueryResultViewModel : BaseViewModel
 {
+    #region  Private Data Members
     public ContentPage contentPage;
 
     public ObservableCollection<QueryLocationDto> QueryLocationsDto { get; } = new();
@@ -39,17 +41,32 @@ public partial class QueryResultViewModel : BaseViewModel
     IFileService fileService;
     IEmailService emailService;
     IQueryProcessingService queryProcessingService;
-    IAppSettingsService appSettingsService;
+    IAppSettingsService settingsService;
 
     readonly string _class = "QueryResultViewModel";
+    #endregion
 
-    public QueryResultViewModel(IFileService fileService, IQueryProcessingService queryProcessingService, IEmailService emailService, IAppSettingsService appSettingsService)
+    #region Constructor
+    public QueryResultViewModel(IFileService fileService, 
+                                IQueryProcessingService queryProcessingService, 
+                                IEmailService emailService)
     {
         this.fileService = fileService;
         this.emailService = emailService;
         this.queryProcessingService = queryProcessingService;
-        this.appSettingsService = appSettingsService;
+        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
     }
+    #endregion
+
+    #region Observable Properties
+    [ObservableProperty]
+    string audioStatus = "off";
+
+    [ObservableProperty]
+    string audioDownloadStatus = "off";
+
+    [ObservableProperty]
+    bool audioStreaming = false;
 
     [ObservableProperty]
     bool isInitialized;
@@ -98,7 +115,9 @@ public partial class QueryResultViewModel : BaseViewModel
 
     [ObservableProperty]
     bool hideUnselected;
+    #endregion
 
+    #region Relay Commands
     [RelayCommand]
     async Task QueryResultAppearing(QueryResultLocationsDto dto)
     {
@@ -127,7 +146,7 @@ public partial class QueryResultViewModel : BaseViewModel
             }
 
             QueryHits = dto.Hits;
-            MaxQueryResults = await appSettingsService.Get("max_query_results", 50);
+            MaxQueryResults = await settingsService.Get("max_query_results", 50);
 
             string titleMessage = $"Query Result {queryHits} hits ...";
             Title = titleMessage;
@@ -193,13 +212,25 @@ public partial class QueryResultViewModel : BaseViewModel
             IsBusy = true;
             string message = string.Empty;
             bool parsingSuccessful = false;
-            bool runPreCheckSilent = await appSettingsService.Get("run_precheck_silent", true);
+            bool runPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
 
             QueryInputString = queryString.Trim();
             (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
                                                                                      runPreCheckSilent);
             if (message.Contains("="))
             {
+                if (message.Contains("Audio status"))
+                {
+                    AudioStatus = await settingsService.Get("audio_status", "off");
+                }
+                else if (message.Contains("Audio streaming"))
+                {
+                    AudioStreaming = await settingsService.Get("stream_audio", false);
+                }
+                else if (message.Contains("Audio download"))
+                {
+                    AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
+                }
                 return;
             }
 
@@ -462,6 +493,7 @@ public partial class QueryResultViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
+    #endregion
 
     #region Helper Methods
     private async Task LoadXaml(List<QueryLocationDto> dtos, bool clear = false)

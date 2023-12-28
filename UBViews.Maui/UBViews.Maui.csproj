@@ -247,6 +247,7 @@
 	  <None Remove="Resources\Raw\Email\Contacts.template.xml" />
 	  <None Remove="Resources\Raw\Email\Contacts.test.xml" />
 	  <None Remove="Resources\Raw\JsonData\partTitles.json" />
+	  <None Remove="Resources\Raw\Notes\Notes.template.xml" />
 	  <None Remove="Resources\Raw\Query\Queries.template.xml" />
 	  <None Remove="Resources\Raw\Query\QueryCmdList.xml" />
 	  <None Remove="Resources\Raw\Query\QueryCommandList.txt" />
