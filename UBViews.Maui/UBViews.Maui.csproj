@@ -244,15 +244,7 @@
 	  <None Remove="Resources\Raw\Audio\BookIntro.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.000.mp3" />
 	  <None Remove="Resources\Raw\Audio\UB.001.mp3" />
-	  <None Remove="Resources\Raw\Email\Contacts.template.xml" />
-	  <None Remove="Resources\Raw\Email\Contacts.test.xml" />
 	  <None Remove="Resources\Raw\JsonData\partTitles.json" />
-	  <None Remove="Resources\Raw\Notes\Notes.template.xml" />
-	  <None Remove="Resources\Raw\Query\Queries.template.xml" />
-	  <None Remove="Resources\Raw\Query\QueryCmdList.xml" />
-	  <None Remove="Resources\Raw\Query\QueryCommandList.txt" />
-	  <None Remove="Resources\Raw\Query\QueryResults.xml" />
-	  <None Remove="Resources\Raw\Settings\Settings.template.xml" />
 	  <None Remove="Resources\Raw\XmlData\Astrisks.xml" />
 	  <None Remove="Resources\Raw\XmlData\PaperTitles.xml" />
 	  <None Remove="Resources\Raw\XmlData\ParagraphStyleDictionary.xml" />

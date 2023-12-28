@@ -32,21 +32,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="3" locationCount="1" type="FilterBy+And" terms="[foreword; orvonton]" proximity="paragraph" filterId="PARID">
-    <QueryString>foreword and orvonton filterby parid</QueryString>
-    <ReverseQueryString>orvonton and foreword filterby parid</ReverseQueryString>
-    <QueryExpression>FilterBy(And(Term("foreword"),Term("orvonton")),PARID)</QueryExpression>
-    <QueryLocations count="1">
-      <QueryLocation id="0.5" pid="0:0.4">
-        <TermOccurrenceList count="3">
-          <TermOccurrence term="foreword" docId="0" seqId="5" dpoId="6" tpoId="31" len="8" />
-          <TermOccurrence term="foreword" docId="0" seqId="5" dpoId="28" tpoId="180" len="8" />
-          <TermOccurrence term="orvonton" docId="0" seqId="5" dpoId="67" tpoId="420" len="8" />
-        </TermOccurrenceList>
-      </QueryLocation>
-    </QueryLocations>
-  </QueryResult>
-  <QueryResult id="4" locationCount="1" type="FilterBy+And" terms="[admonishes; mandate]" proximity="sequence" filterId="SEQID">
+  <QueryResult id="3" locationCount="1" type="FilterBy+And" terms="[admonishes; mandate]" proximity="sequence" filterId="SEQID">
     <QueryString>admonishes and mandate filterby seqid</QueryString>
     <ReverseQueryString>mandate and admonishes filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("admonishes"),Term("mandate")),SEQID)</QueryExpression>
@@ -59,7 +45,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="5" locationCount="1" type="FilterBy+And" terms="[interregnum; witness]" proximity="sequence" filterId="SEQID">
+  <QueryResult id="4" locationCount="1" type="FilterBy+And" terms="[interregnum; witness]" proximity="sequence" filterId="SEQID">
     <QueryString>interregnum and witness filterby seqid</QueryString>
     <ReverseQueryString>witness and interregnum filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("interregnum"),Term("witness")),SEQID)</QueryExpression>
@@ -72,7 +58,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="6" locationCount="2" type="FilterBy+And" terms="[progress; economic]" proximity="sequence" filterId="SEQID">
+  <QueryResult id="5" locationCount="2" type="FilterBy+And" terms="[progress; economic]" proximity="sequence" filterId="SEQID">
     <QueryString>progress and economic filterby seqid</QueryString>
     <ReverseQueryString>economic and progress filterby seqid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("progress"),Term("economic")),SEQID)</QueryExpression>
@@ -91,7 +77,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="7" locationCount="5" type="FilterBy+And" terms="[profit; motive]" proximity="section" filterId="SECID">
+  <QueryResult id="6" locationCount="5" type="FilterBy+And" terms="[profit; motive]" proximity="section" filterId="SECID">
     <QueryString>profit and motive filterby secid</QueryString>
     <ReverseQueryString>motive and profit filterby secid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("profit"),Term("motive")),SECID)</QueryExpression>
@@ -130,7 +116,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="8" locationCount="4" type="FilterBy+And" terms="[profit; motive]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="7" locationCount="4" type="FilterBy+And" terms="[profit; motive]" proximity="paragraph" filterId="PARID">
     <QueryString>profit and motive filterby parid</QueryString>
     <ReverseQueryString>motive and profit filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("profit"),Term("motive")),PARID)</QueryExpression>
@@ -163,7 +149,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="9" locationCount="1" type="FilterBy+And" terms="[democracy; ideal]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="8" locationCount="1" type="FilterBy+And" terms="[democracy; ideal]" proximity="paragraph" filterId="PARID">
     <QueryString>democracy and ideal filterby parid</QueryString>
     <ReverseQueryString>ideal and democracy filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("democracy"),Term("ideal")),PARID)</QueryExpression>
@@ -177,7 +163,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="10" locationCount="1" type="FilterBy+And" terms="[cosmic; instrument]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="9" locationCount="1" type="FilterBy+And" terms="[cosmic; instrument]" proximity="paragraph" filterId="PARID">
     <QueryString>cosmic and instrument filterby parid</QueryString>
     <ReverseQueryString>instrument and cosmic filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("cosmic"),Term("instrument")),PARID)</QueryExpression>
@@ -190,19 +176,22 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="11" locationCount="1" type="And" terms="[prostitutes; temple]" proximity="book">
+  <QueryResult id="10" locationCount="1" type="And" terms="[prostitutes; temple]" proximity="paragraph">
     <QueryString>prostitutes and temple</QueryString>
     <ReverseQueryString>temple and prostitutes</ReverseQueryString>
     <QueryExpression>And(Term("prostitutes"),Term("temple"))</QueryExpression>
     <QueryLocations count="1">
       <QueryLocation id="89.68" pid="89:7.5">
-        <TermOccurrenceList count="1">
+        <TermOccurrenceList count="4">
+          <TermOccurrence term="temple" docId="89" seqId="68" dpoId="0" tpoId="0" len="6" />
+          <TermOccurrence term="temple" docId="89" seqId="68" dpoId="14" tpoId="95" len="6" />
           <TermOccurrence term="prostitutes" docId="89" seqId="68" dpoId="15" tpoId="102" len="11" />
+          <TermOccurrence term="temple" docId="89" seqId="68" dpoId="37" tpoId="224" len="6" />
         </TermOccurrenceList>
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="12" locationCount="2" type="FilterBy+And" terms="[mystery; cynics]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="11" locationCount="2" type="FilterBy+And" terms="[mystery; cynics]" proximity="paragraph" filterId="PARID">
     <QueryString>mystery and cynics filterby parid</QueryString>
     <ReverseQueryString>cynics and mystery filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("mystery"),Term("cynics")),PARID)</QueryExpression>
@@ -222,7 +211,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="13" locationCount="5" type="STerm" terms="[rejuvenation]" stemmed="rejuven" proximity="book">
+  <QueryResult id="12" locationCount="5" type="STerm" terms="[rejuvenation]" stemmed="rejuven" proximity="book">
     <QueryString>~rejuvenation</QueryString>
     <QueryExpression>STerm("rejuvenation")</QueryExpression>
     <QueryLocations count="5">
@@ -253,7 +242,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="14" locationCount="1" type="FilterBy+And" terms="[conscience; power]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="13" locationCount="1" type="FilterBy+And" terms="[conscience; power]" proximity="paragraph" filterId="PARID">
     <QueryString>conscience and power filterby parid</QueryString>
     <ReverseQueryString>power and conscience filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("conscience"),Term("power")),PARID)</QueryExpression>
@@ -266,7 +255,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="15" locationCount="1" type="CTerm" terms="[ascending midwayers]" proximity="paragraph">
+  <QueryResult id="14" locationCount="1" type="CTerm" terms="[ascending midwayers]" proximity="paragraph">
     <QueryString>[ascending midwayers]</QueryString>
     <QueryExpression>CTerm("[ascending; midwayers]")</QueryExpression>
     <QueryLocations count="1">
@@ -277,7 +266,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="16" locationCount="1" type="CTerm" terms="[composite personality groups]" proximity="paragraph">
+  <QueryResult id="15" locationCount="1" type="CTerm" terms="[composite personality groups]" proximity="paragraph">
     <QueryString>[composite personality groups]</QueryString>
     <QueryExpression>CTerm("[composite; personality; groups]")</QueryExpression>
     <QueryLocations count="1">
@@ -289,7 +278,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="17" locationCount="1" type="FilterBy+And" terms="[dematerialization; accelerated]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="16" locationCount="1" type="FilterBy+And" terms="[dematerialization; accelerated]" proximity="paragraph" filterId="PARID">
     <QueryString>dematerialization and accelerated filterby parid</QueryString>
     <ReverseQueryString>accelerated and dematerialization filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("dematerialization"),Term("accelerated")),PARID)</QueryExpression>
@@ -302,7 +291,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="18" locationCount="1" type="FilterBy+And" terms="[mind; ship]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="17" locationCount="1" type="FilterBy+And" terms="[mind; ship]" proximity="paragraph" filterId="PARID">
     <QueryString>mind and ship filterby parid</QueryString>
     <ReverseQueryString>ship and mind filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("mind"),Term("ship")),PARID)</QueryExpression>
@@ -316,7 +305,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="19" locationCount="5" type="FilterBy+And" terms="[terms; equal]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="18" locationCount="5" type="FilterBy+And" terms="[terms; equal]" proximity="paragraph" filterId="PARID">
     <QueryString>terms and equal filterby parid</QueryString>
     <ReverseQueryString>equal and terms filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("terms"),Term("equal")),PARID)</QueryExpression>
@@ -354,7 +343,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="20" locationCount="6" type="FilterBy+And" terms="[terms; meaning]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="19" locationCount="6" type="FilterBy+And" terms="[terms; meaning]" proximity="paragraph" filterId="PARID">
     <QueryString>terms and meaning filterby parid</QueryString>
     <ReverseQueryString>meaning and terms filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("terms"),Term("meaning")),PARID)</QueryExpression>
@@ -397,7 +386,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="21" locationCount="3" type="FilterBy+And" terms="[term; service]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="20" locationCount="3" type="FilterBy+And" terms="[term; service]" proximity="paragraph" filterId="PARID">
     <QueryString>term and service filterby parid</QueryString>
     <ReverseQueryString>service and term filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("term"),Term("service")),PARID)</QueryExpression>
@@ -422,7 +411,7 @@
       </QueryLocation>
     </QueryLocations>
   </QueryResult>
-  <QueryResult id="22" locationCount="2" type="FilterBy+And" terms="[evolutionary; premind]" proximity="paragraph" filterId="PARID">
+  <QueryResult id="21" locationCount="2" type="FilterBy+And" terms="[evolutionary; premind]" proximity="paragraph" filterId="PARID">
     <QueryString>evolutionary and premind filterby parid</QueryString>
     <ReverseQueryString>premind and evolutionary filterby parid</ReverseQueryString>
     <QueryExpression>FilterBy(And(Term("evolutionary"),Term("premind")),PARID)</QueryExpression>
@@ -437,6 +426,34 @@
         <TermOccurrenceList count="2">
           <TermOccurrence term="premind" docId="107" seqId="16" dpoId="17" tpoId="116" len="7" />
           <TermOccurrence term="evolutionary" docId="107" seqId="16" dpoId="27" tpoId="172" len="12" />
+        </TermOccurrenceList>
+      </QueryLocation>
+    </QueryLocations>
+  </QueryResult>
+  <QueryResult id="22" locationCount="3" type="FilterBy+And" terms="[life; premind]" proximity="paragraph" filterId="PARID">
+    <QueryString>life and premind filterby parid</QueryString>
+    <ReverseQueryString>premind and life filterby parid</ReverseQueryString>
+    <QueryExpression>FilterBy(And(Term("life"),Term("premind")),PARID)</QueryExpression>
+    <QueryLocations count="3">
+      <QueryLocation id="30.105" pid="30:1.101">
+        <TermOccurrenceList count="3">
+          <TermOccurrence term="premind" docId="30" seqId="105" dpoId="4" tpoId="26" len="7" />
+          <TermOccurrence term="life" docId="30" seqId="105" dpoId="55" tpoId="349" len="4" />
+          <TermOccurrence term="premind" docId="30" seqId="105" dpoId="74" tpoId="452" len="7" />
+        </TermOccurrenceList>
+      </QueryLocation>
+      <QueryLocation id="40.66" pid="40:9.1">
+        <TermOccurrenceList count="2">
+          <TermOccurrence term="premind" docId="40" seqId="66" dpoId="24" tpoId="173" len="7" />
+          <TermOccurrence term="life" docId="40" seqId="66" dpoId="42" tpoId="279" len="4" />
+        </TermOccurrenceList>
+      </QueryLocation>
+      <QueryLocation id="65.2" pid="65:0.1">
+        <TermOccurrenceList count="4">
+          <TermOccurrence term="life" docId="65" seqId="2" dpoId="3" tpoId="28" len="4" />
+          <TermOccurrence term="premind" docId="65" seqId="2" dpoId="4" tpoId="33" len="7" />
+          <TermOccurrence term="life" docId="65" seqId="2" dpoId="5" tpoId="41" len="4" />
+          <TermOccurrence term="life" docId="65" seqId="2" dpoId="32" tpoId="108" len="4" />
         </TermOccurrenceList>
       </QueryLocation>
     </QueryLocations>
