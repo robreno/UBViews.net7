@@ -268,6 +268,14 @@
                 <!--<Setter Property="TextDecorations" Value="Underline" />-->
             </Style>
 
+            <Style x:Key="NoteSpan" TargetType="Span" BasedOn="{StaticResource BaseParagaphSpan}">
+                <Setter Property="Text" Value="*" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="TextColor" Value="Blue" />
+                <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="ToolTipProperties.Text" Value="Tap to open note ..."/>
+            </Style>
+
             <Style x:Key="QueryResultSpan" TargetType="Span" BasedOn="{StaticResource BaseSpan}">
                 <Setter Property="TextColor" Value="DarkGoldenrod"/>
             </Style>
@@ -377,7 +385,7 @@
             </Style>
 
             <Style x:Key="PaperContent" TargetType="VerticalStackLayout">
-                <Setter Property="Padding" Value="30" />
+                <Setter Property="Padding" Value="30,0,20,0" />
             </Style>
 
             <!-- AppSettings Styles -->
