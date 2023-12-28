@@ -17,8 +17,8 @@ namespace UBViews
             Routing.RegisterRoute(nameof(AppSettingsPage), typeof(AppSettingsPage));
             Routing.RegisterRoute(nameof(AddContactsPage), typeof(AddContactsPage));
             Routing.RegisterRoute(nameof(ContactsPage), typeof(ContactsPage));
-            Routing.RegisterRoute(nameof(NotesPage), typeof(NotesPage));
             Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
+            Routing.RegisterRoute(nameof(NotesPage), typeof(NotesPage));
 
             Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
             Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
