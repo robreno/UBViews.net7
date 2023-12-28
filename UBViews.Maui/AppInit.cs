@@ -14,38 +14,34 @@ namespace UBViews
 
         Dictionary<int, string> NamesSrc = new Dictionary<int, string>()
         {
-            { 0, "Query/Queries.template.xml" },
-            { 1, "Query/Queries.xml" },
-            { 2, "Query/QueryCmdList.xml" },
-            { 3, "Settings/Settings.template.xml" },
-            { 4, "Database/queryResults.db3" },
-            { 5, "Database/postingLists.db3" },
+            { 0, "Templates/Contacts.xml" },
+            { 1, "Templates/Notes.xml" },
+            { 2, "Templates/Settings.xml" },
+            { 3, "Database/queryResults.db3" },
+            { 4, "Database/postingLists.db3" },
         };
 
         Dictionary<int, string> TargetsSrc = new Dictionary<int, string>()
         {
-            { 0, "UserQueries.xml" },
-            { 1, "QueryHistory.xml" },
-            { 2, "QueryCommands.xml" },
-            { 3, "Settings.xml" },
-            { 4, "QueryResults.db3" },
-            { 5, "PostingLists.db3" },
+            { 0, "Contacts.xml" },
+            { 1, "Notes.xml" },
+            { 2, "Settings.xml" },
+            { 3, "queryResults.db3" },
+            { 4, "postingLists.db3" },
         };
 
         string[] srcNames = new string[]
         {
-            "Query/Queries.template.xml",
-            "Query/QueryResults.xml",
-            "Settings/Settings.template.xml",
-            "Email/Contacts.template.xml"
+            "Templates/Contacts.xml",
+            "Templates/Notes.xml",
+            "Templates/Settings.xml",
         };
 
         string[] trgNames = new string[]
         {
-            "UserQueries.xml",
-            "QueryHistory.xml",
-            "Settings.xml",
             "Contacts.xml",
+            "Notes.xml",
+            "Settings.xml",
         };
 
         Dictionary<string, bool> UserFiles = new();
