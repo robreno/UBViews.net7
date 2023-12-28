@@ -14,6 +14,7 @@ using UBViews.Services;
 
 public partial class NoteService : INoteService
 {
+    #region Private Data Members
     /// <summary>
     /// CultureInfo
     /// </summary>
@@ -27,11 +28,16 @@ public partial class NoteService : INoteService
     IFileService fileService;
 
     readonly string _class = nameof(NoteService);
+    #endregion
 
+    #region Constructor
     public NoteService(IFileService fileService)
     {
         this.fileService = fileService;
     }
+    #endregion
+
+    #region  Public Interface Methods
     public async Task<NoteLocationsDto> GetNoteLocationsDtoAsync()
     {
         string _method = nameof(GetNoteLocationsDtoAsync);
@@ -131,7 +137,6 @@ public partial class NoteService : INoteService
             return null;
         }
     }
-
     public async Task<Border> CreateNoteBorderAsync(NoteEntry note)
     {
         string _method = nameof(CreateNoteBorderAsync);
@@ -173,7 +178,6 @@ public partial class NoteService : INoteService
             return null;
         }
     }
-
     public async Task<List<NoteEntry>> LoadNotesAsync()
     {
         string _method = nameof(LoadNotesAsync);
@@ -275,9 +279,12 @@ public partial class NoteService : INoteService
             return null;
         }
     }
+    #endregion
 
+    #region  Private Helper Methods
     private async Task<string> LoadResourceContentAsync(string fileName)
     {
+        string _method = nameof(LoadResourceContentAsync);
         try
         {
             string _appDir = FileSystem.AppDataDirectory;
@@ -289,8 +296,9 @@ public partial class NoteService : INoteService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return null;
         }
     }
+    #endregion
 }
