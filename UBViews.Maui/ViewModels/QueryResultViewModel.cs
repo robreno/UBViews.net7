@@ -553,16 +553,17 @@ public partial class QueryResultViewModel : BaseViewModel
 
                 Borders.Add(newBorder);
                 contentVSL.Add(newBorder);
-                contentScrollView.Content = contentVSL;
             }
+            contentScrollView.Content = contentVSL;
+
             string titleMessage = string.Empty;
             if (hit == QueryHits)
             {
-                titleMessage = $"Query Result {hit} hits ...";
+                titleMessage = $"Query Result {hit} hit(s) ...";
             }
             else
             {
-                titleMessage = $"Query Result {hit} hits out of {QueryHits} total ...";
+                titleMessage = $"Query Result {hit} hit(s) out of {QueryHits} total ...";
             }
             Title = titleMessage;
         }
