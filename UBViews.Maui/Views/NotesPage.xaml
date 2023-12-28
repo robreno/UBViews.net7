@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:model="clr-namespace:UBViews.Models.Query"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             x:Class="UBViews.NotesPage"
+             Title="{Binding Title}"
+             x:DataType="viewmodel:NotesViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="ButtonWidth">165</x:String>
+            <x:String x:Key="SearchBarWidth">400</x:String>
+        </ResourceDictionary>
+        <Style x:Key="basePidStyle" TargetType="Label">
+            <Setter Property="Margin" Value="0,20,5,0" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="IsVisible" Value="true" />
+        </Style>
+        <Style x:Key="borderStyle" TargetType="Border">
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="IsVisible" Value="true" />
+            <Setter Property="WidthRequest" Value="200.0" />
+            <Setter Property="HeightRequest" Value="200.0" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <behavior:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding NotesPageAppearingCommand}" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout x:Name="mainVSL" 
+                         Margin="50"
+                         HorizontalOptions="CenterAndExpand">
+
+        <Label x:Name="notesLabel" 
+            Margin="0,20,0,0"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Style="{DynamicResource RegularParagraph}"
+            ToolTipProperties.Text="To go to paragraph text tap.">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Style="{StaticResource RegularSpan}" Text="Notes (" />
+                    <Span Style="{StaticResource RegularSpan}" Text="displayed " />
+                    <Span Style="{StaticResource RegularSpan}" Text="{Binding NoteCount}" />
+                    <Span Style="{StaticResource RegularSpan}" Text=")" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
+            <Label x:Name="hideUncheckedLabel" 
+                Margin="10,0,0,0"
+                Text="Hide Unchecked" 
+                Style="{StaticResource CheckBoxCaption}"  />
+            <CheckBox x:Name="selectedCheckBox" 
+                   VerticalOptions="Start"
+                   IsChecked="{Binding HideUnselected, Mode=TwoWay}">
+                <CheckBox.Behaviors>
+                    <behavior:EventToCommandBehavior 
+                         EventName="CheckedChanged" 
+                         Command="{Binding SelectedCheckboxChangedCommand}"
+                         CommandParameter="{Binding Source={x:Reference selectedCheckBox}, Path=IsChecked}"/>
+                </CheckBox.Behaviors>
+            </CheckBox>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <Button x:Name="shareChecked" 
+                 HorizontalOptions="Start"
+                 Margin="10,0,0,10"
+                 Text="Share Selected" 
+                 HeightRequest="40" 
+                 WidthRequest="125"
+                 Command="{Binding ShareSelectedCommand}"/>
+        </HorizontalStackLayout>
+
+        <ScrollView x:Name="contentScrollView" 
+                    MaximumWidthRequest="750"
+                    MaximumHeightRequest="550"
+                    VerticalScrollBarVisibility="Default">
+
+            <!--<VerticalStackLayout x:Name="outerVerticalStackLayout"
+                                 HorizontalOptions="CenterAndExpand">-->
+
+                <VerticalStackLayout x:Name="contentVerticalStackLayout"
+                                     HorizontalOptions="Center">
+
+                </VerticalStackLayout>
+
+            <!--</VerticalStackLayout>-->
+
+        </ScrollView>
+
+    </VerticalStackLayout>
+
+</ContentPage>

@@ -64,6 +64,8 @@ namespace UBViews
             
             builder.Services.AddTransient<IContactsService>((e) => new XmlContactsService(new FileService()));
 
+            builder.Services.AddTransient<INoteService>((e) => new NoteService(new FileService()));
+
             // Connectivity Service
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);
             builder.Services.AddTransient<ConnectivityViewModel>();
@@ -106,6 +108,9 @@ namespace UBViews
 
             builder.Services.AddTransient<ContactsViewModel>();
             builder.Services.AddTransient<ContactsPage>();
+
+            builder.Services.AddTransient<NotesViewModel>();
+            builder.Services.AddTransient<NotesPage>();
 
             // Xaml Pages ViewModel
             builder.Services.AddTransient<XamlPaperViewModel>();
