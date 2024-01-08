@@ -45,11 +45,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     readonly string _class = nameof(XmlAppSettingsViewModel);
     #endregion
 
+    #region Constructor
     public XmlAppSettingsViewModel(IAppSettingsService settingsService)
     {
         this.settingsService = settingsService;
     }
+    #endregion
 
+    #region Public Observable Properties
     [ObservableProperty]
     bool isRefreshing;
 
@@ -97,15 +100,16 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     string audioFolderPath = string.Empty;
+    #endregion
 
-    // RelayCommands
-
+    #region Public Relay Commands
     [RelayCommand]
     async Task AppSettingPageAppearing()
     {
+        string _method = nameof(AppSettingPageAppearing);
         try
         {
-            await LoadSettings();
+            await LoadSettingsAsync();
             var audioPathBorder = contentPage.FindByName("audioPathBorder") as Border;
             var playbackControlsHSL = contentPage.FindByName("PlaybackControlsHSL") as HorizontalStackLayout;
             var lineHeightHSL = contentPage.FindByName("LineHeightHSL") as HorizontalStackLayout;
@@ -127,28 +131,28 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task AppSettingPageLoaded()
     {
+        string _method = nameof(AppSettingPageLoaded);
         try
         {
             // Do nothing for now
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task AppSettingPageDisappearing()
     {
+        string _method = nameof(AppSettingPageDisappearing);
         try
         {
             if (SettingsDirty == true)
@@ -158,14 +162,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task MaxQueryResultValueChanged(double value)
     {
+        string _method = nameof(MaxQueryResultValueChanged);
         try
         {
             previousMaxQuery = MaxQueryResults;
@@ -173,14 +177,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task LineHeightValueChanged(double value)
     {
+        string _method = nameof(LineHeightValueChanged);
         try
         {
             previousLineHeight = LineHeight;
@@ -188,14 +192,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ShowPidsCheckedChanged(bool value)
     {
+        string _method = nameof(ShowPidsCheckedChanged);
         try
         {
             previousShowPids = ShowReferencePids;
@@ -203,14 +207,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task UseCachingCheckedChanged(bool value)
     {
+        string _method = nameof(UseCachingCheckedChanged);
         try
         {
             previousUseCaching = UseCaching;
@@ -218,14 +222,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ShowPlaybackControlsCheckedChanged(bool value)
     {
+        string _method = nameof(ShowPlaybackControlsCheckedChanged);
         try
         {
             previousShowPlaybackControls = ShowPlaybackControls;
@@ -233,14 +237,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task ShowPaperContentsCheckedChanged(bool value)
     {
+        string _method = nameof(ShowPaperContentsCheckedChanged);
         try
         {
             previousShowPaperContents = ShowPaperContents;
@@ -248,14 +252,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task AutoSendEmailCheckedChanged(bool value)
     {
+        string _method = nameof(AutoSendEmailCheckedChanged);
         try
         {
             previousAutoSendEmail = AutoSendEmail;
@@ -263,14 +267,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.AutoSendEmail => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task UseDefaultAudioPathChanged(bool value)
     {
+        string _method = nameof(UseDefaultAudioPathChanged);
         try
         {
             previousUseDefaultAudioPath = UseDefaultAudoPath;
@@ -296,14 +300,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.AutoSendEmail => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task WindowSizeSelectedIndexChanged(int value)
     {
+        string _method = nameof(WindowSizeSelectedIndexChanged);
         try
         {
             // 0 small, 1 medium, 2 large
@@ -326,41 +330,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
-        }
-    }
-
-    [RelayCommand]
-    async Task LoadSettings()
-    {
-        try
-        {
-            UseCaching = previousUseCaching = await settingsService.Get("use_caching", false);
-            MaxQueryResults = previousMaxQuery = await settingsService.Get("max_query_results", 50);
-            ShowReferencePids = previousShowPids = await settingsService.Get("show_reference_pids", false);
-            LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
-            ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
-            ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
-            AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
-            WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
-            AudioDownloadStatus = previousAudioDownlandStatus = await settingsService.Get("audio_download_status", "");
-            AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
-            AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
-            UseDefaultAudoPath = previousUseDefaultAudioPath = await settingsService.Get("use_default_audio_path", true);
-            RunPreCheckSilent = previousRunPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
-            SettingsDirty = false;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task PickAudioFolder()
     {
+        string _method = nameof(PickAudioFolder);
         try
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -380,14 +357,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.LoadData => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task SaveSettings()
     {
+        string _method = nameof(SaveSettings);
         try
         {
             if (previousUseCaching != UseCaching)
@@ -471,14 +448,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.SaveSettings => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task SaveCacheSettings()
     {
+        string _method = nameof(SaveCacheSettings);
         try
         {
             await settingsService.SaveCache();
@@ -486,14 +463,14 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.SaveSettings => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
 
     [RelayCommand]
     async Task NavigateTo(string target)
     {
+        string _method = nameof(NavigateTo);
         try
         {
             IsBusy = true;
@@ -517,16 +494,44 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
         finally
         {
             IsBusy = false;
         }
     }
-    async Task<(bool, string)> PickFolderAsync(CancellationToken cancellationToken)
+    #endregion
+
+    #region Private Helper Methods  
+    private async Task LoadSettingsAsync()
     {
+        string _method = "LoadSettings";
+        try
+        {
+            UseCaching = previousUseCaching = await settingsService.Get("use_caching", false);
+            MaxQueryResults = previousMaxQuery = await settingsService.Get("max_query_results", 50);
+            ShowReferencePids = previousShowPids = await settingsService.Get("show_reference_pids", false);
+            LineHeight = previousLineHeight = await settingsService.Get("line_height", 1.0);
+            ShowPaperContents = previousShowPaperContents = await settingsService.Get("show_paper_contents", false);
+            ShowPlaybackControls = previousShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
+            AutoSendEmail = previousAutoSendEmail = await settingsService.Get("auto_send_email", false);
+            WindowSize = previousWindowSize = await settingsService.Get("window_size", LARGE);
+            AudioDownloadStatus = previousAudioDownlandStatus = await settingsService.Get("audio_download_status", "");
+            AudioFolderName = previousAudioFolderName = await settingsService.Get("audio_folder_name", "");
+            AudioFolderPath = previousAudioFolderPath = await settingsService.Get("audio_folder_path", "");
+            UseDefaultAudoPath = previousUseDefaultAudioPath = await settingsService.Get("use_default_audio_path", true);
+            RunPreCheckSilent = previousRunPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
+            SettingsDirty = false;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+    private async Task<(bool, string)> PickFolderAsync(CancellationToken cancellationToken)
+    {
+        string _method = nameof(PickFolderAsync);
         try
         {
             var result = await FolderPicker.Default.PickAsync(cancellationToken);
@@ -550,9 +555,21 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in AppSettingsViewModel.SaveSettings => ",
-                ex.Message, "Ok");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return (false, null);
         }
     }
+    private async Task DisplayMessageAsync(string source, string message)
+    {
+        string _method = "DisplayMessageAsync";
+        try
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {source} => ", message, "Ok");
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+    #endregion
 }

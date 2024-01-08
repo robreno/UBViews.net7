@@ -2,6 +2,7 @@
 
 public interface IAppSettingsService
 {
+    Task<bool> IsDirty();
     Task Clear();
     Task Clear(string key);
     Task<bool> ContainsKey(string key);
