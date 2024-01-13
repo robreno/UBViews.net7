@@ -111,6 +111,7 @@ public partial class PopupViewModel : BaseViewModel
     [RelayCommand]
     async Task ClosePopup(object obj)
     {
+        string _method = "ClosePopup";
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -123,8 +124,7 @@ public partial class PopupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
     #endregion
@@ -159,8 +159,7 @@ public partial class PopupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised in MainViewModel.NavigateTo => ",
-                ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
     public async Task CreateNoteContentAsync()
@@ -242,8 +241,6 @@ public partial class PopupViewModel : BaseViewModel
                 paragraph.Notes.Add(note);
                 Paragraphs.Add(paragraph);
 
-                //var entries = note.NoteEntries;
-
                 NoteHit noteHit = new NoteHit
                 {
                     Id = paperId + "." + seqId,
@@ -269,8 +266,8 @@ public partial class PopupViewModel : BaseViewModel
 
                 Borders.Add(newBorder);
                 contentVSL.Add(newBorder);
-                contentScrollView.Content = contentVSL;
             }
+            contentScrollView.Content = contentVSL;
         }
         catch (Exception ex)
         {
