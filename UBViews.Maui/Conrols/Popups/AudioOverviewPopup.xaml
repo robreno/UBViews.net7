@@ -9,7 +9,7 @@
 
     <Border x:Name="popuBorder" 
             Stroke="Blue"
-            VerticalOptions="StartAndExpand">
+            VerticalOptions="Start">
         
         <VerticalStackLayout BackgroundColor="WhiteSmoke">
 
@@ -17,7 +17,7 @@
                    Style="{StaticResource PopupTitleLabel}" />
 
             <ScrollView x:Name="mainScrollView"
-                        VerticalOptions="StartAndExpand"
+                        VerticalOptions="Start"
                         Style="{StaticResource PopupScrollViewStyle}">
 
                 <VerticalStackLayout x:Name="mainSCVSL">
@@ -26,13 +26,19 @@
                            Style="{StaticResource RegularParagraph}"> 
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="The Urantia Foundation allows readers to download the audio files of the Urantia papers." 
+                                <Span Text="The Urantia Foundation allows readers to download" 
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="UBViews allows users to listen to those files if they are located in a folder accessible to UBViews."  
+                                <Span Text="audio files for the Urantia papers. UBViews allows" 
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="users to listen to the downloaded audio files located"  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="This allows users to tap-n-play and listen to a paper being viewed."  
+                                <Span Text="in a App accessible folder. This allows users to tap-n-play"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="to listen to a paper being viewed."  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
@@ -42,14 +48,17 @@
                            Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to setup an audio download folder for the Urantia book audio files." 
+                                <Span Text="This popup describes how to setup an audio download folder for"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Users can download the Urantia book's audio files from Urantia Foundation's website."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="the Urantia book audio files. Users can download the audio"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The process of how to download the audio files which will be explained below."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="files from Urantia Foundation's website. The steps to download"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="the audio files will be explained below."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -62,16 +71,16 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Go to the urnatia.org and select Listen to the papers."  
+                                <Span Text="Go to urantia.org and from the Home menu select Listen."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="From the contents select the paper you want to download and select to listen to it."
+                                <Span Text="From the contents select the paper you want to download."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select the vertical ... to expand."  
+                                <Span Text="On the Audio Control select the vertical (⋮) to expand."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="To see image:"  
+                                <Span Text="This shows the Download command:"  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
@@ -87,13 +96,13 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select Download and save to an archive location for Urantia book audio files."  
+                                <Span Text="Select Download and save to a folder location for audio files."  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="In UBViews Settings page you can pick and set the Urantia audio files for the App."
+                                <Span Text="In UBViews Settings page you can then pick the folder"
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Settings Page:"  
+                                <Span Text="the audio files were downloaded into:"  
                                       Style="{StaticResource RegularSpan}"  />
                             </FormattedString>
                         </Label.FormattedText>
@@ -109,14 +118,17 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select a folder and then the path will change to the new folder selected."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Select a local folder and the path will change to the selected"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="This folder should be the folder that you downloaded the Urantia book audio files into."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="folder. This folder should be the folder that you downloaded"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Now UBViews can play the audio files of the Urantia book. See Help for how."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="the Urantia book audio files into. Now UBViews can play the"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="audio files of the Urantia book."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -131,16 +143,22 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Hosting the audio files of "  
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Text="The Urantia Book"  
-                                      Style="{StaticResource ItalicSpan}"  />
-                                <Span Text=" online is a significant expense for Urantia Foundation. Your support helps keep them available."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Urantia Foundation's hosting the audio files of"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Please consider making a donation. Any amount is appreciated. Thank you!"
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="the Urantia Book online is a significant expense"
+                                      Style="{StaticResource ItalicSpan}" />
+                                <Span Text="for Urantia Foundation. Your donation helps support"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="this service so others can enjoy listening to the papers."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Please consider making a donation. Any amount is appreciated."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Thank you!"
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
