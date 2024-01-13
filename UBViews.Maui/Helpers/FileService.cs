@@ -74,7 +74,7 @@ public class FileService : IFileService
     /// <typeparam name="T"></typeparam>
     /// <param name="filePathName"></param>
     /// <returns></returns>
-    public async Task<List<T>> LoadAsset_Obsolete<T>(string filePathName)
+    public async Task<List<T>> LoadAsset_JsonSerializer<T>(string filePathName)
     {
         try
         {

@@ -29,7 +29,7 @@ public interface IFileService
     /// <typeparam name="T"></typeparam>
     /// <param name="filePathName"></param>
     /// <returns></returns>
-    Task<List<T>> LoadAsset<T>(string filePathName);
+    Task<List<T>> LoadAsset_JsonSerializer<T>(string filePathName);
 
     /// <summary>
     /// 
