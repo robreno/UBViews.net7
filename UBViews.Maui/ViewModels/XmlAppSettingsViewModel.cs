@@ -106,7 +106,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task AppSettingPageAppearing()
     {
-        string _method = nameof(AppSettingPageAppearing);
+        string _method = "AppSettingPageAppearing";
         try
         {
             await LoadSettingsAsync();
@@ -138,7 +138,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task AppSettingPageLoaded()
     {
-        string _method = nameof(AppSettingPageLoaded);
+        string _method = "AppSettingPageLoaded";
         try
         {
             // Do nothing for now
@@ -152,7 +152,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task AppSettingPageDisappearing()
     {
-        string _method = nameof(AppSettingPageDisappearing);
+        string _method = "AppSettingPageDisappearing";
         try
         {
             if (SettingsDirty == true)
@@ -169,7 +169,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task MaxQueryResultValueChanged(double value)
     {
-        string _method = nameof(MaxQueryResultValueChanged);
+        string _method = "MaxQueryResultValueChanged";
         try
         {
             previousMaxQuery = MaxQueryResults;
@@ -184,7 +184,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task LineHeightValueChanged(double value)
     {
-        string _method = nameof(LineHeightValueChanged);
+        string _method = "LineHeightValueChanged";
         try
         {
             previousLineHeight = LineHeight;
@@ -199,7 +199,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task ShowPidsCheckedChanged(bool value)
     {
-        string _method = nameof(ShowPidsCheckedChanged);
+        string _method = "ShowPidsCheckedChanged";
         try
         {
             previousShowPids = ShowReferencePids;
@@ -214,7 +214,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task UseCachingCheckedChanged(bool value)
     {
-        string _method = nameof(UseCachingCheckedChanged);
+        string _method = "UseCachingCheckedChanged";
         try
         {
             previousUseCaching = UseCaching;
@@ -229,7 +229,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task ShowPlaybackControlsCheckedChanged(bool value)
     {
-        string _method = nameof(ShowPlaybackControlsCheckedChanged);
+        string _method = "ShowPlaybackControlsCheckedChanged";
         try
         {
             previousShowPlaybackControls = ShowPlaybackControls;
@@ -244,7 +244,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task ShowPaperContentsCheckedChanged(bool value)
     {
-        string _method = nameof(ShowPaperContentsCheckedChanged);
+        string _method = "ShowPaperContentsCheckedChanged";
         try
         {
             previousShowPaperContents = ShowPaperContents;
@@ -259,7 +259,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task AutoSendEmailCheckedChanged(bool value)
     {
-        string _method = nameof(AutoSendEmailCheckedChanged);
+        string _method = "AutoSendEmailCheckedChanged";
         try
         {
             previousAutoSendEmail = AutoSendEmail;
@@ -274,7 +274,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task UseDefaultAudioPathChanged(bool value)
     {
-        string _method = nameof(UseDefaultAudioPathChanged);
+        string _method = "UseDefaultAudioPathChanged";
         try
         {
             previousUseDefaultAudioPath = UseDefaultAudoPath;
@@ -307,7 +307,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task WindowSizeSelectedIndexChanged(int value)
     {
-        string _method = nameof(WindowSizeSelectedIndexChanged);
+        string _method = "WindowSizeSelectedIndexChanged";
         try
         {
             // 0 small, 1 medium, 2 large
@@ -337,7 +337,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task PickAudioFolder()
     {
-        string _method = nameof(PickAudioFolder);
+        string _method = "PickAudioFolder";
         try
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -364,7 +364,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task SaveSettings()
     {
-        string _method = nameof(SaveSettings);
+        string _method = "SaveSettings";
         try
         {
             if (previousUseCaching != UseCaching)
@@ -455,7 +455,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task SaveCacheSettings()
     {
-        string _method = nameof(SaveCacheSettings);
+        string _method = "SaveCacheSettings";
         try
         {
             await settingsService.SaveCache();
@@ -470,7 +470,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     [RelayCommand]
     async Task NavigateTo(string target)
     {
-        string _method = nameof(NavigateTo);
+        string _method = "NavigateTo";
         try
         {
             IsBusy = true;
@@ -531,7 +531,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
     }
     private async Task<(bool, string)> PickFolderAsync(CancellationToken cancellationToken)
     {
-        string _method = nameof(PickFolderAsync);
+        string _method = "PickFolderAsync";
         try
         {
             var result = await FolderPicker.Default.PickAsync(cancellationToken);
