@@ -22,7 +22,7 @@ public class Paragraph
     public NoteLocationsDto CreateNoteDto()
     {
         NoteLocationsDto dto = new NoteLocationsDto();
-        if (this.Notes != null)
+        if (Notes != null)
         {
             dto.Notes = Notes;
         }
