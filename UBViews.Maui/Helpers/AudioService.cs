@@ -126,7 +126,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task InitializeDataAsync(ContentPage contentPage, IMediaElement mediaElement, PaperDto dto)
     {
-        string _method = nameof(InitializeDataAsync);
+        string _method = "InitializeDataAsync";
         try
         {
             this.httpClient = ServiceHelper.Current.GetService<HttpClient>();
@@ -162,7 +162,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<bool> IsInitializedAsync()
     {
-        string _method = nameof(IsInitializedAsync);
+        string _method = "IsInitializedAsync";
         try
         {
             bool isInitialized = false;
@@ -186,7 +186,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetContentPageAsync(ContentPage contentPage)
     {
-        string _method = nameof(SetContentPageAsync);
+        string _method = "SetContentPageAsync";
         try
         {
             this.contentPage = contentPage;
@@ -206,7 +206,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaElementAsync(IMediaElement mediaElement)
     {
-        string _method = nameof(SetMediaElementAsync);
+        string _method = "SetMediaElementAsync";
         try
         {
             this.mediaElement = mediaElement;
@@ -227,7 +227,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<AudioMarker> GetAtAsync(int index)
     {
-        string _method = nameof(GetAtAsync);
+        string _method = "GetAtAsync";
 
         try
         {
@@ -247,7 +247,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task ClearAsync()
     {
-        string _method = nameof(ClearAsync);
+        string _method = " ClearAsync";
 
         try
         {
@@ -268,7 +268,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task InsertAsync(AudioMarker mediaMarker)
     {
-        string _method = nameof(InsertAsync);
+        string _method = "InsertAsync";
 
         try
         {
@@ -310,7 +310,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
     {
-        string _method = nameof(LoadAudioMarkersAsync);
+        string _method = "LoadAudioMarkersAsync";
 
         try
         {
@@ -351,7 +351,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<IList<AudioMarker>> GetAudioMarkersListAsync()
     {
-        string _method = nameof(GetAudioMarkersListAsync);
+        string _method = "GetAudioMarkersListAsync";
 
         try
         {
@@ -379,7 +379,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task DisconnectMediaElementAsync()
     {
-        string _method = nameof(DisconnectMediaElementAsync);
+        string _method = "DisconnectMediaElementAsync";
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -404,7 +404,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMarkersAsync(AudioMarkerSequence markers)
     {
-        string _method = nameof(SetMediaElementAsync);
+        string _method = "SetMarkersAsync";
         try
         {
             this.Markers = markers;
@@ -429,7 +429,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetAudioStatusAsync(bool value)
     {
-        string _method = nameof(SetAudioStatusAsync);
+        string _method = "SetAudioStatusAsync";
         try
         {
             if (value)
@@ -492,7 +492,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetAudioStreamingStatusAsync(bool value)
     {
-        string _method = nameof(SetAudioStreamingStatusAsync);
+        string _method = "SetAudioStreamingStatusAsync";
         try
         {
             if (value)
@@ -522,7 +522,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task<bool> GetAudioStatusAsync()
     {
-        string _method = nameof(GetAudioStatusAsync);
+        string _method = "GetAudioStatusAsync(";
         try
         {
             bool _state = false;
@@ -552,7 +552,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaPlaybackControlsAsync(bool value)
     {
-        string _method = nameof(SetMediaPlaybackControlsAsync);
+        string _method = "SetMediaPlaybackControlsAsync";
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -576,7 +576,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPlaybackControlsStartTimeAsync(AudioMarker audioMarker)
     {
-        string _method = nameof(SetPlaybackControlsStartTimeAsync);
+        string _method = "SetPlaybackControlsStartTimeAsync";
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -598,7 +598,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetShowMediaPlaybackControlsAsync(bool value)
     {
-        string _method = nameof(SetShowMediaPlaybackControlsAsync);
+        string _method = "SetShowMediaPlaybackControlsAsync";
         try
         {
             this.ShowPlaybackControls = value;
@@ -618,7 +618,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetMediaStateAsync(MediaStatePair mediaStatePair)
     {
-        string _method = nameof(SetMediaStateAsync);
+        string _method = "SetMediaStateAsync";
         try
         {
             this.MediaState = mediaStatePair;
@@ -720,7 +720,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetDurationAsync(TimeSpan duration)
     {
-        string _method = nameof(SetDurationAsync);
+        string _method = "SetDurationAsync";
         try
         {
             this.Duration = duration;
@@ -740,7 +740,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPlatformAsync(string platformName)
     {
-        string _method = nameof(SetPlatformAsync);
+        string _method = "SetPlatformAsync";
         try
         {
             this.Plattform = platformName;
@@ -760,7 +760,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetPaperDtoAsync(PaperDto paperDto)
     {
-        string _method = nameof(SetPaperDtoAsync);
+        string _method = "SetPaperDtoAsync";
         try
         {
             this.PaperDto = paperDto;
@@ -784,7 +784,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetParagraphsAsync(List<Paragraph> paragraphs)
     {
-        string _method = nameof(SetParagraphsAsync);
+        string _method = "SetParagraphsAsync";
         try
         {
             foreach (var paragraph in paragraphs)
@@ -807,7 +807,7 @@ public partial class AudioService : IAudioService
     /// <returns></returns>
     public async Task SetSendToastAsync(bool value)
     {
-        string _method = nameof(SetSendToastAsync);
+        string _method = "SetSendToastAsync";
         try
         {
             this.SendToastState = value;
@@ -824,7 +824,7 @@ public partial class AudioService : IAudioService
     #region  Audio Gestures
     public async Task TappedGestureForPaperAsync(string value)
     {
-        string _method = nameof(TappedGestureForPaperAsync);
+        string _method = "TappedGestureForPaperAsync";
         try
         {
             if (contentPage == null)
@@ -878,7 +878,7 @@ public partial class AudioService : IAudioService
     }
     public async Task DoubleTappedGestureForPaperAsync(string value)
     {
-        string _method = nameof(DoubleTappedGestureForPaperAsync);
+        string _method = "DoubleTappedGestureForPaperAsync";
         try
         {
             if (contentPage == null)
@@ -922,7 +922,7 @@ public partial class AudioService : IAudioService
     }
     public async Task TappedGestureAsync(string id)
     {
-        string _method = nameof(TappedGestureAsync);
+        string _method = "TappedGestureAsync";
         try
         {
             if (contentPage == null)
@@ -1015,7 +1015,7 @@ public partial class AudioService : IAudioService
     }
     public async Task TappedGestureAsync(string id, bool value)
     {
-        string _method = nameof(TappedGestureAsync);
+        string _method = "TappedGestureAsync";
         try
         {
             if (contentPage == null)
@@ -1109,7 +1109,7 @@ public partial class AudioService : IAudioService
     }
     public async Task DoubleTappedGestureAsync(string id)
     {
-        string _method = nameof(DoubleTappedGestureAsync);
+        string _method = "DoubleTappedGestureAsync";
         try
         {
             if (contentPage == null)
@@ -1158,7 +1158,7 @@ public partial class AudioService : IAudioService
     }
     public async Task DoubleTappedGestureAsync(string id, bool value)
     {
-        string _method = nameof(DoubleTappedGestureAsync);
+        string _method = "DoubleTappedGestureAsync";
         try
         {
             if (contentPage == null)
@@ -1211,7 +1211,7 @@ public partial class AudioService : IAudioService
     #region   MediaElement Audio Methods
     public async Task<bool> PlayPauseAsync(string value)
     {
-        string _method = nameof(PlayPauseAsync);
+        string _method = "PlayPauseAsync";
         try
         {
             bool retval = false;
@@ -1238,7 +1238,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PlayAudioAsync()
     {
-        string _method = nameof(PlayAudioAsync);
+        string _method = "PlayAudioAsync";
         try
         {
             string _state = "Playing";
@@ -1275,7 +1275,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PauseAudioAsync()
     {
-        string _method = nameof(PauseAudioAsync);
+        string _method = "PauseAudioAsync";
         try
         {
             string _state = "Paused";
@@ -1300,7 +1300,7 @@ public partial class AudioService : IAudioService
     }
     public async Task StopAudioAsync()
     {
-        string _method = nameof(StopAudioAsync);
+        string _method = "StopAudioAsync";
         try
         {
             string _state = "Stopped";
@@ -1326,7 +1326,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PlayAudioRangeAsync(string timeSpanRange)
     {
-        string _method = nameof(PlayAudioRangeAsync);
+        string _method = "PlayAudioRangeAsync";
         try
         {
             string _state = "Playing";
@@ -1359,7 +1359,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PlayAudioRangeExAsync(AudioMarker audioMarker)
     {
-        string _method = nameof(PlayAudioRangeExAsync);
+        string _method = "PlayAudioRangeExAsync";
         try
         {
             string _state = "Playing";
@@ -1388,7 +1388,7 @@ public partial class AudioService : IAudioService
     }
     public async Task PositionChangedAsync(TimeSpan timeSpan)
     {
-        string _method = nameof(PositionChangedAsync);
+        string _method = "PositionChangedAsync";
         try
         {
             Position = timeSpan;
@@ -1417,7 +1417,7 @@ public partial class AudioService : IAudioService
     }
     public async Task StateChangedAsync(string state)
     {
-        string _method = nameof(StateChangedAsync);
+        string _method = "StateChangedAsync";
         try
         {
             var currentState = state;
@@ -1431,7 +1431,7 @@ public partial class AudioService : IAudioService
     }
     public async Task DownloadAudioFileAsync(string fileName, string audioDir)
     {
-        string _method = nameof(DownloadAudioFileAsync);
+        string _method = "DownloadAudioFileAsync";
         try
         {
             // C:\Users\robre\AppData\Local\Packages\879ca98e-d45e-44b3-9be6-e6d900695058_9zz4h110yvjzm\LocalState
@@ -1468,7 +1468,7 @@ public partial class AudioService : IAudioService
     }
     public async Task SendToastAsync(string message)
     {
-        string _method = nameof(SendToastAsync);
+        string _method = "SendToastAsync";
         try
         {
             using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
