@@ -395,10 +395,6 @@ public partial class PopupViewModel : BaseViewModel
             Style style = (Style)App.Current.Resources["RegularParagraph"];
 
             Label authorLabel = new Label { Text = $"Author: {NoteAuthor}", Style = style };
-            //Label subjectLabel = new Label { Text = $"Subject: {NoteSubject}", Style = style };
-
-            //vsl.Add(authorLabel);
-            //vsl.Add(subjectLabel);
 
             vsl.Add(label);
             vsl.Add(checkBox);
@@ -429,13 +425,6 @@ public partial class PopupViewModel : BaseViewModel
             binding.Source = nameof(NotesViewModel);
             binding.Path = "IsChecked";
 
-            //var behavior = new EventToCommandBehavior
-            //{
-            //    EventName = "CheckedChanged",
-            //    Command = ParagraphSelectedCommand,
-            //    CommandParameter = checkBox
-            //};
-            //checkBox.Behaviors.Add(behavior);
             return checkBox;
         }
         catch (Exception ex)
