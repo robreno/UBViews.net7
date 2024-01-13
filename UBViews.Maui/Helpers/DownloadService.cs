@@ -51,7 +51,7 @@ public class DownloadService : IDownloadService
     #region  Interface Implementations
     public async Task  InitializeDataAsync(ContentPage contentPage, PaperDto dto)
     {
-        string _method = nameof(InitializeDataAsync);
+        string _method = "InitializeDataAsync";
         try
         {
             this.contentPage = contentPage;
@@ -110,7 +110,7 @@ public class DownloadService : IDownloadService
     }
     public async Task<bool> DownloadAudioFileAsync()
     {
-        string _method = nameof(DownloadAudioFileAsync);
+        string _method = "DownloadAudioFileAsync";
         try
         {
             bool isSuccess = false;
@@ -156,7 +156,7 @@ public class DownloadService : IDownloadService
 
     public async Task<bool> DownloadAudioFileExAsync()
     {
-        string _method = nameof(DownloadAudioFileAsync);
+        string _method = "DownloadAudioFileExAsync";
         try
         {
             bool isSuccess = false;
@@ -195,7 +195,7 @@ public class DownloadService : IDownloadService
     }
     public async Task<bool> DownloadAudioFileAsync(string fileName, string audioDir)
     {
-        string _method = nameof(DownloadAudioFileAsync);
+        string _method = "DownloadAudioFileAsync";
         try
         {
             bool isSuccess = false;
@@ -234,7 +234,7 @@ public class DownloadService : IDownloadService
     }
     public async Task<bool> DownloadAudioFileAsync(Uri uri, string audioDir)
     {
-        string _method = nameof(DownloadAudioFileAsync);
+        string _method = "DownloadAudioFileAsync";
         try
         {
             bool isSuccess = false;
