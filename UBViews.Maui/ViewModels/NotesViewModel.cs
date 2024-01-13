@@ -93,7 +93,7 @@ public partial class NotesViewModel : BaseViewModel
     [RelayCommand]
     async Task NotesPageAppearing()
     {
-        string _method = nameof(NotesPageAppearing);
+        string _method = "NotesPageAppearing";
         try
         {
             if (contentPage == null)
@@ -170,7 +170,7 @@ public partial class NotesViewModel : BaseViewModel
     [RelayCommand]
     async Task SelectedCheckboxChanged(bool value)
     {
-        string _method = nameof(SelectedCheckboxChanged);
+        string _method = "SelectedCheckboxChanged";
         try
         {
             var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
@@ -212,7 +212,7 @@ public partial class NotesViewModel : BaseViewModel
     [RelayCommand]
     async Task ParagraphSelected(CheckBox checkbox)
     {
-        string _method = nameof(ParagraphSelected);
+        string _method = "ParagraphSelected";
         try
         {
             string id = checkbox.ClassId;
@@ -262,7 +262,7 @@ public partial class NotesViewModel : BaseViewModel
     [RelayCommand]
     async Task GoToDetails(PaperDto dto)
     {
-        string _method = nameof(GoToDetails);
+        string _method = "GoToDetails";
         try
         {
             IsBusy = true;
@@ -292,7 +292,7 @@ public partial class NotesViewModel : BaseViewModel
     #region Helper Methods
     private async Task LoadXaml(List<NoteEntry> dtos, bool plainText = true, bool clear = false)
     {
-        string _method = nameof(LoadXaml);
+        string _method = "LoadXaml";
         try
         {
             var contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
@@ -544,7 +544,7 @@ public partial class NotesViewModel : BaseViewModel
     } 
     private async Task<Border> CreateNoteIcon(NoteEntry note)
     {
-        string _method = nameof(CreateNoteIcon);
+        string _method = "CreateNoteIcon";
         try
         {
             var pid = note.Pid;
