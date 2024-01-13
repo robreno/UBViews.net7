@@ -1,9 +1,11 @@
 ﻿namespace UBViews.Helpers;
 
 using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 using UBViews.Services;
 using UBViews.Models.AppData;
+using UBViews.Models.Contacts;
 
 // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
 
@@ -21,7 +23,13 @@ public class XmlContactsService : IContactsService
     private bool _cacheDirty;
     private int _cacheCount;
 
+    private bool _initialized = false;
+    private bool _dataInitialized = false;
+
     private readonly string _class = "XmlContactsService";
+
+    ObservableCollection<Contact> Contacts = new();
+
 
     /// <summary>
     /// 
