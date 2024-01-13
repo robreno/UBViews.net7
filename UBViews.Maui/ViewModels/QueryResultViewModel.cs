@@ -121,7 +121,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task QueryResultAppearing(QueryResultLocationsDto dto)
     {
-        string _method = nameof(QueryResultAppearing);
+        string _method = "QueryResultAppearing";
         try
         {
             if (contentPage == null)
@@ -438,7 +438,7 @@ public partial class QueryResultViewModel : BaseViewModel
     [RelayCommand]
     async Task NavigateTo(string target)
     {
-        string _method = nameof(NavigateTo);
+        string _method = "NavigateTo";
         try
         {
             IsBusy = true;
