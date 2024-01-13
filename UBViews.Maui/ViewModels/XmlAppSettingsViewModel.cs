@@ -42,7 +42,7 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
 
     private IAppSettingsService settingsService;
 
-    readonly string _class = nameof(XmlAppSettingsViewModel);
+    readonly string _class = "XmlAppSettingsViewModel";
     #endregion
 
     #region Constructor
