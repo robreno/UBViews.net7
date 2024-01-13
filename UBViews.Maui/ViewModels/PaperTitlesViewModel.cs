@@ -118,7 +118,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperTitlesPageAppearing()
         {
-            string _method = nameof(PaperTitlesPageAppearing);
+            string _method = "PaperTitlesPageAppearing";
             try
             {
                 IsBusy = true;
@@ -183,7 +183,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task FlyoutMenu(string actionId)
         {
-            string _method = nameof(FlyoutMenu);
+            string _method = "FlyoutMenu";
             try
             {
                 if (contentPage == null)
@@ -305,7 +305,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
-            string _method = nameof(LoadAudioMarkers);
+            string _method = "LoadAudioMarkers";
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
@@ -321,7 +321,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PositionChanged(TimeSpan timeSpan)
         {
-            string _method = nameof(PositionChanged);
+            string _method = "PositionChanged";
             try
             {
                 await audioService.PositionChangedAsync(timeSpan);
@@ -336,7 +336,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task StateChanged(string state)
         {
-            string _method = nameof(StateChanged);
+            string _method = "StateChanged";
             try
             {
                 await audioService.StateChangedAsync(state);
