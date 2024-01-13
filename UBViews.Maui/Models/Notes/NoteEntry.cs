@@ -20,7 +20,10 @@ public class NoteEntry
     public string Subject { get; set; }
     public string Text { get; set; }
     public string Style { get; set; }
+    
+    // TODO: Remove NoteEntries afer removing all references
     public List<NoteText> NoteEntries { get; set; } = new();
+    public List<NoteRun> NoteRuns { get; set; } = new();
 
     public bool EqualTo(NoteEntry dto)
     {
