@@ -195,7 +195,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewAppearing(PaperDto dto)
         {
-            string _method = nameof(PaperViewAppearing);
+            string _method = "PaperViewAppearing";
             try
             {
                 if (contentPage == null)
@@ -264,7 +264,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewLoaded(PaperDto dto)
         {
-            string _method = nameof(PaperViewLoaded);
+            string _method = "PaperViewLoaded";
             try
             {
                 if (dto == null)
@@ -306,7 +306,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewDisappearing(PaperDto dto)
         {
-            string _method = nameof(PaperViewDisappearing);
+            string _method = "PaperViewDisappearing";
             try
             {
                 // Do Nothing
@@ -320,7 +320,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PaperViewUnloaded(PaperDto dto)
         {
-            string _method = nameof(PaperViewUnloaded);
+            string _method = "PaperViewUnloaded";
             try
             {
                 await audioService.DisconnectMediaElementAsync();
@@ -334,7 +334,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task TappedGestureForPaper(string value)
         {
-            string _method = nameof(TappedGestureForPaper);
+            string _method = "TappedGestureForPaper";
             try
             {
                 if (contentPage == null) 
@@ -355,7 +355,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task DoubleTappedGestureForPaper(string value)
         {
-            string _method = nameof(DoubleTappedGestureForPaper);
+            string _method = "DoubleTappedGestureForPaper";
             try
             {
                 if (contentPage == null)
@@ -378,7 +378,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task TappedGesture(string id)
         {
-            string _method = nameof(TappedGesture);
+            string _method = "TappedGesture";
             try
             {
                 if (contentPage == null)
@@ -406,7 +406,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task DoubleTappedGesture(string id)
         {
-            string _method = nameof(DoubleTappedGesture);
+            string _method = "DoubleTappedGesture";
             try
             {
                 if (contentPage == null)
@@ -435,7 +435,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SwipeGesture(string actionId)
         {
-            string _method = nameof(SwipeGesture);
+            string _method = "SwipeGesture";
             try
             {
                 if (contentPage == null)
@@ -507,7 +507,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task FlyoutMenu(string actionId)
         {
-            string _method = nameof(FlyoutMenu);
+            string _method = "FlyoutMenu";
             try
             {
                 if (contentPage == null)
@@ -589,7 +589,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetMediaPlaybackControls(bool value)
         {
-            string _method = nameof(SetMediaPlaybackControls);
+            string _method = "SetMediaPlaybackControls";
             try
             {
                 //await audioService.SetMediaPlaybackControlsAsync(value);
@@ -610,7 +610,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetPlaybackControlsStartTime(AudioMarker audioMarker)
         {
-            string _method = nameof(SetPlaybackControlsStartTime);
+            string _method = "SetPlaybackControlsStartTime";
             try
             {
                 //var me = contentPage.FindByName("mediaElement") as IMediaElement;
@@ -629,7 +629,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task SetReferencePids()
         {
-            string _method = nameof(SetReferencePids);
+            string _method = "SetReferencePids";
             try
             {
                 await MainThread.InvokeOnMainThreadAsync(() =>
@@ -676,7 +676,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task ScrollTo(string labelName)
         {
-            string _method = nameof(ScrollTo);
+            string _method = "ScrollTo";
             try
             {
                 var scrollView = contentPage.FindByName("contentScrollView") as ScrollView;
@@ -715,7 +715,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudio()
         {
-            string _method = nameof(PlayAudio);
+            string _method = "PlayAudio";
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -738,7 +738,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PauseAudio()
         {
-            string _method = nameof(PauseAudio);
+            string _method = "PauseAudio";
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -761,7 +761,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task StopAudio()
         {
-            string _method = nameof(StopAudio);
+            string _method = "StopAudio";
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -785,7 +785,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudioRange(string timeSpanRange)
         {
-            string _method = nameof(PlayAudioRange);
+            string _method = "PlayAudioRange";
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -808,7 +808,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PlayAudioRangeEx(AudioMarker audioMarker)
         {
-            string _method = nameof(PlayAudioRangeEx);
+            string _method = "PlayAudioRangeEx";
             try
             {
                 CurrentState = MediaState.CurrentState;
@@ -831,7 +831,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task PositionChanged(TimeSpan timeSpan)
         {
-            string _method = nameof(PositionChanged);
+            string _method = "PositionChanged";
             try
             {
                 await audioService.PositionChangedAsync(timeSpan);
@@ -846,7 +846,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task StateChanged(string state)
         {
-            string _method = nameof(StateChanged);
+            string _method = "StateChanged";
             try
             {
                 await audioService.StateChangedAsync(state);
@@ -865,7 +865,7 @@ namespace UBViews.ViewModels
         /// <returns></returns>
         async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
-            string _method = nameof(LoadAudioMarkers);
+            string _method = LoadAudioMarkers;
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
@@ -885,7 +885,7 @@ namespace UBViews.ViewModels
         /// <returns></returns>
         async Task SendToast(string message)
         {
-            string _method = nameof(SendToast);
+            string _method = "SendToast";
             try
             {
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
