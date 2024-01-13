@@ -15,7 +15,11 @@ public class NoteHit
     public int Hit { get; set; } = 0;
     public int PaperId { get; set; } = 0;
     public int SequenceId { get; set; } = 0;
+    public string LocationId { get; set; } = null;
     public string Pid { get; set; }
     public bool Selected { get; set; }
+    public bool IsDirty { get; set; }
+
+    // TODO: Remove paragraph not needed
     public Paragraph Paragraph { get; set; }
 }
