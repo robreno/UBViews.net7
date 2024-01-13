@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using UBViews.Models.Ubml;
 public class NoteLocationsDto
 {
-    public List<NoteEntry> NoteLocations { get; set; } = new();
+    public List<NoteEntry> Notes { get; set; } = new();
     public int Count()
     {
-        return NoteLocations.Count();
+        return Notes.Count();
     }
 }
