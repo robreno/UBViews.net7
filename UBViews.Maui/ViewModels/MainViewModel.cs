@@ -244,7 +244,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task TappedGesture(string action)
     {
-        string _method = nameof(TappedGesture);
+        string _method = "TappedGesture";
         try
         {
             IsBusy = true;
@@ -389,7 +389,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task MediaOpened(TimeSpan timeSpan)
     {
-        string _method = nameof(MediaOpened);
+        string _method = "MediaOpened";
         try
         {
             //
@@ -404,7 +404,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task PositionChanged(TimeSpan timeSpan)
     {
-        string _method = nameof(PositionChanged);
+        string _method = "PositionChanged";
         try
         {
             await audioService.PositionChangedAsync(timeSpan);
@@ -419,7 +419,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task StateChanged(string state)
     {
-        string _method = nameof(StateChanged);
+        string _method = "StateChanged";
         try
         {
             // Opening, Paused
@@ -435,7 +435,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     async Task MediaEnded(TimeSpan timeSpan)
     {
-        string _method = nameof(MediaEnded);
+        string _method = "MediaEnded";
         try
         {
             //
@@ -516,7 +516,7 @@ public partial class MainViewModel : BaseViewModel
     #region  Helper Methods
     private async Task<bool> CheckInternetAsync()
     {
-        string _method = nameof(CheckInternetAsync);
+        string _method = "CheckInternetAsync";
         try
         {
             bool isInternet = false;
