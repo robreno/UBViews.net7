@@ -1,7 +1,8 @@
 ﻿namespace UBViews.Services;
 
-using UBViews.Models.AppData;
 using System.Xml.Linq;
+
+using UBViews.Models.AppData;
 
 public interface IContactsService
 {
