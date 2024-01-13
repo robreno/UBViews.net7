@@ -1,11 +1,5 @@
 ﻿namespace UBViews.Models.Notes;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using UBViews.Models.Ubml;
 
 public class NoteHit
@@ -19,7 +13,4 @@ public class NoteHit
     public string Pid { get; set; }
     public bool Selected { get; set; }
     public bool IsDirty { get; set; }
-
-    // TODO: Remove paragraph not needed
-    public Paragraph Paragraph { get; set; }
 }
