@@ -19,6 +19,15 @@ public class Paragraph
     public string Text { get; set; }
     public List<Run> Runs { get; set; } = new();
     public List<NoteEntry> Notes { get; set; } = new();
+    public NoteLocationsDto CreateNoteDto()
+    {
+        NoteLocationsDto dto = new NoteLocationsDto();
+        if (this.Notes != null)
+        {
+            dto.Notes = Notes;
+        }
+        return dto;
+    }
     public string CreatePlainTextBody()
     {
         string _body = string.Empty;
