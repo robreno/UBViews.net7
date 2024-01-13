@@ -30,6 +30,7 @@ using UBViews.Views;
 //[QueryProperty(nameof(NoteLocations), nameof(NoteLocations))]
 public partial class NotesViewModel : BaseViewModel
 {
+    #region Private Data Members
     public ContentPage contentPage;
 
     public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
@@ -42,14 +43,18 @@ public partial class NotesViewModel : BaseViewModel
     INoteService notesService;
 
     readonly string _class = "NotesViewModel";
+    #endregion
 
+    #region Constructor
     public NotesViewModel(IFileService fileService, INoteService notesService, IEmailService emailService)
     {
         this.fileService = fileService;
         this.notesService = notesService;
         this.emailService = emailService;
     }
+    #endregion
 
+    #region Observable Properties
     [ObservableProperty]
     bool isRefreshing;
 
@@ -82,7 +87,9 @@ public partial class NotesViewModel : BaseViewModel
 
     [ObservableProperty]
     bool hideUnselected;
+    #endregion
 
+    #region Relay Commands
     [RelayCommand]
     async Task NotesPageAppearing()
     {
@@ -94,7 +101,7 @@ public partial class NotesViewModel : BaseViewModel
                 return;
             }
 
-            var locations = await notesService.LoadNotesAsync();
+            var locations = await notesService.GetNotesAsync();
             foreach (var location in locations)
             {
                 var paperId = location.PaperId;
@@ -280,6 +287,7 @@ public partial class NotesViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
+    #endregion
 
     #region Helper Methods
     private async Task LoadXaml(List<NoteEntry> dtos, bool plainText = true, bool clear = false)
