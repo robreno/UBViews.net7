@@ -30,7 +30,6 @@ public class XmlContactsService : IContactsService
 
     ObservableCollection<Contact> Contacts = new();
 
-
     /// <summary>
     /// 
     /// </summary>
@@ -48,6 +47,72 @@ public class XmlContactsService : IContactsService
         // TODO: Move this code out of Constructor
         Task.Run( async () => await InitializeData());
     }
+
+    #region Private Initialization Methods
+    private async Task InitializeDataAsync()
+    {
+        string _method = "InitializeDataAsync";
+        try
+        {
+            //// Sets _initialzed to true if successful
+            //var loadContentResult = await LoadContentAsync();
+            //if (!loadContentResult)
+            //{
+            //    throw new Exception("Initialization Exception: Settings file failed to load.");
+            //}
+            //// Sets _dataInitialized to true if successful
+            //var loadDataResult = await InitializeSettingsAsync();
+            //if (!loadDataResult)
+            //{
+            //    throw new Exception("Initialization Exception: Loading date failed.");
+            //}
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+    }
+    private async Task<bool> InitializeSettingsAsync()
+    {
+        string _method = "InitializeSettingsAsync";
+        try
+        {
+            if (!_initialized)
+            {
+                throw new Exception("Initialization Exception.");
+            }
+
+            var contacts = _contactsRoot.Descendants("Contact");
+            foreach (var contact in contacts)
+            {
+                Contact newContact = new Contact();
+                var id = contact.Attribute("id").Value;
+                var autoSendEmail = contact.Attribute("autoSendEmail").Value;
+
+                var firstName = contact.Descendants("FirstName").FirstOrDefault();
+                var lastName = contact.Descendants("LastName").FirstOrDefault();
+                var displayName = contact.Descendants("DisplayName").FirstOrDefault();
+                var email = contact.Descendants("Email").FirstOrDefault();
+
+                newContact.Id = Int32.Parse(id);
+                newContact.AutoSendEmail = autoSendEmail == "false" ? false : true;
+                newContact.FirstName = firstName == null ? "Unknown" : firstName.Value;
+                newContact.LastName = lastName == null ? "Unknown" : lastName.Value;
+                newContact.DisplayName = displayName == null ? "Unknown" : displayName.Value;
+                newContact.Email = email == null ? "Unknown" : email.Value;
+                Contacts.Add(newContact);
+            }
+            _dataInitialized = true;
+            return _dataInitialized;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return false;
+        }
+    }
+    #endregion
 
     #region Private Methods
     /// <summary>
@@ -77,9 +142,9 @@ public class XmlContactsService : IContactsService
     }
 
     // Count Methods
-    private async Task<int> GetCurrentCount()
+    private async Task<int> GetCurrentCountAsync()
     {
-        string _method = "GetCurrentCount";
+        string _method = "GetCurrentCountAsync";
 
         try
         {
@@ -92,9 +157,9 @@ public class XmlContactsService : IContactsService
             return 0;
         }
     }
-    private async Task<int> IncrementCount()
+    private async Task<int> IncrementCountAsync()
     {
-        string _method = "IncrementCount";
+        string _method = "IncrementCountAsync";
 
         try
         {
@@ -109,9 +174,9 @@ public class XmlContactsService : IContactsService
             return 0;
         }
     }
-    private async Task<int> DecrementCount()
+    private async Task<int> DecrementCountAsync()
     {
-        string _method = "DecrementCount";
+        string _method = "DecrementCountAsync";
 
         try
         {
@@ -128,9 +193,9 @@ public class XmlContactsService : IContactsService
     }
 
     // ContactId Methods
-    private async Task<int> GetLastContactId()
+    private async Task<int> GetLastContactIdAsync()
     {
-        string _method = "GetLastContactId";
+        string _method = "GetLastContactIdAsync";
 
         try
         {
@@ -143,9 +208,9 @@ public class XmlContactsService : IContactsService
             return 0;
         }
     }
-    private async Task<int> ResetLastContactId()
+    private async Task<int> ResetLastContactIdAsync()
     {
-        string _method = "ResetContactId";
+        string _method = "ResetContactIdAsync";
 
         try
         {
@@ -159,9 +224,9 @@ public class XmlContactsService : IContactsService
             return 0;
         }
     }
-    private async Task<int> IncrementContactId()
+    private async Task<int> IncrementContactIdAsync()
     {
-        string _method = "GetLastContactId";
+        string _method = "GetLastContactIdAsync";
 
         try
         {
@@ -176,7 +241,6 @@ public class XmlContactsService : IContactsService
             return 0;
         }
     }
-
 
     /// <summary>
     /// LoadContactsAsync
@@ -248,7 +312,7 @@ public class XmlContactsService : IContactsService
             }
 
             int _nextId = 0;
-            contact.Id = _nextId = await IncrementContactId();
+            contact.Id = _nextId = await IncrementContactIdAsync();
 
             XElement newContact = new XElement("Contact",
                                     new XAttribute("id", contact.Id),
@@ -259,7 +323,7 @@ public class XmlContactsService : IContactsService
                                     new XElement("Email", contact.Email));
 
             _contactsRoot.Add(newContact);
-            await IncrementCount();
+            await IncrementCountAsync();
             await SaveContactsAsync();
 
             message = "Successfully Saved!";
@@ -602,10 +666,10 @@ public class XmlContactsService : IContactsService
 
             oldContact.Remove();
 
-            int _count = await DecrementCount();
+            int _count = await DecrementCountAsync();
             if (_count == 0)
             {
-                var _lastId = await ResetLastContactId();
+                var _lastId = await ResetLastContactIdAsync();
                 await SaveContactsAsync();
             }
             else
