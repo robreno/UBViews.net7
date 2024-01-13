@@ -14,7 +14,6 @@ public class FocusedEventArgsConverter : IValueConverter
         var editor = (Editor)args.VisualElement;
         var id = editor.StyleId;
         var name = editor.ClassId;
-        var dto = new FocusedEventArgsDto();
         return value;
     }
 
