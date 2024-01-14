@@ -526,92 +526,12 @@ public partial class NoteService : INoteService
         string _method = "GetNoteLocationsDtoAsync";
         try
         {
-            var dto = new NoteLocationsDto();
-            string contents = await LoadResourceContentAsync("Notes.xml");
-            XDocument xdoc = XDocument.Parse(contents);
-            XElement root = xdoc.Root;
-            var notes = root.Descendants("Note");
-            foreach (var note in notes)
+            if (!_initialized)
             {
-                var id = note.Attribute("id").Value;
-                var type = note.Attribute("type").Value;
-                var paperId = note.Attribute("paperId").Value;
-                var sequenceId = note.Attribute("seqId").Value;
-                var locationId = note.Attribute("locationId").Value;
-                var pid = note.Attribute("pid").Value;
-                var created = note.Attribute("created").Value;
-                var edited = note.Attribute("edited").Value;
-                var author = note.Element("Author").Value;
-                var subject = note.Element("Subject").Value;
-
-                var runsNode = note.Descendants("Runs").FirstOrDefault();
-
-                var runs = runsNode.Descendants("Run");
-                StringBuilder sb = new StringBuilder();
-                NoteText noteText = new NoteText();
-                noteText.Style = "RegularParagraph";
-                foreach (var run in runs)
-                {
-                    var attribs = run.Attributes();
-                    
-
-                    var style = run.Attribute("style").Value;
-                    var text = run.Value;
-                    NoteRun newRun = new NoteRun() { Text = text };
-                    foreach (var att in attribs)
-                    {
-                        var name = att.Name.LocalName;
-                        var value = att.Value;
-                        if (name.Equals("style"))
-                        {
-                            newRun.Style = value;
-                        }
-                        if (name.Equals("textSize"))
-                        {
-                            newRun.TextSize = value;
-                        }
-                        if (name.Equals("fontFamily"))
-                        {
-                            newRun.FontFamily = value;
-                        }
-                        if (name.Equals("textColor"))
-                        {
-                            newRun.TextColor = value;
-                        }
-                        if (name.Equals("textTransform"))
-                        {
-                            newRun.TextTransform = value;
-                        }
-                    }
-
-                    sb.Append(text);
-                    noteText.NoteRuns.Add(newRun);
-                }
-                noteText.Text = sb.ToString();
-
-                var createdArry = created.Split("-");
-                var editedArry  = edited.Split("-");
-
-                var newNoteEntry = new NoteEntry()
-                {
-                    Id = Int32.Parse(id),
-                    Type = type,
-                    PaperId = Int32.Parse(paperId),
-                    SequenceId = Int32.Parse(sequenceId),
-                    LocationId = locationId,
-                    Pid = pid,
-                    DateCreated = new DateTime(Int32.Parse(createdArry[0]),
-                                               Int32.Parse(createdArry[1]),
-                                               Int32.Parse(createdArry[2])),
-                    DateEdited = new DateTime(Int32.Parse(editedArry[0]),
-                                              Int32.Parse(editedArry[1]),
-                                              Int32.Parse(editedArry[2])),
-                    Author = author,
-                    Subject = subject
-                };
-                newNoteEntry.NoteEntries.Add(noteText);
-                dto.NoteLocations.Add(newNoteEntry);
+                await InitializeDataAsync();
             }
+            var dto = new NoteLocationsDto();
+            dto.Notes = Notes.ToList();
             return dto;
         }
         catch (Exception ex)
@@ -879,7 +799,6 @@ public partial class NoteService : INoteService
                     Subject = subject,
                     Text = text
                 };
-                newNoteEntry.NoteEntries.Add(noteText);
                 notes.Add(newNoteEntry);
             }
             return notes;

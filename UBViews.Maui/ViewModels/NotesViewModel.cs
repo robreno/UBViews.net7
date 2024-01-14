@@ -33,10 +33,12 @@ public partial class NotesViewModel : BaseViewModel
     #region Private Data Members
     public ContentPage contentPage;
 
-    public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
+    public ObservableCollection<UniqueId> Uids { get; set; } = new();
+    public ObservableCollection<Editor> Editors { get; set; } = new();
+    public ObservableCollection<Button> Buttons { get; set; } = new();
     public ObservableCollection<NoteEntry> Notes { get; } = new();
+    public ObservableCollection<Paragraph> Paragraphs { get; set; } = new();
     public ObservableCollection<NoteHit> Hits { get; set; } = new();
-    public ObservableCollection<Border> Borders { get; set; } = new();
 
     IFileService fileService;
     IEmailService emailService;
@@ -69,6 +71,9 @@ public partial class NotesViewModel : BaseViewModel
 
     [ObservableProperty]
     string noteSubject = null;
+
+    [ObservableProperty]
+    string defaultNoteSpanStyle = null;
 
     [ObservableProperty]
     DateTime noteCreated;
@@ -123,7 +128,7 @@ public partial class NotesViewModel : BaseViewModel
             Title = titleMessage;
 
             var _notes = Notes.ToList();
-            await LoadXaml(_notes);
+            await LoadXamlAsync(_notes);
         }
         catch (Exception ex)
         {
@@ -235,10 +240,16 @@ public partial class NotesViewModel : BaseViewModel
         try
         {
             var selectedHits = Hits.Where(p => p.Selected == true).ToList();
+            //var _paragraph  = notesService.GetParagraphAsync()
             List<Paragraph> paragraphs = new();
             foreach (var hit in selectedHits)
             {
-                var paragraph = hit.Paragraph;
+                // Save Note Here or throw
+                var id = hit.Id;
+                var paperId = hit.PaperId;
+                var seqId = hit.SequenceId;
+                // not updates yet ...
+                var paragraph = await notesService.GetParagraphAsync(paperId, seqId);
                 paragraphs.Add(paragraph);
             }
 #if WINDOWS
@@ -290,9 +301,9 @@ public partial class NotesViewModel : BaseViewModel
     #endregion
 
     #region Helper Methods
-    private async Task LoadXaml(List<NoteEntry> dtos, bool plainText = true, bool clear = false)
+    private async Task LoadXamlAsync(List<NoteEntry> dtos, bool plainText = true, bool clear = false)
     {
-        string _method = "LoadXaml";
+        string _method = "LoadXamlAsync";
         try
         {
             var contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
@@ -335,23 +346,22 @@ public partial class NotesViewModel : BaseViewModel
                     SequenceId = seqId,
                     Pid = pid,
                     Selected = false,
-                    Paragraph = paragraph,
+                    IsDirty = false
                 };
                 Hits.Add(noteHit);
 
                 // Create Span List
-                var spansList = await GetSpansList(note, paragraph, plainText);
+                var spansList = await GetSpansAsync(note, paragraph, plainText);
                 // Create FormattedString
-                FormattedString fs = await CreateFormattedString(noteHit, spansList, hit);
+                FormattedString fs = await CreateFormattedStringAsync(noteHit, spansList, hit);
                 // Create Label
-                Label label = await CreateLabel(fs, labelName, paperId, seqId, pid);
+                Label label = await CreateLabelAsync(fs, labelName, paperId, seqId, pid);
                 // Create Border
-                Border newBorder = await CreateBorder(paperId, seqId, label);
+                Border newBorder = await CreateBorderAsync(paperId, seqId, label);
 
-                Borders.Add(newBorder);
                 contentVSL.Add(newBorder);
-                contentScrollView.Content = contentVSL;
             }
+            contentScrollView.Content = contentVSL;
 
             string titleMessage = string.Empty;
             titleMessage = $"Notes ({hit} hits)";
@@ -362,58 +372,56 @@ public partial class NotesViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<List<Span>> GetSpansList(NoteEntry note, Paragraph paragraph, bool plainText)
+    private async Task<List<Span>> GetSpansAsync(NoteEntry note, Paragraph paragraph, bool plainText)
     {
-        string _method = "GetSpansList";
+        string _method = "GetSpansAsync";
         try
         {
             string paragraphText = paragraph.Text;
             List<Span> spans = new();
 
-            var entries = note.NoteEntries;
-            foreach (var entry in entries)
+            Span newSpan = null;
+            NoteRun noteRun = null;
+            if (plainText)
             {
-                Span newSpan = new();
-                var style = entry.Style;
-                var text = entry.Text;
-                if (plainText)
+                noteRun = new NoteRun()
                 {
-                    newSpan.Text = text;
-                    newSpan.Style = (Style)App.Current.Resources[style];
-                    spans.Add(newSpan);
-                }
-                else // Rich Text Notes
+                    Text = note.Text,
+                    Style = DefaultNoteSpanStyle,
+                    //TextSize = null,
+                    //FontFamily = null,
+                    //TextColor = null,
+                    //TextTransform = null
+                };
+                newSpan = await CreateNewSpanAsync(noteRun);
+                spans.Add(newSpan);
+            }
+            else
+            {
+                // Make RichText Runs 
+                var noteRuns = note.NoteRuns;
+                foreach (var run in noteRuns)
                 {
-                    var runs = entry.NoteRuns;
-                    foreach (var run in runs)
+                    newSpan = new Span();
+
+                    var runText = run.Text;
+                    var runStyle = run.Style;
+                    var runFontSize = run.TextSize;
+                    var runFontFamily = run.FontFamily;
+                    var runTextColor = run.TextColor;
+                    var runTextTransform = run.TextTransform;
+
+                    noteRun = new NoteRun()
                     {
-                        var runText = run.Text;
-                        var runStyle = run.Style;
-                        var runFontSize = run.TextSize;
-                        var runFontFamily = run.FontFamily;
-                        var runTextColor = run.TextColor;
-                        var runTextTransform = run.TextTransform;
-
-                        newSpan.Text = runText;
-                        newSpan.Style = (Style)App.Current.Resources[style];
-                        if (runFontSize != null)
-                        {
-
-                        }
-                        if (runFontFamily != null)
-                        {
-
-                        }
-                        if (runTextColor != null)
-                        {
-                            newSpan.TextColor = Color.Parse(runTextColor);
-                        }
-                        if (runTextTransform != null)
-                        {
-
-                        }
-                        spans.Add(newSpan);
-                    }
+                        Text = note.Text,
+                        Style = run.Style,
+                        TextSize = run.TextSize,
+                        FontFamily = run.FontFamily,
+                        TextColor = run.TextColor,
+                        TextTransform = run.TextTransform
+                    };
+                    newSpan = await CreateNewSpanAsync(noteRun);
+                    spans.Add(newSpan);
                 }
             }
             return spans;
@@ -424,9 +432,66 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<FormattedString> CreateFormattedString(NoteHit noteHit, List<Span> spansList, int hit)
+    private async Task<Span> CreateNewSpanAsync(NoteRun run)
     {
-        string _method = "CreateFormattedString";
+        string _method = "CreateNewSpan";
+        try
+        {
+            Span newSpan = new Span();
+
+            var runText = run.Text;
+            var runStyle = run.Style;
+            var runFontSize = run.TextSize;
+            var runFontFamily = run.FontFamily;
+            var runTextColor = run.TextColor;
+            var runTextTransform = run.TextTransform;
+
+            newSpan.Text = runText;
+            newSpan.Style = (Style)App.Current.Resources[runStyle];
+            if (runFontSize != null)
+            {
+                var _size = Double.Parse(runFontSize);
+            }
+            if (runFontFamily != null)
+            {
+                newSpan.FontFamily = runFontFamily;
+            }
+            if (runTextColor != null)
+            {
+                var _color = Color.Parse(runTextColor);
+            }
+            if (runTextTransform != null)
+            {
+                TextTransform _transform;
+                if (runTextTransform.Equals("None"))
+                {
+                    _transform = TextTransform.None;
+                }
+                else if (runTextTransform.Equals("Lowercase"))
+                {
+                    _transform = TextTransform.Lowercase;
+                }
+                else if (runTextTransform.Equals("Uppercase"))
+                {
+                    _transform = TextTransform.Uppercase;
+                }
+                else
+                {
+                    _transform = TextTransform.Default;
+                }
+                newSpan.TextTransform = _transform;
+            }
+            return newSpan;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class} . {_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
+    private async Task<FormattedString> CreateFormattedStringAsync(NoteHit noteHit, List<Span> spansList, int hit)
+    {
+        string _method = "CreateFormattedStringAsync";
         try
         {
             FormattedString formattedString = new FormattedString();
@@ -459,9 +524,9 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<Label> CreateLabel(FormattedString fs, string labelName, int paperId, int seqId, string pid)
+    private async Task<Label> CreateLabelAsync(FormattedString fs, string labelName, int paperId, int seqId, string pid)
     {
-        string _method = "CreateLabel";
+        string _method = "CreateLabelAsync";
         try
         {
             Label label = new Label { FormattedText = fs };
@@ -481,14 +546,14 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<Border> CreateBorder(int paperId, int seqId, Label label)
+    private async Task<Border> CreateBorderAsync(int paperId, int seqId, Label label)
     {
-        string _method = "CreateBorder";
+        string _method = "CreateBorderAsync";
         try
         {
             VerticalStackLayout vsl = new VerticalStackLayout();
 
-            CheckBox checkBox = await CreateCheckBox(paperId, seqId);
+            CheckBox checkBox = await CreateCheckBoxAsync(paperId, seqId);
 
             Style style = (Style)App.Current.Resources["RegularParagraph"];
 
@@ -514,9 +579,9 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<CheckBox> CreateCheckBox(int paperId, int seqId)
+    private async Task<CheckBox> CreateCheckBoxAsync(int paperId, int seqId)
     {
-        string _method = "CreateCheckBox";
+        string _method = "CreateCheckBoxAsync";
         try
         {
             CheckBox checkBox = new CheckBox();
@@ -542,9 +607,9 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     } 
-    private async Task<Border> CreateNoteIcon(NoteEntry note)
+    private async Task<Border> CreateNoteIconAsync(NoteEntry note)
     {
-        string _method = "CreateNoteIcon";
+        string _method = "CreateNoteIconAsync";
         try
         {
             var pid = note.Pid;
@@ -583,7 +648,7 @@ public partial class NotesViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task SendToast(string message)
+    private async Task SendToastAsync(string message)
     {
         try
         {
