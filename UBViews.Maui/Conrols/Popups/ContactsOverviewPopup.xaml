@@ -26,14 +26,20 @@
                            Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to add contacts so you can share Urantia quotes with friends, family, or study group members." 
+                                <Span Text="This popup describes how to add contacts so you can share Urantia"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Users can add contacts and then share Urantia book quotes via email or other applications depending on the platform used."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="quotes with friends, family, or study group members. Users can add"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The process of how to add a contact will be explained below."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="contacts and then share Urantia book quotes via email or other"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Apps depending on the platform used. The process of how to add"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="a contact will be explained below."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -47,23 +53,29 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Go to the Contacts Page from the Main Page using the Contacts button."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Go to the Contacts Page from the Main Page using the Contacts button."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="Enter the new contact information and click the Save button."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="A new contact will appear below the new contact fields indicating the new contact was successfully added."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="A new contact will appear below the new contact fields indicating"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="When you select the new contact its data will populate the fields for update or deletion."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="the new contact was successfully added. When you select the new"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Click the Clear button and the contact form's fields are cleared ready for a new contact entry."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="contact its data will populate the fields for update or deletion."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The Auto Send checkbox allows a contact to automatically receive shared quotes when a user shares content."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Click the Clear button and the contact form's fields are cleared"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="ready for a new contact entry. When Auto Send is checked the contact"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="will automatically receive shared quotes when a user shares content."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
