@@ -24,18 +24,29 @@
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to use the Settings Page to configure various settings to one's user preferences." 
+                                <Span Text="This popup describes how to use the Settings Page to configure"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Users can set various settings to, for example, turn on or off the standard paragraph identifier method of citing Paper:Section:Pargraph traditioanlly used by the Foundation."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="various settings to one's user preferences. Users can set various"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="In addition, one can control the number of query results returned and much more. The process of how to configure the settings will be explained below."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="settings to, for example, turn on or off the standard paragraph"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="identifier method of citing Paper:Section:Pargraph traditioanlly"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="used by the Foundation. In addition, one can control the number"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="of query results returned and much more. The process of how to"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="configure the settings will be explained below."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
@@ -67,11 +78,14 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The Max Query Reult control allows one to increment/decrement the number of maximum query results returned on any single query."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="The Max Query Reult control allows one to increment/decrement"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="the number of maximum query results returned on any single query."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="The current default range is anywhere from 50 to 200:"
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -86,14 +100,17 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The Show References control allows you to set on or off the paragraph references."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="The Show References control allows you to set on or off the."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Paragraph references appear to the left of a paragraph's opening sentence."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="paragraph references. Paragraph references appear to the left of a"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="References appear in the form 196:0.1 refering to the paper, section, and paragraph."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="paragraph's opening sentence. References appear in the"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="form 196:0.1 refering to the paper, section, and paragraph."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -108,14 +125,17 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="To display each paper's content titles check Paper Contents."                                      
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="To display each paper's content titles check Paper Contents."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="By default the paper content titles are not displayed for quicker navigation."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="By default the paper content titles are not displayed for"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="If the paper contet titles are showing they can be used for navigating to a specific section within a paper."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="quicker navigation. If the paper contet titles are showing they can"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="be used for navigating to a specific section within a paper."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -131,14 +151,20 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Auto Share Email allows automatic sharing of content wtih selected recipients."                                      
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Auto Share Email allows automatic sharing of content wtih"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="When a contact is added you can check the Auto Send checkbox to create an auto send list."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="selected recipients. When a contact is added you can check the"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Audo Send recipients will be automatically included in th recipients list when sharing Urantia content."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Auto Send checkbox to create an auto send list. Auto Send recipients"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="will be automatically included in the recipients list when sharing"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Urantia content."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -154,16 +180,23 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The Query Caching control causes queries to be cached."                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="The Query Caching control causes queries to be cached."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Cached queries provide a efficient way of returning query results that have already been run."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Cached queries provide a efficient way of returning query"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Over time query caching can result in larger disk space usage. An alternative is to use query caching only for long running queries or important queries of note, but otherwise turn it off."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="results that have already been run. Over time query caching can"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Consider this setting like keeping a query history."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="result in larger disk space usage. An alternative is to use query"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="caching only for long running queries or important queries of note,"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="but otherwise turn it off. Consider this setting like keeping a query history."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -177,19 +210,26 @@
                                 <Span Text="Audio Folder Picker:"
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
-                                <Span Text="This control allows the user to pick a folder where the Urantia audio files are achived."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="This control allows the user to pick a folder where the Urantia"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="UBViews will determine if the audio files are present and allow the Audio Service to play the audio files so users can listen to the papers."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="audio files are achived. UBViews will determine if the audio"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The Audio Folder Picker control is covered in detail in the Help Popup "                                      
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="files are present and allow the Audio Service to play the audio"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="files so users can listen to the papers. The Audio Folder Picker"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="control is covered in detail in the Help Popup"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="Audio Overview"
                                       FontAttributes="Bold"
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Text="."                                      
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Text="."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
