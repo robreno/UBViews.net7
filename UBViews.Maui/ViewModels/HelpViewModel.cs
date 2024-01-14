@@ -71,6 +71,14 @@ public partial class HelpViewModel : BaseViewModel
             {
                 popup = new AudioOverviewPopup(new PopupViewModel());
             }
+            else if (target == "NavigationOverviewPopup")
+            {
+                popup = new NavigationOverviewPopup(new PopupViewModel());
+            }
+            else if (target == "ListeningOverviewPopup")
+            {
+                popup = new ListenOverviewPopup(new PopupViewModel());
+            }
             else if (target == "SearchingOverviewPopup")
             {
                 popup = new SearchOverviewPopup(new PopupViewModel());
