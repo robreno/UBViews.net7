@@ -24,20 +24,29 @@
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to Search the Urantia book using the Query Engine." 
+                                <Span Text="This popup describes how to Search the Urantia book using the Query Engine."
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="UBViews Search Engine (UBViewsSE) uses a custom query language for searching the Urantia book."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="SharpSQLiteRepo Search Engine (SharpSQLiteRepoSE) uses a custom query"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Besides the standard boolean operators Or/And there are custom opertors like FilterBy."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="language for searching the Urantia book. Besides the standard boolean"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="For example, the FilterBy operator allows you to set the search level to entire book or just a paper, section, or paragraph."  
-                                       Style="{StaticResource RegularSpan}"  />
+                                <Span Text="operators Or/And there are custom opertors like FilterBy. For example,"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Other types of searches, such a Phrase search, Compound Term search, Stem search, and SubQuery will covered below."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="the FilterBy operator allows you to set the search level to entire book"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="or just a paper, section, or paragraph. Other types of searches, such"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="as Phrase search, Compound Term search, Stem search, and SubQuery will"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="covered below."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -49,20 +58,29 @@
                                 <Span Text="You can search on a single term or mulitiple terms." 
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text=" For example if you enter the term 'ship' from the Main Page Search entry 11 query results are returned."  
+                                <Span Text=" For example if you enter the term 'ship' from the Main"  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="When a query is entered fromt he Main Page it navigates to the Query Results Page showing the original query and its query results.."  
+                                <Span Text="Page Search entry 11 query results are returned. When a query is"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="entered from the Main Page it navigates to the Query Results"  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="From the Query Results page you can select and share quotes or modify the query and keep refining the search."  
+                                <Span Text=" Page showing the original query and its query results. From the"  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Query Results page you can select and share quotes or modify the"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="query and keep refining the search."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="search_single_term.png" Aspect="AspectFit" />
+                    <Image Source="search_single_term.png" 
+                           Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
@@ -88,7 +106,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="search_and_query.png" Aspect="AspectFit" />
+                    <Image Source="search_and_query.png" 
+                           Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">    
@@ -98,35 +117,44 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="If you enter 'ship or mind' you will get over a thousand hits!"  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="If you enter 'ship or mind' you will get over a thousand hits!"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Not very useful. You want a more targeted search."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Not very useful. You want a more targeted search."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="Or is best used as a SubQuery on the results of a And query."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="Modify the query to be '(ship and mind) or steamed'."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="Parentheses '(' and ')' are together a SubQuery operator encapsulating a query."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="The And query inside the parentheses is now a SubQuery ready to operated on."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Take the SubQuery(And) and add an Or query like so: '(ship and mind) or steamed'."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Take the SubQuery(And) and add an Or query like so: '(ship and mind) or"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Now we have a compound query that returns the results (2 hits):"
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="steamed'. These two queries are equivalent: 'ship and mind or steamed' and"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="'(ship and mind) or steamed'. SubQuery is meant to contain more complex"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="queries than just And queries.Now we have a compound query that returns"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="the results (2 hits):"
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="search_subquery_and.png" Aspect="AspectFit" />
+                    <Image Source="search_subquery_and.png" 
+                           Aspect="AspectFit" />
 
                     <Label VerticalOptions="StartAndExpand" 
                            HorizontalOptions="StartAndExpand"
@@ -137,16 +165,82 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="You an also search for exact phrases by entering a phrase in quotation marks,"
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Text=" such as for example: &quot;your world&quot;."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="You an also search for exact phrases by entering a phrase"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The exact Phrase query &quot;your world&quot; returns the following results:"
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="in quotation marks, such as for example: &quot;name"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="of your world&quot;. The exact Phrase query &quot;name of your"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="world&quot; returns the following results (1 hit):"
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+
+                    <Image Source="search_phrase_query.png"
+                           Aspect="AspectFit" />
+
+                    <Label VerticalOptions="StartAndExpand"
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Compound Term operator:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The Urantia book contains Compound Terms, like 'Supreme Being'."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Text=" To search for a compound term place the term in square brackets:"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="'[supreme being]'."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The compound term search '[supreme being]' returns the following"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="results (171 hits limited to 50 hits):"
+                                      Style="{StaticResource RegularSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="search_compound_term.png"
+                           Aspect="AspectFit" />
+
+                    <Label VerticalOptions="StartAndExpand"
+                           HorizontalOptions="StartAndExpand"
+                           Margin="10,10,10,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Stemming operator:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Stemming is the process of reducing inflected (or sometimes derived)"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="words to their word stem, base or root form. For example, 'rejuvenated'"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="when stemed includes the term 'rejuventations'. The approximate"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="symbol '~' is the stemming operator applied to a '~term-to-be-stemmed'."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="To stem 'rejuvenated' enter the following query: '~rejuvenated'."
+                                      Style="{StaticResource RegularSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="search_stemmed_term.png"
+                           Aspect="AspectFit" />
 
                 </VerticalStackLayout>
                 
