@@ -81,7 +81,7 @@ public partial class QueryProcessingService : IQueryProcessingService
 
     #region  Public Properties
     public bool Initialized { get; set; }
-    public QueryInputDto QueryInputDto { get; set; }
+    public QueryInputDto QueryInputDto { get; set; } = new();
     public string QueryInputString { get; set; }
     public string PreviousQueryInputString { get; set; }
     public string QueryExpression { get; set; }
@@ -127,7 +127,7 @@ public partial class QueryProcessingService : IQueryProcessingService
         {
             bool isValidCommand = true;
             string message = queryString;
-            queryString = queryString.Trim();
+            queryString = string.IsNullOrEmpty(queryString) ? "" : queryString.Trim();
             if (queryString.Contains("="))
             {
                 var arry = queryString.Split("=");
@@ -172,6 +172,11 @@ public partial class QueryProcessingService : IQueryProcessingService
                     }
                 }
                 await ClearQuerySearchBar(contentPage);
+            }
+            else if (string.IsNullOrEmpty(queryString))
+            {
+                isValidCommand = false;
+                message = "Query String is Null or Empty. Please enter a valid query.";
             }
             return (isValidCommand, message);
         }
