@@ -123,7 +123,7 @@ public partial class MainViewModel : BaseViewModel
     QueryResultLocationsDto queryLocations;
 
     [ObservableProperty]
-    QueryInputDto queryInputDto = new QueryInputDto() { Text = string.Empty, TokenCount = 0 };
+    QueryInputDto queryInputDto;
 
     [ObservableProperty]
     int tokenCount;
@@ -175,6 +175,8 @@ public partial class MainViewModel : BaseViewModel
             {
                 return;
             }
+
+            QueryInputDto = new QueryInputDto() { Text = "[Empty]", TokenCount = 0 };
 
             AudioStatus = await settingsService.Get("audio_status", "off");
             AudioStreaming = await settingsService.Get("stream_audio", false);
@@ -323,7 +325,7 @@ public partial class MainViewModel : BaseViewModel
             bool parsingSuccessful = false;
             bool runPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
 
-            QueryInputString = queryString.Trim();
+            QueryInputString = queryString;
             (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
                                                                                      runPreCheckSilent);
             if (message.Contains("="))
@@ -370,9 +372,11 @@ public partial class MainViewModel : BaseViewModel
                     throw new Exception("Uknown Parsing Error!");
                 }
             }
-            else // Parsing failure
+            else // Query parsing error
             {
-                throw new Exception("Unknown Parsing Error!");
+                string _msg = $"{message}";
+                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
+                    _msg, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
             }
         }
         catch (Exception ex)
@@ -534,7 +538,7 @@ public partial class MainViewModel : BaseViewModel
             return false;
         }
     }
-    private async Task SendToast(string message)
+    private async Task SendToastAsync(string message)
     {
         try
         {

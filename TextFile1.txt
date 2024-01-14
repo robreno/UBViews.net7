@@ -310,3 +310,5 @@ private async Task<string> GetFileSizeInBytes(long TotalBytes)
                                             HorizontalOptions="FillAndExpand"
                                             VerticalOptions="FillAndExpand"
                                             Padding="10,10,10,0">
+
+1>C:\Program Files\dotnet\sdk\8.0.101\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(251,5): warning NETSDK1201: For projects targeting .NET 8.0 and higher, specifying a RuntimeIdentifier will no longer produce a self contained app by default. To continue building self-contained apps, set the SelfContained property to true or use the --self-contained argument.
