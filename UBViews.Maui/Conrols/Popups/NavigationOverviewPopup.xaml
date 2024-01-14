@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+               xmlns:bahaviors="clr-namespace:UBViews.Behaviors"
+               xmlns:viewmodels="clr-namespace:UBViews.ViewModels"            
+               x:Class="UBViews.Controls.Help.NavigationOverviewPopup"
+               x:DataType="viewmodels:PopupViewModel">
+
+    <Border x:Name="popuBorder" 
+            Stroke="Blue">
+        
+        <VerticalStackLayout BackgroundColor="WhiteSmoke">
+
+            <Label Text="Navigation Overview"
+                   Style="{StaticResource PopupTitleLabel}" />
+
+            <ScrollView x:Name="mainScrollView"
+                        Style="{StaticResource PopupScrollViewStyle}">
+
+                <VerticalStackLayout x:Name="mainSCVSL">
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="There are mnay ways to navigate to the text of the papers."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="The process of how to navigate the papers will be explained below."  
+                                      Style="{StaticResource RegularSpan}"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="main_page.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Main Page:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="UBViews Main Page (opening screen) is designed for simplicity."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="From the Main Page you can navigate to either the Parts of Book or"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Titles of the Papers."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Or you can enter a query and tap on the paragraph of a query result and go straight to a paper."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="parts_of_book.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Parts of Book:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="This is a simple choice, pick a part and go to the part's paper titles."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="From there navigate to a part's individual paper."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="part_titles.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Contents of Paper:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="In the Part Titles page you can navigate to the"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=" Content titles of a paper if it is enabled in the settings page."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Each Section Title navigates to the paper's page"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="automatically scrolling to that section title."  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="This makes it easy to tap and be ready to read"
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="or listen to the chosen title."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="contents_of_paper.png" Aspect="AspectFit" />
+
+                    <Label Margin="10,10,10,10"
+                           Style="{StaticResource RegularParagraph}">    
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="From the contents of the papers you can navigate to a paper"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text=" and start reading or listening."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="context_menu.png" Aspect="AspectFit"/>
+
+                    <Label Margin="10,10,10,10"
+                          Style="{StaticResource RegularParagraph}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Query Route:"
+                                      FontAttributes="Bold"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="You can also enter a query and from the query results page"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="you can tap on one of the query result's paragraphs and"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="navigate directly to that paper automatically"  
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="scrolling to the paragraph."
+                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Image Source="navigation_tooltip.png" Aspect="AspectFit"/>
+
+                </VerticalStackLayout>
+                
+            </ScrollView>
+
+            <Button x:Name="closePopup" 
+                    Text="Close"
+                    Margin="20"
+                    WidthRequest="165"
+                    VerticalOptions="End">
+                <Button.Behaviors>  
+                    <bahaviors:EventToCommandBehavior 
+                        EventName="Clicked"
+                        Command="{Binding ClosePopupCommand}"
+                        CommandParameter="{Binding .}"/>
+                </Button.Behaviors>
+            </Button>
+            
+        </VerticalStackLayout>
+        
+    </Border>
+    
+</toolkit:Popup>
