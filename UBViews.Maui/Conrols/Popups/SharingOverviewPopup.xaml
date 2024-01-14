@@ -24,14 +24,20 @@
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to share Urantia quotes with friends, family, or study group members." 
+                                <Span Text="This popup describes how to share Urantia quotes with"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Users can add contacts and then share Urantia book quotes via email or other applications depending on the platform used."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="friends, family, or study group members. Users can add contacts and"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="The process of how to add share content will be explained below."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="then share Urantia book quotes via email or other Apps"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="depending on the platform used. The process of how to add"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="share content will be explained below."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -44,20 +50,32 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="When viewing a paper if you rigt-click a Context Menu will appear with commands."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="When viewing a paper if you rigt-click a Context Menu will"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="From the context menu select the command you desire. In this case, we are sharing content, so you have Copy, Share, and Email commands to choose from."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="appear with commands. From the context menu select the"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Copy will copy the paragragph's text to the clipboard where the user can paste the content into another application."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="command you desire. In this case, we are sharing content, so"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Share, depending on your platform, will share the content with other applications."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="you have Copy, Share, and Email commands to choose from."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Email will open up the default email client with the paragraph's text therein using the Auto Send list for email recipients."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="Copy will copy the paragragph's text to the clipboard where"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="the user can paste the content into another application."
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="Share, depending on your platform, will share the content"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="with other applications. Email will open up the default email client with"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="the paragraph's text therein using the Auto Send list for email recipients."
+                                      Style="{StaticResource RegularSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -72,11 +90,14 @@
                                       FontAttributes="Bold"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="After entering a query the Query Results Page shows the results of the query."  
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="After entering a query the Query Results Page shows the"
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="Select the checkbox for the query results you want to share and click Share Selected button."
-                                      Style="{StaticResource RegularSpan}"  />
+                                <Span Text="results of the query. Select the checkbox for the query results"
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="you want to share and click Share Selected button."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -90,9 +111,10 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Share Selected will open up the default email client with the paragraph's"
-                                      Style="{StaticResource RegularSpan}"  />
-                                <Span Text=" text in the body and fill the recipients list using the Auto Send recipients."
-                                      Style="{StaticResource RegularSpan}"  />
+                                      Style="{StaticResource RegularSpan}" />
+                                <Span Style="{StaticResource RegularSpaceSpan}" />
+                                <Span Text="text in the body and fill the recipients list using the Auto Send recipients."
+                                      Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
