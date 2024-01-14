@@ -16,137 +16,182 @@
             EventName="Loaded" Command="{Binding HelpPageAppearingCommand}" />
     </ContentPage.Behaviors>
 
-    <!--<ScrollView x:Name="contentScrollView" 
-                BackgroundColor="WhiteSmoke">-->
 
-        <VerticalStackLayout x:Name="outerVerticalStackLayout">
+    <VerticalStackLayout x:Name="outerVerticalStackLayout">
 
-            <Border Stroke="Transparent" 
-                    HorizontalOptions="Center" 
-                    Padding="0,10,0,10">
+        <Border Stroke="Transparent"
+                HorizontalOptions="Center"
+                Padding="0,10,0,10">
 
-                <Label Style="{StaticResource ContentsPartTitle}">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="HowTo Help Popups" Style="{StaticResource PopupTitleSpan}" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Border>
+            <Label Style="{StaticResource ContentsPartTitle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="HowTo Help Popups"
+                              Style="{StaticResource PopupTitleSpan}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Border>
 
-            <VerticalStackLayout x:Name="contentVerticalStackLayout" 
-                                 Style="{StaticResource PopupTitlesStaticVSL}">
+        <VerticalStackLayout x:Name="contentVerticalStackLayout"
+                             Style="{StaticResource PopupTitlesStaticVSL}">
 
-                <Border Style="{StaticResource TitleBorderStyle}" 
-                        Margin="0,0,0,10" 
-                        Stroke="Blue" 
-                        StrokeThickness="5">
-                    <Label x:Name="settingsOverviewLabel" 
-                           Text="Settings Overview"
-                           Style="{StaticResource RegularParagraph}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource 
-                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
-                                                      Path=ShowPopupCommand}" 
-                                    CommandParameter="SettingsOverviewPopup" />
-                        </Label.GestureRecognizers>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource PopupTabsSpan}" />
-                                <Span Text="Settings Overview" Style="{StaticResource PopupTitleSpan}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-
-                <Border Style="{StaticResource TitleBorderStyle}" 
-                        Margin="0,10,0,10"
-                        Stroke="Blue" 
-                        StrokeThickness="5">
-                    <Label x:Name="contactsOverviewLabel" 
-                               Text="Contacts Overview"
-                               Style="{StaticResource RegularParagraph}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource 
-                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
-                                                      Path=ShowPopupCommand}" 
-                                    CommandParameter="ContactsOverviewPopup" />
-                        </Label.GestureRecognizers>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource PopupTabsSpan}" />
-                                <Span Text="Contacts Overview" Style="{StaticResource PopupTitleSpan}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-
-                <Border Style="{StaticResource TitleBorderStyle}" 
-                        Margin="0,10,0,10"
-                        Stroke="Blue" 
-                        StrokeThickness="5">
-                    <Label x:Name="shareQuotesLabel" 
-                           Text="Sharing Overview"
-                           Style="{StaticResource RegularParagraph}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource 
-                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
-                                                      Path=ShowPopupCommand}" 
-                                    CommandParameter="SharingOverviewPopup" />
-                        </Label.GestureRecognizers>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource PopupTabsSpan}" />
-                                <Span Text="Sharing Overview" Style="{StaticResource PopupTitleSpan}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-
-                <Border Style="{StaticResource TitleBorderStyle}" 
-                        Margin="0,10,0,0"
-                        Stroke="Blue" 
-                        StrokeThickness="5">
-                    <Label x:Name="downLoadFolderLabel" 
-                           Text="Audio Overview"
-                           Style="{StaticResource RegularParagraph}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource 
-                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
-                                                      Path=ShowPopupCommand}" 
-                                    CommandParameter="AudioOverviewPopup" />
-                        </Label.GestureRecognizers>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Style="{StaticResource PopupTabsSpan}" />
-                                <Span Text="Audio Overview" Style="{StaticResource PopupTitleSpan}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
-
-            <Border Style="{StaticResource TitleBorderStyle}" 
-                    Margin="0,10,0,0"
-                    Stroke="Blue" 
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,0,0,10"
+                    Stroke="Blue"
                     StrokeThickness="5">
-                <Label x:Name="searchingLabel" 
-                       Text="Searching Overview"
+                <Label x:Name="settingsOverviewLabel"
+                       Text="Settings Overview"
                        Style="{StaticResource RegularParagraph}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer 
-                            Command="{Binding Source={RelativeSource 
-                                              AncestorType={x:Type viewmodel:HelpViewModel}}, 
-                                              Path=ShowPopupCommand}" 
-                            CommandParameter="SearchingOverviewPopup" />
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                                      Path=ShowPopupCommand}"
+                                              CommandParameter="SettingsOverviewPopup" />
                     </Label.GestureRecognizers>
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Style="{StaticResource PopupTabsSpan}" />
-                            <Span Text="Searching Overview" Style="{StaticResource PopupTitleSpan}" />
+                            <Span Text="Settings Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,10"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="contactsOverviewLabel"
+                       Text="Contacts Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                                      Path=ShowPopupCommand}"
+                                              CommandParameter="ContactsOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Contacts Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,10"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="shareQuotesLabel"
+                       Text="Sharing Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                                      Path=ShowPopupCommand}"
+                                              CommandParameter="SharingOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Sharing Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,0"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="downLoadFolderLabel"
+                       Text="Audio Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                      AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                                      Path=ShowPopupCommand}"
+                                              CommandParameter="AudioOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Audio Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,0"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="navigationLabel"
+                       Text="Navigation Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                  AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                  Path=ShowPopupCommand}"
+                                              CommandParameter="NavigationOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Navigation Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,0"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="listeningLabel"
+                       Text="Listening Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                  AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                  Path=ShowPopupCommand}"
+                                              CommandParameter="ListeningOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Listening Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+
+            <Border Style="{StaticResource TitleBorderStyle}"
+                    Margin="0,10,0,0"
+                    Stroke="Blue"
+                    StrokeThickness="5">
+                <Label x:Name="searchingLabel"
+                       Text="Searching Overview"
+                       Style="{StaticResource RegularParagraph}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                              AncestorType={x:Type viewmodel:HelpViewModel}}, 
+                                              Path=ShowPopupCommand}"
+                                              CommandParameter="SearchingOverviewPopup" />
+                    </Label.GestureRecognizers>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Style="{StaticResource PopupTabsSpan}" />
+                            <Span Text="Searching Overview"
+                                  Style="{StaticResource PopupTitleSpan}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -154,8 +199,6 @@
 
         </VerticalStackLayout>
 
-        </VerticalStackLayout>
-
-    <!--</ScrollView>-->
+    </VerticalStackLayout>
 
 </ContentPage>
