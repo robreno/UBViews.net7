@@ -367,10 +367,6 @@ public partial class MainViewModel : BaseViewModel
                     }
                     await NavigateTo("QueryResults");
                 }
-                else // Parsing failure
-                {
-                    throw new Exception("Uknown Parsing Error!");
-                }
             }
             else // Query parsing error
             {

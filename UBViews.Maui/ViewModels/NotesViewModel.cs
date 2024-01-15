@@ -128,7 +128,7 @@ public partial class NotesViewModel : BaseViewModel
             Title = titleMessage;
 
             var _notes = Notes.ToList();
-            await LoadXamlAsync(_notes);
+            await CreateXamlAsync(_notes);
         }
         catch (Exception ex)
         {
@@ -301,26 +301,26 @@ public partial class NotesViewModel : BaseViewModel
     #endregion
 
     #region Helper Methods
-    private async Task LoadXamlAsync(List<NoteEntry> dtos, bool plainText = true, bool clear = false)
+    private async Task CreateXamlAsync(List<NoteEntry> notes, bool plainText = true, bool clear = false)
     {
-        string _method = "LoadXamlAsync";
+        string _method = "CreateXamlAsync";
         try
         {
-            var contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
-            var contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
-            var notes = dtos;
+            var _contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
+            var _contentVSL = contentPage.FindByName("contentVerticalStackLayout") as VerticalStackLayout;
+            var _notes = notes;
             int hit = 0;
 
             if (clear) 
             {
-                contentScrollView.Content = null;
-                contentVSL = new VerticalStackLayout()
+                _contentScrollView.Content = null;
+                _contentVSL = new VerticalStackLayout()
                 {
                     HorizontalOptions = LayoutOptions.Center
                 };
             }
 
-            foreach (var note in notes)
+            foreach (var note in _notes)
             {
                 hit++;
                 var id = note.Id;
@@ -359,9 +359,9 @@ public partial class NotesViewModel : BaseViewModel
                 // Create Border
                 Border newBorder = await CreateBorderAsync(paperId, seqId, label);
 
-                contentVSL.Add(newBorder);
+                _contentVSL.Add(newBorder);
             }
-            contentScrollView.Content = contentVSL;
+            _contentScrollView.Content = _contentVSL;
 
             string titleMessage = string.Empty;
             titleMessage = $"Notes ({hit} hits)";
