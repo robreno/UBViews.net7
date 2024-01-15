@@ -572,34 +572,35 @@ public partial class QueryResultViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<FormattedString> CreateFormattedStringAsync(Paragraph paragraph, List<Span> spansList, int hit)
+    private async Task<FormattedString> CreateFormattedStringAsync(Paragraph paragraph, List<Span> spans, int hit)
     {
         string _method = "CreateFormattedStringAsync";
         try
         {
             FormattedString formattedString = new FormattedString();
-            await Task.Run(() =>
+
+            var paperId = paragraph.PaperId;
+            var seqId = paragraph.SeqId;
+            var pid = paragraph.Pid;
+            var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
+
+            Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
+            Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, 
+                                                                                     Text = pid };
+            Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
+            Span hitsSpan = new Span() { Style = (Style)App.Current.Resources["HID"], StyleId = labelName, 
+                                                                                      Text = $"[hit {hit}]" };
+
+            formattedString.Spans.Add(hitsSpan);
+            formattedString.Spans.Add(tabSpan);
+            formattedString.Spans.Add(pidSpan);
+            formattedString.Spans.Add(spaceSpan);
+
+            foreach (var span in spans)
             {
-                var paperId = paragraph.PaperId;
-                var seqId = paragraph.SeqId;
-                var pid = paragraph.Pid;
-                var labelName = "_" + paperId.ToString("000") + "_" + seqId.ToString("000");
-
-                Span tabSpan = new Span() { Style = (Style)App.Current.Resources["TabsSpan"] };
-                Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, Text = pid };
-                Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
-                Span hitsSpan = new Span() { Style = (Style)App.Current.Resources["HID"], StyleId = labelName, Text = $"[hit {hit}]" };
-
-                formattedString.Spans.Add(hitsSpan);
-                formattedString.Spans.Add(tabSpan);
-                formattedString.Spans.Add(pidSpan);
-                formattedString.Spans.Add(spaceSpan);
-
-                foreach (var span in spansList)
-                {
-                    formattedString.Spans.Add(span);
-                }
-            });
+                formattedString.Spans.Add(span);
+            }
+            
             return formattedString;
         }
         catch (Exception ex)
