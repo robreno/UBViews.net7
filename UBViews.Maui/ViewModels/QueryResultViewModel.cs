@@ -188,7 +188,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 {
                     dtos.Add(location);
                 }
-                await LoadXaml(dtos);
+                await LoadXamlAsync(dtos);
             }
         }
         catch (Exception ex)
@@ -272,7 +272,7 @@ public partial class QueryResultViewModel : BaseViewModel
                         // Navigate to results page
                     }
                     //await NavigateTo("QueryResults");
-                    await LoadXaml(QueryLocationsDto.ToList(), true);
+                    await LoadXamlAsync(QueryLocationsDto.ToList(), true);
                 }
                 else
                 {
@@ -496,9 +496,9 @@ public partial class QueryResultViewModel : BaseViewModel
     #endregion
 
     #region Helper Methods
-    private async Task LoadXaml(List<QueryLocationDto> dtos, bool clear = false)
+    private async Task LoadXamlAsync(List<QueryLocationDto> dtos, bool clear = false)
     {
-        string _method = "LoadXaml";
+        string _method = "LoadXamlAsync";
         try
         {
             var contentScrollView = contentPage.FindByName("contentScrollView") as ScrollView;
@@ -545,7 +545,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 // Create Span List
                 var spansList = await CreateSpansList(location, paragraph);
                 // Create FormattedString
-                FormattedString fs = await CreateFormattedString(paragraph, spansList, hit);
+                FormattedString fs = await CreateFormattedStringAsync(paragraph, spansList, hit);
                 // Create Label
                 Label label = await CreateLabel(fs, labelName, paperId, seqId, pid);
                 // Create Border
@@ -572,9 +572,9 @@ public partial class QueryResultViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<FormattedString> CreateFormattedString(Paragraph paragraph, List<Span> spansList, int hit)
+    private async Task<FormattedString> CreateFormattedStringAsync(Paragraph paragraph, List<Span> spansList, int hit)
     {
-        string _method = "CreateFormattedString";
+        string _method = "CreateFormattedStringAsync";
         try
         {
             FormattedString formattedString = new FormattedString();
