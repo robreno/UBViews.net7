@@ -535,7 +535,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 Hits.Add(queryHit);
 
                 // Create Span List
-                var spans = await CreateSpansAsync(location, paragraph);
+                var spans = await CreateHighlightedSpansAsync(location, paragraph);
                 // Create FormattedString
                 FormattedString fs = await CreateFormattedStringAsync(paragraph, spans, hit);
                 // Create Label
@@ -564,9 +564,9 @@ public partial class QueryResultViewModel : BaseViewModel
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<List<Span>> CreateSpansAsync(QueryLocationDto location, Paragraph paragraph)
+    private async Task<List<Span>> CreateHighlightedSpansAsync(QueryLocationDto location, Paragraph paragraph)
     {
-        string _method = "GetSpansAsync";
+        string _method = "CreateHighlightedSpansAsync";
         try
         {
             string text = paragraph.Text;
