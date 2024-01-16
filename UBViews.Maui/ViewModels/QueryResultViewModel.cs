@@ -274,20 +274,12 @@ public partial class QueryResultViewModel : BaseViewModel
                     //await NavigateTo("QueryResults");
                     await LoadXamlAsync(QueryLocationsDto.ToList(), true);
                 }
-                else
-                {
-                    // Handle unsuccessful query result returned
-                    message = $"Query unsuccessful for unknown reason.";
-                    await App.Current.MainPage.DisplayAlert($"Query in {_method}.{_class} => ", message, "Ok");
-                }
             }
             else // Parsing failure
             {
-                // TODO: bug here double alert sent 
-                // Handle unsuccessful query result returned
-                message = "Unknown Erro, try again?";
+                string _msg = $"{message}";
                 QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
-                    message, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
+                    _msg, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
             }
         }
         catch (Exception ex)
@@ -595,7 +587,7 @@ public partial class QueryResultViewModel : BaseViewModel
 
             var txt = string.Empty;
             Span newSpan = null;
-            List<Span> spansList = new();
+            List<Span> spans = new();
             foreach (var item in spanArray)
             {
                 txt = item;
@@ -605,15 +597,15 @@ public partial class QueryResultViewModel : BaseViewModel
                     txt = txt.Replace('}', ' ');
                     txt = txt.Trim();
                     newSpan = new Span() { Style = (Style)App.Current.Resources["HighlightSpan"], Text = txt };
-                    spansList.Add(newSpan);
+                    spans.Add(newSpan);
                 }
                 else
                 {
                     newSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpan"], Text = item };
-                    spansList.Add(newSpan);
+                    spans.Add(newSpan);
                 }
             }
-            return spansList;
+            return spans;
         }
         catch (Exception ex)
         {
