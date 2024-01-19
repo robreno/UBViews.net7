@@ -177,6 +177,7 @@
                 <Setter Property="Source" Value="urantia_circles_one.png" />
             </Style>
             <Style x:Key="SmallHeaderImage" TargetType="Image">
+                <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="Aspect" Value="AspectFill" />
                 <Setter Property="HeightRequest" Value="67" />
                 <Setter Property="WidthRequest" Value="67" />

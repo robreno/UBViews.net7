@@ -115,6 +115,27 @@ public partial class QueryResultViewModel : BaseViewModel
 
     [ObservableProperty]
     bool hideUnselected;
+
+    [ObservableProperty]
+    Color defaultColorForMainVSL = Color.Parse("White");
+
+    [ObservableProperty]
+    Color defaultColorForSelectionHSL = Color.Parse("White");
+
+    [ObservableProperty]
+    Color defaultColorForScrollView = Color.Parse("BlueViolet");
+
+    [ObservableProperty]
+    Color defaulColorForContentVSL = Color.Parse("White");
+
+    [ObservableProperty]
+    Color defaultColorForBorder = Color.Parse("LightBlue");
+
+    [ObservableProperty]
+    Color defaultColorForEditor = Color.Parse("White");
+
+    [ObservableProperty]
+    Color defaultColorForHSL = Color.Parse("LightBlue");
     #endregion
 
     #region Relay Commands
