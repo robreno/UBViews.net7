@@ -144,7 +144,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
             finally
             {
@@ -156,6 +156,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task TappedGesture(string id)
         {
+            string _method = "TappedGesture";
             try
             {
                 IsBusy = true;
@@ -170,7 +171,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
             finally 
@@ -202,10 +203,10 @@ namespace UBViews.ViewModels
                 var paperId = Int32.Parse(actionArray[1]);
 
                 // Create Markers and PaperDto
-                Markers = await LoadAudioMarkers(paperId);
+                this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
                 foreach (var marker in Markers.Values())
                 {
-                    AudioMarkers.Add(marker);
+                    this.AudioMarkers.Add(marker);
                 }
                 var dto = await fileService.GetPaperDtoAsync(paperId);
                 var paragraphs = await fileService.GetParagraphsAsync(paperId);
@@ -303,22 +304,6 @@ namespace UBViews.ViewModels
         }
 
         [RelayCommand]
-        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
-        {
-            string _method = "LoadAudioMarkers";
-            try
-            {
-                this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
-                return this.Markers;
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-                return null;
-            }
-        }
-
-        [RelayCommand]
         async Task PositionChanged(TimeSpan timeSpan)
         {
             string _method = "PositionChanged";
@@ -351,6 +336,7 @@ namespace UBViews.ViewModels
         [RelayCommand]
         async Task GoToDetails(PaperDto dto)
         {
+            string _method = "GoToDetails";
             try
             {
                 if (dto == null)
@@ -375,7 +361,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return;
             }
             finally
