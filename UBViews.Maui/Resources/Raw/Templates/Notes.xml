@@ -1,44 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Notes count="4">
-  <Note id="1" type="paragraph" style="regular" paperId="0" seqId="2" locationId="0.2" pid="0:0.1" created="2023-12-18" edited="2023-12-18">
+<Notes count="5" lastId="5">
+  <Note id="1" type="paragraph" style="regular" paperId="0" seqId="2" locationId="0.2" pid="0:0.1" created="1/12/2023" edited="2/12/2023" createdTime="18:08:23" editedTime="18:08:23">
     <Author>Rob Reno</Author>
     <Subject>Name of our world</Subject>
     <Text>Urantia is the name of our world. We are Urantians!</Text>
-    <Runs count="3">
-      <Run style="RegularSpan" textColor="red">Urantia is the </Run>
-      <Run style="RegularItalicSpan" textColor="blue">name of our world</Run>
-      <Run style="RegularSpan"> . We are Urantians!</Run>
+    <Runs count="0">
+      <!--<Run style="RegularSpan" textColor="blue">Urantia is the </Run>
+      <Run style="ItalicSpan" textColor="blue">name of our world</Run>
+      <Run style="RegularSpan"> . We are Urantians!</Run>-->
     </Runs>
   </Note>
-  <Note id="2" type="paragraph" style="regular" paperId="50" seqId="53" locationId="50.53" pid="50:6.3" created="2023-12-18" edited="2023-12-18">
+  <Note id="2" type="paragaph" style="regular" paperId="0" seqId="6" locationId="0.6" pid="0:0.5" created="3/12/2023" edited="4/12/2023"  createdTime="18:08:23" editedTime="18:08:23">
     <Author>Rob Reno</Author>
-    <Subject>Normal Worlds</Subject>
-    <Text>We live on a sin stricken world! We can know little of what it is like on normal worlds.</Text>
-    <Runs count="4">
-      <Run style="RegularSpan" textColor="pink">We live on a </Run>
-      <Run style="RegularItalicSpan" textColor="red">sin stricken</Run>
+    <Subject>Geographic Center of Infinity</Subject>
+    <Text>Havona is the geographic center of infinity.</Text>
+    <Runs count="0">
+      <!--<Run style="RegularSpan" textColor="pink">We live on a </Run>
+      <Run style="ItalicSpan" textColor="red">sin stricken</Run>
       <Run style="RegularSpan" textSize="24"> world! </Run>
-      <Run style="RegularSpan" textTransform="toupper">We can know little of what it is like on normal worlds.</Run>
+      <Run style="RegularSpan" textTransform="toupper">We can know little of what it is like on normal worlds.</Run>-->
     </Runs>
   </Note>
-  <Note id="3" type="paragraph" style="regular" paperId="0" seqId="3" locationId="0.3" pid="0:0.2" created="2023-12-18" edited="2023-12-18">
+  <Note id="3" type="paragraph" style="regular" paperId="0" seqId="1" locationId="0.3" pid="0:0.2" created="5/12/2023" edited="6/12/2023"  createdTime="18:08:23" editedTime="19:08:23">
     <Author>Rob Reno</Author>
     <Subject>Enlarged Concepts</Subject>
-    <Text>Enlarged concepts hard to teach to Urantians!</Text>
-    <Runs count="3">
-      <Run style="RegularSpan" textColor="red">Enlarged </Run>
-      <Run style="RegularItalicSpan" textColor="blue">concepts hard to teach to</Run>
-      <Run style="RegularSpan"> Urantians!</Run>
+    <Text>Enlarged concepts hard to teach to Urantians! </Text>
+    <Runs count="0">
+      <!--<Run style="RegularSpan" textColor="red">Enlarged </Run>
+      <Run style="ItalicSpan" textColor="blue">concepts hard to teach to</Run>
+      <Run style="RegularSpan"> Urantians!</Run>-->
     </Runs>
   </Note>
-  <Note id="4" type="paragraph" style="regular" paperId="0" seqId="2" locationId="0.2" pid="0:0.1" created="2023-12-18" edited="2023-12-18">
+  <Note id="4" type="paragraph" style="regular" paperId="0" seqId="2" locationId="0.2" pid="0:0.1" created="7/12/2023" edited="8/12/2023" createdTime="18:08:23" editedTime="18:08:23">
     <Author>Rob Reno</Author>
     <Subject>Ideational Confusion</Subject>
-    <Text>Humans are very confused about their cosmic place in the uniiverse.</Text>
-    <Runs count="3">
-      <Run style="RegularSpan" textColor="red">Humans </Run>
-      <Run style="RegularItalicSpan" textColor="blue">are very confused</Run>
-      <Run style="RegularSpan"> about their cosmic place in the uniiverse.</Run>
+    <Text>Humans are very confused about their cosmic place in the universe.</Text>
+    <Runs count="0">
+      <!--<Run style="RegularSpan" textColor="red">Humans </Run>
+      <Run style="ItalicSpan" textColor="blue">are very confused</Run>
+      <Run style="RegularSpan"> about their cosmic place in the uniiverse.</Run>-->
     </Runs>
+  </Note>
+  <Note id="5" type="general" style="regular" paperId="0" seqId="1" locationId="0.1" pid="0:0.0" created="9/12/2023" edited="10/12/2023" createdTime="18:08:23" editedTime="18:08:23">
+    <Author>Rob Reno</Author>
+    <Subject>General Note</Subject>
+    <Text>This is a general note with no specific paragraph attached.</Text>
+    <Runs count="0" />
   </Note>
 </Notes>

@@ -144,7 +144,7 @@ namespace UBViews.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
             finally
             {
