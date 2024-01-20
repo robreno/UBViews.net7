@@ -43,7 +43,7 @@
 		<AppInstallerUri>C:\Archive\Projects\UBViews_2023\AppPackages\</AppInstallerUri>
 		<Platforms>AnyCPU;x86</Platforms>
 		<DefaultLanguage>en</DefaultLanguage>
-		<SelfContained>true</SelfContained>
+		<!--<SelfContained>true</SelfContained>-->
 	</PropertyGroup>
 
   <!-- see Publish a .NET MAUI app for Windows with the CLI -->

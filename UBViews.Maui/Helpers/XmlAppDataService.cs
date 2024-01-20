@@ -17,7 +17,7 @@ public class XmlAppDataService : IAppDataService
     private string _content = null;
     private string _appDir = null;
     private bool _cacheDirty = false;
-    //private int _fileCount = 0;
+    private int _fileCount = 0;
 
     readonly string[] sizeSuffixes = { "Bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
 

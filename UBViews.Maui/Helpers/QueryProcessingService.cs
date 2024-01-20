@@ -34,7 +34,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     public ObservableCollection<QueryLocationDto> QueryLocationsDto { get; } = new();
 
     bool _queryParsingSuccessful = false;
-    //bool _queryLocationsDtoInitiaized = false;
+    bool _queryLocationsDtoInitiaized = false;
 
     IFSRepositoryService repositoryService;
     IAppSettingsService settingsService;

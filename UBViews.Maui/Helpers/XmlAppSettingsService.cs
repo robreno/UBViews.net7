@@ -22,7 +22,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     private bool _initialized = false;
     private bool _dataInitialized = false;
     private bool _cacheDirty = false;
-    //private bool _settingsDirty = false;
+    private bool _settingsDirty = false;
 
     ObservableCollection<Setting> Settings = new();
 
