@@ -11,13 +11,6 @@ public class XmlAppDataService : IAppDataService
     /// <summary>
     /// Private Data Members
     /// </summary>
-    //private const string _appDataFileName = "QueryHistory.xml";
-    private XDocument _appData = null;
-    private XElement _appDataRoot = null;
-    private string _content = null;
-    private string _appDir = null;
-    private bool _cacheDirty = false;
-    private int _fileCount = 0;
 
     readonly string[] sizeSuffixes = { "Bytes", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb" };
 
@@ -48,37 +41,7 @@ public class XmlAppDataService : IAppDataService
             return null;
         }
     }
-    public async Task SaveAppDataAsync(string filename, string content)
-    {
-        try
-        {
-            string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, filename);
-            using var stream = System.IO.File.OpenWrite(targetFile);
-            using StreamWriter writer = new StreamWriter(stream);
-            await writer.WriteAsync(content);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-        }
-    }
-    public async Task SaveAppDataExAsync(string fileName)
-    {
-        try
-        {
-            if (_cacheDirty)
-            {
-                string targetFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
-                using var stream = File.Create(targetFilePath);
-                CancellationToken token = new CancellationToken(false);
-                await _appDataRoot.SaveAsync(stream, SaveOptions.None, token);
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
-        }
-    }
+
     public async Task<List<AppFileDto>> GetAppFilesAsync()
     {
         try
@@ -98,7 +61,7 @@ public class XmlAppDataService : IAppDataService
                 var _ns = _fi.DirectoryName.Normalize();
                 var _folderName = _fi.Directory.Name;
 
-                var _size = await GetFileSize(_fileLength);
+                var _size = await GetFileSizeAsync(_fileLength);
 
                 var newFile = new AppFileDto
                 {
@@ -123,7 +86,7 @@ public class XmlAppDataService : IAppDataService
     #endregion
 
     #region  Private Methods
-    private async Task<string> GetFileSize(long length)
+    private async Task<string> GetFileSizeAsync(long length)
     {
         try
         {
