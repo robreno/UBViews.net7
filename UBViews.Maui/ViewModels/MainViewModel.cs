@@ -267,9 +267,9 @@ public partial class MainViewModel : BaseViewModel
             }
 
             string errorMsg = string.Empty;
-            bool _mediaStateDirty = false;
-            MediaStatePair _statePair = await audioService.GetMediaStateAsync();
+            //bool _mediaStateDirty = false;
             //await audioService.TappedGestureAsync(action, _mediaStateDirty);
+            MediaStatePair _statePair = await audioService.GetMediaStateAsync();
 
             var _state = mediaElement.CurrentState;
             var _stateStr = _state.ToString();
