@@ -354,12 +354,6 @@
 	  <MauiXaml Update="Conrols\Popups\ContactsOverviewPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Conrols\Popups\ListenOverviewPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Conrols\Popups\NavigationOverviewPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Conrols\Popups\SearchOverviewPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -2,15 +2,10 @@
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.ObjectModel;
-
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Primitives;
-
-// Needed from GlobalUsings file
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Maui.Views;
 
 using UBViews.Models;
 using UBViews.Models.Ubml;
@@ -18,8 +13,6 @@ using UBViews.Models.Audio;
 using UBViews.Services;
 using UBViews.Extensions;
 using UBViews.Views;
-using UBViews.Models.Notes;
-using UBViews.Controls.Help;
 
 namespace UBViews.ViewModels
 {
@@ -63,12 +56,12 @@ namespace UBViews.ViewModels
         public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
 
         /// <summary>
-        /// IFileService
+        /// 
         /// </summary>
         IFileService fileService;
 
         /// <summary>
-        /// IAudioService
+        /// 
         /// </summary>
         IAudioService audioService;
 
@@ -78,46 +71,36 @@ namespace UBViews.ViewModels
         IEmailService emailService;
 
         /// <summary>
-        /// IAppSettingsService
+        /// 
         /// </summary>
         IAppSettingsService settingsService;
 
         /// <summary>
-        /// IDownloadService
+        /// 
         /// </summary>
         IDownloadService downloadService;
 
-        /// <summary>
-        /// INoteService
-        /// </summary>
-        INoteService notesService;
-
-        readonly string _class = "XamlPaperViewModel";
+        readonly string _class = nameof(XamlPaperViewModel);
         #endregion
 
-        #region Constructor
         /// <summary>
-        /// CStor XamlPaperViewModel
+        /// 
         /// </summary>
         /// <param name="fileService"></param>
-        public XamlPaperViewModel(IFileService fileService,
-                                  IEmailService emailService,
-                                  IAppSettingsService settingsService,
+        public XamlPaperViewModel(IFileService fileService, 
+                                  IEmailService emailService, 
+                                  IAppSettingsService settingsService, 
                                   IAudioService audioService,
-                                  IDownloadService downloadService,
-                                  INoteService notesService)
+                                  IDownloadService downloadService)
         {
             this.fileService = fileService;
             this.emailService = emailService;
             this.audioService = audioService;
             this.settingsService = settingsService;
             this.downloadService = downloadService;
-            this.notesService = notesService;
             this.cultureInfo = new CultureInfo("en-US");
         }
-        #endregion
 
-        #region Observable Properties
         [ObservableProperty]
         bool isRefreshing;
 
@@ -174,9 +157,9 @@ namespace UBViews.ViewModels
 
         [ObservableProperty]
         string downloadAudioStatus;
-        #endregion
 
-        #region Relay Commands
+        // RelayCommands
+
         [RelayCommand]
         async Task RefeshingView(PaperDto dto)
         {
@@ -222,20 +205,6 @@ namespace UBViews.ViewModels
                 }
                 else
                 {
-                    var paperId = dto.Id;
-                    var notes = await notesService.GetNotesAsync();
-                    var results = notes.Where(n => n.PaperId == paperId);
-                    List<string> noteIds = new();
-                    foreach (var note in results)
-                    {
-                        if (noteIds.Contains(note.LocationId))
-                        {
-                            continue;
-                        }
-                        await AddNoteIconAsync(note);
-                        noteIds.Add(note.LocationId.ToString());
-                    }
-
                     var hasValue = contentPage.Resources.TryGetValue("audioUri", out object uri);
                     if (hasValue)
                     {
@@ -276,7 +245,8 @@ namespace UBViews.ViewModels
                     ScrollToLabelName = "_" + uid.Substring(4, 3) + "_" + uid.Substring(0, 3);
                 }
 
-                Markers = await audioService.LoadAudioMarkersAsync(PaperDto.Id);
+                var paperId = paperDto.Id;
+                Markers = await audioService.LoadAudioMarkersAsync(paperId);
                 if (Markers.Size > 0)
                 {
                     foreach (var marker in Markers.Values().ToList())
@@ -306,7 +276,6 @@ namespace UBViews.ViewModels
                 int paperId = dto.Id;
                 var paragraphs = await fileService.GetParagraphsAsync(paperId);
 
-                Paragraphs.Clear();
                 foreach (var paragraph in paragraphs)
                 {
                     Paragraphs.Add(paragraph);
@@ -507,7 +476,7 @@ namespace UBViews.ViewModels
                     case "Copy":
                         // Add paragraph text to clipboard
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToastAsync($"Paragraph {pid} copied to clipboard!");
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
@@ -582,12 +551,12 @@ namespace UBViews.ViewModels
                     case "Copy":
                         // Add paragraph text to clipboard
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToastAsync($"Paragraph {pid} copied to clipboard!");
+                        await SendToast($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
                         await emailService.ShareParagraphAsync(paragraph);
-                        await SendToastAsync($"Paragraph {pid} shared!");
+                        await SendToast($"Paragraph {pid} shared!");
                         break;
                     case "Email":
                         // Email Paragraph
@@ -888,17 +857,15 @@ namespace UBViews.ViewModels
                 return;
             }
         }
-        #endregion
 
-        #region Pivate Helper Methods
         /// <summary>
-        /// LoadAudioMarkers
+        /// 
         /// </summary>
         /// <param name="paperId"></param>
         /// <returns></returns>
-        async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
+        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
-            string _method = "LoadAudioMarkersAsync";
+            string _method = LoadAudioMarkers;
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
@@ -912,46 +879,13 @@ namespace UBViews.ViewModels
         }
 
         /// <summary>
-        /// AddNoteIconAsync
-        /// </summary>
-        /// <param name="note"></param>
-        /// <returns></returns>
-        private async Task AddNoteIconAsync(NoteEntry note)
-        {
-            string _method = "AddNoteIconAsync";
-            try
-            {
-                var pid = note.Pid;
-                var locationId = note.LocationId;
-                var arry = locationId.Split('.');
-                var labelName = "_" + Int32.Parse(arry[0]).ToString("000")
-                                + "_" + Int32.Parse(arry[1]).ToString("000");
-                var vsl = "VSL" + labelName;
-                var labelVsl = contentPage.FindByName(vsl) as VerticalStackLayout;
-
-                if (labelVsl != null)
-                {
-                    var border = await notesService.CreateNoteBorderAsync(note);
-                    var fst = labelVsl.First();
-                    labelVsl.Clear();
-                    labelVsl.Add(border);
-                    labelVsl.Add(fst);
-                }
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            }
-        }
-
-        /// <summary>
         /// SendToast
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        async Task SendToastAsync(string message)
+        async Task SendToast(string message)
         {
-            string _method = "SendToastAsync";
+            string _method = "SendToast";
             try
             {
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -968,6 +902,5 @@ namespace UBViews.ViewModels
                 return;
             }
         }
-        #endregion
     }
 }
