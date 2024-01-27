@@ -9,6 +9,5 @@ public partial class PaperTitlesPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 		vm.contentPage = this;
-        vm.mediaElement = this.mediaElement;
     }
 }

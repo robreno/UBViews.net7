@@ -421,9 +421,9 @@ public partial class PopupViewModel : BaseViewModel
             checkBox.ClassId = paperId + "." + seqId;
             checkBox.HorizontalOptions = LayoutOptions.End;
 
-            var binding = new Binding();
-            binding.Source = nameof(NotesViewModel);
-            binding.Path = "IsChecked";
+            //var binding = new Binding();
+            //binding.Source = nameof(NotesViewModel);
+            //binding.Path = "IsChecked";
 
             return checkBox;
         }
@@ -433,47 +433,48 @@ public partial class PopupViewModel : BaseViewModel
             return null;
         }
     }
-    private async Task<Border> CreateNoteIconAsync(NoteEntry note)
-    {
-        string _method = "CreateNoteIconAsyn";
-        try
-        {
-            var pid = note.Pid;
-            var locationId = note.LocationId;
-            var arry = locationId.Split('.');
-            var labelName = "_" + Int32.Parse(arry[0]).ToString("000")
-                            + "_" + Int32.Parse(arry[1]).ToString("000");
 
-            Image image = new Image()
-            {
-                Source = "quick_note.png",
-                Aspect = Aspect.AspectFit
-            };
+    //private async Task<Border> CreateNoteIconAsync(NoteEntry note)
+    //{
+    //    string _method = "CreateNoteIconAsyn";
+    //    try
+    //    {
+    //        var pid = note.Pid;
+    //        var locationId = note.LocationId;
+    //        var arry = locationId.Split('.');
+    //        var labelName = "_" + Int32.Parse(arry[0]).ToString("000")
+    //                        + "_" + Int32.Parse(arry[1]).ToString("000");
 
-            Border border = new Border()
-            {
-                HeightRequest = 15,
-                WidthRequest = 15,
-                HorizontalOptions = LayoutOptions.Start,
+    //        Image image = new Image()
+    //        {
+    //            Source = "quick_note.png",
+    //            Aspect = Aspect.AspectFit
+    //        };
 
-            };
-            border.SetValue(ToolTipProperties.TextProperty, $"Tap to open note(s) for {pid} ...");
-            border.Content = image;
+    //        Border border = new Border()
+    //        {
+    //            HeightRequest = 15,
+    //            WidthRequest = 15,
+    //            HorizontalOptions = LayoutOptions.Start,
 
-            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "OpenPopupNoteCommand");
-            tapGestureRecognizer.CommandParameter = $"{labelName}";
-            tapGestureRecognizer.NumberOfTapsRequired = 1;
-            border.GestureRecognizers.Add(tapGestureRecognizer);
+    //        };
+    //        border.SetValue(ToolTipProperties.TextProperty, $"Tap to open note(s) for {pid} ...");
+    //        border.Content = image;
 
-            return border;
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return null;
-        }
-    }
+    //        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+    //        tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "OpenPopupNoteCommand");
+    //        tapGestureRecognizer.CommandParameter = $"{labelName}";
+    //        tapGestureRecognizer.NumberOfTapsRequired = 1;
+    //        border.GestureRecognizers.Add(tapGestureRecognizer);
+
+    //        return border;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+    //        return null;
+    //    }
+    //}
     private async Task SendToastAsync(string message)
     {
         try

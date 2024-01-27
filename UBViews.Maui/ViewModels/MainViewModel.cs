@@ -38,16 +38,6 @@ public partial class MainViewModel : BaseViewModel
     public ContentPage contentPage;
 
     /// <summary>
-    /// MediaStatePair
-    /// </summary>
-    public MediaStatePair MediaState = new();
-
-    /// <summary>
-    /// IMediaElement
-    /// </summary>
-    public IMediaElement mediaElement;
-
-    /// <summary>
     /// Services
     /// </summary>
     IFileService fileService;
@@ -171,11 +161,6 @@ public partial class MainViewModel : BaseViewModel
                 return;
             }
 
-            if (mediaElement == null)
-            {
-                return;
-            }
-
             QueryInputDto = new QueryInputDto() { Text = "[Empty]", TokenCount = 0 };
 
             AudioStatus = await settingsService.Get("audio_status", "off");
@@ -183,9 +168,6 @@ public partial class MainViewModel : BaseViewModel
             AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
 
             await audioService.SetContentPageAsync(contentPage);
-            await audioService.SetMediaElementAsync(mediaElement);
-            await audioService.SetMediaSourceAsync("loadLocalResource",
-                                                   LocalResourceAudioFilePathName);
 
             bool hasInternet = await CheckInternetAsync();
             Preferences.Default.Set("has_internet", hasInternet);
@@ -195,7 +177,7 @@ public partial class MainViewModel : BaseViewModel
                 await queryProcessingService.SetContentPageAsync(contentPage);
                 MaxQueryResults = await settingsService.Get("max_query_results", 50);
                 await queryProcessingService.SetMaxQueryResultsAsync(MaxQueryResults);
-                isInitialized = true;
+                this.IsInitialized = true;
             }
 
             string titleMessage = $"UBViews Home";
@@ -213,10 +195,7 @@ public partial class MainViewModel : BaseViewModel
         string _method = "MainPageDisappearing";
         try
         {
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                mediaElement.Stop();
-            });
+
         }
         catch (Exception ex)
         {
@@ -230,12 +209,7 @@ public partial class MainViewModel : BaseViewModel
         string _method = "MainPageUnloaded";
         try
         {
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                // Stop and cleanup MediaElement when we navigate away
-                mediaElement.Stop();
-                mediaElement.Handler?.DisconnectHandler();
-            });
+
         }
         catch (Exception ex)
         {
@@ -256,46 +230,9 @@ public partial class MainViewModel : BaseViewModel
                 return;
             }
 
-            if (mediaElement == null)
-            {
-                return;
-            }
-
             if (AudioStatus.Equals("off"))
             {
                 return;
-            }
-
-            string errorMsg = string.Empty;
-            //bool _mediaStateDirty = false;
-            //await audioService.TappedGestureAsync(action, _mediaStateDirty);
-            MediaStatePair _statePair = await audioService.GetMediaStateAsync();
-
-            var _state = mediaElement.CurrentState;
-            var _stateStr = _state.ToString();
-            PreviousState = CurrentState;
-            CurrentState = _stateStr;
-            _statePair.SetState(_stateStr);
-
-            switch (_stateStr)
-            {
-                case "Paused":
-                case "Stopped":
-                    await MainThread.InvokeOnMainThreadAsync(() =>
-                    {
-                        mediaElement.Play();
-                    });
-                    break;
-                case "Playing":
-                    await MainThread.InvokeOnMainThreadAsync(() =>
-                    {
-                        mediaElement.Pause();
-                    });
-                    break;
-                case "Failed":
-                    break;
-                default:
-                    break;
             }
         }
         catch (Exception ex)
@@ -383,67 +320,6 @@ public partial class MainViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
-        }
-    }
-
-    [RelayCommand]
-    async Task MediaOpened(TimeSpan timeSpan)
-    {
-        string _method = "MediaOpened";
-        try
-        {
-            //
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-
-    [RelayCommand]
-    async Task PositionChanged(TimeSpan timeSpan)
-    {
-        string _method = "PositionChanged";
-        try
-        {
-            await audioService.PositionChangedAsync(timeSpan);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-
-    [RelayCommand]
-    async Task StateChanged(string state)
-    {
-        string _method = "StateChanged";
-        try
-        {
-            // Opening, Paused
-            await audioService.StateChangedAsync(state);
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-    }
-
-    [RelayCommand]
-    async Task MediaEnded(TimeSpan timeSpan)
-    {
-        string _method = "MediaEnded";
-        try
-        {
-            //
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
         }
     }
 

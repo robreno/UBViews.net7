@@ -111,7 +111,6 @@ public interface IAudioService
     /// 
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="clearSearchBar"></param>
     /// <returns></returns>
     Task SetAudioStreamingStatusAsync(bool value);
 

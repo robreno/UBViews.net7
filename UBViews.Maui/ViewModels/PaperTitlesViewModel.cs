@@ -33,13 +33,7 @@ namespace UBViews.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public IMediaElement mediaElement;
-
-        /// <summary>
-        /// 
-        /// </summary>
         IDownloadService downloadService;
-
         IFileService fileService;
         IAppSettingsService settingsService;
         IAudioService audioService;
@@ -192,11 +186,6 @@ namespace UBViews.ViewModels
                     return;
                 }
 
-                if (mediaElement == null)
-                {
-                    return;
-                }
-
                 var actionArray = actionId.Split('_');
                 var action = actionArray[0];
                 var labelName = "_" + actionArray[1];
@@ -211,120 +200,38 @@ namespace UBViews.ViewModels
                 var dto = await fileService.GetPaperDtoAsync(paperId);
                 var paragraphs = await fileService.GetParagraphsAsync(paperId);
 
-                await audioService.InitializeDataAsync(contentPage, mediaElement, dto);
                 await audioService.SetMarkersAsync(Markers);
                 await audioService.SetParagraphsAsync(paragraphs);
 
-                await downloadService.InitializeDataAsync(contentPage, dto);
-                if (AudioDownloadStatus.Equals("on"))
-                {
-                    await downloadService.DownloadAudioFileAsync();
-                }
+                //await downloadService.InitializeDataAsync(contentPage, dto);
+                //if (AudioDownloadStatus.Equals("on"))
+                //{
+                //    await downloadService.DownloadAudioFileAsync();
+                //}
 
-                if (StreamAudio && AudioStatus.Equals("on"))
-                {
-                    AudioUriString = AudioBaseUriString + "U" + paperId.ToString("0") + ".mp3";
-                    AudioUri = new Uri(AudioUriString);
-                    await audioService.SetMediaSourceAsync(AudioUriString);
-                }
+                //if (StreamAudio && AudioStatus.Equals("on"))
+                //{
+                //    AudioUriString = AudioBaseUriString + "U" + paperId.ToString("0") + ".mp3";
+                //    AudioUri = new Uri(AudioUriString);
+                //    await audioService.SetMediaSourceAsync(AudioUriString);
+                //}
 
-                if (!AudioFolderName.Equals("[Empty]") && AudioStatus.Equals("on"))
-                {
-                    if (LocalAudioFilePathName == null)
-                    {
-                        LocalAudioFilePathName = AudioFolderPath
-                                                 + @"\"
-                                                 + paperId.ToString("000") + ".mp3";
-                    }
+                //if (!AudioFolderName.Equals("[Empty]") && AudioStatus.Equals("on"))
+                //{
+                //    if (LocalAudioFilePathName == null)
+                //    {
+                //        LocalAudioFilePathName = AudioFolderPath
+                //                                 + @"\"
+                //                                 + paperId.ToString("000") + ".mp3";
+                //    }
 
-                    var fileExists = File.Exists(LocalAudioFilePathName);
-                    if (fileExists && !PathInitialized)
-                    {
-                        await audioService.SetMediaSourceAsync("loadFromLocalFile", LocalAudioFilePathName);
-                        PathInitialized = true;
-                    }
-                }
-
-                string errorMsg = string.Empty;
-                bool _mediaStateDirty = false;
-                MediaStatePair _state = await audioService.GetMediaStateAsync();
-                switch (action)
-                {
-                    case "Play":
-                        if (MediaState.CurrentState == "None" || 
-                            MediaState.CurrentState == "Stopped")
-                        {
-                            MediaState.SetState("Playing");
-                            _mediaStateDirty = true;
-                            await audioService.PlayAudioAsync();
-                        }
-                        else if (MediaState.CurrentState == "Paused")
-                        {
-                            MediaState.SetState("Playing");
-                            _state.SetState("Playing");
-                            _mediaStateDirty = true;
-                            await audioService.PlayAudioAsync();
-                        }
-                        break;
-                    case "Pause":
-                        if (MediaState.CurrentState == "Playing")
-                        {
-                            MediaState.SetState("Paused");
-                            _state.SetState("Paused");
-                            _mediaStateDirty = true;
-                            await audioService.PauseAudioAsync();
-                        }
-                        break;
-                    case "Stop":
-                        if (MediaState.CurrentState == "Playing" ||
-                            MediaState.CurrentState == "Paused")
-                        {
-                            MediaState.SetState("Stopped");
-                            _state.SetState("Stopped");
-                            _mediaStateDirty = true;
-                            await audioService.StopAudioAsync();
-                        }
-                        break;
-                    default:
-                        errorMsg = "Unkown Command!";
-                        await App.Current.MainPage.DisplayAlert("Unknown Action =>", errorMsg, "Cancel");
-                        break;
-                }
-                if (_mediaStateDirty)
-                {
-                    var _tmp = await audioService.GetMediaStateAsync();
-                    await audioService.SetMediaStateAsync(MediaState);
-                }
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-                return;
-            }
-        }
-
-        [RelayCommand]
-        async Task PositionChanged(TimeSpan timeSpan)
-        {
-            string _method = "PositionChanged";
-            try
-            {
-                await audioService.PositionChangedAsync(timeSpan);
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-                return;
-            }
-        }
-
-        [RelayCommand]
-        async Task StateChanged(string state)
-        {
-            string _method = "StateChanged";
-            try
-            {
-                await audioService.StateChangedAsync(state);
+                //    var fileExists = File.Exists(LocalAudioFilePathName);
+                //    if (fileExists && !PathInitialized)
+                //    {
+                //        await audioService.SetMediaSourceAsync("loadFromLocalFile", LocalAudioFilePathName);
+                //        PathInitialized = true;
+                //    }
+                //}
             }
             catch (Exception ex)
             {

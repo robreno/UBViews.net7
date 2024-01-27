@@ -2,6 +2,8 @@ F# DU in C#
 https://stackoverflow.com/questions/17254855/what-is-the-simplest-way-to-access-data-of-an-f-discriminated-union-type-in-c
 https://stackoverflow.com/questions/23843142/f-discriminated-union-usage-from-c-sharp
 
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/nullable-reference-types#setting-the-nullable-context
+
 
 1. Parse Query
 2. Run Query via getIteratorEx: 

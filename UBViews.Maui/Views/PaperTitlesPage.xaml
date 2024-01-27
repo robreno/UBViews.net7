@@ -27,19 +27,10 @@
             EventName="Loaded" 
             Command="{Binding PaperTitlesPageAppearingCommand}" />
     </ContentPage.Behaviors>
-    
-    <Grid x:Name="mainGrid" 
+
+    <Grid x:Name="mainGrid"
           BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, 
                                             Dark={StaticResource DarkBackground}}">
-
-        <VerticalStackLayout x:Name="mediaElementVSL" VerticalOptions="End">
-            <toolkit:MediaElement x:Name="mediaElement" ShouldShowPlaybackControls="false">
-                <toolkit:MediaElement.Behaviors>
-                    <toolkit:EventToCommandBehavior EventName="PositionChanged" Command="{Binding PositionChangedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
-                    <toolkit:EventToCommandBehavior EventName="StateChanged" Command="{Binding StateChangedCommand}" EventArgsConverter="{StaticResource MediaStateChangedEventArgsConverter}" />
-                </toolkit:MediaElement.Behaviors>
-            </toolkit:MediaElement>
-        </VerticalStackLayout>
 
         <ScrollView x:Name="contentScrollView">
             

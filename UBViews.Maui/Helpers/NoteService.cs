@@ -609,8 +609,7 @@ public partial class NoteService : INoteService
                     Author = author,
                     Subject = subject
                 };
-                newNoteEntry.NoteEntries.Add(noteText);
-                dto.NoteLocations.Add(newNoteEntry);
+                dto.Notes.Add(newNoteEntry);
             }
             return dto;
         }
@@ -879,7 +878,6 @@ public partial class NoteService : INoteService
                     Subject = subject,
                     Text = text
                 };
-                newNoteEntry.NoteEntries.Add(noteText);
                 notes.Add(newNoteEntry);
             }
             return notes;

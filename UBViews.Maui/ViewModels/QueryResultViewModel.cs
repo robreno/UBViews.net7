@@ -169,7 +169,7 @@ public partial class QueryResultViewModel : BaseViewModel
             QueryHits = dto.Hits;
             MaxQueryResults = await settingsService.Get("max_query_results", 50);
 
-            string titleMessage = $"Query Result {queryHits} hits ...";
+            string titleMessage = $"Query Result {this.QueryHits} hits ...";
             Title = titleMessage;
 
             var locations = dto.QueryLocations.Take(MaxQueryResults).ToList();

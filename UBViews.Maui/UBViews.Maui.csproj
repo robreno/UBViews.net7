@@ -29,21 +29,6 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
   
-		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-		<RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
-		<RunAnalyzers>false</RunAnalyzers>
-		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
-		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-		<GenerateTestArtifacts>True</GenerateTestArtifacts>
-		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-		<PackageCertificateThumbprint>2565189F4FEF403D012593F201FD52B0642B3843</PackageCertificateThumbprint>
-		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-		<AppInstallerUri>C:\Archive\Projects\UBViews_2023\AppPackages\</AppInstallerUri>
-		<Platforms>AnyCPU;x86</Platforms>
-		<DefaultLanguage>en</DefaultLanguage>
-		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 
   <!-- see Publish a .NET MAUI app for Windows with the CLI -->
@@ -181,6 +166,8 @@
 	  <Compile Remove="Services\IRepositoryService.cs" />
 	  <Compile Remove="Services\ISubscriberService.cs" />
 	  <Compile Remove="State\ContentsFilter.cs" />
+	  <Compile Remove="ViewModels\NotesViewModel.cs" />
+	  <Compile Remove="Views\NotesPage.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -196,6 +183,7 @@
 
 	<ItemGroup>
 	  <MauiXaml Remove="Conrols\PaperHeadingControl.xaml" />
+	  <MauiXaml Remove="Views\NotesPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -379,9 +367,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HelpPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\NotesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PartsPage.xaml">

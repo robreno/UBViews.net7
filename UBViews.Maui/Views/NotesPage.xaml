@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
+             xmlns:converter="clr-namespace:UBViews.Converters"
              xmlns:model="clr-namespace:UBViews.Models.Query"
              xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
+             xmlns:control="clr-namespace:UBViews.Controls"
              x:Class="UBViews.NotesPage"
              Title="{Binding Title}"
              x:DataType="viewmodel:NotesViewModel">
@@ -13,6 +16,8 @@
             <x:String x:Key="ButtonWidth">165</x:String>
             <x:String x:Key="SearchBarWidth">400</x:String>
         </ResourceDictionary>
+        <converter:TextChangedEventArgsConverter x:Key="TextChangedEventArgsConverter" />
+        <converter:LoadedEventArgsConverter x:Key="LoadedEventArgsConverter" />
         <Style x:Key="basePidStyle" TargetType="Label">
             <Setter Property="Margin" Value="0,20,5,0" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -29,19 +34,24 @@
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior
             EventName="Appearing"
-            Command="{Binding NotesPageAppearingCommand}" />
+            Command="{Binding NotesPageAppearingCommand}"/>
+        <behavior:EventToCommandBehavior
+            EventName="Loaded"
+            Command="{Binding NotesPageLoadedCommand}"/>
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL" 
                          Margin="50"
-                         HorizontalOptions="CenterAndExpand">
+                         MinimumWidthRequest="300"
+                         HorizontalOptions="CenterAndExpand"
+                         BackgroundColor="{Binding DefaultColorForMainVSL}">
 
         <Label x:Name="notesLabel" 
-            Margin="0,20,0,0"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            Style="{DynamicResource RegularParagraph}"
-            ToolTipProperties.Text="To go to paragraph text tap.">
+               Margin="0,20,0,0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Style="{DynamicResource RegularParagraph}"
+               ToolTipProperties.Text="To go to paragraph text tap.">
             <Label.FormattedText>
                 <FormattedString>
                     <Span Style="{StaticResource RegularSpan}" Text="Notes (" />
@@ -52,47 +62,73 @@
             </Label.FormattedText>
         </Label>
 
-        <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
+        <HorizontalStackLayout x:Name="checkBoxLabelPair" 
+                               HeightRequest="50"
+                               BackgroundColor="{Binding DefaultColorForSelectionHSL}">
             <Label x:Name="hideUncheckedLabel" 
-                Margin="10,0,0,0"
-                Text="Hide Unchecked" 
-                Style="{StaticResource CheckBoxCaption}"  />
+                   Margin="10,0,0,0"
+                   Text="Hide Unchecked" 
+                   Style="{StaticResource CheckBoxCaption}"  />
             <CheckBox x:Name="selectedCheckBox" 
-                   VerticalOptions="Start"
-                   IsChecked="{Binding HideUnselected, Mode=TwoWay}">
+                      VerticalOptions="Start"
+                      IsChecked="{Binding HideUnselected, Mode=TwoWay}">
                 <CheckBox.Behaviors>
                     <behavior:EventToCommandBehavior 
                          EventName="CheckedChanged" 
                          Command="{Binding SelectedCheckboxChangedCommand}"
-                         CommandParameter="{Binding Source={x:Reference selectedCheckBox}, Path=IsChecked}"/>
+                         CommandParameter="{Binding Source={x:Reference selectedCheckBox}, 
+                                                    Path=IsChecked}"/>
                 </CheckBox.Behaviors>
             </CheckBox>
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout>
+        <HorizontalStackLayout x:Name="notesPageButtonHSL">
+            
             <Button x:Name="shareChecked" 
                  HorizontalOptions="Start"
-                 Margin="10,0,0,10"
-                 Text="Share Selected" 
+                 Margin="10,0,0,10"  
                  HeightRequest="40" 
                  WidthRequest="125"
-                 Command="{Binding ShareSelectedCommand}"/>
+                 Text="Share Selected" 
+                 Command="{Binding ShareSelectedCommand}"
+                 CommandParameter="{Binding Source={x:Reference shareChecked}}"/>
+
+            <Button x:Name="newNote" 
+                 HorizontalOptions="Start"
+                 Margin="10,0,0,10"
+                 HeightRequest="40" 
+                 WidthRequest="125"
+                 Text="New Note">
+                <Button.Behaviors>
+                    <behavior:EventToCommandBehavior
+                        EventName="Clicked"
+                        Command="{Binding NewNoteCommand}"
+                        CommandParameter="{Binding Source={x:Reference newNote}}" />
+                </Button.Behaviors>
+            </Button>
+
         </HorizontalStackLayout>
 
+        <control:NewNoteControl x:Name="newNoteControl" />
+
         <ScrollView x:Name="contentScrollView" 
+                    HorizontalOptions="Center"
+                    MinimumWidthRequest="300"
                     MaximumWidthRequest="750"
-                    MaximumHeightRequest="550"
-                    VerticalScrollBarVisibility="Default">
+                    MaximumHeightRequest="600"
+                    VerticalScrollBarVisibility="Default"
+                    BackgroundColor="{Binding DefaultColorForScrollView}">
 
-            <!--<VerticalStackLayout x:Name="outerVerticalStackLayout"
-                                 HorizontalOptions="CenterAndExpand">-->
 
-                <VerticalStackLayout x:Name="contentVerticalStackLayout"
-                                     HorizontalOptions="Center">
+            <VerticalStackLayout x:Name="contentVerticalStackLayout"
+                                 Padding="0"
+                                 MinimumHeightRequest="{OnPlatform WinUI=30}"
+                                 MinimumWidthRequest="{OnPlatform WinUI=300}"
+                                 MaximumWidthRequest="{OnPlatform WinUI=750}"
+                                 HorizontalOptions="Center"
+                                 BackgroundColor="{Binding DefaultColorForContentVSL}">
 
-                </VerticalStackLayout>
-
-            <!--</VerticalStackLayout>-->
+            </VerticalStackLayout>
 
         </ScrollView>
 

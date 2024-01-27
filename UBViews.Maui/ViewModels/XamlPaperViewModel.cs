@@ -245,7 +245,7 @@ namespace UBViews.ViewModels
                     ScrollToLabelName = "_" + uid.Substring(4, 3) + "_" + uid.Substring(0, 3);
                 }
 
-                var paperId = paperDto.Id;
+                var paperId = this.PaperDto.Id;
                 Markers = await audioService.LoadAudioMarkersAsync(paperId);
                 if (Markers.Size > 0)
                 {
@@ -865,7 +865,7 @@ namespace UBViews.ViewModels
         /// <returns></returns>
         async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
         {
-            string _method = LoadAudioMarkers;
+            string _method = "LoadAudioMarkers";
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);

@@ -40,7 +40,6 @@ namespace UBViews
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Singleton Services
             builder.Services.AddSingleton<HttpClient>((e) => new HttpClient());
             builder.Services.AddSingleton<IAppSettingsService>((e) => new XmlAppSettingsService(
                                                                           new FileService()));
@@ -109,8 +108,8 @@ namespace UBViews
             builder.Services.AddTransient<ContactsViewModel>();
             builder.Services.AddTransient<ContactsPage>();
 
-            builder.Services.AddTransient<NotesViewModel>();
-            builder.Services.AddTransient<NotesPage>();
+            //builder.Services.AddTransient<NotesViewModel>();
+            //builder.Services.AddTransient<NotesPage>();
 
             // Xaml Pages ViewModel
             builder.Services.AddTransient<XamlPaperViewModel>();

@@ -45,11 +45,6 @@ public partial class AudioService : IAudioService
     };
 
     /// <summary>
-    /// CultureInfo
-    /// </summary>
-    private CultureInfo cultureInfo;
-
-    /// <summary>
     /// ContentPage
     /// </summary>
     private ContentPage contentPage;
@@ -488,7 +483,6 @@ public partial class AudioService : IAudioService
     /// 
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="clearSearchBar"></param>
     /// <returns></returns>
     public async Task SetAudioStreamingStatusAsync(bool value)
     {

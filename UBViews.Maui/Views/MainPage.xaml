@@ -38,16 +38,6 @@
                          Padding="10,10,10,10"
                          VerticalOptions="Center">
 
-        <VerticalStackLayout x:Name="mediaElementVSL" VerticalOptions="End">
-            <toolkit:MediaElement x:Name="mediaElement" ShouldShowPlaybackControls="false">
-                <toolkit:MediaElement.Behaviors>
-                    <toolkit:EventToCommandBehavior EventName="PositionChanged" Command="{Binding PositionChangedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
-                    <toolkit:EventToCommandBehavior EventName="StateChanged" Command="{Binding StateChangedCommand}" EventArgsConverter="{StaticResource MediaStateChangedEventArgsConverter}" />
-                    <toolkit:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" CommandParameter="{Binding Source={x:Reference mediaElement}, Path=Position}" />
-                </toolkit:MediaElement.Behaviors>
-            </toolkit:MediaElement>
-        </VerticalStackLayout>
-
         <Border HeightRequest="70"
                 WidthRequest="70"
                 HorizontalOptions="Center"
