@@ -83,10 +83,7 @@ namespace UBViews.ViewModels
         readonly string _class = nameof(XamlPaperViewModel);
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileService"></param>
+        #region Constructor
         public XamlPaperViewModel(IFileService fileService, 
                                   IEmailService emailService, 
                                   IAppSettingsService settingsService, 
@@ -100,6 +97,9 @@ namespace UBViews.ViewModels
             this.downloadService = downloadService;
             this.cultureInfo = new CultureInfo("en-US");
         }
+        #endregion
+
+        #region Observable Properties
 
         [ObservableProperty]
         bool isRefreshing;
@@ -157,8 +157,9 @@ namespace UBViews.ViewModels
 
         [ObservableProperty]
         string downloadAudioStatus;
+        #endregion
 
-        // RelayCommands
+        #region Relay Commands
 
         [RelayCommand]
         async Task RefeshingView(PaperDto dto)
@@ -236,6 +237,7 @@ namespace UBViews.ViewModels
                 PaperNumber = dto.Id.ToString("0");
                 ShowReferencePids = await settingsService.Get("show_reference_pids", false);
                 ShowPlaybackControls = await settingsService.Get("show_playback_controls", false);
+
                 await audioService.SetMediaPlaybackControlsAsync(ShowPlaybackControls);
 
                 string uid = dto.Uid;
@@ -476,7 +478,7 @@ namespace UBViews.ViewModels
                     case "Copy":
                         // Add paragraph text to clipboard
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        await SendToastAsync($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
@@ -551,12 +553,12 @@ namespace UBViews.ViewModels
                     case "Copy":
                         // Add paragraph text to clipboard
                         await Clipboard.Default.SetTextAsync(plainText);
-                        await SendToast($"Paragraph {pid} copied to clipboard!");
+                        await SendToastAsync($"Paragraph {pid} copied to clipboard!");
                         break;
                     case "Share":
                         // Share Paragraph
                         await emailService.ShareParagraphAsync(paragraph);
-                        await SendToast($"Paragraph {pid} shared!");
+                        await SendToastAsync($"Paragraph {pid} shared!");
                         break;
                     case "Email":
                         // Email Paragraph
@@ -857,15 +859,18 @@ namespace UBViews.ViewModels
                 return;
             }
         }
+        #endregion
+
+        #region Private Helper Methods
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="paperId"></param>
         /// <returns></returns>
-        async Task<AudioMarkerSequence> LoadAudioMarkers(int paperId)
+        async Task<AudioMarkerSequence> LoadAudioMarkersAsync(int paperId)
         {
-            string _method = "LoadAudioMarkers";
+            string _method = "LoadAudioMarkersAsync";
             try
             {
                 this.Markers = await audioService.LoadAudioMarkersAsync(paperId);
@@ -879,13 +884,13 @@ namespace UBViews.ViewModels
         }
 
         /// <summary>
-        /// SendToast
+        /// SendToastAsync
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        async Task SendToast(string message)
+        async Task SendToastAsync(string message)
         {
-            string _method = "SendToast";
+            string _method = "SendToastAsync";
             try
             {
                 using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -902,5 +907,6 @@ namespace UBViews.ViewModels
                 return;
             }
         }
+        #endregion
     }
 }

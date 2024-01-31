@@ -139,7 +139,7 @@ public partial class QueryProcessingService : IQueryProcessingService
                     message = $"Audio streaming = {value.ToUpper()}.";
                     if (!silent)
                     {
-                        await SendToast(message);
+                        await SendToastAsync(message);
                     }
 
                 }
@@ -149,7 +149,7 @@ public partial class QueryProcessingService : IQueryProcessingService
                     message = $"Audio status = {value.ToUpper()}.";
                     if (!silent)
                     {
-                        await SendToast(message);
+                        await SendToastAsync(message);
                     }
                 }
                 else if (command == "audio_download_status")
@@ -159,7 +159,7 @@ public partial class QueryProcessingService : IQueryProcessingService
                     message = $"Audio download status = {value.ToUpper()}.";
                     if (!silent)
                     {
-                        await SendToast(message);
+                        await SendToastAsync(message);
                     }
                 }
                 else
@@ -168,10 +168,10 @@ public partial class QueryProcessingService : IQueryProcessingService
                     message = $"Invalid command = [{command}], please try again.";
                     if (!silent)
                     {
-                        await SendToast(message);
+                        await SendToastAsync(message);
                     }
                 }
-                await ClearQuerySearchBar(contentPage);
+                await ClearQuerySearchBarAsync(contentPage);
             }
             else if (string.IsNullOrEmpty(queryString))
             {
@@ -316,7 +316,7 @@ public partial class QueryProcessingService : IQueryProcessingService
             else
             {
                 // Normalize Query and set QueryInputString property
-                await NormalizeQueryString(queryString);
+                await NormalizeQueryStringAsync(queryString);
                 // Parse queryString with QueryEngine methods
                 QueryExpression = parserService.ParseQuery(QueryInputDto.Text).ToString();
                 TermList = parserService.ParseQueryStringToTermList(queryString).ToList();
@@ -484,7 +484,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<string> GetQueryInputStringAsync()
     {
-        string _method = "GetQueryInputString";
+        string _method = "GetQueryInputStringAsync";
         try
         {
             return this.QueryInputString;
@@ -510,7 +510,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<List<string>> GetTermListAsync()
     {
-        string _method = "GetTermsList";
+        string _method = "GetTermsListAsync";
         try
         {
             return this.TermList;
@@ -523,7 +523,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<bool> GetQueryResultExistsAsync()
     {
-        string _method = "QueryResultExists";
+        string _method = "QueryResultExistsAsync";
         try
         {
             return this.QueryResultExists;
@@ -536,7 +536,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<QueryResultLocationsDto> GetQueryResultLocationsAsync()
     {
-        string _method = "GetQueryResultLocations";
+        string _method = "GetQueryResultLocationsAsync";
         try
         {
             return this.QueryLocations;
@@ -584,9 +584,9 @@ public partial class QueryProcessingService : IQueryProcessingService
     #endregion
 
     #region Helper Methods
-    private async Task NormalizeQueryString(string queryString)
+    private async Task NormalizeQueryStringAsync(string queryString)
     {
-        string _method = "NormalizeQueryString";
+        string _method = "NormalizeQueryStringAsync";
         try
         {
             string qs = "";
@@ -606,14 +606,14 @@ public partial class QueryProcessingService : IQueryProcessingService
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
     }
-    private async Task<string> ReverseQueryString(string queryString)
+    private async Task<string> ReverseQueryStringAsync(string queryString)
     {
-        string _method = "ReverseQueryString";
+        string _method = "ReverseQueryStringAsync";
         {
             try
             {
                 string reverseQueryString = string.Empty;
-                var queryType = await GetQueryType(queryString);
+                var queryType = await GetQueryTypeAsync(queryString);
                 reverseQueryString = queryType.ReverseQuery;
                 return reverseQueryString;
             }
@@ -624,13 +624,13 @@ public partial class QueryProcessingService : IQueryProcessingService
             }
         }
     }
-    private async Task<string> BaseQueryString(string queryString)
+    private async Task<string> BaseQueryStringAsync(string queryString)
     {
-        string _method = "BaseQueryString";
+        string _method = "BaseQueryStringAsync";
         try
         {
             var baseQuery = string.Empty;
-            var queryType = await GetQueryType(queryString);
+            var queryType = await GetQueryTypeAsync(queryString);
             baseQuery = queryType.BaseQuery;
             return baseQuery;
         }
@@ -640,9 +640,9 @@ public partial class QueryProcessingService : IQueryProcessingService
             return null;
         }
     }
-    private async Task<QueryType> GetQueryType(string queryString)
+    private async Task<QueryType> GetQueryTypeAsync(string queryString)
     {
-        string _method = "GetQueryType";
+        string _method = "GetQueryTypeAsync";
         try
         {
             var queryType = new QueryType();
@@ -711,9 +711,9 @@ public partial class QueryProcessingService : IQueryProcessingService
             return null;
         }
     }
-    private async Task<bool> ClearQuerySearchBar(ContentPage contentPage)
+    private async Task<bool> ClearQuerySearchBarAsync(ContentPage contentPage)
     {
-        string _method = "ClearQuerySearchBar";
+        string _method = "ClearQuerySearchBarAsync";
         try
         {
             if (contentPage != null)
@@ -736,8 +736,9 @@ public partial class QueryProcessingService : IQueryProcessingService
             return false;
         }
     }
-    private async Task SendToast(string message)
+    private async Task SendToastAsync(string message)
     {
+        string _method = "SendToastAsync";
         try
         {
             using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
@@ -750,13 +751,13 @@ public partial class QueryProcessingService : IQueryProcessingService
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
-    private async Task<List<QueryLocationDto>> InitializeQueryLocationsDto(QueryResultLocationsDto dto)
+    private async Task<List<QueryLocationDto>> InitializeQueryLocationsDtoAsync(QueryResultLocationsDto dto)
     {
-        string _method = "InitializeQueryLocationsDto";
+        string _method = "InitializeQueryLocationsDtoAsync";
         try
         {
             List<QueryLocationDto> locations = new();

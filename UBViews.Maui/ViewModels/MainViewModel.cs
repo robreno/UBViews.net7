@@ -44,7 +44,6 @@ public partial class MainViewModel : BaseViewModel
     IAppSettingsService settingsService;
     IFSRepositoryService repositoryService;
     IQueryProcessingService queryProcessingService;
-    IAudioService audioService;
     IConnectivity connectivityService;
 
     ParserService parserService;
@@ -58,16 +57,14 @@ public partial class MainViewModel : BaseViewModel
                          IFSRepositoryService repositoryService,
                          IAppSettingsService settingsService,
                          IQueryProcessingService queryProcessingService, 
-                         IAudioService audioService,
                          IConnectivity connectivityService)
     {
         this.fileService = fileService;
         this.settingsService = settingsService;
 
         this.repositoryService = repositoryService;
-       
+
         this.queryProcessingService = queryProcessingService;
-        this.audioService = audioService;
         this.connectivityService = connectivityService;
 
         this.parserService = new ParserService();
@@ -166,8 +163,6 @@ public partial class MainViewModel : BaseViewModel
             AudioStatus = await settingsService.Get("audio_status", "off");
             AudioStreaming = await settingsService.Get("stream_audio", false);
             AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
-
-            await audioService.SetContentPageAsync(contentPage);
 
             bool hasInternet = await CheckInternetAsync();
             Preferences.Default.Set("has_internet", hasInternet);
