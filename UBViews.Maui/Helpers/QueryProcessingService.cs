@@ -109,6 +109,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task SetContentPageAsync(ContentPage contentPage)
     {
+        string _method = "SetContentPageAsync";
         try
         {
             this.contentPage = contentPage;
@@ -116,7 +117,7 @@ public partial class QueryProcessingService : IQueryProcessingService
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"NullReference in {_class}.{_method} => ", ex.Message, "Ok");
             return;
         }
     }
@@ -274,12 +275,13 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<(bool, string)> ParseQueryAsync(string queryString)
     {
-        string _method = "ParseQuery";
-        var isSuccess = false;
-        var errorMessage = string.Empty;
-        var message = string.Empty;
+        string _method = "ParseQueryAsync";
         try
         {
+            var isSuccess = false;
+            var errorMessage = string.Empty;
+            var message = string.Empty;
+
             //var isSecretCommand = await PreCheckQuery(queryString);
             var validChars = QueryFilterService.checkForValidChars(queryString);
             var validCharsSuccess = validChars.Item1;
@@ -339,11 +341,13 @@ public partial class QueryProcessingService : IQueryProcessingService
     }
     public async Task<(bool, bool, QueryResultLocationsDto)> RunQueryAsync(string queryString)
     {
-        string _method = "RunQuery";
-        bool isSuccess = false;
-        bool isFromQueryHistory = false;
+        string _method = "RunQueryAsync";
         try
         {
+
+            bool isSuccess = false;
+            bool isFromQueryHistory = false;
+
             var errorMessage = string.Empty;
             var msg = string.Empty;
             if (!_queryParsingSuccessful)
