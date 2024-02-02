@@ -40,19 +40,28 @@ namespace UBViews
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<HttpClient>((e) => new HttpClient());
-            builder.Services.AddSingleton<IAppSettingsService>((e) => new XmlAppSettingsService(
+
+
+            builder.Services.AddTransient<IAppSettingsService>((e) => new XmlAppSettingsService(
                                                                           new FileService()));
 
-            // Uses Singleton IAppSettingsService via ServiceHelper Internally
             builder.Services.AddTransient<IQueryProcessingService>((e) => new QueryProcessingService(
-                                                                              new FSRepositoryService()));
+                                                                          new FSRepositoryService(),
+                                                                          new XmlAppSettingsService(
+                                                                            new FileService())));
+
             builder.Services.AddTransient<IAudioService>((e) => new AudioService(
-                                                                    new FileService()));
+                                                                new FileService(),
+                                                                new XmlAppSettingsService(
+                                                                      new FileService())));
+
             builder.Services.AddTransient<IEmailService>((e) => new EmailService(
                                                                     new XmlContactsService(
                                                                         new FileService())));
-            builder.Services.AddTransient<IDownloadService>((e) => new DownloadService());
+
+            builder.Services.AddTransient<IDownloadService>((e) => new DownloadService(
+                                                                new XmlAppSettingsService(
+                                                                      new FileService())));
 
             // Transient Services
             builder.Services.AddTransient<IFileService>((e) => new FileService());

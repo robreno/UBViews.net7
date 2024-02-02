@@ -55,11 +55,6 @@ public partial class AudioService : IAudioService
     private IMediaElement mediaElement;
 
     /// <summary>
-    /// 
-    /// </summary>
-    public HttpClient httpClient;
-
-    /// <summary>
     /// ObservableCollection
     /// </summary>
     public ObservableCollection<AudioMarker> AudioMarkers { get; private set; } = new();
@@ -78,10 +73,10 @@ public partial class AudioService : IAudioService
     #endregion
 
     #region  Constructors
-    public AudioService(IFileService fileService)
+    public AudioService(IFileService fileService, IAppSettingsService settingsService)
     {
         this.fileService = fileService;
-        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
+        this.settingsService = settingsService;
     }
     #endregion
 
@@ -124,7 +119,6 @@ public partial class AudioService : IAudioService
         string _method = "InitializeDataAsync";
         try
         {
-            this.httpClient = ServiceHelper.Current.GetService<HttpClient>();
             this.contentPage = contentPage;
             this.mediaElement = mediaElement;
             await SetPaperDtoAsync(dto);

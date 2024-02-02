@@ -16,11 +16,6 @@ public class DownloadService : IDownloadService
     /// </summary>
     private ContentPage contentPage;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public HttpClient httpClient;
-
     readonly string _class = "DownloadService";
     #endregion
 
@@ -28,9 +23,9 @@ public class DownloadService : IDownloadService
     IAppSettingsService settingsService;
     #endregion
 
-    public DownloadService()
+    public DownloadService(IAppSettingsService settingsService)
     {
-        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
+        this.settingsService = settingsService;
     }
 
     #region  Public Properties
@@ -57,8 +52,6 @@ public class DownloadService : IDownloadService
             this.contentPage = contentPage;
             PaperDto = dto;
             PaperName = PaperDto.Id.ToString("000") + ".mp3";
-
-            this.httpClient = ServiceHelper.Current.GetService<HttpClient>();
 
             var hasValue = contentPage.Resources.TryGetValue("audioUri", out object uri);
             if (hasValue)
@@ -122,21 +115,24 @@ public class DownloadService : IDownloadService
             {
                 if (ValidAudioDownloadPath)
                 {
-                    var response = await httpClient.GetAsync(AudioUri);
-                    var result = response.EnsureSuccessStatusCode();
-                    if (result.IsSuccessStatusCode)
+                    using (var client = new HttpClient())
                     {
-                        var stream = await response.Content.ReadAsStreamAsync();
-                        var fileInfo = new FileInfo(AudioDownloadFullPathName);
-                        using (var fileStream = fileInfo.OpenWrite())
+                        var response = await client.GetAsync(AudioUri);
+                        var result = response.EnsureSuccessStatusCode();
+                        if (result.IsSuccessStatusCode)
                         {
-                            await stream.CopyToAsync(fileStream);
+                            var stream = await response.Content.ReadAsStreamAsync();
+                            var fileInfo = new FileInfo(AudioDownloadFullPathName);
+                            using (var fileStream = fileInfo.OpenWrite())
+                            {
+                                await stream.CopyToAsync(fileStream);
+                            }
+                            isSuccess = true;
                         }
-                        isSuccess = true;
-                    }
-                    else
-                    {
-                        throw new Exception("File not found.");
+                        else
+                        {
+                            throw new Exception("File not found");
+                        }
                     }
                     return isSuccess;
                 }
@@ -163,21 +159,24 @@ public class DownloadService : IDownloadService
 
             if (ValidAudioDownloadPath)
             {
-                var response = await httpClient.GetAsync(AudioUri);
-                var result = response.EnsureSuccessStatusCode();
-                if (result.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var stream = await response.Content.ReadAsStreamAsync();
-                    var fileInfo = new FileInfo(AudioDownloadFullPathName);
-                    using (var fileStream = fileInfo.OpenWrite())
+                    var response = await client.GetAsync(AudioUri);
+                    var result = response.EnsureSuccessStatusCode();
+                    if (result.IsSuccessStatusCode)
                     {
-                        await stream.CopyToAsync(fileStream);
+                        var stream = await response.Content.ReadAsStreamAsync();
+                        var fileInfo = new FileInfo(AudioDownloadFullPathName);
+                        using (var fileStream = fileInfo.OpenWrite())
+                        {
+                            await stream.CopyToAsync(fileStream);
+                        }
+                        isSuccess = true;
                     }
-                    isSuccess = true;
-                }
-                else
-                {
-                    throw new Exception("File not found.");
+                    else
+                    {
+                        throw new Exception("File not found");
+                    }
                 }
                 return isSuccess;
             }
@@ -201,28 +200,31 @@ public class DownloadService : IDownloadService
             bool isSuccess = false;
 
             // Setup Uri and File Path
-  
+
             string uriBasePath = AudioUriString;
             string uriFullPath = uriBasePath + fileName;
             Uri uri = new Uri(uriFullPath);
 
             string fileNamePath = Path.Combine(audioDir, "000.mp3");
-            
-            var response = await httpClient.GetAsync(uri);
-            var result = response.EnsureSuccessStatusCode();
-            if (result.IsSuccessStatusCode)
+
+            using (var client = new HttpClient())
             {
-                var stream = await response.Content.ReadAsStreamAsync();
-                var fileInfo = new FileInfo(fileNamePath);
-                using (var fileStream = fileInfo.OpenWrite())
+                var response = await client.GetAsync(uri);
+                var result = response.EnsureSuccessStatusCode();
+                if (result.IsSuccessStatusCode)
                 {
-                    await stream.CopyToAsync(fileStream);
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    var fileInfo = new FileInfo(fileNamePath);
+                    using (var fileStream = fileInfo.OpenWrite())
+                    {
+                        await stream.CopyToAsync(fileStream);
+                    }
+                    isSuccess = true;
                 }
-                isSuccess = true;
-            }
-            else
-            {
-                throw new Exception("File not found");
+                else
+                {
+                    throw new Exception("File not found");
+                }
             }
             return isSuccess;
         }
@@ -242,21 +244,24 @@ public class DownloadService : IDownloadService
             string fileName = PaperDto.Id.ToString("000") + ".mp3";
             string fileNamePath = Path.Combine(audioDir, fileName);
 
-            var response = await httpClient.GetAsync(uri);
-            var result = response.EnsureSuccessStatusCode();
-            if (result.IsSuccessStatusCode)
+            using (var client = new HttpClient())
             {
-                var stream = await response.Content.ReadAsStreamAsync();
-                var fileInfo = new FileInfo(fileNamePath);
-                using (var fileStream = fileInfo.OpenWrite())
+                var response = await client.GetAsync(uri);
+                var result = response.EnsureSuccessStatusCode();
+                if (result.IsSuccessStatusCode)
                 {
-                    await stream.CopyToAsync(fileStream);
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    var fileInfo = new FileInfo(fileNamePath);
+                    using (var fileStream = fileInfo.OpenWrite())
+                    {
+                        await stream.CopyToAsync(fileStream);
+                    }
+                    isSuccess = true;
                 }
-                isSuccess = true;
-            }
-            else
-            {
-                throw new Exception("File not found");
+                else
+                {
+                    throw new Exception("File not found");
+                }
             }
             return isSuccess;
         }
