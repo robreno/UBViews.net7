@@ -56,8 +56,10 @@ namespace UBViews
                                                                       new FileService())));
 
             builder.Services.AddTransient<IEmailService>((e) => new EmailService(
-                                                                    new XmlContactsService(
-                                                                        new FileService())));
+                                                                new XmlContactsService(
+                                                                    new FileService()),
+                                                                new XmlAppSettingsService(
+                                                                      new FileService())));
 
             builder.Services.AddTransient<IDownloadService>((e) => new DownloadService(
                                                                 new XmlAppSettingsService(

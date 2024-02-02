@@ -50,10 +50,10 @@ public class EmailService : IEmailService
     #endregion
 
     #region  Constructors
-    public EmailService(IContactsService contactService)
+    public EmailService(IContactsService contactService, IAppSettingsService settingsService)
     {
         this.contactService = contactService;
-        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
+        this.settingsService = settingsService;
     }
     #endregion
 

@@ -49,12 +49,13 @@ public partial class QueryResultViewModel : BaseViewModel
     #region Constructor
     public QueryResultViewModel(IFileService fileService, 
                                 IQueryProcessingService queryProcessingService, 
-                                IEmailService emailService)
+                                IEmailService emailService,
+                                IAppSettingsService settingsService)
     {
         this.fileService = fileService;
         this.emailService = emailService;
         this.queryProcessingService = queryProcessingService;
-        this.settingsService = ServiceHelper.Current.GetService<IAppSettingsService>();
+        this.settingsService = settingsService;
     }
     #endregion
 
