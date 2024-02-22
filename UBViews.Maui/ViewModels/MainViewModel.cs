@@ -158,7 +158,7 @@ public partial class MainViewModel : BaseViewModel
                 return;
             }
 
-            QueryInputDto = new QueryInputDto() { Text = "[Empty]", TokenCount = 0 };
+            this.QueryInputDto = new QueryInputDto() { Text = "[Empty]", TokenCount = 0 };
 
             AudioStatus = await settingsService.Get("audio_status", "off");
             AudioStreaming = await settingsService.Get("stream_audio", false);
