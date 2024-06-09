@@ -6,13 +6,13 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="UBViews" Publisher="CN=robre" Version="0.1.3.0" />
+  <Identity Name="64251AgondonterMedia.UBViews" Publisher="CN=159B4EF4-25E0-45FD-B9EF-470F34B731B8" Version="1.1.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="CC68130D-0A4C-44DF-9C3D-21DE94C6FE5F" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="0901223f-a927-4310-a2cb-be07587280b8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>UBViews</DisplayName>
-    <PublisherDisplayName>Uratia Book Viewer</PublisherDisplayName>
+    <PublisherDisplayName>Agondonter Media</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
 
