@@ -1,6 +1,7 @@
 ﻿namespace UBViews.Models.Ubml;
 
 using System.Text;
+using System.Text.RegularExpressions;
 
 using UBViews.Models.Notes;
 
@@ -46,7 +47,9 @@ public class Paragraph
         foreach (Run run in runsList)
         {
             var runStyle = run.Style;
-            var runText = run.Text;
+            //var runText = run.Text;
+            var runText = Regex.Replace(run.Text, @"(\u2012|\u2013|\u2014|\u2015)", "--");
+
             switch (runStyle)
             {
                 case "{StaticResource PID}":
