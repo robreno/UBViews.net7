@@ -10,7 +10,7 @@ namespace UBViews
     public partial class AppShell
     {
         #region Database Paths and Data Members 
-        // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalState
+        // C:\Users\robre\AppData\Local\Packages\UBViews_nfwqfzxenpb9w\LocalState
         private string _appLocalState = FileSystem.Current.AppDataDirectory;
         // C:\Users\robre\AppData\Local\Packages\UBViews_1s7hth42e283a\LocalCache
         private string _appLocalCache = FileSystem.Current.CacheDirectory;
