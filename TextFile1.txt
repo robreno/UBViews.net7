@@ -1,3 +1,9 @@
+
+1>Assets file 'C:\Archive\Projects\UBViews_2023\UBViews\QueryEngine\obj\project.assets.json' doesn't have a target for 'net7.0'. Ensure that restore has run and that you have included 'net7.0' in the TargetFrameworks for your project.
+1>Assets file 'C:\Archive\Projects\UBViews_2023\UBViews\QueryFilter\obj\project.assets.json' doesn't have a target for 'net7.0'. Ensure that restore has run and that you have included 'net7.0' in the TargetFrameworks for your project.
+1>Assets file 'C:\Archive\Projects\UBViews_2023\UBViews\LexParser\obj\project.assets.json' doesn't have a target for 'net7.0'. Ensure that restore has run and that you have included 'net7.0' in the TargetFrameworks for your project.
+
+
 F# DU in C#
 https://stackoverflow.com/questions/17254855/what-is-the-simplest-way-to-access-data-of-an-f-discriminated-union-type-in-c
 https://stackoverflow.com/questions/23843142/f-discriminated-union-usage-from-c-sharp
