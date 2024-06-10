@@ -175,7 +175,7 @@ public partial class MainViewModel : BaseViewModel
                 this.IsInitialized = true;
             }
 
-            string titleMessage = $"UBViews Home";
+            string titleMessage = $"UBViews";
             Title = titleMessage;
         }
         catch (Exception ex)
