@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <FsLexToolPath>..\..\src\FsLex\bin\$(Configuration)\net6.0</FsLexToolPath>
-    <FsYaccToolPath>..\..\src\FsYacc\bin\$(Configuration)\net6.0</FsYaccToolPath>
+    <!--<FsLexToolPath>..\..\src\FsLex\bin\$(Configuration)\net6.0</FsLexToolPath>
+    <FsYaccToolPath>..\..\src\FsYacc\bin\$(Configuration)\net6.0</FsYaccToolPath>-->
   </PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -42,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="7.0.0" />
+    <PackageReference Update="FSharp.Core" Version="7.0.200" />
   </ItemGroup>
 
 </Project>
