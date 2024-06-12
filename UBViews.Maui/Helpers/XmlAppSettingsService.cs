@@ -230,7 +230,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     }
 
     /// <summary>
-    /// Get<T>
+    /// Get_T
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
@@ -268,7 +268,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     }
 
     /// <summary>
-    /// Set<T>
+    /// Set_T
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
@@ -312,7 +312,7 @@ public partial class XmlAppSettingsService : IAppSettingsService
     }
 
     /// <summary>
-    /// SetCache<T>
+    /// SetCache_T
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
