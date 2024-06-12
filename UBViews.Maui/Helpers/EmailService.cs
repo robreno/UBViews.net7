@@ -31,6 +31,7 @@ public class EmailService : IEmailService
     private List<ContactDto> _contacts = new List<ContactDto>();
     //private int _tries = 0;
     //private int _maxTries = 3;
+
     private bool _contactsInitialized = false;
     private bool _recipientsInitialized = false;
     private bool _isInitialized = false;
