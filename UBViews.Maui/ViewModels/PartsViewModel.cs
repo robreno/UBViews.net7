@@ -12,6 +12,7 @@ namespace UBViews.ViewModels;
 
 public partial class PartsViewModel : BaseViewModel
 {
+    #region   Private Data Members
     /// <summary>
     /// 
     /// </summary>
@@ -22,18 +23,112 @@ public partial class PartsViewModel : BaseViewModel
     /// </summary>
     IFileService fileService;
 
+    /// <summary>
+    /// 
+    /// </summary>
     IAppSettingsService settingsService;
-    public PartsViewModel(IFileService fileService, IAppSettingsService settingsService)
+
+    /// <summary>
+    /// 
+    /// </summary>
+    IAudioService audioService;
+
+    readonly string _class = "PartsViewModel";
+    #endregion
+
+    #region   Constructor
+    public PartsViewModel(IFileService fileService, IAppSettingsService settingsService, IAudioService audioService)
     {
         this.fileService = fileService;
         this.settingsService = settingsService;
+        this.audioService = audioService;
     }
+    #endregion
 
+    #region  Observable Properties
     [ObservableProperty]
     bool isRefreshing;
 
     [ObservableProperty]
     bool showPaperContents;
+    #endregion
+
+    #region  Relay Commands
+    [RelayCommand]
+    async Task PartsPageAppearing()
+    {
+        string _method = "PartsPageAppearing";
+        try
+        {
+            if (contentPage == null)
+            {
+                return;
+            }
+
+            //mediaElement.Source = MediaSource.FromResource("BookIntro.mp3");
+            await audioService.SetContentPageAsync(contentPage);
+
+            string titleMessage = $"Parts of Book";
+            Title = titleMessage;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
+    async Task PartsPageDisappearing()
+    {
+        string _method = "PartsPageDisappearing";
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
+    async Task PartsPageUnloaded()
+    {
+        string _method = "PartsPageUnloaded";
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Cancel");
+        }
+    }
+
+    [RelayCommand]
+    async Task TappedGesture(string action)
+    {
+        string _method = "TappedGesture";
+        try
+        {
+            IsBusy = true;
+
+            if (contentPage == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
+        }
+        finally
+        {
+            IsBusy = false;
+            IsRefreshing = false;
+        }
+    }
 
     [RelayCommand]
     async Task NavigateTo(string id)
@@ -41,6 +136,7 @@ public partial class PartsViewModel : BaseViewModel
         if (IsBusy)
             return;
 
+        string _method = "NavigateTo";
         try
         {
             base.IsBusy = true;
@@ -94,7 +190,7 @@ public partial class PartsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
         }
         finally
         {
@@ -102,4 +198,5 @@ public partial class PartsViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
+    #endregion
 }
