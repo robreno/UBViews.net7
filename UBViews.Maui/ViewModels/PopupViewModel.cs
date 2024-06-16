@@ -434,47 +434,47 @@ public partial class PopupViewModel : BaseViewModel
         }
     }
 
-    //private async Task<Border> CreateNoteIconAsync(NoteEntry note)
-    //{
-    //    string _method = "CreateNoteIconAsyn";
-    //    try
-    //    {
-    //        var pid = note.Pid;
-    //        var locationId = note.LocationId;
-    //        var arry = locationId.Split('.');
-    //        var labelName = "_" + Int32.Parse(arry[0]).ToString("000")
-    //                        + "_" + Int32.Parse(arry[1]).ToString("000");
+    private async Task<Border> CreateNoteIconAsync(NoteEntry note)
+    {
+        string _method = "CreateNoteIconAsyn";
+        try
+        {
+            var pid = note.Pid;
+            var locationId = note.LocationId;
+            var arry = locationId.Split('.');
+            var labelName = "_" + Int32.Parse(arry[0]).ToString("000")
+                            + "_" + Int32.Parse(arry[1]).ToString("000");
 
-    //        Image image = new Image()
-    //        {
-    //            Source = "quick_note.png",
-    //            Aspect = Aspect.AspectFit
-    //        };
+            Image image = new Image()
+            {
+                Source = "quick_note.png",
+                Aspect = Aspect.AspectFit
+            };
 
-    //        Border border = new Border()
-    //        {
-    //            HeightRequest = 15,
-    //            WidthRequest = 15,
-    //            HorizontalOptions = LayoutOptions.Start,
+            Border border = new Border()
+            {
+                HeightRequest = 15,
+                WidthRequest = 15,
+                HorizontalOptions = LayoutOptions.Start,
 
-    //        };
-    //        border.SetValue(ToolTipProperties.TextProperty, $"Tap to open note(s) for {pid} ...");
-    //        border.Content = image;
+            };
+            border.SetValue(ToolTipProperties.TextProperty, $"Tap to open note(s) for {pid} ...");
+            border.Content = image;
 
-    //        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-    //        tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "OpenPopupNoteCommand");
-    //        tapGestureRecognizer.CommandParameter = $"{labelName}";
-    //        tapGestureRecognizer.NumberOfTapsRequired = 1;
-    //        border.GestureRecognizers.Add(tapGestureRecognizer);
+            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.SetBinding(TapGestureRecognizer.CommandProperty, "OpenPopupNoteCommand");
+            tapGestureRecognizer.CommandParameter = $"{labelName}";
+            tapGestureRecognizer.NumberOfTapsRequired = 1;
+            border.GestureRecognizers.Add(tapGestureRecognizer);
 
-    //        return border;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-    //        return null;
-    //    }
-    //}
+            return border;
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return null;
+        }
+    }
     private async Task SendToastAsync(string message)
     {
         try
