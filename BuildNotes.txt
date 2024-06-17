@@ -1,0 +1,36 @@
+
+Publish a .NET MAUI app for Windows
+https://learn.microsoft.com/en-us/dotnet/maui/windows/deployment/overview?view=net-maui-7.0
+
+Publish a .NET MAUI app for Windows with the CLI
+https://learn.microsoft.com/en-us/dotnet/maui/windows/deployment/publish-cli?view=net-maui-7.0
+https://learn.microsoft.com/en-us/dotnet/maui/windows/deployment/publish-cli
+
+Create a .NET MAUI Windows MSIX to Sideload Or Publish to the Microsoft Store (Gerald Versluis): https://youtu.be/FNwv_W3TtSU
+
+Powershell: 
+msbuild .\UBViews.Maui\UBViews.Maui.csproj /restore /t:Publish /p:TargetFramework=net7.0-windows10.0.19041.0 /p:configuration=release /p:GenerateAppxPackageOnBuild=true /p:Platform=x64
+
+msbuild .\UBViews.Maui\UBViews.Maui.csproj /restore /t:Publish /p:TargetFramework=net7.0-windows10.0.19041.0 /p:configuration=release /p:GenerateAppxPackageOnBuild=true /p:Platform=x64
+
+Warning
+
+Attempting to publish a .NET MAUI solution will result in the dotnet publish command attempting to publish each project in the solution individually, 
+which can cause issues when you've added other project types to your solution. Therefore, the dotnet publish command should be scoped to your .NET MAUI 
+app project.
+
+-f net7.0-windows10.0.19041.0 | net7.0-android | net7.0-ios | net7.0-maccatalyst
+
+-r 
+
+-c Release
+
+-p:RuntimeIdentifierOverride=win10-x64 | -p:RuntimeIdentifierOverride=win10-x86
+
+dotnet publish -f net7.0-windows10.0.19041.0 -c [Release | Debug] -p:RuntimeIdentifierOverride=win10-[x86 | x64]
+
+Publish a .NET MAUI app for Windows with Visual Studio
+https://learn.microsoft.com/en-us/dotnet/maui/windows/deployment/publish-visual-studio-folder?view=net-maui-7.0
+
+How to: Debug a Release Build
+https://learn.microsoft.com/en-us/cpp/build/how-to-debug-a-release-build?view=msvc-170
