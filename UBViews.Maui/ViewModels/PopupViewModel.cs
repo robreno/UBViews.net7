@@ -12,9 +12,7 @@ public partial class PopupViewModel : BaseViewModel
 {
     #region Private Data Members
     public Popup popupPage;
-
     public VerticalStackLayout vslPopupContent;
-
     readonly string _class = "PopupViewModel";
     #endregion
 
