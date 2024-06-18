@@ -24,10 +24,10 @@
                            Style="{StaticResource RegularParagraph}" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="This popup describes how to Search the Urantia book using the Query Engine."
+                                <Span Text="This popup describes how to search the Urantia book using the Query Engine."
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text="SharpSQLiteRepo Search Engine (SharpSQLiteRepoSE) uses a custom query"
+                                <Span Text="UBViews Search Engine (UBViewsSE) uses a custom query"
                                       Style="{StaticResource RegularSpan}" />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                                 <Span Text="language for searching the Urantia book. Besides the standard boolean"
