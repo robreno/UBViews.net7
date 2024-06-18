@@ -15,6 +15,9 @@ using UBViews.Services;
 using UBViews.Extensions;
 using UBViews.Views;
 
+// TODO:
+// See: https://siddharthsingh89.github.io/maui-recipes/xaml/2022-06-20-maui-images.html
+
 namespace UBViews.ViewModels
 {
     [QueryProperty(nameof(PaperDto), "PaperDto")]
