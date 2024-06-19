@@ -431,6 +431,137 @@ module QueryRepository =
                 let occList = objList |> Seq.toList |> List.map convertTermOccurrenceToModel
                 return Some(occList)
         } |> Async.StartAsTask
+
+module ContactRepository =
+
+    // Contacts Tables
+    [<Table("Contacts")>]
+    [<AllowNullLiteral>]
+    type Contact() =
+        [<PrimaryKey; AutoIncrement>]
+        member val Id = 0 with get, set
+        member val AutoSendEmail = false with get, set
+        member val FirstName = "" with get, set
+        member val LastName = "" with get, set
+        member val DisplayName = "" with get, set
+        member val Email = "" with get, set
+
+    // Conversion Methods
+    let convertModelToContact (obj: ContactObject) : Contact =
+        let _contact = new Contact()
+        _contact.Id <- obj.Id
+        _contact.AutoSendEmail <- obj.AutoSendEmail
+        _contact.FirstName <- obj.FirstName
+        _contact.LastName <- obj.LastName
+        _contact.DisplayName <- obj.DisplayName
+        _contact.Email <- obj.Email
+        _contact
+
+    let convertContactToModel (obj: Contact) : ContactObject =
+        { Id = obj.Id
+          AutoSendEmail = obj.AutoSendEmail
+          FirstName = obj.FirstName
+          LastName = obj.LastName
+          DisplayName = obj.DisplayName
+          Email = obj.Email }
+
+    /// <summary>
+    /// connect
+    /// </summary>
+    /// <remarks>Creates connection to database.</remarks>
+    /// <param name="dbPath"></param>
+    /// <returns>SQLiteAsyncConnection to database.</returns>
+    let connect dbPath = 
+        async {
+            let db = SQLiteAsyncConnection(SQLiteConnectionString dbPath)
+            let path = db.DatabasePath
+            do! db.CreateTableAsync<Contact>() |> Async.AwaitTask |> Async.Ignore
+            return db
+        }
+
+    /// <summary>
+    /// getContactsAsync 
+    /// </summary>
+    /// <remarks>Gets Contact.</remarks>
+    /// <param name="dbPath">Path to database.</param>
+    /// <returns>ContactObj.</returns>
+    let getContactsAsync dbPath = 
+        async {
+            let! database = connect dbPath
+            let! objs = database.Table<Contact>().ToListAsync() |> Async.AwaitTask
+            return objs |> Seq.toList |> List.map convertContactToModel
+        } |> Async.StartAsTask
+
+    /// <summary>
+    /// getContactByIdAsync
+    /// </summary>
+    /// <remarks>Gets Contact.</remarks>
+    /// <param name="dbPath">Path to database.</param>
+    /// <param name="id">ContactId.</param>
+    /// <returns>Some(ContactObj) or None.</returns>
+    let getContactByIdAsync dbPath id = 
+        async {
+            let! database = connect dbPath
+            let! obj = database.Table<Contact>().Where(fun q -> q.Id = id)
+                                                .FirstOrDefaultAsync() |> Async.AwaitTask
+            let opt = CheckForNull(obj)
+            if (opt.IsNone) then
+                return None
+            else
+                let objModel = opt.Value |> convertContactToModel
+                return Some(objModel)
+        } |> Async.StartAsTask
+
+    /// <summary>
+    /// saveQueryResult
+    /// </summary>
+    /// <remarks>Saves Contact.</remarks>
+    /// <param name="dbPath">Path to database.</param>
+    /// <param name="contactObj">ContactObject.</param>
+    /// <returns>ID of row added to database. This is the ContactId.</returns>
+    let saveContactAsync dbPath contactObj = 
+        async {
+            let! database = connect dbPath
+            let obj = convertModelToContact contactObj
+            do! database.InsertAsync(obj) |> Async.AwaitTask |> Async.Ignore
+            let! rowIdObj = database.ExecuteScalarAsync("select last_insert_rowid()", [||]) |> Async.AwaitTask
+            let rowId = rowIdObj |> int
+            return { contactObj with Id = rowId }
+        } |> Async.StartAsTask
+
+    /// <summary>
+    /// updateContact
+    /// </summary>
+    /// <remarks>Updates Contact.</remarks>
+    /// <param name="dbPath">Path to database.</param>
+    /// <param name="contactObj">ContactObject.</param>
+    /// <returns>ID of row updated in database. This is the ContactId.</returns>
+    //let updateContactAsync dbPath contactObj = 
+    //    async {
+    //        let! database = connect dbPath
+    //        let obj = convertModelToContact contactObj
+    //        do! database.UpdateAsync(obj) |> Async.AwaitTask |> Async.Ignore
+    //        let! rowIdObj = database.ExecuteScalarAsync("select last_update_rowid()", [||]) |> Async.AwaitTask
+    //        let rowId = rowIdObj |> int
+    //        return { contactObj with Id = rowId }
+    //    } |> Async.StartAsTask
+
+    /// <summary>
+    /// deleteContact
+    /// </summary>
+    /// <remarks>Deletes Contact.</remarks>
+    /// <param name="dbPath">Path to database.</param>
+    /// <param name="contactObj">ContactObject.</param>
+    /// <returns>ID of row deleted in database. This is the ContactId.</returns>
+    //let deleteContactAsync dbPath contactObj = 
+    //    async {
+    //        let! database = connect dbPath
+    //        let obj = convertModelToContact contactObj
+    //        do! database.DeleteAsync(obj) |> Async.AwaitTask |> Async.Ignore
+    //        let! rowIdObj = database.ExecuteScalarAsync("select last_delete_rowid()", [||]) |> Async.AwaitTask
+    //        let rowId = rowIdObj |> int
+    //        return { contactObj with Id = rowId }
+    //    } |> Async.StartAsTask
         
 
 
