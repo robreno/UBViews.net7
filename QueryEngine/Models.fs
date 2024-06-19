@@ -68,4 +68,12 @@ module Models =
         { Id: int
           Lexeme: string
           Stemmed: string }
+    
+    type ContactObject =
+        { Id: int
+          AutoSendEmail: bool
+          FirstName: string
+          LastName: string
+          DisplayName: string
+          Email: string }
 
