@@ -14,10 +14,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>UBViews.Maui</ApplicationTitle>
+		<ApplicationTitle>UBViews</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>ubviews.maui</ApplicationId>
+		<ApplicationId>com.agondontermedia.ubviews</ApplicationId>
 		<ApplicationIdGuid>aa91c2eb-6265-48b2-8835-b94bb1c7b79b</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -35,11 +35,51 @@
 		<PackageCertificateThumbprint>4FA5B4B395F826D17F15F4176249D4EB57E5F61E</PackageCertificateThumbprint>
 		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
 		<AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-		<GenerateTestArtifacts>False</GenerateTestArtifacts>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>UBViews</ApplicationTitle>
+	  <ApplicationId>com.agondontermedia.ubviews</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -71,6 +111,7 @@
 	<ItemGroup>
 	  <Compile Remove="Conrols\PaperHeadingControl.xaml.cs" />
 	  <Compile Remove="Converters\DurationDisplayConverter.cs" />
+	  <Compile Remove="Helpers\NoteService.cs" />
 	  <Compile Remove="Helpers\RepositoryService.cs" />
 	  <Compile Remove="Models\PaperTitle.cs" />
 	  <Compile Remove="Models\Query\_PaperDto.cs" />

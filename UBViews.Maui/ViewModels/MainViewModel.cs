@@ -213,36 +213,6 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task TappedGesture(string action)
-    {
-        string _method = "TappedGesture";
-        try
-        {
-            IsBusy = true;
-
-            if (contentPage == null)
-            {
-                return;
-            }
-
-            if (AudioStatus.Equals("off"))
-            {
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
-            return;
-        }
-        finally
-        {
-            IsBusy = false;
-            IsRefreshing = false;
-        }
-    }
-
-    [RelayCommand]
     async Task SubmitQuery(string queryString)
     {
         string _method = "SubmitQuery";

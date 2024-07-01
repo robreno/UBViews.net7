@@ -74,7 +74,7 @@ namespace UBViews
             
             builder.Services.AddTransient<IContactsService>((e) => new XmlContactsService(new FileService()));
 
-            builder.Services.AddTransient<INoteService>((e) => new NoteService(new FileService()));
+            //builder.Services.AddTransient<INoteService>((e) => new NoteService(new FileService()));
 
             // Connectivity Service
             builder.Services.AddSingleton<IConnectivity>((e) => Connectivity.Current);
