@@ -120,7 +120,9 @@
 	  <Compile Remove="Services\ISubscriberService.cs" />
 	  <Compile Remove="State\ContentsFilter.cs" />
 	  <Compile Remove="ViewModels\NotesViewModel.cs" />
+	  <Compile Remove="ViewModels\QueryInputViewModel.cs" />
 	  <Compile Remove="Views\NotesPage.xaml.cs" />
+	  <Compile Remove="Views\QueryInputPage.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -137,6 +139,7 @@
 	<ItemGroup>
 	  <MauiXaml Remove="Conrols\PaperHeadingControl.xaml" />
 	  <MauiXaml Remove="Views\NotesPage.xaml" />
+	  <MauiXaml Remove="Views\QueryInputPage.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>

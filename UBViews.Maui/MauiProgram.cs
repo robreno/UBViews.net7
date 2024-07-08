@@ -101,8 +101,9 @@ namespace UBViews
             builder.Services.AddTransient<ContentTitlesViewModel>();
             builder.Services.AddTransient<ContentTitlesPage>();
 
-            builder.Services.AddTransient<QueryInputViewModel>();
-            builder.Services.AddTransient<QueryInputPage>();
+            //builder.Services.AddTransient<QueryInputViewModel>();
+            //builder.Services.AddTransient<QueryInputPage>();
+
             builder.Services.AddTransient<QueryResultViewModel>();
             builder.Services.AddTransient<QueryResultPage>();
             builder.Services.AddTransient<QueryResultPage2>();

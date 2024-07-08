@@ -20,7 +20,7 @@ namespace UBViews
             Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
             //Routing.RegisterRoute(nameof(NotesPage), typeof(NotesPage));
 
-            Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
+            //Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
             Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
             Routing.RegisterRoute(nameof(QueryResultPage2), typeof(QueryResultPage2));
 
