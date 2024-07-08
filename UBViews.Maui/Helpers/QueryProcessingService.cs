@@ -34,6 +34,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     public ObservableCollection<QueryLocationDto> QueryLocationsDto { get; } = new();
 
     bool _queryParsingSuccessful = false;
+    // TODO: Not used; see Cstor
     bool _queryLocationsDtoInitiaized = false;
 
     IFSRepositoryService repositoryService;
@@ -67,7 +68,7 @@ public partial class QueryProcessingService : IQueryProcessingService
     #region  Initialize Query Results
     private async Task InitializeQueryResults()
     {
-        string _method = "nitializeQueryResults";
+        string _method = "InitializeQueryResults";
         try
         {
             QueryResults = await repositoryService.GetQueryResultsAsync();
