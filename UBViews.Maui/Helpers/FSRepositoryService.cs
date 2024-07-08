@@ -634,7 +634,7 @@ namespace UBViews.Helpers
 
         #region Database Helper Methods
         /// <summary>
-        /// RunQuery
+        /// RunQueryAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <returns></returns>
@@ -655,7 +655,7 @@ namespace UBViews.Helpers
         }
 
         /// <summary>
-        /// 
+        /// ProcessTokenPostingListAsync
         /// </summary>
         /// <param name="queryString"></param>
         /// <param name="query"></param>
