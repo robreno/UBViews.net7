@@ -36,6 +36,8 @@ namespace UBViews.Helpers
         private string queryDB_Path = string.Empty;
         private string postingDB_Path = string.Empty;
         QueryService _queryService;
+
+        readonly string _class = "FSRepositoryService";
         #endregion
 
         public FSRepositoryService() 
@@ -48,6 +50,7 @@ namespace UBViews.Helpers
         #region Database Initialization
         public async Task InititializeDatabase(IFSRepositoryService.InitOptions options)
         {
+            string _method = "InititializeDatabase";
             try
             {
                 switch (options)
@@ -66,7 +69,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
             }
         }
         #endregion
@@ -79,7 +82,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<int> SaveQueryResultAsync(QueryResult queryResult)
         {
-            string methodName = "SaveQueryResultAsync";
+            string _method = "SaveQueryResultAsync";
             try
 
             {
@@ -100,7 +103,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return 0;
             }
         }
@@ -112,7 +115,7 @@ namespace UBViews.Helpers
         /// <returns>QueryResultObject rowId.</returns>
         public async Task<int> SaveQueryResultAsync(QueryResultDto queryResultDto)
         {
-            string methodName = "SaveQueryResultAsync";
+            string _method = "SaveQueryResultAsync";
             try
             {
                 var obj = await MapQueryResultDtoTotObj(queryResultDto);
@@ -122,7 +125,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return 0;
             }
         }
@@ -134,7 +137,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<int> SaveQueryResultAsync(XElement queryResultElm)
         {
-            string methodName = "SaveQueryResultLocationsAsync";
+            string _method = "SaveQueryResultLocationsAsync";
             try
             {
                 var locationCount = queryResultElm.Attribute("locationCount").Value;
@@ -220,7 +223,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return 0;
             }
         }
@@ -232,7 +235,7 @@ namespace UBViews.Helpers
         /// <returns>(bool true or false, QueryResultDto or null)</returns>
         public async Task<(bool, QueryResultDto)> QueryResultExistsAsync(string queryString)
         {
-            string methodName = "QueryResultExistsAsync";
+            string _method = "QueryResultExistsAsync";
             try
             {
                 var obj = await QueryRepository.getQueryResultByStringAsync(queryDB_Path, queryString);
@@ -259,7 +262,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return (false, null);
             }
         }
@@ -270,7 +273,7 @@ namespace UBViews.Helpers
         /// <returns>List of QueryResultDto</returns>
         public async Task<List<QueryResultDto>> GetQueryResultsAsync()
         {
-            string methodName = "GetQueryResultsAsync";
+            string _method = "GetQueryResultsAsync";
             try
             {
                 var queryResultList = await QueryRepository.getQueryResultsAsync(queryDB_Path);
@@ -284,7 +287,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -296,7 +299,7 @@ namespace UBViews.Helpers
         /// <returns>QueryResultLocationsDto</returns>
         public async Task<QueryResultLocationsDto> GetQueryResultByStringAsync(string queryString)
         {
-            string methodName = "GetQueryResultByQueryStringAsync";
+            string _method = "GetQueryResultByQueryStringAsync";
             try
             {
                 QueryResultLocationsDto queryResultLocationsDto = null;
@@ -310,7 +313,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -322,7 +325,7 @@ namespace UBViews.Helpers
         /// <returns>QueryResultLocationsDto</returns>
         public async Task<QueryResultLocationsDto> GetQueryResultByIdAsync(int id)
         {
-            string methodName = "GetQueryResultByQueryIdAsync";
+            string _method = "GetQueryResultByQueryIdAsync";
             try
             {
                 QueryResultLocationsDto queryResultLocations = null;
@@ -335,7 +338,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -346,6 +349,7 @@ namespace UBViews.Helpers
         /// <returns>List of QueryCommandDto</returns>
         public async Task<List<QueryCommandDto>> GetQueryCommandsAsync()
         {
+            string _method = "GetQueryCommandsAsync";
             try
             {
                 List<QueryCommandDto> queryCommands = new List<QueryCommandDto>();
@@ -368,7 +372,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Exception raised =>", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -379,7 +383,7 @@ namespace UBViews.Helpers
         /// <returns>List of PostingList</returns>
         public async Task<List<PostingListDto>> GetPostingListsAsync()
         {
-            string methodName = "GetPostingsAsync";
+            string _method = "GetPostingsAsync";
             try
             {
                 var postingLists = await QueryEngine.PostingRepository.getPostingListsAsync(postingDB_Path);
@@ -393,7 +397,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -405,7 +409,7 @@ namespace UBViews.Helpers
         /// <returns>PostingList</returns>
         public async Task<PostingListDto> GetPostingListByLexemeAsync(string lexeme)
         {
-            string methodName = "GetPostingListByLexemeAsync";
+            string _method = "GetPostingListByLexemeAsync";
             try
             {
                 PostingListDto postingListDto = null;
@@ -419,7 +423,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -430,7 +434,7 @@ namespace UBViews.Helpers
         /// <returns>List of TermOccurrenceDto</returns>
         public async Task<List<TermOccurrenceDto>> GetTermOccurrencesAsync()
         {
-            string methodName = "GetTermOccurrencesAsync";
+            string _method = "GetTermOccurrencesAsync";
             try
             {
                 List<TermOccurrenceDto> dtoList = new List<TermOccurrenceDto>();
@@ -449,7 +453,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -461,7 +465,7 @@ namespace UBViews.Helpers
         /// <returns>List of TermOccurrence</returns>
         public async Task<List<TermOccurrenceDto>> GetTermOccurrencesByQueryResultIdAsync(int id)
         {
-            string methodName = "GetTermOccurrencesByQueryResultIdAsync";
+            string _method = "GetTermOccurrencesByQueryResultIdAsync";
             try
             {
                 List<TermOccurrenceDto> dtoList = new List<TermOccurrenceDto>();
@@ -480,7 +484,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -492,7 +496,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TokenOccurrenceDto>> GetTokenOccurrencesByPostingListIdAsync(int postingId)
         {
-            string methodName = "GetTokenOccurrencesByPostingListIdAsync";
+            string _method = "GetTokenOccurrencesByPostingListIdAsync";
             try
             {
                 List<TokenOccurrenceDto> dtoList = new List<TokenOccurrenceDto>();
@@ -510,7 +514,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -521,7 +525,7 @@ namespace UBViews.Helpers
         /// <returns>TokenStemDto List</returns>
         public async Task<List<TokenStemDto>> GetTokenStemsAsync()
         {
-            string methodName = "GetTokenStemsAsync";
+            string _method = "GetTokenStemsAsync";
             try
             {
                 List<TokenStemDto> dtoList = null; ;
@@ -535,7 +539,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -547,7 +551,7 @@ namespace UBViews.Helpers
         /// <returns>TokenStem</returns>
         public async Task<TokenStemDto> GetTokenStemAsync(string lexeme)
         {
-            string methodName = "GetTokenStemAsync";
+            string _method = "GetTokenStemAsync";
             try
             {
                 TokenStemDto dto = null;
@@ -561,7 +565,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -573,7 +577,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<PostingListDto>> GetPostingListsByStemAsync(string stem)
         {
-            string methodName = "GetPostingListsByStemAsync";
+            string _method = "GetPostingListsByStemAsync";
             try
             {
                 var postingLists = await PostingRepository.getPostingListsByStemAsync(postingDB_Path, stem);
@@ -592,7 +596,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -604,7 +608,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<List<TokenOccurrenceDto>> GetTokenOccurrencesByStemAsync(string stem)
         {
-            string methodName = "GetTokenOccurrencesByStemAsync";
+            string _method = "GetTokenOccurrencesByStemAsync";
             try
             {
                 var postingLists = await GetPostingListsByStemAsync(stem);
@@ -622,7 +626,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -636,7 +640,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<TokenPostingList> RunQueryAsync(string queryString)
         {
-            string methodName = "RunQueryAsync";
+            string _method = "RunQueryAsync";
             try
             {
                 var query = await LexParser.LexParser.parseQueryStringAsync(queryString);
@@ -645,7 +649,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -659,7 +663,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<XElement> ProcessTokenPostingListAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
         {
-            string methodName = "ProcessTokenPostingListAsync";
+            string _method = "ProcessTokenPostingListAsync";
             try
             {
                 var _basePL = tpl.BasePostingList.Head;
@@ -669,7 +673,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
@@ -683,7 +687,7 @@ namespace UBViews.Helpers
         /// <returns></returns>
         public async Task<(QueryResultLocationsDto, XElement)> GetQueryResultLocationsAsync(string queryString, UBViews.Query.Ast.Query query, TokenPostingList tpl)
         {
-            string methodName = "ProcessTokenPostingListAsync";
+            string _method = "ProcessTokenPostingListAsync";
             try
             {
                 QueryResultLocationsDto dto = null;
@@ -695,7 +699,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return (null, null);
             }
         }
@@ -705,7 +709,7 @@ namespace UBViews.Helpers
         // obj -> dto
         private async Task<QueryResultDto> MapQueryResultObjTotDto(QueryResultObject obj)
         {
-            string methodName = "MapQueryResultObjToDto";
+            string _method = "MapQueryResultObjToDto";
             try
             {
                 var queryResultDto = new QueryResultDto()
@@ -723,13 +727,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<QueryResultLocationsDto> MapQueryResultObjToDto(QueryResultObject queryResultObj)
         {
-            string methodName = "MapQueryResultObjToDto";
+            string _method = "MapQueryResultObjToDto";
             try
             {
                 var queryResultDto = new QueryResultLocationsDto()
@@ -781,13 +785,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<PostingListDto> MapPostingListObjToDto(PostingListObject postingListObj)
         {
-            string methodName = "MapPostingListObjToDto";
+            string _method = "MapPostingListObjToDto";
             try
             {
                 var postingListDto = new PostingListDto()
@@ -799,13 +803,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<TermOccurrenceDto> MapTermOccurrenceObjToDto(TermOccurrenceObject termOccurrenceObj)
         {
-            string methodName = "MapTermOccurrenceObjToDto";
+            string _method = "MapTermOccurrenceObjToDto";
             try
             {
                 var dto = new TermOccurrenceDto()
@@ -824,13 +828,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<TokenOccurrenceDto> MapTokenOccurrenceObjToDto(TokenOccurrenceObject tokenOccurrenceObj)
         {
-            string methodName = "MapTokenOccurrenceObjToDto";
+            string _method = "MapTokenOccurrenceObjToDto";
             try
             {
                 var dto = new TokenOccurrenceDto()
@@ -848,13 +852,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<TokenStemDto> MapTokenStemObjToDto(TokenStemObject tokenStemObj)
         {
-            string methodName = "MapTokenStemObjToDto";
+            string _method = "MapTokenStemObjToDto";
             try
             {
                 var dto = new TokenStemDto()
@@ -867,14 +871,14 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         // dto -> obj
         private async Task<QueryResultObject> MapQueryResultDtoTotObj(QueryResultDto dto)
         {
-            string methodName = "MapQueryResultObjTotDto";
+            string _method = "MapQueryResultObjTotDto";
             try
             {
                 QueryResultObject obj = new QueryResultObject(dto.Id,
@@ -889,13 +893,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<TermOccurrenceObject> MapTermOccurrenceDtoTotObj(TermOccurrenceDto dto)
         {
-            string methodName = "MapTermOccurrenceDtoTotObj";
+            string _method = "MapTermOccurrenceDtoTotObj";
             try
             {
                 TermOccurrenceObject obj = new TermOccurrenceObject(dto.Id,
@@ -911,13 +915,13 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
         private async Task<QueryResultLocationsDto> MapQueryResultElmToDto(XElement queryResultElm)
         {
-            string methodName = "MapQueryResultElmToDto";
+            string _method = "MapQueryResultElmToDto";
             try
             {
                 var queryId = Int32.Parse(queryResultElm.Attribute("id").Value);
@@ -980,7 +984,7 @@ namespace UBViews.Helpers
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert($"Exception raised => {methodName}.", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
                 return null;
             }
         }
