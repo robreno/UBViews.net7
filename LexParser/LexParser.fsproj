@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst;</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-    <!--<FsLexToolPath>..\..\src\FsLex\bin\$(Configuration)\net6.0</FsLexToolPath>
-    <FsYaccToolPath>..\..\src\FsYacc\bin\$(Configuration)\net6.0</FsYaccToolPath>-->
+    <!--<FsLexToolPath>..\src\FsLex\bin\$(Configuration)\net7.0</FsLexToolPath>
+    <FsYaccToolPath>..\src\FsYacc\bin\$(Configuration)\net7.0</FsYaccToolPath>-->
   </PropertyGroup>
 
   <!--<Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
-  <Import Project="..\..\src\FsLexYacc.Build.Tasks\FsLexYacc.targets" />-->
+  <Import Project="..\src\FsLexYacc.Build.Tasks\FsLexYacc.targets" />-->
 
   <ItemGroup>
     <!--<FsYacc Include="Parser.fsy">
