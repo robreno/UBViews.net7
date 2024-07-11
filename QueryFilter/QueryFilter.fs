@@ -18,7 +18,7 @@ module QueryFilterService =
     let minus    = set [|'-';|]
     let nbhyph   = set [|'‑';|]
     let alphanumeric = atozlSeq + atozuSeq + numeric
-    let allVaidCharsSet = alphanumeric + ops + nbhyph
+    let allVaidCharsSet = alphanumeric + minus + ops + nbhyph
 
     // failwith strings
     let invalidStringsSet = 
@@ -26,7 +26,7 @@ module QueryFilterService =
             ["and and"; "or or"; "and filterby"; "or filterby";]
 
     // TODO: Create Regex and get match and capture
-    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?"; "-";|]
+    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?";|]
         
 
     let containsInvalidChars (queryString : string) : bool =
