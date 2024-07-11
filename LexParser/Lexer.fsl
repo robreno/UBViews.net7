@@ -22,7 +22,7 @@ let newline = ('\n' | '\r' '\n')
 
 // Just grab a sequence of characters to form a token. We will turn that into
 // a 'document token' later.
-let wordcharacter = ['a'-'z''A'-'Z''\'']
+let wordcharacter = ['a'-'z''A'-'Z''\'''-']
 let softcharacter = ['‑']
 let term = (wordcharacter | softcharacter)+
 
