@@ -397,6 +397,7 @@ public partial class QueryProcessingService : IQueryProcessingService
             }
             else
             {
+                // Replace dash/minus with nonbreaking hyphen
                 if (QueryInputString.Contains('-'))
                 {
                     QueryInputString = QueryInputString.Replace('-', '‑');
