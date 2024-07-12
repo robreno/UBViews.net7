@@ -279,6 +279,8 @@ public partial class QueryProcessingService : IQueryProcessingService
         string _method = "ParseQueryAsync";
         try
         {
+            this.QueryInputString = queryString;
+
             var isSuccess = false;
             var errorMessage = string.Empty;
             var message = string.Empty;
@@ -395,6 +397,11 @@ public partial class QueryProcessingService : IQueryProcessingService
             }
             else
             {
+                if (QueryInputString.Contains('-'))
+                {
+                    QueryInputString = QueryInputString.Replace('-', '‑');
+                }
+
                 var astQuery = await parserService.ParseQueryAsync(QueryInputString);
                 var query = astQuery.Head;
                 QueryExpression = await parserService.QueryToStringAsync(query);

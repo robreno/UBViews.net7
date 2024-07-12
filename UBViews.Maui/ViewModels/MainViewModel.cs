@@ -247,11 +247,6 @@ public partial class MainViewModel : BaseViewModel
                 return;
             }
 
-            if (queryInputString.Contains('-'))
-            {
-                QueryInputString = queryString.Replace('-', '‑');
-            }
-
             (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
             if (parsingSuccessful)
             {
