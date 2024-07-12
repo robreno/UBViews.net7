@@ -218,6 +218,12 @@ public partial class MainViewModel : BaseViewModel
         string _method = "SubmitQuery";
         try
         {
+            // Replace dash/minus with nonbreaking hyphen
+            if (queryString.Contains('-'))
+            {
+                queryString = queryString.Replace('-', '‑');
+            }
+
             // temple and prostitutes
             // prostitutes and temple
             // foreword and orvonton
