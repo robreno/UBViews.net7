@@ -1,3 +1,7 @@
+Tenet ID:
+Client ID:
+Client Key:
+
 #Sideloading .MET Maui App
 
 Gerald Versluis on YouTube: 
