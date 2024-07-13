@@ -397,12 +397,6 @@ public partial class QueryProcessingService : IQueryProcessingService
             }
             else
             {
-                // Replace dash/minus with nonbreaking hyphen
-                //if (QueryInputString.Contains('-'))
-                //{
-                //    QueryInputString = QueryInputString.Replace('-', '‑');
-                //}
-
                 var astQuery = await parserService.ParseQueryAsync(QueryInputString);
                 var query = astQuery.Head;
                 QueryExpression = await parserService.QueryToStringAsync(query);
