@@ -1,21 +1,3 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Contacts count="3" lastId="3">
-  <Contact id="1" autoSendEmail="true">
-    <FirstName>Rob</FirstName>
-    <LastName>Reno</LastName>
-    <DisplayName>RR</DisplayName>
-    <Email>robreno@hotmail.com</Email>
-  </Contact>
-  <Contact id="2" autoSendEmail="false">
-    <FirstName>Brad</FirstName>
-    <LastName>Garner</LastName>
-    <DisplayName>BG</DisplayName>
-    <Email>brad@urantia.org</Email>
-  </Contact>
-  <Contact id="3" autoSendEmail="false">
-    <FirstName>Pat</FirstName>
-    <LastName>Sonti</LastName>
-    <DisplayName>PS</DisplayName>
-    <Email>ps010@my.tamuct.edu</Email>
-  </Contact>
 </Contacts>
