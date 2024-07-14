@@ -67,34 +67,6 @@ MSBuidlCommand:
 MSBuild Command:
 	msbuild .\UBViews.Maui\UBViews.csproj /restore /t:Publish /p:TargetFramework=net7.0-windows10.0.19041.0 /p:configuration=debug /p:GenerateAppxPackageOnBuild=true /p:Platform=x64 /p:AppxPackageSigningEnabled=true /p:PackageCertificateThumbprint="2565189F4FEF403D012593F201FD52B0642B3843" /p:PackageCertificatePassword="P@ssW0rD!"
 
-
-Project "C:\Archive\Projects\UBViews_2023\UBViews\UBViews.Maui\UBViews.Maui.csproj" (1:10) is building "C:\Archive\Projects\U
-BViews_2023\UBViews\UBViews.QueryEngine\UBViews.LexParser.fsproj" (2:6) on node 1 (default targets).
-
-C:\Program Files\dotnet\sdk\7.0.203\Sdks\Microsoft.NET.Sdk\targets\Microsoft.PackageDependencyResolution.targets(266,5): erro
-r NETSDK1005: Assets file 'C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\obj\project.assets.json' doesn't have
- a target for 'net7.0'. Ensure that restore has run and that you have included 'net7.0' in the TargetFrameworks for your proj
-ect. [C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\UBViews.LexParser.fsproj]
-
-Done Building Project "C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\UBViews.LexParser.fsproj" (default target
-s) -- FAILED.
-
-Done Building Project "C:\Archive\Projects\UBViews_2023\UBViews\UBViews.Maui\UBViews.Maui.csproj" (Publish target(s)) -- FAIL
-ED.
-
-Build FAILED.
-
-"C:\Archive\Projects\UBViews_2023\UBViews\UBViews.Maui\UBViews.Maui.csproj" (Publish target) (1:10) ->
-"C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\UBViews.LexParser.fsproj" (default target) (2:6) ->
-(ResolvePackageAssets target) ->
-  C:\Program Files\dotnet\sdk\7.0.203\Sdks\Microsoft.NET.Sdk\targets\Microsoft.PackageDependencyResolution.targets(266,5): er
-ror NETSDK1005: Assets file 'C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\obj\project.assets.json' doesn't ha
-ve a target for 'net7.0'. Ensure that restore has run and that you have included 'net7.0' in the TargetFrameworks for your pr
-oject. [C:\Archive\Projects\UBViews_2023\UBViews\UBViews.QueryEngine\UBViews.LexParser.fsproj]
-
-    0 Warning(s)
-    1 Error(s)
-
 Install Certificate into Root store:
 	1. Install certificate to LocalMachine
 	2. Certificate Import Wizard -> Place all certificates in the following store -> Browse -> 
