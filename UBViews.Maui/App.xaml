@@ -504,8 +504,8 @@
                 <Setter Property="Stroke" Value="Blue" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
                 <Setter Property="StrokeThickness" Value="3" />
-                <Setter Property="Padding" Value="10" />
-                <Setter Property="Margin" Value="10,0,10,0" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="10,5,10,5" />
                 <Setter Property="WidthRequest" Value="600" />
                 <Setter Property="MinimumWidthRequest" Value="600" />
                 <Setter Property="MaximumWidthRequest" Value="800" />
