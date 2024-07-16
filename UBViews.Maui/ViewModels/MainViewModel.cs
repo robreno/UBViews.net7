@@ -218,12 +218,6 @@ public partial class MainViewModel : BaseViewModel
         string _method = "SubmitQuery";
         try
         {
-            // Replace dash/minus with nonbreaking hyphen
-            if (queryString.Contains('-'))
-            {
-                queryString = queryString.Replace('-', '‑');
-            }
-
             // temple and prostitutes
             // prostitutes and temple
             // foreword and orvonton
@@ -234,53 +228,61 @@ public partial class MainViewModel : BaseViewModel
             bool runPreCheckSilent = await settingsService.Get("run_precheck_silent", true);
 
             QueryInputString = queryString;
-            (bool result, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
-                                                                                     runPreCheckSilent);
-            if (message.Contains("="))
-            {
-                if (message.Contains("Audio status"))
-                {
-                    AudioStatus = await settingsService.Get("audio_status", "off");
-                }
-                else if (message.Contains("Audio streaming"))
-                {
-                    AudioStreaming = await settingsService.Get("stream_audio", false);
-                }
-                else if (message.Contains("Audio download"))
-                {
-                    AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
-                }
-                return;
-            }
+            (bool isValid, message) = await queryProcessingService.PreCheckQueryAsync(QueryInputString,
+                                                                                      runPreCheckSilent);
 
-            (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
-            if (parsingSuccessful)
+            if (!isValid)
             {
-                QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
-                QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
-                TermList = await queryProcessingService.GetTermListAsync();
-
-                (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
-                if (isSuccess)
-                {
-                    if (QueryResultExists)
-                    {
-                        // Query result from history successfully
-                        // Navigate to results page
-                    }
-                    else
-                    {
-                        // New query run successfully
-                        // Navigate to results page
-                    }
-                    await NavigateTo("QueryResults");
-                }
+                await App.Current.MainPage.DisplayAlert($"Invalid Query String => ", message, "Ok");
             }
-            else // Query parsing error
+            else
             {
-                string _msg = $"{message}";
-                QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
-                    _msg, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
+                if (message.Contains("="))
+                {
+                    if (message.Contains("Audio status"))
+                    {
+                        AudioStatus = await settingsService.Get("audio_status", "off");
+                    }
+                    else if (message.Contains("Audio streaming"))
+                    {
+                        AudioStreaming = await settingsService.Get("stream_audio", false);
+                    }
+                    else if (message.Contains("Audio download"))
+                    {
+                        AudioDownloadStatus = await settingsService.Get("audio_download_status", "off");
+                    }
+                    return;
+                }
+
+                (parsingSuccessful, message) = await queryProcessingService.ParseQueryAsync(QueryInputString);
+                if (parsingSuccessful)
+                {
+                    QueryInputString = await queryProcessingService.GetQueryInputStringAsync();
+                    QueryExpression = await queryProcessingService.GetQueryExpressionAsync();
+                    TermList = await queryProcessingService.GetTermListAsync();
+
+                    (bool isSuccess, QueryResultExists, QueryLocations) = await queryProcessingService.RunQueryAsync(QueryInputString);
+                    if (isSuccess)
+                    {
+                        if (QueryResultExists)
+                        {
+                            // Query result from history successfully
+                            // Navigate to results page
+                        }
+                        else
+                        {
+                            // New query run successfully
+                            // Navigate to results page
+                        }
+                        await NavigateTo("QueryResults");
+                    }
+                }
+                else // Query parsing error
+                {
+                    string _msg = $"{message}";
+                    QueryInputString = await App.Current.MainPage.DisplayPromptAsync("Query Parsing Error",
+                        _msg, "Ok", "Cancel", "Retry Query here ..", -1, null, "");
+                }
             }
         }
         catch (Exception ex)
