@@ -26,7 +26,7 @@ module QueryFilterService =
             ["and and"; "or or"; "and filterby"; "or filterby";]
 
     // TODO: Create Regex and get match and capture
-    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?";|]
+    let invalidCharStrings = set [| "/"; "\\"; "?"; "~ "; "/"; "\\"; "?"; "-";|]
         
 
     let containsInvalidChars (queryString : string) : bool =
