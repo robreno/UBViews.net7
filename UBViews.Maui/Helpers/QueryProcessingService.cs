@@ -128,9 +128,18 @@ public partial class QueryProcessingService : IQueryProcessingService
         try
         {
             bool isValidCommand = true;
-            string message = queryString;
-            queryString = string.IsNullOrEmpty(queryString) ? "" : queryString.Trim();
-            if (queryString.Contains("="))
+            string message = "Valid Query: " + queryString;
+            QueryInputString = queryString = string.IsNullOrEmpty(queryString) ? "" : queryString.Trim();
+
+            // If query string is empty or null return immediately
+            if (string.IsNullOrEmpty(QueryInputString))
+            {
+                isValidCommand = false;
+                message = "Query String is empty. Please enter a valid query.";
+                await ClearQuerySearchBarAsync(contentPage);
+            }
+            // Handle secret commands
+            else if (queryString.Contains("="))
             {
                 var arry = queryString.Split("=");
                 var command = arry[0];
@@ -175,10 +184,11 @@ public partial class QueryProcessingService : IQueryProcessingService
                 }
                 await ClearQuerySearchBarAsync(contentPage);
             }
-            else if (string.IsNullOrEmpty(queryString))
+            // Query string is not null or empty so normalize it
+            else
             {
-                isValidCommand = false;
-                message = "Query String is Null or Empty. Please enter a valid query.";
+                await NormalizeQueryStringAsync(queryString);
+                message = QueryInputString;
             }
             return (isValidCommand, message);
         }
@@ -279,7 +289,7 @@ public partial class QueryProcessingService : IQueryProcessingService
         string _method = "ParseQueryAsync";
         try
         {
-            this.QueryInputString = queryString;
+            QueryInputString = queryString;
 
             var isSuccess = false;
             var errorMessage = string.Empty;
@@ -605,6 +615,11 @@ public partial class QueryProcessingService : IQueryProcessingService
                 sb.Append(t + " ");
             }
             qs = sb.ToString().Trim();
+            // Replace dash/minus with nonbreaking hyphen
+            if (qs.Contains('-'))
+            {
+                qs = qs.Replace('-', '‑');
+            }
             QueryInputDto = new QueryInputDto() { Text = qs, TokenCount = tokens.Length };
             QueryInputString = QueryInputDto.Text;
         }
