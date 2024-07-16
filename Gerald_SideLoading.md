@@ -4,6 +4,8 @@ Invalid package family name: 64251AgondonterMedia.63599A5E40A94_bgb1pwhsvttky (e
 
 Invalid package publisher name: CN=agmedia (expected: CN=159B4EF4-25E0-45FD-B9EF-470F34B731B8)
 
+Fix: Removed all self-created certificates that were associated wtih the App. 
+
 <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 
 <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
