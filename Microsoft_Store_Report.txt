@@ -1,0 +1,25 @@
+
+Package Warning:
+
+Package acceptance validation warning: The following restricted capabilities require approval before you can use them in your app: runFullTrust.
+
+See: https://learn.microsoft.com/en-us/answers/questions/1115168/why-does-a-net-maui-app-for-windows-10-require-the
+
+Email Repor:
+
+10.1.2.10 Functionality	
+
+The product crashes at launch. The issue was observed on multiple devices running Windows build 22631.3737. 
+
+Observed On: Dell Latitude 5520, Microsoft
+surface laptop Go
+Tested On: Dell Latitude 5520, Microsoft
+surface laptop Go
+Error Message: N/A
+
+ 
+Tip: A Windows product may run flawlessly during development and testing, but after submitting it for certification testing, the product may crash or perform unexpectedly. Along these same lines, your product may not perform as expected after publication. You can contact Developer Support at http://aka.ms/storesupport if you need assistance with troubleshooting.
+
+Tested devices: Dell Latitude 5400
+
+See: https://github.com/dotnet/docs-maui/issues/1275
