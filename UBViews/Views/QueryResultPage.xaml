@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behavior="clr-namespace:UBViews.Behaviors"
-             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              xmlns:model="clr-namespace:UBViews.Models"
+             xmlns:viewmodel="clr-namespace:UBViews.ViewModels"
              x:Class="UBViews.Views.QueryResultPage"
              Title="{Binding Title}"
              x:DataType="viewmodel:QueryResultViewModel">
