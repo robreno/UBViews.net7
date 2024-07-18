@@ -1,27 +1,3 @@
-Current Errors:
-
-Invalid package family name: 64251AgondonterMedia.63599A5E40A94_bgb1pwhsvttky (expected: 64251AgondonterMedia.63599A5E40A94_eybjt1st3sczw)
-
-Invalid package publisher name: CN=agmedia (expected: CN=159B4EF4-25E0-45FD-B9EF-470F34B731B8)
-
-Fix: Removed all self-created certificates that were associated wtih the App. 
-
-<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-
-<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-
-Package.appxmanifest:
-
- <Identity 
-    Name="64251AgondonterMedia.63599A5E40A94" 
-    Publisher="CN=159B4EF4-25E0-45FD-B9EF-470F34B731B8" 
-    Version="1.0.0.0" />
-
-  <Properties>
-    <DisplayName>UBViews</DisplayName>
-    <PublisherDisplayName>Agondonter Media</PublisherDisplayName>
-    <Logo>$placeholder$.png</Logo>
-  </Properties>
 
 #Sideloading .MET Maui App
 
@@ -32,10 +8,6 @@ Create a .NET MAUI Windows MSIX to Sideload Or Publish to the Microsoft Store
 	https://youtu.be/FNwv_W3TtSU?t=910
 
 #Links
-
-NET MAUI Repo Windows Publishing/Archiving Issue: 
-	.NET MAUI Windows target publishing/archiving #4329
-	https://github.com/dotnet/maui/issues/4329
 
 Create a certificate for package signing
 

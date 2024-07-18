@@ -126,6 +126,7 @@
 	  <Compile Remove="ViewModels\QueryInputViewModel.cs" />
 	  <Compile Remove="Views\NotesPage.xaml.cs" />
 	  <Compile Remove="Views\QueryInputPage.xaml.cs" />
+	  <Compile Remove="Views\QueryResultPage2.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -143,6 +144,7 @@
 	  <MauiXaml Remove="Conrols\PaperHeadingControl.xaml" />
 	  <MauiXaml Remove="Views\NotesPage.xaml" />
 	  <MauiXaml Remove="Views\QueryInputPage.xaml" />
+	  <MauiXaml Remove="Views\QueryResultPage2.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -329,9 +331,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\QueryResultPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\QueryResultPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

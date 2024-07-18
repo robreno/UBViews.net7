@@ -22,7 +22,7 @@ namespace UBViews
 
             //Routing.RegisterRoute(nameof(QueryInputPage), typeof(QueryInputPage));
             Routing.RegisterRoute(nameof(QueryResultPage), typeof(QueryResultPage));
-            Routing.RegisterRoute(nameof(QueryResultPage2), typeof(QueryResultPage2));
+            //Routing.RegisterRoute(nameof(QueryResultPage2), typeof(QueryResultPage2));
 
             #region Xaml Papers
             // Generated Xaml Pages
