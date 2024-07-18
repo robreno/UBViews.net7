@@ -746,7 +746,6 @@ public partial class QueryResultViewModel : BaseViewModel
             return null;
         }
     }
-    #endregion
     private async Task SendToastAsync(string message)
     {
         string _method = "SendToastAsync";
@@ -766,4 +765,5 @@ public partial class QueryResultViewModel : BaseViewModel
             return;
         }
     }
+    #endregion
 }
