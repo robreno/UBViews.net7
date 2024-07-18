@@ -197,13 +197,13 @@
                 </CheckBox>
             </HorizontalStackLayout>
 
-            <Border Stroke="Blue"
+            <Border x:Name="audioPathBorder" 
+                    Stroke="Blue"
                     Padding="10">
                 
                 <VerticalStackLayout x:Name="audioPathVSL">
 
-                    <HorizontalStackLayout x:Name="audioUseDefaultHSL" 
-                                           IsVisible="False">
+                    <HorizontalStackLayout x:Name="audioPathHSL">
                         
                         <Label Text="Use Default: "
                                HorizontalOptions="Start"

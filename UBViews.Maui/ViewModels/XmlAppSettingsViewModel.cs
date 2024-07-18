@@ -110,21 +110,19 @@ public partial class XmlAppSettingsViewModel : BaseViewModel
         try
         {
             await LoadSettingsAsync();
-            var audioPathBorder = contentPage.FindByName("audioPathBorder") as Border;
             var playbackControlsHSL = contentPage.FindByName("PlaybackControlsHSL") as HorizontalStackLayout;
             var lineHeightHSL = contentPage.FindByName("LineHeightHSL") as HorizontalStackLayout;
             var windowSizeHSL = contentPage.FindByName("WindowSizeHSL") as HorizontalStackLayout;
-            var audioPathHSL = contentPage.FindByName("audioPathVSL") as HorizontalStackLayout;
+            var audioPathBorder = contentPage.FindByName("audioPathBorder") as Border;
 #if WINDOWS
             playbackControlsHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
             windowSizeHSL.IsVisible = false;
-            audioPathHSL.IsVisible = false;
+            audioPathBorder.IsVisible = false;
 #elif ANDROID
             playbackControlsHSL.IsVisible = false;
             lineHeightHSL.IsVisible = false;
             windowSizeHSL.IsVisible = false;
-            audioPathHSL.IsVisible = false;
 #endif
         }
         catch (Exception ex)

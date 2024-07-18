@@ -21,7 +21,6 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls.Platform;
 
 using UBViews.Models;
-using UBViews.Helpers;
 using UBViews.Models.Ubml;
 using UBViews.Models.Query;
 using UBViews.Services;
@@ -40,22 +39,22 @@ public partial class QueryResultViewModel : BaseViewModel
 
     IFileService fileService;
     IEmailService emailService;
-    IQueryProcessingService queryProcessingService;
     IAppSettingsService settingsService;
+    IQueryProcessingService queryProcessingService;
 
     readonly string _class = "QueryResultViewModel";
     #endregion
 
     #region Constructor
-    public QueryResultViewModel(IFileService fileService, 
-                                IQueryProcessingService queryProcessingService, 
+    public QueryResultViewModel(IFileService fileService,
                                 IEmailService emailService,
-                                IAppSettingsService settingsService)
+                                IAppSettingsService settingsService,
+                                IQueryProcessingService queryProcessingService)
     {
         this.fileService = fileService;
         this.emailService = emailService;
-        this.queryProcessingService = queryProcessingService;
         this.settingsService = settingsService;
+        this.queryProcessingService = queryProcessingService;
     }
     #endregion
 
@@ -124,7 +123,7 @@ public partial class QueryResultViewModel : BaseViewModel
     Color defaultColorForSelectionHSL = Color.Parse("White");
 
     [ObservableProperty]
-    Color defaultColorForScrollView = Color.Parse("BlueViolet");
+    Color defaultColorForScrollView = Color.Parse("White");
 
     [ObservableProperty]
     Color defaulColorForContentVSL = Color.Parse("White");
@@ -170,7 +169,7 @@ public partial class QueryResultViewModel : BaseViewModel
             QueryHits = dto.Hits;
             MaxQueryResults = await settingsService.Get("max_query_results", 50);
 
-            string titleMessage = $"Query Result {this.QueryHits} hits ...";
+            string titleMessage = $"Query Result {QueryHits} hits ...";
             Title = titleMessage;
 
             var locations = dto.QueryLocations.Take(MaxQueryResults).ToList();

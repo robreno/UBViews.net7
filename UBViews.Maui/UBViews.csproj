@@ -21,8 +21,8 @@
 		<ApplicationIdGuid>aa91c2eb-6265-48b2-8835-b94bb1c7b79b</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.7</ApplicationDisplayVersion>
-		<ApplicationVersion>1.7</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -160,17 +160,20 @@
 	  <None Remove="Resources\Fonts\SabonLTStd-Italic.otf" />
 	  <None Remove="Resources\Fonts\SabonLTStd-Roman.otf" />
 	  <None Remove="Resources\Images\Help\application_settings.png" />
+	  <None Remove="Resources\Images\Help\application_settings_a.png" />
 	  <None Remove="Resources\Images\Help\application_settings_two.png" />
 	  <None Remove="Resources\Images\Help\audio_path_after.png" />
 	  <None Remove="Resources\Images\Help\audio_path_setting.png" />
 	  <None Remove="Resources\Images\Help\auto_share_email.png" />
 	  <None Remove="Resources\Images\Help\context_menu.png" />
+	  <None Remove="Resources\Images\Help\context_menu_a.png" />
 	  <None Remove="Resources\Images\Help\context_menu_two.png" />
 	  <None Remove="Resources\Images\Help\default_mail_client.png" />
 	  <None Remove="Resources\Images\Help\download_one_options.png" />
 	  <None Remove="Resources\Images\Help\download_two.png" />
 	  <None Remove="Resources\Images\Help\empty_contact.png" />
 	  <None Remove="Resources\Images\Help\max_query_results.png" />
+	  <None Remove="Resources\Images\Help\navigation_tooltip.png" />
 	  <None Remove="Resources\Images\Help\new_contact.png" />
 	  <None Remove="Resources\Images\Help\paper_contents.png" />
 	  <None Remove="Resources\Images\Help\query_caching.png" />
@@ -224,16 +227,19 @@
 
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\Help\application_settings.png" />
+	  <MauiImage Include="Resources\Images\Help\application_settings_a.png" />
 	  <MauiImage Include="Resources\Images\Help\audio_path_after.png" />
 	  <MauiImage Include="Resources\Images\Help\audio_path_setting.png" />
 	  <MauiImage Include="Resources\Images\Help\auto_share_email.png" />
 	  <MauiImage Include="Resources\Images\Help\context_menu.png" />
+	  <MauiImage Include="Resources\Images\Help\context_menu_a.png" />
 	  <MauiImage Include="Resources\Images\Help\context_menu_two.png" />
 	  <MauiImage Include="Resources\Images\Help\default_mail_client.png" />
 	  <MauiImage Include="Resources\Images\Help\download_one_options.png" />
 	  <MauiImage Include="Resources\Images\Help\download_two.png" />
 	  <MauiImage Include="Resources\Images\Help\empty_contact.png" />
 	  <MauiImage Include="Resources\Images\Help\max_query_results.png" />
+	  <MauiImage Include="Resources\Images\Help\navigation_tooltip.png" />
 	  <MauiImage Include="Resources\Images\Help\new_contact.png" />
 	  <MauiImage Include="Resources\Images\Help\paper_contents.png" />
 	  <MauiImage Include="Resources\Images\Help\query_caching.png" />

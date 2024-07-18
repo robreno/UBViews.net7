@@ -40,6 +40,11 @@ public partial class HelpViewModel : BaseViewModel
     {
         try 
         {
+            var downloadFolderBorder = contentPage.FindByName("downloadFolderBorder") as Border;
+            var listeningOverviewBorder = contentPage.FindByName("listeningOverviewBorder") as Border;
+            downloadFolderBorder.IsVisible = false;
+            listeningOverviewBorder.IsVisible = false;
+
             Title = "Help Popups";
         }
         catch (Exception ex)
