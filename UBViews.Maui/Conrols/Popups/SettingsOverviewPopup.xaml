@@ -68,7 +68,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="application_settings.png" Aspect="AspectFit" />
+                    <Image Source="application_settings_a.png" Aspect="AspectFit" />
 
                     <Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">    
@@ -203,7 +203,7 @@
 
                     <Image Source="use_query_caching.png" Aspect="AspectFit" />
 
-                    <Label Margin="10,10,10,10"
+                    <!--<Label Margin="10,10,10,10"
                            Style="{StaticResource RegularParagraph}">
                         <Label.FormattedText>
                             <FormattedString>
@@ -234,7 +234,7 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="audio_path_setting.png" Aspect="AspectFit" />
+                    <Image Source="audio_path_setting.png" Aspect="AspectFit" />-->
 
                 </VerticalStackLayout>
                 

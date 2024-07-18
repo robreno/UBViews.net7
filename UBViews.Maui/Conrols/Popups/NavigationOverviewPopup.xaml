@@ -120,14 +120,14 @@
                                 <Span Text="From the contents of the papers you can navigate to a paper"  
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
-                                <Span Text=" and start reading or listening."
+                                <Span Text=" and start reading or right-click and view the context menu."
                                       Style="{StaticResource RegularSpan}"  />
                                 <Span Style="{StaticResource RegularSpaceSpan}" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
-                    <Image Source="context_menu.png" Aspect="AspectFit"/>
+                    <Image Source="context_menu_a.png" Aspect="AspectFit"/>
 
                     <Label Margin="10,10,10,10"
                           Style="{StaticResource RegularParagraph}">
