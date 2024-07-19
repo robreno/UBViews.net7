@@ -22,7 +22,7 @@
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior
-            EventName="Loaded"
+            EventName="Appearing"
             Command="{Binding QueryResultAppearingCommand}"
             CommandParameter="{Binding QueryLocations}"/>
         <behavior:EventToCommandBehavior
