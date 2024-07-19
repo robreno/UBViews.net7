@@ -13,7 +13,8 @@
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
-            EventName="Loaded" Command="{Binding HelpPageAppearingCommand}" />
+            EventName="Appearing" 
+            Command="{Binding HelpPageAppearingCommand}" />
     </ContentPage.Behaviors>
 
 
