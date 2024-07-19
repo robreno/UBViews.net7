@@ -23,11 +23,11 @@
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior
             EventName="Appearing"
-            Command="{Binding QueryResultAppearingCommand}"
+            Command="{Binding QueryResultPageAppearingCommand}"
             CommandParameter="{Binding QueryLocations}"/>
         <behavior:EventToCommandBehavior
              EventName="Loaded"
-             Command="{Binding QueryResultLoadedCommand}"/>
+             Command="{Binding QueryResultPageLoadedCommand}"/>
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL" 

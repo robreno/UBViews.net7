@@ -69,7 +69,7 @@ public partial class QueryResultViewModel : BaseViewModel
     bool audioStreaming = false;
 
     [ObservableProperty]
-    bool isInitialized;
+    bool isInitialized = false;
 
     [ObservableProperty]
     string pageTitle;
@@ -78,7 +78,7 @@ public partial class QueryResultViewModel : BaseViewModel
     bool isRefreshing;
 
     [ObservableProperty]
-    QueryResultLocationsDto queryLocations;
+    QueryResultLocationsDto queryLocations = new();
 
     [ObservableProperty]
     string queryString;
@@ -140,7 +140,7 @@ public partial class QueryResultViewModel : BaseViewModel
 
     #region Relay Commands
     [RelayCommand]
-    async Task QueryResultAppearing(QueryResultLocationsDto dto)
+    async Task QueryResultPageAppearing(QueryResultLocationsDto dto)
     {
         string _method = "QueryResultAppearing";
         try
@@ -190,7 +190,7 @@ public partial class QueryResultViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async Task QueryResultLoaded()
+    async Task QueryResultPageLoaded()
     {
         string _method = "QueryResultLoaded";
         try
