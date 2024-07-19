@@ -24,7 +24,7 @@
 
     <ContentPage.Behaviors>
         <behavior:EventToCommandBehavior 
-            EventName="Loaded" 
+            EventName="Appearing" 
             Command="{Binding PaperTitlesPageAppearingCommand}" />
     </ContentPage.Behaviors>
 
