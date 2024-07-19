@@ -9,7 +9,7 @@
   <Identity 
     Name="64251AgondonterMedia.63599A5E40A94" 
     Publisher="CN=159B4EF4-25E0-45FD-B9EF-470F34B731B8" 
-    Version="7.1.0.0" />
+    Version="7.1.1.0" />
 
   <Properties>
     <DisplayName>UBViews</DisplayName>
