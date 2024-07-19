@@ -650,8 +650,12 @@ public partial class QueryResultViewModel : BaseViewModel
             Span pidSpan = new Span() { Style = (Style)App.Current.Resources["PID"], StyleId = labelName, 
                                                                                      Text = pid };
             Span spaceSpan = new Span() { Style = (Style)App.Current.Resources["RegularSpaceSpan"] };
-            Span hitsSpan = new Span() { Style = (Style)App.Current.Resources["HID"], StyleId = labelName, 
-                                                                                      Text = $"[hit {hit}]" };
+            Span hitsSpan = new Span() 
+            { 
+                Style = (Style)App.Current.Resources["HID"], 
+                StyleId = labelName, 
+                Text = $"[hit {hit}]" 
+            };
 
             formattedString.Spans.Add(hitsSpan);
             formattedString.Spans.Add(tabSpan);
@@ -698,7 +702,8 @@ public partial class QueryResultViewModel : BaseViewModel
         string _method = "CreateBorderAsync";
         try
         {
-            VerticalStackLayout vsl = new VerticalStackLayout();
+            var id = paperId + "." + seqId;
+            VerticalStackLayout vsl = new VerticalStackLayout() { ClassId = id };
 
             CheckBox checkBox = await CreateCheckBoxAsync(paperId, seqId);
 
@@ -707,6 +712,7 @@ public partial class QueryResultViewModel : BaseViewModel
 
             Border newBorder = new Border()
             {
+                ClassId = id,
                 Style = (Style)App.Current.Resources["QueryResultBorderStyle"],
                 Content = vsl
             };

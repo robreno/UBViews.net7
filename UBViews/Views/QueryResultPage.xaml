@@ -34,7 +34,7 @@
                          HorizontalOptions="CenterAndExpand"
                          BackgroundColor="{Binding DefaultColorForMainVSL}">
 
-        <Label x:Name="maxQueryResultsLable" 
+        <Label x:Name="maxQueryResultsLabel" 
                Margin="0,20,0,0"
                VerticalOptions="Center"
                HorizontalOptions="Center"
@@ -72,7 +72,8 @@
 
         </Border>
 
-        <HorizontalStackLayout x:Name="checkBoxLabelPair" HeightRequest="50">
+        <HorizontalStackLayout x:Name="checkBoxLabelPair" 
+                               HeightRequest="50">
             <Label x:Name="hideUncheckedLabel" 
                    Margin="10,0,0,0"
                    Text="Hide Unchecked" 
