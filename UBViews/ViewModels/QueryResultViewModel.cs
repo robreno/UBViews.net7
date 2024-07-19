@@ -177,6 +177,7 @@ public partial class QueryResultViewModel : BaseViewModel
             {
                 QueryLocationsDto.Add(location);
             }
+            IsInitialized = true;
         }
         catch (NullReferenceException ex)
         {
@@ -209,7 +210,7 @@ public partial class QueryResultViewModel : BaseViewModel
                 {
                     dtos.Add(location);
                 }
-                await LoadXamlAsync(dtos);
+                await LoadXamlAsync(dtos, IsInitialized);
             }
         }
         catch (Exception ex)
@@ -221,6 +222,22 @@ public partial class QueryResultViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task QueryResultPageDisappearing()
+    {
+        string _method = "QueryResultDisappearing";
+        try
+        {
+            QueryLocationsDto.Clear();
+
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised {_class}.{_method} => ", ex.Message, "Cancel");
+            return;
         }
     }
 

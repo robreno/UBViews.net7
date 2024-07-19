@@ -28,6 +28,9 @@
         <behavior:EventToCommandBehavior
              EventName="Loaded"
              Command="{Binding QueryResultPageLoadedCommand}"/>
+        <behavior:EventToCommandBehavior 
+            EventName="Disappearing"
+            Command="{Binding QueryResultPageDisappearingCommand}" />
     </ContentPage.Behaviors>
 
     <VerticalStackLayout x:Name="mainVSL" 
