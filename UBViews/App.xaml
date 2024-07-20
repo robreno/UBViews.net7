@@ -497,7 +497,7 @@
                 <Setter Property="Margin" Value="10,0,10,0" />
                 <Setter Property="MinimumWidthRequest" Value="400" />
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="IsEnabled" Value="True" />
             </Style>
 
             <Style x:Key="QueryResultBorderStyle" TargetType="Border">
