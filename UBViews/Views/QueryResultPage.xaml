@@ -63,8 +63,7 @@
                        Placeholder="Modify query here"
                        SemanticProperties.Description="SearchBar for entering search query."
                        SemanticProperties.HeadingLevel="Level1"
-                       SemanticProperties.Hint="Text SearchBar"
-                       IsEnabled="True">
+                       SemanticProperties.Hint="Text SearchBar">
                 <SearchBar.Behaviors>
                     <behavior:EventToCommandBehavior 
                         EventName="SearchButtonPressed"
